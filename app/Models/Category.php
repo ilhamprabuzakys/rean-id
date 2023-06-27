@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Events\CategoryActionEvent;
+use App\Events\LogEventAction;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -29,6 +32,32 @@ class Category extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function (Category $category) {
+            event(new LogEventAction('created', $category));
+            event(new CategoryActionEvent($category));
+        });
+
+        static::updated(function (Category $category) {
+            event(new LogEventAction('updated', $category));
+            event(new CategoryActionEvent($category));
+        });
+
+        static::deleted(function (Category $category) {
+            event(new LogEventAction('deleted', $category));
+            event(new CategoryActionEvent($category));
+        });
+    }
+
+    public static function clearCache()
+    {
+        Cache::forget('categories');
+        Cache::forget('categoriesCount');
     }
 
     public function posts() 

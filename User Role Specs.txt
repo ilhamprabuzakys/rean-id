@@ -1,0 +1,15 @@
+Member :
+1. Upload Postingan
+2. Edit dan Hapus Postingan
+
+Admin :
+1. Upload Postingan
+2. Approve Postingan dari Member
+3. Hapus dan Edit Postingan dari smeua Member
+
+SuperAdmin
+1. CRUD User
+2. CRUD Postingan
+3. CRUD Category
+4. CRUD Tags
+5. Approve Postingan 

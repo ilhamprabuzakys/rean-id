@@ -25,8 +25,8 @@ class DatabaseSeeder extends Seeder
                     $this->call($seeder);
                 }
             }
-            \App\Models\Post::factory(100)->create();
-            \App\Models\User::factory(10)->create();
+            \App\Models\Post::factory(200)->create();
+            \App\Models\User::factory(20)->create();
         } catch (\Throwable $th) {
             dd($th, 'something went wrong');
         }

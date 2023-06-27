@@ -1,346 +1,178 @@
 @extends('dashboard-borex.layouts.app')
 @push('scripts')
+   <!-- swiper js -->
    <script src="{{ asset('assets/borex/libs/swiper/swiper-bundle.min.js') }}"></script>
-   <script src="{{ asset('assets/borex/js/pages/ecommerce-product-detail.init.js') }}"></script>
+   <!-- nouisliderribute js -->
+   <script src="{{ asset('assets/borex/libs/nouislider/nouislider.min.js') }}"></script>
+   <script src="{{ asset('assets/borex/libs/wnumb/wNumb.min.js') }}"></script>
 @endpush
 @push('style')
+   <!-- swiper css -->
    <link rel="stylesheet" href="{{ asset('assets/borex/libs/swiper/swiper-bundle.min.css') }}">
+   <!-- nouisliderribute css -->
+   <link rel="stylesheet" href="{{ asset('assets/borex/libs/nouislider/nouislider.min.css') }}">
 @endpush
 @section('content')
    <div class="row">
       <div class="col-lg-12">
          <div class="card">
-            <div class="card-body">
-               <div class="row">
-                  <div class="col-xl-4">
-                     <div class="product-detail mt-3" dir="ltr">
-
-                        <div class="swiper product-thumbnail-slider rounded border overflow-hidden position-relative">
-                           <div class="swiper-wrapper">
-                              <div class="swiper-slide"><img src="{{ asset('assets/borex/images/product/img-1.jpg') }}" class="img-fluid d-block" /></div>
-                              <div class="swiper-slide"><img src="{{ asset('assets/borex/images/product/img-2.jpg') }}" class="img-fluid d-block" /></div>
-                              <div class="swiper-slide"><img src="{{ asset('assets/borex/images/product/img-3.jpg') }}" class="img-fluid d-block" /></div>
-                              <div class="swiper-slide"><img src="{{ asset('assets/borex/images/product/img-6.jpg') }}" class="img-fluid d-block" /></div>
-                              <div class="swiper-slide"><img src="{{ asset('assets/borex/images/product/img-5.jpg') }}" class="img-fluid d-block" /></div>
-                           </div>
-                           <div class="d-none d-md-block">
-                              <div class="swiper-button-next"></div>
-                              <div class="swiper-button-prev"></div>
-                           </div>
-                        </div>
-
-                        <div class="mt-4">
-                           <div thumbsSlider="" class="swiper product-nav-slider mt-2 overflow-hidden">
-                              <div class="swiper-wrapper">
-                                 <div class="swiper-slide rounded">
-                                    <div class="nav-slide-item"><img src="{{ asset('assets/borex/images/product/img-1.jpg') }}" class="img-fluid d-block rounded" /></div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="nav-slide-item"><img src="{{ asset('assets/borex/images/product/img-2.jpg') }}" class="img-fluid d-block rounded" /></div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="nav-slide-item"><img src="{{ asset('assets/borex/images/product/img-3.jpg') }}" class="img-fluid d-block rounded" /></div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="nav-slide-item"><img src="{{ asset('assets/borex/images/product/img-6.jpg') }}" class="img-fluid d-block rounded" /></div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="nav-slide-item"><img src="{{ asset('assets/borex/images/product/img-5.jpg') }}" class="img-fluid d-block rounded" /></div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-
-                     </div>
-                  </div>
-                  <div class="col-xl-8">
-                     <div class="mt-3 mt-xl-3 ps-xl-5">
-                        <div class="row justify-content-between">
-
-                           <div class="col-md-6">
-                              <h4 class="font-size-20 mb-3">{{ $post->title }}</h4>
-                           </div>
-
-                           <div class="col-md-6 d-flex justify-content-end align-items-center">
-                              <a href="{{ route('posts.edit', $post) }}" class="btn btn-success waves-effect mt-2 waves-light me-2">
-                                 <i class="bx bx-edit me-2"></i>Edit
-                              </a>
-                              <a href="{{ route('posts.index') }}" class="btn btn-secondary waves-effect mt-2 waves-light">
-                                 <i class="bx bx-arrow-back me-2"></i>Kembali
-                              </a>
-                           </div>
-                        </div>
-
-                        <p class="text-muted mb-0">
-                           <i class="bx bxs-star text-warning"></i>
-                           <i class="bx bxs-star text-warning"></i>
-                           <i class="bx bxs-star text-warning"></i>
-                           <i class="bx bxs-star text-warning"></i>
-                           <i class="bx bxs-star-half text-warning"></i>
-                        </p>
-
-                        <div class="text-muted mt-2">
-                           <span class="badge bg-success font-size-14 me-1"><i class="mdi mdi-star"></i> 4.5</span> 234 Reviews
-                        </div>
-
-                        <h3 class="mb-0 mt-4"><span class="text-muted me-2"><del class="font-size-22 fw-normal">$500</del></span><b>$450</b></h3>
-
-                        <p class="mt-4 text-muted">{!! $post->body !!}</p>
-
-                        <div>
-                           <div class="row">
-                              <div class="col-lg-6 col-sm-8">
-                                 <div class="product-desc-color mt-3">
-                                    <h5 class="font-size-14">Tags :</h5>
-                                    <ul class="list-inline mt-3">
-                                       <li class="list-inline-item">
-                                          <i class="mdi mdi-circle font-size-18 text-dark"></i>
-                                       </li>
-                                       <li class="list-inline-item">
-                                          <i class="mdi mdi-circle font-size-18 text-success"></i>
-                                       </li>
-                                       <li class="list-inline-item">
-                                          <i class="mdi mdi-circle font-size-18 text-primary"></i>
-                                       </li>
-
-                                       <li class="list-inline-item">
-                                          <a href="#" class="text-primary border-0 p-1">
-                                             2 + Colors
-                                          </a>
-                                       </li>
-                                    </ul>
-
-                                 </div>
-
-
-                                 <div class="row text-center mt-4 pt-1">
-                                    <div class="col-md-6">
-                                       <div class="d-grid">
-                                          <button type="button" class="btn btn-primary waves-effect waves-light mt-2 me-1">
-                                             <i class="bx bx-star me-2"></i> Bookmark
-                                          </button>
-                                       </div>
+            <div class="card-body p-0">
+               <div class="swiper-container slider rounded">
+                  <div class="swiper-wrapper" dir="ltr">
+                     <div class="swiper-slide p-4 rounded overflow-hidden ecommerce-slied-bg" style="background-image: url({{ asset('assets/borex/images/auth-bg.jpg') }});">
+                        <div class="bg-overlay bg-dark"></div>
+                        <div class="row justify-content-center">
+                           <div class="col-xl-7 col-lg-11">
+                              <div class="row align-items-center">
+                                 <div class="col-md-7">
+                                    <h3 class="mb-2 text-truncate text-white"><a href="#" class="text-white">{{ $post->title }} </a></h3>
+                                    {{-- <ul class="list-unstyled px-0 mb-0 mt-4">
+                                               <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Ceramic Shield front, matt glass back and stainless steel design</p></li>
+                                               <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Water resistant to a depth of 6 metres for up to 30 minutes (IP68)</p></li>
+                                               <li><p class="text-white-50 mb-0 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Pro 12MP camera system (Telephoto, Wide and Ultra Wide)</p></li>
+                                           </ul> --}}
+                                    <h2 class="mb-0 mt-4 text-white"><span class="font-size-20">Sebuah </span><b> {{ $post->category->name }}</b></h2>
+                                    <div class="mt-4">
+                                       @forelse ($post->tags as $tag)
+                                          <span class="badge rounded-pill bg-soft-primary w-md p-2 font-size-16 text-decoration-none">{{ $tag->name }}</span>
+                                       @empty
+                                          <a class="btn btn-primary w-md waves-effect waves-light">Belum memiliki tag</a>
+                                       @endforelse
+                                       {{-- <a class="btn btn-success w-lg waves-effect waves-light">Buy Now</a> --}}
                                     </div>
-                                    <div class="col-md-6">
-                                       <div class="d-grid">
-                                          <button type="button" class="btn btn-success waves-effect mt-2 waves-light">
-                                             <i class="bx bx-share me-2"></i>Share
-                                          </button>
-                                       </div>
+                                 </div>
+                                 <div class="col-md-5">
+                                    <div class="p-4">
+                                       <img src="{{ asset('storage/' . $post->file_path) }}" class="img-fluid" alt="image-posts">
                                     </div>
                                  </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
-               </div>
-               <!-- end row -->
+                     {{-- 
+                       <div class="swiper-slide p-4 rounded overflow-hidden ecommerce-slied-bg" style="background-image: url({{ asset('assets/borex/images/auth-bg-1.jpg') }});">
+                           <div class="bg-overlay bg-dark"></div>
+                           <div class="row justify-content-center">
+                               <div class="col-xl-7 col-lg-11">
+                                  <div class="row align-items-center">
+                                   <div class="col-md-5">
+                                       <div class="p-4">
+                                        <img src="{{ asset('assets/borex/images/product/img-2.png') }}" class="img-fluid" alt="">
+                                       </div>
+                                    </div>
 
-               <div class="row">
-                  <div class="col-8">
-                     <div class="mt-4 pt-3">
-                        <h5 class="font-size-14 mb-3">Reviews : </h5>
-                        <div class="text-muted mb-3">
-                           <span class="badge bg-success font-size-14 me-1"><i class="mdi mdi-star"></i> 4.2</span> 234 Reviews
-                        </div>
+                                    <div class="col-md-6 offset-md-1">
+                                       <h3 class="mb-2 text-truncate text-white"><a href="ecommerce-product-detail.html" class="text-white">New Iphone 11 Pro +128GB </a></h3>
+                                       <h5 class="text-white-50 font-size-16 mt-1">Heavy On Features, Light on Price.</h5>
+                                       <ul class="list-unstyled px-0 mb-0 mt-4">
+                                           <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Battery life: Up to 22 hours of video playback</p></li>
+                                           <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> 13.7 cm (5.4-inch) Super Retina HDR and True Tone</p></li>
+                                           </ul>
+                                       <h2 class="mb-0 mt-4 text-white"><span class="font-size-20">Form</span><b> $2,360</b> <span class="text-white-50 me-2"><del class="font-size-20 fw-normal">$3500</del></span></h2>
+                                       <div class="mt-4">
+                                           <button type="button" class="btn btn-success w-lg waves-effect waves-light">Buy Now</button>
+                                       </div>
+                                   </div>
+                                  </div>
+                               </div>
+                          </div>
+                       </div>
 
-                        <div class="border py-4 rounded">
+                       <div class="swiper-slide p-4 rounded overflow-hidden ecommerce-slied-bg" style="background-image: url({{ asset('assets/borex/images/auth-bg-2.jpg') }});">
+                           <div class="bg-overlay bg-dark"></div>
+                           <div class="row justify-content-center">
 
-                           <div class="px-4" data-simplebar style="max-height: 360px;">
-                              <div class="border-bottom pb-3">
-                                 <p class="float-sm-end text-muted font-size-13">12 July, 2021</p>
-                                 <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.1</div>
-                                 <p class="text-muted mb-4">Maecenas non vestibulum ante, nec efficitur orci. Duis eu ornare mi, quis bibendum quam. Etiam imperdiet aliquam purus sit amet rhoncus.
-                                    Vestibulum pretium consectetur leo, in mattis ipsum sollicitudin eget. Pellentesque vel mi tortor.
-                                    Nullam vitae maximus dui dolor sit amet, consectetur adipiscing elit.</p>
-                                 <div class="d-flex align-items-start">
-                                    <div class="flex-grow-1">
-                                       <div class="d-flex">
-                                          <img src="{{ asset('assets/borex/images/users/avatar-2.jpg') }}" class="avatar-sm rounded-circle" alt="">
-                                          <div class="flex-1 ms-2 ps-1">
-                                             <h5 class="font-size-16 mb-0">Samuel</h5>
-                                             <p class="text-muted mb-0 mt-1">65 Followers, 86 Reviews</p>
+                               <div class="col-xl-7 col-lg-11">
+                                  <div class="row align-items-center">
+                                       <div class="col-md-7">
+                                           <h3 class="mb-2 text-truncate text-white"><a href="ecommerce-product-detail.html" class="text-white">New Iphone 13 Max Pro +256GB </a></h3>
+                                           <h5 class="text-white font-size-16 mt-1">Heavy On Features, Light on Price.</h5>
+                                           <ul class="list-unstyled px-0 mb-0 mt-4">
+                                               <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Ceramic Shield front, matt glass back and stainless steel design</p></li>
+                                               <li><p class="text-white-50 mb-1 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Water resistant to a depth of 6 metres for up to 30 minutes (IP68)</p></li>
+                                               <li><p class="text-white-50 mb-0 text-truncate"><i class="mdi mdi-circle-medium align-middle text-white me-1"></i> Pro 12MP camera system (Telephoto, Wide and Ultra Wide)</p></li>
+                                           </ul>
+                                           <h2 class="mb-0 mt-4 text-white"><span class="font-size-20">Form</span><b> $7,999</b> <span class="text-white-50 me-2"><del class="font-size-20 fw-normal">$9,999</del></span></h2>
+                                           <div class="mt-4">
+                                               <button type="button" class="btn btn-success w-lg waves-effect waves-light">Buy Now</button>
+                                           </div>
+                                       </div>
+                                       <div class="col-md-5">
+                                          <div class="p-4">
+                                           <img src="{{ asset('assets/borex/images/product/img-3.png') }}" class="img-fluid" alt="">
                                           </div>
                                        </div>
-                                    </div>
-
-                                    <div class="flex-shrink-0">
-                                       <ul class="list-inline product-review-link mb-0">
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-like"></i></a>
-                                          </li>
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-comment-dots"></i></a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-
-                              </div>
-
-                              <div class="border-bottom py-3">
-                                 <p class="float-sm-end text-muted font-size-13">06 July, 2021</p>
-                                 <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.0</div>
-                                 <p class="text-muted mb-4">Cras ac condimentum velit. Quisque vitae elit auctor quam egestas congue. Duis eget lorem fringilla, ultrices justo consequat, gravida lorem.
-                                    Maecenas orci enim, sodales id condimentum et, nisl arcu aliquam velit,
-                                    sit amet vehicula turpis metus cursus dolor cursus eget dui.</p>
-                                 <div class="d-flex align-items-start">
-                                    <div class="flex-grow-1">
-                                       <div class="d-flex">
-                                          <img src="{{ asset('assets/borex/images/users/avatar-3.jpg') }}" class="avatar-sm rounded-circle" alt="">
-                                          <div class="flex-1 ms-2 ps-1">
-                                             <h5 class="font-size-16 mb-0">Joseph</h5>
-                                             <p class="text-muted mb-0 mt-1">85 Followers, 102 Reviews</p>
-                                          </div>
-                                       </div>
-                                    </div>
-
-                                    <div class="flex-shrink-0">
-                                       <ul class="list-inline product-review-link mb-0">
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-like"></i></a>
-                                          </li>
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-comment-dots"></i></a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-
-                              <div class="pt-3">
-                                 <p class="float-sm-end text-muted font-size-13">26 June, 2021</p>
-                                 <div class="badge bg-success mb-2"><i class="mdi mdi-star"></i> 4.2</div>
-                                 <p class="text-muted mb-4">Aliquam sit amet eros eleifend, tristique ante sit amet, eleifend arcu. Cras ut diam quam. Fusce quis diam eu augue semper ullamcorper vitae
-                                    sed massa. Mauris lacinia, massa a feugiat mattis, leo massa porta eros, sed congue arcu sem nec orci.
-                                    In ac consectetur augue. Nullam pulvinar risus non augue tincidunt blandit.</p>
-                                 <div class="d-flex align-items-start">
-                                    <div class="flex-grow-1">
-                                       <div class="d-flex">
-                                          <img src="{{ asset('assets/borex/images/users/avatar-6.jpg') }}" class="avatar-sm rounded-circle" alt="">
-                                          <div class="flex-1 ms-2 ps-1">
-                                             <h5 class="font-size-16 mb-0">Paul</h5>
-                                             <p class="text-muted mb-0 mt-1">27 Followers, 66 Reviews</p>
-                                          </div>
-                                       </div>
-                                    </div>
-
-                                    <div class="flex-shrink-0">
-                                       <ul class="list-inline product-review-link mb-0">
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-like"></i></a>
-                                          </li>
-                                          <li class="list-inline-item">
-                                             <a href="#"><i class="bx bx-comment-dots"></i></a>
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-
-                              </div>
-                           </div>
-
-                           <div class="px-4 mt-2">
-                              <div class="border rounded mt-4">
-                                 <form action="#">
-                                    <div class="px-2 py-1 bg-light">
-                                       <div class="btn-group" role="group">
-                                          <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none"><i class="bx bx-link"></i></button>
-                                          <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none"><i class="bx bx-smile"></i></button>
-                                          <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none"><i class="bx bx-at"></i></button>
-                                       </div>
-                                    </div>
-                                    <textarea rows="3" class="form-control border-0 resize-none" placeholder="Your Message..."></textarea>
-                                 </form>
-                              </div>
-
-                              <div class="text-end mt-3">
-                                 <button type="button" class="btn btn-success w-sm text-truncate ms-2"> Send <i class="bx bx-send ms-2 align-middle"></i></button>
-                              </div>
-                           </div>
-
-                        </div>
-                     </div>
+                                  </div>
+                               </div>
+                          </div>
+                       </div> --}}
                   </div>
 
-                  <div class="col-4">
-                     <div class="product-desc mt-4 pt-3">
-                        <h5 class="font-size-14 mb-3">Product description: </h5>
-                        <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
-                           <li class="nav-item">
-                              <a class="nav-link" id="desc-tab" data-bs-toggle="tab" href="#desc" role="tab">Description</a>
-                           </li>
-                           <li class="nav-item">
-                              <a class="nav-link active" id="specifi-tab" data-bs-toggle="tab" href="#specifi" role="tab">Specifications</a>
-                           </li>
-                        </ul>
-                        <div class="tab-content border border-top-0 p-4">
-                           <div class="tab-pane fade" id="desc" role="tabpanel">
-                              <div class="row">
-                                 <div class="col-sm-3 col-md-3">
-                                    <div>
-                                       <img src="{{ asset('assets/borex/images/product/img-3.jpg') }}" alt="" class="img-fluid mx-auto rounded d-block">
-                                    </div>
-                                 </div>
-                                 <div class="col-sm-9 col-md-9">
-                                    <div class="text-muted p-2">
-                                       <p>If several languages coalesce, the grammar of the resulting language is more simple.</p>
-                                       <p>Everyone realizes a new common language would be desirable, one could refuse to pay expensive translators.</p>
-                                       <p>It will be as simple as occidental in fact.</p>
-
-                                       <div>
-                                          <ul class="list-unstyled product-desc-list text-dark">
-                                             <li><i class="mdi mdi-circle-medium me-1 align-middle text-primary"></i> Sed ut perspiciatis omnis iste</li>
-                                             <li><i class="mdi mdi-circle-medium me-1 align-middle text-primary"></i> Neque porro quisquam est</li>
-                                             <li><i class="mdi mdi-circle-medium me-1 align-middle text-primary"></i> Quis autem vel eum iure</li>
-                                          </ul>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="tab-pane fade show active" id="specifi" role="tabpanel">
-                              <div class="table-responsive">
-                                 <table class="table table-nowrap mb-0">
-                                    <tbody>
-                                       <tr>
-                                          <th scope="row" style="width: 50%;">Category :</th>
-                                          <td>Phone</td>
-                                       </tr>
-                                       <tr>
-                                          <th scope="row">Brand :</th>
-                                          <td>Iphone</td>
-                                       </tr>
-                                       <tr>
-                                          <th scope="row">Color :</th>
-                                          <td>Dark</td>
-                                       </tr>
-                                       <tr>
-                                          <th scope="row">Quality :</th>
-                                          <td>High</td>
-                                       </tr>
-                                       <tr>
-                                          <th scope="row">Material :</th>
-                                          <td>Metal</td>
-                                       </tr>
-
-                                    </tbody>
-                                 </table>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="mt-4 pt-3">
-
+                  {{-- <div class="swiper-button-next"></div>
+                   <div class="swiper-button-prev"></div> --}}
                </div>
 
 
             </div>
          </div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="card">
+            {{-- <div class="card-header">
+               <h4 class="card-title">Top Product</h4>
+           </div> --}}
+            <div class="card-body">
+               <div class="row mb-4 justify-content-between">
+                  <div class="col-lg-7">
+                     <h3 class="text-capitalize">{{ $post->title }}</h3>
+                  </div>
+                  <div class="col-lg-5">
+                     <div class="d-flex justify-content-end">
+                        {{-- <a class="badge badge-soft-success rounded-circle">
+                           <i class="bx bx-badge-check" style="font-size: 25px"></i>
+                        </a> --}}
+                        {{-- <button type="submit" class="bg-transparent border-0">
+                           <span class="badge rounded-pill bg-approval w-md p-2 font-size-16 text-decoration-none">
+                              Approve?
+                              <i class="bx bx-check-circle"></i>
+                           </span>
+                        </button> --}}
+                        <a href="{{ route('posts.index') }}">
+                           <span class="badge rounded-pill bg-primary w-md p-2 font-size-16 text-decoration-none">Kembali <i class="bx bx-share ms-2"></i></span>
+                        </a>
+                     </div>
+                  </div>
+                  <div class="row my-2 justify-content-start">
+                     <div>
+                        <img src="{{ asset('storage/' . $post->file_path) }}" alt="image-postingan" class="img-fluid post-image-size">
+                     </div>
+                  </div>
+                  <div class="row ms-1">
+                     @forelse ($post->tags as $tag)
+                        <div class="col-lg-1 me-3">
+                           <span class="badge rounded-pill bg-primary w-md p-1 font-size-16 text-decoration-none">{{ $tag->name }}</span>
+                        </div>
+
+                     @empty
+                        ''
+                     @endforelse
+                  </div>
+                  <div class="row my-3">
+                     {!! $post->body !!}
+                  </div>
+               </div>
+
+
+
+            </div>
+         </div>
+         <!-- end row -->
+
+
       </div>
    </div>
 @endsection

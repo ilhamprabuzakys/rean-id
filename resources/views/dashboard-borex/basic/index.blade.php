@@ -3,63 +3,123 @@
    <h4 class="page-title">Dashboard</h4>
 @endsection
 @php
-   $postsCount = Illuminate\Support\Facades\Cache::remember('postsCount', now()->addDays(1), function () {
-       return App\Models\Post::count();
-   });
-   
-   $usersCount = Illuminate\Support\Facades\Cache::remember('usersCount', now()->addDays(1), function () {
-       return App\Models\User::count();
-   });
-   
-   $logsCount = Illuminate\Support\Facades\Cache::remember('logsCount', now()->addDays(1), function () {
-       return App\Models\Log::count();
-   });
+   $postsCount = App\Models\Post::where('user_id', auth()->user()->id)
+       ->get()
+       ->count();
+   $logsCount = App\Models\Log::where('user_id', auth()->user()->id)
+       ->get()
+       ->count();
+   $usersCount = 0;
+   if (auth()->user()->role != 'member') {
+       $usersCount = App\Models\User::count();
+   }
 @endphp
 @section('content')
    <div class="row">
-      <div class="col-xxl-9">
+      <div class="col-xxl-12">
          <div class="row d-flex justify-content-between">
-            <div class="col-xl col-lg-4">
+            <div class="col-lg-12">
                <div class="card">
                   <div class="card-body">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 me-3">
-                           <div class="avatar">
-                              <div class="avatar-title rounded bg-primary bg-gradient">
-                                 <i data-eva="people" class="fill-white"></i>
+                     @php
+                        $role = '';
+                        switch (auth()->user()->role) {
+                            case 'superadmin':
+                                $role = 'Super Admin';
+                                break;
+                            case 'admin':
+                                $role = 'Admin';
+                                break;
+                            case 'member':
+                                $role = 'Member';
+                                break;
+                        }
+                     @endphp
+                     <h2 class="card-title">Hai {{ auth()->user()->name }}! Kamu login sebagai {{ $role }}</h2>
+                     <p class="card-text">Login pada {{ now()->format('l, d F Y') }} di Moh. Toha, Kota Bandung</p>
+                     {{-- <p class="card-text">Login pada <span id="login-time"></span> di <span id="user-location"></span></p> --}}
+
+                     <script>
+                        // Mendapatkan lokasi pengguna
+                        function getLocation() {
+                           if (navigator.geolocation) {
+                              navigator.geolocation.getCurrentPosition(showPosition);
+                           } else {
+                              console.log("Geolocation is not supported by this browser.");
+                           }
+                        }
+
+                        // Menampilkan data lokasi
+                        function showPosition(position) {
+                           var latitude = position.coords.latitude;
+                           var longitude = position.coords.longitude;
+
+                           // Mengirim data lokasi ke server atau melakukan manipulasi lainnya
+                           // ...
+
+                           // Menampilkan data lokasi pada elemen dengan id 'user-location'
+                           var userLocationElement = document.getElementById('user-location');
+                           userLocationElement.textContent = 'Latitude: ' + latitude + ', Longitude: ' + longitude;
+                        }
+
+                        // Mengupdate waktu login setiap detik
+                        setInterval(function() {
+                           var loginTimeElement = document.getElementById('login-time');
+                           loginTimeElement.textContent = new Date().toLocaleString();
+                        }, 1000);
+
+                        // Memanggil fungsi untuk mendapatkan lokasi pengguna saat halaman dimuat
+                        getLocation();
+                     </script>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xxl-9">
+         <div class="row d-flex justify-content-between">
+            @if (auth()->user()->role != 'member')
+               <div class="col-xl col-lg-auto">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center">
+                           <div class="flex-shrink-0 me-3">
+                              <div class="avatar">
+                                 <div class="avatar-title rounded bg-primary bg-gradient">
+                                    <i data-eva="people" class="fill-white"></i>
+                                 </div>
                               </div>
                            </div>
-                        </div>
-                        <div class="flex-grow-1">
-                           <p class="text-muted mb-1">Total Users</p>
-                           <h4 class="mb-0">{{ $usersCount }}</h4>
-                        </div>
-
-                        <div class="flex-shrink-0 align-self-end ms-2">
-                           <div class="badge rounded-pill font-size-13 badge-soft-success">+3
+                           <div class="flex-grow-1">
+                              <p class="text-muted mb-1">Total Users</p>
+                              <h4 class="mb-0">{{ $usersCount }} User</h4>
                            </div>
+
+                           {{-- <div class="flex-shrink-0 align-self-end ms-2">
+                              <div class="badge rounded-pill font-size-13 badge-soft-success">+3
+                              </div>
+                           </div> --}}
                         </div>
                      </div>
+                     <!-- end card body -->
                   </div>
-                  <!-- end card body -->
+                  <!-- end card -->
                </div>
-               <!-- end card -->
-            </div>
-
-            <div class="col-xl col-lg-4">
+            @endif
+            <div class="col-xl col-lg-auto">
                <div class="card">
                   <div class="card-body">
                      <div class="d-flex align-items-center">
                         <div class="flex-shrink-0 me-3">
                            <div class="avatar">
                               <div class="avatar-title rounded bg-warning bg-gradient">
-                                 <i data-eva="list-outline" class="fill-white"></i>
+                                 <i data-eva="book-open-outline" class="fill-white"></i>
                               </div>
                            </div>
                         </div>
                         <div class="flex-grow-1">
                            <p class="text-muted mb-1">Total Postingan</p>
-                           <h4 class="mb-0">{{ $postsCount }}</h4>
+                           <h4 class="mb-0">{{ $postsCount }} <span class="h5">Postingan</span></h4>
                         </div>
                         <div class="flex-shrink-0 align-self-end ms-2">
                            <div class="badge rounded-pill font-size-13 badge-soft-danger">+3
@@ -71,26 +131,26 @@
                </div>
                <!-- end card -->
             </div>
-           
-            <div class="col-xl col-lg-4">
+
+            <div class="col-xl col-lg-auto">
                <div class="card">
                   <div class="card-body">
                      <div class="d-flex align-items-center">
                         <div class="flex-shrink-0 me-3">
                            <div class="avatar">
-                              <div class="avatar-title rounded bg-danger bg-gradient">
-                                 <i data-eva="list-outline" class="fill-white"></i>
+                              <div class="avatar-title rounded bg-success bg-gradient">
+                                 <i data-eva="activity-outline" class="fill-white"></i>
                               </div>
                            </div>
                         </div>
                         <div class="flex-grow-1">
-                           <p class="text-muted mb-1">Total Logs</p>
-                           <h4 class="mb-0">{{ $postsCount }}</h4>
+                           <p class="text-muted mb-1">Aktivitasku</p>
+                           <h4 class="mb-0">{{ $postsCount }} <span class="h5">Log aktivitas</span></h4>
                         </div>
-                        <div class="flex-shrink-0 align-self-end ms-2">
+                        {{-- <div class="flex-shrink-0 align-self-end ms-2">
                            <div class="badge rounded-pill font-size-13 badge-soft-danger">+3
                            </div>
-                        </div>
+                        </div> --}}
                      </div>
                   </div>
                   <!-- end card body -->
@@ -99,7 +159,7 @@
             </div>
          </div>
 
-         <div class="card">
+         {{-- <div class="card">
             <div class="card-body pb-0">
                <div class="d-flex align-items-start">
                   <div class="flex-grow-1">
@@ -137,7 +197,7 @@
                            </div>
                         </div>
 
-                        {{-- <div class="row g-0">
+                        <div class="row g-0">
                                 <div class="col-sm-6">
                                     <div class="border-bottom border-end p-3 h-100">
                                         <p class="text-muted text-truncate mb-1">Orders</p>
@@ -178,7 +238,7 @@
                                         <h5 class="text-truncate mb-0">$12,248</h5>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                      </div>
                   </div>
                   <div class="col-xxl-9">
@@ -188,10 +248,9 @@
                   </div>
                </div>
             </div>
-            <!-- end card body -->
-         </div>
+         </div> --}}
 
-         <div class="row mb-5">
+         {{-- <div class="row mb-5">
             <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body">
@@ -262,7 +321,7 @@
                  </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
       </div>
    </div>
    <!-- end row -->

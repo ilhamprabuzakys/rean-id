@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
-use App\Events\PostCreated;
-use App\Events\PostDeleted;
-use App\Events\PostUpdated;
-use App\Listeners\ClearPostCache;
+use App\Events\CategoryActionEvent;
+use App\Events\LogEventAction;
+use App\Events\PostActionEvent;
+use App\Events\TagActionEvent;
+use App\Listeners\CategoryCacheListener;
+use App\Listeners\ModelActionListener;
+use App\Listeners\PostCacheListener;
+use App\Listeners\TagCacheListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,14 +26,17 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        PostCreated::class => [
-            ClearPostCache::class,
+        LogEventAction::class => [
+            ModelActionListener::class,
         ],
-        PostUpdated::class => [
-            ClearPostCache::class,
+        PostActionEvent::class => [
+            PostCacheListener::class,
         ],
-        PostDeleted::class => [
-            ClearPostCache::class,
+        CategoryActionEvent::class => [
+            CategoryCacheListener::class,
+        ],
+        TagActionEvent::class => [
+            TagCacheListener::class,
         ],
     ];
 

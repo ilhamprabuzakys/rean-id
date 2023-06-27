@@ -21,6 +21,17 @@ class UserController extends Controller
             'title' => 'Daftar Users',
         ], compact('users'));
     }
+    
+    public function roles()
+    {
+        $users = Cache::remember('users', function() {
+            return User::with(['users'])->orderBy('updated_at', 'desc')->get();
+        });
+
+        return view('dashboard.users.index', [
+            'title' => 'Daftar Users',
+        ], compact('users'));
+    }
 
     public function create()
     {

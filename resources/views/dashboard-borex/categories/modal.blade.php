@@ -8,7 +8,10 @@
          </div>
          <div class="modal-body">
             <ul class="list-group">
-               @forelse ($category->posts as $post)
+               @php
+                  $posts = $category->posts()->orderBy('updated_at', 'desc')->get();
+               @endphp
+               @forelse ($posts as $post)
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                      <a href="{{ route('posts.show', $post) }}" class="text-decoration-none">{{ $post->title }}</a>
                      <span class="badge bg-success badge-pill">{{ $post->user->name }}</span>

@@ -83,7 +83,7 @@ body:not([data-sidebar-size="sm"]) .app-search {
     margin-left: 10px;
 }
 .navbar-brand-box {
-    padding: 0 1.5rem;
+    padding: 0 1.3rem 0 1.3rem;
     width: 255px;
     position: fixed;
     z-index: 1;
@@ -825,9 +825,10 @@ body[data-sidebar-size="sm"] .navbar-brand-box {
 body[data-sidebar-size="sm"] .logo span.logo-lg {
     display: none;
 }
-body[data-sidebar-size="sm"] .logo span.logo-sm {
+body[data-sidebar-size="sm"] .navbar-brand-box .logo span.logo-sm {
     display: block;
-    margin-right: 20px;
+    
+    /* logo di sidebar */
 }
 body[data-sidebar-size="sm"] #page-topbar {
     left: 70px;
@@ -5514,7 +5515,7 @@ body[data-layout-mode="dark"] .apexcharts-pie line {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(../images/auth-bg.jpg);
+    background-image: url(../images/auth-bg-3.jpg);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -5547,7 +5548,7 @@ body[data-layout-mode="dark"] .apexcharts-pie line {
     justify-content: flex-start;
 }
 .authentication-bg .auth-cover-card .bg-overlay {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 .authentication-bg .auth-cover-card .form-floating label {
     color: rgba(255, 255, 255, 0.5);
@@ -6848,3 +6849,40 @@ body[data-layout-mode="dark"] .categories-filter .list-inline-item a.active {
 body[data-layout-mode="dark"] .gallery-box .box-content {
     background-color: #22354e;
 }
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  #preloader:before {
+    content: "";
+    position: fixed;
+    top: calc(50% - 30px);
+    left: calc(50% - 30px);
+    border: 6px solid #1acc8d;
+    border-top-color: #d2f9eb;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: animate-preloader 0.5s linear infinite;
+  }
+  
+  @keyframes animate-preloader {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }

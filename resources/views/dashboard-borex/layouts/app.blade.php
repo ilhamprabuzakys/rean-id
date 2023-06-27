@@ -11,14 +11,28 @@
    <!-- App favicon -->
    <link rel="shortcut icon" href="{{ asset('assets/img/rean-berwarna-logo-saja.png') }}">
 
-   {{-- Box Icons Css --}}
-   <link rel="stylesheet" href="{{ asset('assets/borex/libs/box-icons/css/boxicons.min.css') }}">
    <!-- Bootstrap Css -->
-   <link href="{{ asset('assets/borex/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
+   <link href="{{ asset('assets/borex/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap-style" />
    <!-- Icons Css -->
    <link href="{{ asset('assets/borex/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+   {{-- Box Icons Css --}}
+   <link rel="stylesheet" href="{{ asset('assets/borex/libs/box-icons/css/boxicons.min.css') }}">
+
+   {{-- Style CSS --}}
+   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
    <!-- App Css-->
-   <link href="{{ asset('assets/borex/css/app.min.css') }}" rel="stylesheet" type="text/css"/>
+   <link href="{{ asset('assets/borex/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+   {{-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" defer></script>
+   <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+         OneSignal.init({
+            appId: "bc7f7242-c743-4830-a3c9-0eed3497dfaf",
+         });
+      });
+   </script> --}}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    @stack('style')
    @stack('head')
    {{-- @vite('resources/css/app.css') --}}
@@ -28,11 +42,28 @@
 <body data-sidebar="dark" data-sidebar-size="sm" class="sidebar-enable">
 
    @php
-      $auth = cache()->remember('auth', 60*60*24, function() {
-         return auth()->user();
-      })
+      $postsCount = cache()->remember('postsCount', now()->addDays(1), function () {
+         if (auth()->user()->role == 'member') {
+            return App\Models\Post::where('user_id', auth()->user()->id)->get()->count();
+         } else {
+            return App\Models\Post::count();
+         }
+      });
+
+      $categoriesCount = cache()->remember('categoriesCount', now()->addDays(1), function () {
+          return App\Models\Category::count();
+      });
+      
+      $tagsCount = cache()->remember('tagsCount', now()->addDays(1), function () {
+          return App\Models\Tag::count();
+      });
+
+      $usersCount = cache()->remember('usersCount', now()->addDays(1), function () {
+          return App\Models\User::count();
+      });
    @endphp
    <!-- <body data-layout="horizontal"> -->
+
 
    <!-- Begin page -->
    <div id="layout-wrapper">
@@ -44,14 +75,14 @@
 
          <!-- LOGO -->
          <div class="navbar-brand-box">
-            <a href="{{ route('home') }}" class="logo logo-light d-flex justify-content-start">
-               <span class="logo-lg">
+            <a href="{{ route('dashboard') }}" class="logo logo-light d-flex justify-content-start ">
+               <span class="logo-lg ms-5">
                   <img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="" height="22px">
                </span>
                <span class="logo-sm">
-                  <img src="{{ asset('assets/img/rean-berwarna-logo-saja.png') }}" alt="" height="22px">
+                  <img src="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}" alt="" height="22px">
                </span>
-            </a>  
+            </a>
          </div>
 
          <button type="button" class="btn btn-sm px-3 header-item vertical-menu-btn topnav-hamburger">
@@ -125,9 +156,10 @@
          ...
       </div>
    </div>
-   
+
    @include('sweetalert::alert')
    @stack('modal')
+   {{-- <div id="preloader"></div> --}}
 
    <!-- JAVASCRIPT -->
    <script src="{{ asset('assets/borex/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -137,8 +169,10 @@
 
    @stack('scripts')
 
-   <script src="{{ asset('assets/borex/js/app.js') }}"></script>
    {{-- @vite('resources/js/app.js') --}}
+   {{-- Jquery --}}
+   <script src="{{ asset('assets/js/script.js') }}"></script>
+   <script src="{{ asset('assets/borex/js/app.js') }}"></script>
 
 </body>
 

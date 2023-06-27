@@ -17,13 +17,35 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        static $memberIncrement = 2;
+        static $adminIncrement = 2;
+
+        $name = '';
+        $email = '';
+        $username = '';
+        $password = '';
+
+        $role = fake()->randomElement(['admin', 'member']);
+
+        if ($role == 'member') {
+            $password = \bcrypt('member');
+            $email = $memberIncrement . '.member@rean.id';
+            $name = 'Member ' . $memberIncrement;
+            $username = 'member' . $memberIncrement++;
+        } elseif ($role == 'admin') {
+            $password = \bcrypt('admin');
+            $email = $adminIncrement . '.admin@rean.id';
+            $name = 'Admin ' . $adminIncrement;
+            $username = 'admin' . $adminIncrement++;
+        }
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'username' => fake()->unique()->userName(),
-            'role' => fake()->randomElement(['superadmin', 'admin', 'member', 'biasa']),
+            'name' => $name,
+            'email' => $email,
+            'username' => $username,
+            'role' => $role,
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => $password,
             'remember_token' => Str::random(10),
         ];
     }

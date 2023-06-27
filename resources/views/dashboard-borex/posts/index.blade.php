@@ -1,9 +1,44 @@
 @extends('dashboard-borex.layouts.app')
 @php
-   $postsCount = Illuminate\Support\Facades\Cache::remember('postsCount', now()->addDays(1), function () {
-       return App\Models\Post::count();
-   });
+   $postsCustom = '';
+   if (auth()->user()->role == 'member') {
+       $postsCustom = $posts->where('user_id', auth()->user()->id);
+   } else {
+       $postsCustom = $posts;
+   }
+   // $postsCount = cache()->remember('postsCount', now()->addDays(1), function() {
+   //    return $postsCustom->count();
+   // });
+   $postsCount = $postsCustom->count();
 @endphp
+@push('scripts')
+   @include('dashboard-borex.components.datatable')
+   <script>
+      $(document).ready(function() {
+         var table = $('#posts-table').DataTable();
+         $('#filter-category').on('change', function() {
+            var category = $(this).val();
+
+            if (category === "") {
+               // Jika kategori "Semua" dipilih, hapus filter pada kolom "Kategori"
+               table.column(3).search("").draw();
+            } else {
+               // Jika kategori spesifik dipilih, terapkan filter pada kolom "Kategori"
+               table.column(3).search(category).draw();
+            }
+         });
+         $('#filter-status').on('change', function() {
+            var status = $(this).val();
+
+            if (status === "") {
+               table.column(4).search("").draw();
+            } else {
+               table.column(4).search(status).draw();
+            }
+         });
+      });
+   </script>
+@endpush
 @section('content')
    <div class="row align-items-center">
       <div class="col-md-6">
@@ -28,59 +63,108 @@
          <div class="card shadow-md">
             <div class="card-body">
                <div class="table-responsive">
-                  <table class="table table-sm mb-0">
+                  <div class="row mb-3 justify-content-start">
+                     <div class="col-lg-6">
+                        <label for="filter-category" class="form-label">Kategori</label>
+                        <select class="form-select form-select-md" name="category_id" id="filter-category">
+                           <option selected value="">Semua</option>
+                           @foreach ($categories as $category)
+                              <option value="{{ $category->name }}">{{ $category->name }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+
+                     <div class="col-lg-6">
+                        <label for="filter-status" class="form-label">Status</label>
+                        <select class="form-select form-select-md" name="status" id="filter-status">
+                           <option selected value="">Semua</option>
+                           @foreach ($statuses as $status)
+                              <option value="{{ $status->key }}">{{ $status->label }}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+                  <table class="table table-sm mb-0" id="posts-table">
 
                      <thead class="table-light">
                         <tr>
                            <th>#</th>
                            <th>Judul</th>
-                           <th>Slug</th>
-                           <th>Kategori</th>
-                           <th>Body</th>
+                           <th>Author</th>
+                           <th class="text-center">Kategori</th>
+                           <th>Status</th>
+                           <th>Terakhir diupdate</th>
                            <th class="text-center">
                               <i class="bx bx bx-edit font-size-16"></i>
                            </th>
                         </tr>
                      </thead>
                      <tbody>
-                        @foreach ($posts as $key => $post)
+                        @foreach ($postsCustom as $key => $post)
                            <tr>
-                              <th scope="row">{{ $loop->iteration}}</th>
+                              <th scope="row">{{ $loop->iteration }}</th>
                               <td>
                                  <a href="{{ route('posts.show', $post) }}" class="text-decoration-none text-dark">
                                     {{ $post->title }}
                                  </a>
-                              <td>{{ $post->slug }}</td>
-                              <td>{{ $post->category->name }}</td>
-                              <td>{!! Str::limit($post->body, 10) !!}</td>
+                              </td>
+                              <td><a href="{{ route('users.show', $post->user) }}" class="text-decoration-none text-dark">
+                                    {{ $post->user->name }}
+                                    @if ($post->user->username == auth()->user()->username)
+                                       <span class="text-primary">{{ __(' (Anda)') }}</span>
+                                    @endif
+                                 </a></td>
+                              <td class="text-center">
+                                 @if ($post->category)
+                                    <a href="{{ route('categories.show', $post->category) }}" class="text-decoration-none">{{ $post->category->name }}</a>
+                                 @else
+                                    Belum diset
+                                 @endif
+                              </td>
+                              <td class="text-center">
+                                 @if ($post->status == 'pending')
+                                    <span class="badge badge-soft-primary">Pending</span>
+                                 @elseif ($post->status == 'approved')
+                                    <span class="badge badge-soft-success">Approved</span>
+                                 @else
+                                    <span class="badge badge-soft-danger">Rejected</span>
+                                 @endif
+                              </td>
+                              <td>
+                                 @php
+                                    $currentTime = now();
+                                    $updatedAt = $post->updated_at;
+                                    
+                                    $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
+                                    
+                                    if ($diffInSeconds < 60) {
+                                        echo 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
+                                    } else {
+                                        echo $updatedAt->format('l, d F Y - H:i:s');
+                                    }
+                                 @endphp
+                              </td>
                               <td class="text-center">
                                  <div class="dropdown">
                                     <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                       <i class="bx bx-dots-horizontal-rounded"></i>
                                     </a>
-                                
+
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" href="{{ route('posts.edit', $post) }}">
-                                          <span class="badge rounded-pill badge-soft-success">
-                                             Edit
-                                             <i class="bx bx bx-edit font-size-16 ms-2"></i>
-                                          </span>   
+                                       <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganDenganID{{ $post->id }}">
+                                          Tampilkan
                                        </a>
-                                       <a href="{{ route('posts.destroy', $post) }}" class="badge rounded-pill badge-soft-danger" data-confirm-delete="true">Delete</a>
-                                       <form action="{{ route('posts.destroy', $post) }}" method="post" class="d-inline">
-                                        <a class="dropdown-item" href="#">
-                                             @csrf
-                                             @method('delete')
-                                             <button type="submit" class="badge rounded-pill badge-soft-danger border-0" data-confirm-delete="true">
-                                                Delete
-                                                <i class="bx bx bx-trash-alt font-size-16 ms-2"></i>
-                                             </button>
-                                        </a>
-                                       </form>
+                                       <a class="dropdown-item text-success text-decoration-none" href="{{ route('posts.edit', $post) }}">
+                                          Edit
+                                       </a>
+                                       <a class="text-danger text-decoration-none dropdown-item" href="{{ route('posts.destroy', $post) }}" data-confirm-delete="true">Delete</a>
                                     </div>
-                                </div>
+                                 </div>
                               </td>
                            </tr>
+                           @push('modal')
+                              @include('dashboard-borex.posts.modal')
+                           @endpush
                         @endforeach
                      </tbody>
                   </table>

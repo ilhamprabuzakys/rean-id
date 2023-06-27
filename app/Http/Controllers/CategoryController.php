@@ -48,10 +48,11 @@ class CategoryController extends Controller
         $validatedData = $validator->validated();
         $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['name']);
         $category = Category::create($validatedData);
-        Cache::forget('categories');
-        Alert::success('Data Kategori berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
 
-        return redirect()->route('categories.index')->with('message', "Kategori <b>$category->title</b> telah berhasil <b>ditambahkan!</b>");
+        toast('Data Kategori berhasil ditambahkan!','success');
+        // Alert::success('Data Kategori berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
+
+        return redirect()->route('categories.index')->with('message', "Kategori <b>$category->name</b> telah berhasil <b>ditambahkan!</b>");
     }
 
     public function show(Category $category)
@@ -85,10 +86,11 @@ class CategoryController extends Controller
 
         $validatedData = $validator->validated();
         $validatedData['slug'] = SlugService::createSlug(Category::class, 'slug', $validatedData['name']);
-        $oldNama = $category->nama;
+        $oldNama = $category->name;
         $category->update($validatedData);
-        Cache::forget('categories');
-        Alert::success('Data Kategori berhasil diperbarui!', 'Tabel berhasil diperbarui.');
+
+        toast('Data Kategori berhasil diperbarui!','success');
+        // Alert::success('Data Kategori berhasil diperbarui!', 'Tabel berhasil diperbarui.');
 
         return redirect()->route('categories.index')->with('message', "Kategori <b>{$oldNama}</b> telah berhasil <b>diperbarui!</b>");
     }
@@ -97,9 +99,9 @@ class CategoryController extends Controller
     {
         $namaKategori = $category->name;
         $category->delete();
-        Cache::forget('categories');
-        Alert::success('Data Kategori berhasil dihapus!', 'Tabel berhasil diperbarui.');
 
+        toast('Data Kategori berhasil dihapus!','success');
+        // Alert::success('Data Kategori berhasil dihapus!', 'Tabel berhasil diperbarui.');
         return back()->with('message', "Kategori <b>$namaKategori</b> telah berhasil <b>dihapus!</b>");
     }
 }

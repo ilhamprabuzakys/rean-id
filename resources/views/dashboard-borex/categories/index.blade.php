@@ -1,9 +1,17 @@
 @extends('dashboard-borex.layouts.app')
 @php
-   $categoriesCount = Illuminate\Support\Facades\Cache::remember('categoriesCount', now()->addDays(1), function () {
+   $categoriesCount = cache()->remember('categoriesCount', now()->addDays(1), function () {
        return App\Models\Category::count();
    });
 @endphp
+@push('scripts')
+   @include('dashboard-borex.components.datatable')
+   <script>
+      $(document).ready(function() {
+         $('#categories-table').DataTable();
+      });
+   </script>
+@endpush
 @section('content')
    <div class="row align-items-center">
       <div class="col-md-6">
@@ -28,7 +36,7 @@
          <div class="card shadow-md">
             <div class="card-body">
                <div class="table-responsive">
-                  <table class="table table-sm mb-0">
+                  <table class="table table-sm mb-0" id="categories-table">
 
                      <thead class="table-light">
                         <tr>
@@ -44,33 +52,45 @@
                      <tbody>
                         @foreach ($categories as $category)
                            <tr>
-                              <th scope="row">{{ $loop->iteration}}</th>
+                              <th scope="row">{{ $loop->iteration }}</th>
                               <td>
                                  <a href="{{ route('categories.show', $category) }}" class="text-decoration-none text-secondary">{{ $category->name }}</a>
                               </td>
                               <td>{{ $category->slug }}</td>
                               <td>{{ $category->posts->count() }}</td>
-                              <td>{{ $category->created_at->diffForHumans() }}</td>
+                              <td>
+                                 @php
+                                    $currentTime = now();
+                                    $updatedAt = $category->updated_at;
+                                    
+                                    $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
+                                    
+                                    if ($diffInSeconds < 60) {
+                                        echo 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
+                                    } else {
+                                        echo $updatedAt->format('l, d F Y - H:i:s');
+                                    }
+                                 @endphp
+                              </td>
                               <td>
                                  <a href="#" class="text-decoration-none text-uppercase" data-bs-toggle="modal" data-bs-target="#postinganKategori{{ $category->slug }}">Lihat semua postingan</a>
                               </td>
                               <td>
-                                 <a class="badge rounded-pill badge-soft-success" href="{{ route('categories.edit', $category) }}">
-                                    <i class="bx bx bx-edit font-size-16"></i>
-                                 </a>
-                                 <a href="{{ route('categories.destroy', $category) }}" class="badge rounded-pill badge-soft-danger border-0" data-confirm-delete="true">
-                                    <i class="bx bx bx-trash-alt font-size-16"></i>
-                                 </a>
-                                {{--  <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('delete')
-                                    <a href="{{ route('categories.destroy', $category) }}" class="badge rounded-pill badge-soft-danger border-0" data-confirm-delete="true">
-                                       <i class="bx bx bx-trash-alt font-size-16"></i>
+                                 <div class="dropdown">
+                                    <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                       <i class="bx bx-dots-horizontal-rounded"></i>
                                     </a>
-                                 </form> --}}
+
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                       <a class="dropdown-item text-success text-decoration-none" href="{{ route('categories.edit', $category) }}">
+                                          Edit
+                                       </a>
+                                       <a class="text-danger text-decoration-none dropdown-item" href="{{ route('categories.destroy', $category) }}" data-confirm-delete="true">Delete</a>
+                                    </div>
+                                 </div>
                               </td>
                            </tr>
-                           @push('modal') 
+                           @push('modal')
                               {{-- <div class="modal fade" id="postinganKategori{{ $category->slug }}" tabindex="-1" role="dialog">
                                  <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                      <div class="modal-content">
@@ -97,7 +117,7 @@
                                      </div><!-- /.modal-content -->
                                  </div><!-- /.modal-dialog -->
                              </div> --}}
-                             @include('dashboard-borex.categories.modal')
+                              @include('dashboard-borex.categories.modal')
                            @endpush
                         @endforeach
                      </tbody>

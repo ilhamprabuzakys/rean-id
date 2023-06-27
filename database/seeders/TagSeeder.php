@@ -14,16 +14,20 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         Tag::create([
-            'name' => '2023'
+            'name' => '2023',
+            'slug' => '2023'
         ]);
         Tag::create([
-            'name' => '2022'
+            'name' => '2022',
+            'slug' => '2022'
         ]);
         Tag::create([
-            'name' => '2021'
+            'name' => '2021',
+            'slug' => '2021'
         ]);
         Tag::create([
-            'name' => '2020'
+            'name' => '2020',
+            'slug' => '2020'
         ]);
     }
 }

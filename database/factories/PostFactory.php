@@ -27,7 +27,7 @@ class PostFactory extends Factory
             'slug' => $slug,
             'body' => $body,
             'category_id' => \random_int(1, 7),
-            'user_id' => \random_int(1, 4),
+            'user_id' => \random_int(1, 20),
         ];
     }
 }

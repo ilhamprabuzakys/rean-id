@@ -2,32 +2,23 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(HomeController::class)->group(function() {
+    Route::get('/', 'index')->name('index');
 });
 
-Route::get('/', function() {
-    return redirect()->to('/dashboard');
-})->name('index');
-
-Route::get('/home', function() {
-    return redirect()->to('/dashboard');
-})->name('home');
+// Route::middleware(['role:superadmin', 'role:admin'])->group(function() {
+//     Route::get('/', function() {
+//         return redirect()->route('dashboard');
+//     });
+// });
 
 Route::middleware(['auth'])->group(function() {
     Route::controller(DashboardController::class)->group(function() {
@@ -40,11 +31,40 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/profile/password/{user}/edit', 'password')->name('profile.password');
         Route::put('/profile/password/{user}', 'update_password')->name('profile.update-password');
     });
+
+    Route::middleware(['role:superadmin'])->group(function() {
+        Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
+        Route::post('/post/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
+        Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+        Route::resource('/categories', CategoryController::class);
+        Route::resource('/tags', TagController::class);
+    });
     
     Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
     Route::resource('/posts', PostController::class);
-    Route::resource('/categories', CategoryController::class);
-    Route::resource('/users', UserController::class);
+
+    Route::middleware(['role:superadmin', 'role:admin'])->group(function() {
+        Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
+        Route::resource('/users', UserController::class);
+    });
+
 });
 
 require __DIR__ . '/auth.php';
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/', function() {
+//     return redirect()->to('/dashboard');
+// })->name('index');
+
+// Route::get('/home', function() {
+//     return redirect()->to('/dashboard');
+// })->name('home');
+
+
+// Route::middleware(['auth', 'role:superadmin'])->group(function() {
+   
+// });
