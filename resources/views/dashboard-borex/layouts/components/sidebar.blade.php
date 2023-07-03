@@ -22,7 +22,7 @@
       </li>
       @can('superadmin')
 
-      <li>
+      {{-- <li>
          <a href="javascript: void(0);" class="has-arrow">
              <i class="icon nav-icon" data-eva="book-outline"></i>
              <span class="menu-item" data-key="t-invoices">Invoices</span>
@@ -31,7 +31,7 @@
              <li><a href="invoices-list.html" data-key="t-invoice-list">Invoice List</a></li>
              <li><a href="invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a></li>
          </ul>
-     </li>
+     </li> --}}
 
      <li class="menu-title" data-key="t-pages">Data Utama</li>
 

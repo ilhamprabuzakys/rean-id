@@ -43,53 +43,6 @@ class PostController extends Controller
         ], compact('posts', 'categories', 'tags', 'statuses'));
     }
 
-    public function approval()
-    {
-        $posts = cache()->remember('posts', now()->addDays(7), function () {
-            return Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
-        });
-
-        $categories = cache()->remember('categories', now()->addDays(7), function () {
-            return Category::orderBy('updated_at', 'desc')->get();
-        });
-
-        $statuses = collect([
-            (object) ['key' => 'pending', 'label' => 'Pending'],
-            (object) ['key' => 'approved', 'label' => 'Approved'],
-            (object) ['key' => 'rejected', 'label' => 'Rejected'],
-        ]);
-
-        // $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
-        confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.posts.approval', [
-            'title' => 'Perizinan Postingan',
-        ], compact('posts', 'categories', 'statuses'));
-    }
-   
-    public function approvalForm(Request $request)
-    {
-        $rules = [
-            'status' => ['required'],
-        ];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            dd($validator->errors());
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $validatedData = $validator->validated();
-        // dd($validatedData);
-        $post = Post::where('id', $request->input('post_id'))->first();
-        $post->update($validatedData);
-
-        // Alert::success('Data Postingan berhasil diperbarui!', 'Tabel berhasil diperbarui.');
-        toast('Data postingan berhasil diperbarui!','success');
-
-        return redirect()->back()->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diperbarui!</b>");
-    }
-
     public function create()
     {
         $categories = cache()->remember('categories', now()->addDays(7), function () {
@@ -233,5 +186,52 @@ class PostController extends Controller
     {
         $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
         return response()->json(['slug' => $slug]);
+    }
+
+    public function approval()
+    {
+        $posts = cache()->remember('posts', now()->addDays(7), function () {
+            return Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
+        });
+
+        $categories = cache()->remember('categories', now()->addDays(7), function () {
+            return Category::orderBy('updated_at', 'desc')->get();
+        });
+
+        $statuses = collect([
+            (object) ['key' => 'pending', 'label' => 'Pending'],
+            (object) ['key' => 'approved', 'label' => 'Approved'],
+            (object) ['key' => 'rejected', 'label' => 'Rejected'],
+        ]);
+
+        // $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
+        confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
+        return view('dashboard-borex.posts.approval', [
+            'title' => 'Perizinan Postingan',
+        ], compact('posts', 'categories', 'statuses'));
+    }
+   
+    public function approvalForm(Request $request)
+    {
+        $rules = [
+            'status' => ['required'],
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            dd($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validatedData = $validator->validated();
+        // dd($validatedData);
+        $post = Post::where('id', $request->input('post_id'))->first();
+        $post->update($validatedData);
+
+        // Alert::success('Data Postingan berhasil diperbarui!', 'Tabel berhasil diperbarui.');
+        toast('Data postingan berhasil diperbarui!','success');
+
+        return redirect()->back()->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diperbarui!</b>");
     }
 }

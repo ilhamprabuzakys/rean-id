@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function() {
     Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
     Route::resource('/posts', PostController::class);
 
-    Route::middleware(['role:superadmin', 'role:admin'])->group(function() {
+    Route::middleware(['role:superadmin,admin'])->group(function() {
         Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
         Route::resource('/users', UserController::class);
     });

@@ -13,31 +13,33 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = Cache::remember('users', function() {
-            return User::with(['users'])->orderBy('updated_at', 'desc')->get();
+        $users = cache()->remember('users', now()->addDays(1), function() {
+            return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
         });
 
-        return view('dashboard.users.index', [
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+
+        confirmDelete('Apakah anda yakin untuk menghapus data user ini?', 'Data yang dihapus akan masuk ke tempat sampah.');
+        return view('dashboard-borex.users.list', [
             'title' => 'Daftar Users',
-        ], compact('users'));
+        ], compact('users', 'roles'));
     }
     
-    public function roles()
-    {
-        $users = Cache::remember('users', function() {
-            return User::with(['users'])->orderBy('updated_at', 'desc')->get();
-        });
-
-        return view('dashboard.users.index', [
-            'title' => 'Daftar Users',
-        ], compact('users'));
-    }
-
     public function create()
     {
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+
         return view('dashboard.users.create', [
             'title' => 'Tambah Users',
-        ]);
+        ], compact('roles'));
     }
 
     public function store(Request $request)
@@ -67,20 +69,27 @@ class UserController extends Controller
     
         $validatedData = $validator->validated();
         $user = User::create($validatedData);
-    
+        
+        toast('Data user berhasil ditambahkan!','success');
         return redirect()->route('users.index')->with('message', "User <b>{$user->name}</b> berhasil ditambahkan!");
     }
 
     public function show(User $user)
     {
-        return view('dashboard.users.show', [
+        return view('dashboard-borex.users.show', [
             'title' => 'Postingan User ' . $user->name,
         ], compact('user'));
     }
 
     public function edit(User $user)
     {
-        return view('dashboard.users.show', [
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+
+        return view('dashboard-borex.users.edit', [
             'title' => 'Edit User ' . $user->name,
         ], compact('user'));
     }
@@ -93,7 +102,7 @@ class UserController extends Controller
             'username' => ['required', 'string'],
             'password' => ['required'],
         ];
-    
+
         if (!$request->has('username')) {
             $rules['username'] = '';
         }
@@ -112,7 +121,8 @@ class UserController extends Controller
     
         $validatedData = $validator->validate();
         $user->update($validatedData);
-    
+        toast('Data user berhasil diperbarui!','success');
+        
         return redirect()->route('users.index')->with('message', "User <b>{$user->name}</b> berhasil diperbarui!");
     }
 
@@ -120,7 +130,19 @@ class UserController extends Controller
     {
         $namaUser = $user->name;
         $user->delete();
+        toast('Data user berhasil dihapus!','success');
 
         return redirect()->route('users.index')->with('message', "User <b>$namaUser</b> berhasil dihapus!");
+    }
+
+    public function roles()
+    {
+        $users = cache()->remember('users', now()->addDays(1), function() {
+            return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
+        });
+
+        return view('dashboard-borex.users.list', [
+            'title' => 'Daftar Users',
+        ], compact('users'));
     }
 }
