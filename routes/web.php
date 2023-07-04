@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'index')->name('index');
+    Route::get('/blog/posts/{post}', 'show_post')->name('home.show_post');
 });
 
 // Route::middleware(['role:superadmin', 'role:admin'])->group(function() {

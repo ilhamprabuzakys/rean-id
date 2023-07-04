@@ -6,16 +6,24 @@
    } else {
        $postsCustom = $posts;
    }
-   // $postsCount = cache()->remember('postsCount', now()->addDays(1), function() {
-   //    return $postsCustom->count();
-   // });
    $postsCount = $postsCustom->count();
 @endphp
 @push('scripts')
    @include('dashboard-borex.components.datatable')
    <script>
       $(document).ready(function() {
-         var table = $('#posts-table').DataTable();
+         // var table = $('#posts-table').DataTable({
+         //    drawCallback: function() {
+         //       $('#posts-table').removeClass('table-loader');
+         //    }
+         // });
+         $('#posts-table').on('init.dt', function() {
+            $("#posts-table").removeClass('table-loader').show();
+         });
+         setTimeout(function() {
+            $('#posts-table').DataTable();
+         }, 3000);
+
          $('#filter-category').on('change', function() {
             var category = $(this).val();
 
@@ -38,6 +46,52 @@
          });
       });
    </script>
+@endpush
+@push('styles')
+   <style>
+      .table-loader {
+         visibility: hidden;
+      }
+
+      .table-loader:before {
+         visibility: visible;
+         display: table-caption;
+         content: " ";
+         width: 100%;
+         height: 600px;
+         background-image:
+            linear-gradient(rgba(235, 235, 235, 1) 1px, transparent 0),
+            linear-gradient(90deg, rgba(235, 235, 235, 1) 1px, transparent 0),
+            linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 15%, rgba(255, 255, 255, 0) 30%),
+            linear-gradient(rgba(240, 240, 242, 1) 35px, transparent 0);
+
+         background-repeat: repeat;
+
+         background-size:
+            1px 35px,
+            calc(100% * 0.1666666666) 1px,
+            30% 100%,
+            2px 70px;
+
+         background-position:
+            0 0,
+            0 0,
+            0 0,
+            0 0;
+
+         animation: shine 0.5s infinite;
+      }
+
+      @keyframes shine {
+         to {
+            background-position:
+               0 0,
+               0 0,
+               40% 0,
+               0 0;
+         }
+      }
+   </style>
 @endpush
 @section('content')
    <div class="row align-items-center">
@@ -84,7 +138,7 @@
                         </select>
                      </div>
                   </div>
-                  <table class="table table-sm mb-0" id="posts-table">
+                  <table class="table table-loader table-sm mb-0" id="posts-table">
 
                      <thead class="table-light">
                         <tr>

@@ -10,16 +10,16 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::orderBy('updated_at', 'desc')->get();
+        $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
         $categories = Category::orderBy('updated_at', 'desc')->get();
-        return view('landing.index', [
+        return view('landing.world.index', [
             'title' => '',
         ], compact('posts', 'categories'));
     }
     
     public function show_post(Post $post)
     {
-        return view('home.show', [
+        return view('landing.world.detail', [
             'title' => $post->title,
         ], compact('post'));
     }
