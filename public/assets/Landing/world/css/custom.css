@@ -1,0 +1,25 @@
+/* Styling for Landing */
+.post-category {
+   padding: 0 10px;
+   display: inline-block;
+   height: 20px;
+   background-color: #ffffff;
+   border: 1px solid #0000ff;
+   text-transform: uppercase;
+   font-size: 10px;
+   color: #0000ff;
+   font-weight: 500;
+   line-height: 20px;
+   letter-spacing: 0.75px;
+}
+
+.post-category a:hover, .post-category a:focus {
+   background-color: #0000ff;
+   color: #ffffff; 
+   border: 1px solid #00ffc8;
+}
+
+img.logo-brand {
+   height: 30px !important;
+ }
+ 

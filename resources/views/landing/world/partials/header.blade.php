@@ -4,7 +4,7 @@
          <div class="col-12">
             <nav class="navbar navbar-expand-lg">
 
-               <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="Logo" style="height: 32px !important"></a>
+               <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="Logo" class="logo-brand"></a>
 
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span
                      class="navbar-toggler-icon"></span></button>
@@ -57,7 +57,7 @@
                               <button type="submit">Logout</button>
                            </form> --}}
                         @else
-                           <a class="nav-link" href="#">Login</a>
+                           <a class="nav-link" href="{{ route('login') }}">Login</a>
                         @endauth
                      </li>
                   </ul>

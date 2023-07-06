@@ -78,6 +78,8 @@ class LoginController extends Controller
                 'last_login_at' => Carbon::now()->toDateTimeString(),
                 'last_login_ip' => $request->getClientIp()
             ]);
+
+            
             
             Alert::success('Berhasil Login!', 'Selamat datang di dashboard.');
             return redirect()->intended('/dashboard')->with('success', 'Login successfully!');

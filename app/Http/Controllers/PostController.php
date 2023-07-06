@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cache;
@@ -103,6 +104,13 @@ class PostController extends Controller
         $postCategory = $post->category->name;
 
         // Alert::success('Data Postingan berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
+        // Insert Media
+        Media::create([
+            'media_path' => $post->file_path,
+            'user_id' => auth()->user()->id,
+            'post_id' => $post->id
+        ]);
+
         toast('Data Postingan berhasil ditambahkan!','success');
 
         return redirect()->route('posts.index')->with('message', "Data Postingan <b>$post->title</b> dengan tipe <b>$postCategory</b> telah berhasil <b>ditambahkan!</b>");

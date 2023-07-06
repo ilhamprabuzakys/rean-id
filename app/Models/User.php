@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(EventLog::class);
     }
+
+    public function medias()
+    {
+        return $this->hasMany(Media::class);
+    }
 }

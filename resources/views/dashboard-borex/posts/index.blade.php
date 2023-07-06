@@ -12,17 +12,17 @@
    @include('dashboard-borex.components.datatable')
    <script>
       $(document).ready(function() {
-         // var table = $('#posts-table').DataTable({
-         //    drawCallback: function() {
-         //       $('#posts-table').removeClass('table-loader');
-         //    }
-         // });
-         $('#posts-table').on('init.dt', function() {
-            $("#posts-table").removeClass('table-loader').show();
+         var table = $('#posts-table').DataTable({
+            drawCallback: function() {
+               $('#posts-table').removeClass('table-loader');
+            }
          });
-         setTimeout(function() {
-            $('#posts-table').DataTable();
-         }, 3000);
+         // $('#posts-table').on('init.dt', function() {
+         //    $("#posts-table").removeClass('table-loader').show();
+         // });
+         // setTimeout(function() {
+         //    $('#posts-table').DataTable();
+         // }, 3000);
 
          $('#filter-category').on('change', function() {
             var category = $(this).val();

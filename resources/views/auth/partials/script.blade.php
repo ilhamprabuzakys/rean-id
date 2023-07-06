@@ -38,7 +38,7 @@
    const zoom = 1.5; // Ubah sesuai kebutuhan Anda
    const fov = 19; // Ubah sesuai kebutuhan Anda
    const camera = new THREE.PerspectiveCamera(fov, container.offsetWidth / (container.offsetHeight), 0.5, 1000);
-   camera.position.set(20, 15, 3); // Ubah posisi kamera untuk tampilan depan objek 3D
+   camera.position.set(20, 7, 3); // Ubah posisi kamera untuk tampilan depan objek 3D
    
    // Pretty Ambient Light
    const ambientLight = new THREE.AmbientLight(0xffffff);
@@ -66,15 +66,15 @@
    controls.addEventListener('change', () => {
       renderer.render(scene, camera);
    });
-   controls.target.set(0,0,0);
+   controls.target.set(0,0.5,0);
    controls.update();
    
    // Load use GL Object
    const loader = new GLTFLoader();
    loader.load('models/rean.gltf', function(gltf) {
       const model = gltf.scene;
-      model.position.set(0, 0, 0);
-   
+      // model.position.set(0, 0, 0);
+      model.rotation.set(0, Math.PI - 1.7, 0); // Set rotation to face forward
       scene.add(model);
    
       renderer.render(scene, camera);

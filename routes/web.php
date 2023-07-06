@@ -10,22 +10,13 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(HomeController::class)->group(function() {
-    Route::get('/', 'index')->name('index');
-    Route::get('/blog/posts/{post}', 'show_post')->name('home.show_post');
-});
-
-// Route::middleware(['role:superadmin', 'role:admin'])->group(function() {
-//     Route::get('/', function() {
-//         return redirect()->route('dashboard');
-//     });
-// });
+require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function() {
     Route::controller(DashboardController::class)->group(function() {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
-    
+
     Route::controller(ProfileController::class)->group(function() {
         Route::get('/profile/{user}', 'index')->name('profile.index');
         Route::put('/profile', 'update')->name('profile.update');
@@ -51,21 +42,7 @@ Route::middleware(['auth'])->group(function() {
 
 });
 
-require __DIR__ . '/auth.php';
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::get('/', function() {
-//     return redirect()->to('/dashboard');
-// })->name('index');
-
-// Route::get('/home', function() {
-//     return redirect()->to('/dashboard');
-// })->name('home');
-
-
-// Route::middleware(['auth', 'role:superadmin'])->group(function() {
-   
-// });
+Route::controller(HomeController::class)->group(function() {
+    Route::get('/', 'index')->name('index');
+    Route::get('/{post}', 'show_post')->name('home.show_post');
+});

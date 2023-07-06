@@ -1,11 +1,35 @@
 @extends('landing.world.world')
-@section('content')
 @php
-   $postArtikel = $posts->where('category_id', 1);
-   $postVideo = $posts->where('category_id', 3);
-
+   $postArtikel = $posts->filter(function ($post) {
+        return $post->category->name === 'Artikel';
+    });
+   $postFoto = $posts->filter(function ($post) {
+        return $post->category->name === 'Foto';
+    });
+   $postVideo = $posts->filter(function ($post) {
+        return $post->category->name === 'Video';
+    });
+   $postPoster = $posts->filter(function ($post) {
+        return $post->category->name === 'Poster';
+    });
+   $postDesain = $posts->filter(function ($post) {
+        return $post->category->name === 'Desain';
+    });
+   $postMusik = $posts->filter(function ($post) {
+        return $post->category->name === 'Musik';
+    });
+   $postAudio = $posts->filter(function ($post) {
+        return $post->category->name === 'Audio';
+    });
+   $postEbook = $posts->filter(function ($post) {
+        return $post->category->name === 'Ebook';
+    });
+   $postEvent = $posts->filter(function ($post) {
+        return $post->category->name === 'Event';
+    });
    $firstPostSemua = $posts->first();
 @endphp
+@section('content')
 <div class="row justify-content-center">
 
    <div class="col-12 col-lg-8">
@@ -15,2935 +39,634 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                <li class="title">Daftar Postingan</li>
                <li class="nav-item">
-                  <a class="nav-link active" id="tab1" data-toggle="tab" href="#tab-semua" role="tab" aria-controls="tab-semua" aria-selected="true">Semua</a>
+                  <a class="nav-link active" id="tab1" data-toggle="tab" href="#post-semua" role="tab" aria-controls="tab-semua" aria-selected="true">Semua</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="tab2" data-toggle="tab" href="#world-tab-2" role="tab" aria-controls="world-tab-2" aria-selected="false">Artikel</a>
+                  <a class="nav-link" id="tab2" data-toggle="tab" href="#post-artikel" role="tab" aria-controls="world-tab-2" aria-selected="false">Artikel</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="tab3" data-toggle="tab" href="#world-tab-3" role="tab" aria-controls="world-tab-3" aria-selected="false">Ebook</a>
+                  <a class="nav-link" id="tab3" data-toggle="tab" href="#post-ebook" role="tab" aria-controls="world-tab-3" aria-selected="false">Ebook</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="tab4" data-toggle="tab" href="#world-tab-4" role="tab" aria-controls="world-tab-4" aria-selected="false">Event</a>
+                  <a class="nav-link" id="tab4" data-toggle="tab" href="#post-event" role="tab" aria-controls="world-tab-4" aria-selected="false">Event</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="tab5" data-toggle="tab" href="#world-tab-5" role="tab" aria-controls="world-tab-5" aria-selected="false">Video</a>
+                  <a class="nav-link" id="tab5" data-toggle="tab" href="#post-video" role="tab" aria-controls="world-tab-5" aria-selected="false">Video</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" id="tab6" data-toggle="tab" href="#world-tab-6" role="tab" aria-controls="world-tab-6" aria-selected="false">Audio</a>
-               </li>
-               {{-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-                  <div class="dropdown-menu">
-                     <a class="nav-link" id="tab7" data-toggle="tab" href="#world-tab-7" role="tab" aria-controls="world-tab-7" aria-selected="false">Sports</a>
-                     <a class="nav-link" id="tab8" data-toggle="tab" href="#world-tab-8" role="tab" aria-controls="world-tab-8" aria-selected="false">Politices</a>
-                     <a class="nav-link" id="tab9" data-toggle="tab" href="#world-tab-9" role="tab" aria-controls="world-tab-9" aria-selected="false">Features</a>
-                  </div>
-               </li> --}}
-            </ul>
-            <div class="row d-flex justify-content-end mt-3 mb-0">
-               <div class="mr-3">
-                  <a style="word-spacing: 1px; margin-bottom: 0 !important;" href="?category=semua">Lihat semua konten..</a>
-               </div>
-            </div>
-            <div class="tab-content" id="myTabContent">
-               <div class="tab-pane fade show active" id="tab-semua" role="tabpanel" aria-labelledby="tab1">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-                        <div class="wow fadeInUpBig" data-wow-delay="0.1s">
-                           <div class="single-blog-post">
-
-                              <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b1.jpg" alt="">
-
-                                 <div class="post-cta"><a href="#">{{ $firstPostSemua->category->name }}</a></div>
-                              </div>
-
-                              <div class="post-content">
-                                 <a href="{{ route('home.show_post', $firstPostSemua) }}" class="headline">
-                                    <h5>{{ $firstPostSemua->title }}</h5>
-                                 </a>
-                                 <p style="color: grey; font-size: 11pt !imp
-                                 ">{!! $firstPostSemua->body !!}</p>
-                                 <div class="post-meta">
-                                    <p><a href="#" class="post-author">{{ $firstPostSemua->user->name }}</a> on <a href="#" class="post-date">{{ $firstPostSemua->updated_at->format('M d, Y \a\t g:i a') }}
-                                    </a></p>
-                                 </div>
-                              </div>
-                           </div>
-
-                          
-                           {{-- <div class="single-blog-post">
-
-                              <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                                 <div class="post-cta"><a href="#">travel</a></div>
-                              </div>
-
-                              <div class="post-content">
-                                 <a href="#" class="headline">
-                                    <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                                 </a>
-                                 <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                                 <div class="post-meta">
-                                    <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                 </div>
-                              </div>
-                           </div>  --}}
-
-                          
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-                        @php
-                           $counter = 1;
-                        @endphp
-                        @foreach ($posts as $post)
-                        @if ($counter > 4)
-                           @break
-                        @endif
-                        <div class="single-blog-post post-style-2 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.{{ $counter+1 }}s">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b10.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="{{ route('home.show_post', $post) }}" class="headline">
-                                 <h5>{{ $post->title }}</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">{{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
-                              </div>
-                           </div>
-                        </div>
-                        @php
-                           $counter++;
-                        @endphp
-                        @endforeach
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-2" role="tabpanel" aria-labelledby="tab2">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-3" role="tabpanel" aria-labelledby="tab3">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-4" role="tabpanel" aria-labelledby="tab4">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-5" role="tabpanel" aria-labelledby="tab5">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-6" role="tabpanel" aria-labelledby="tab6">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-7" role="tabpanel" aria-labelledby="tab7">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-8" role="tabpanel" aria-labelledby="tab8">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="tab-pane fade" id="world-tab-9" role="tabpanel" aria-labelledby="tab9">
-                  <div class="row">
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-
-         <div class="world-catagory-area mt-50">
-            <ul class="nav nav-tabs" id="myTab2" role="tablist">
-               <li class="title">What's Trending</li>
-               <li class="nav-item">
-                  <a class="nav-link active" id="tab10" data-toggle="tab" href="#world-tab-10" role="tab" aria-controls="world-tab-10" aria-selected="true">All</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="tab11" data-toggle="tab" href="#world-tab-11" role="tab" aria-controls="world-tab-11" aria-selected="false">Style hunter</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="tab12" data-toggle="tab" href="#world-tab-12" role="tab" aria-controls="world-tab-12" aria-selected="false">Vogue</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="tab13" data-toggle="tab" href="#world-tab-13" role="tab" aria-controls="world-tab-13" aria-selected="false">Health &amp; Fitness</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="tab14" data-toggle="tab" href="#world-tab-14" role="tab" aria-controls="world-tab-14" aria-selected="false">Travel</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" id="tab15" data-toggle="tab" href="#world-tab-15" role="tab" aria-controls="world-tab-15" aria-selected="false">Gadgets</a>
+                  <a class="nav-link" id="tab6" data-toggle="tab" href="#post-audio" role="tab" aria-controls="world-tab-6" aria-selected="false">Audio</a>
                </li>
                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Lainnya</a>
                   <div class="dropdown-menu">
-                     <a class="nav-link" id="tab16" data-toggle="tab" href="#world-tab-16" role="tab" aria-controls="world-tab-16" aria-selected="false">Sports</a>
-                     <a class="nav-link" id="tab17" data-toggle="tab" href="#world-tab-17" role="tab" aria-controls="world-tab-17" aria-selected="false">Politices</a>
-                     <a class="nav-link" id="tab18" data-toggle="tab" href="#world-tab-18" role="tab" aria-controls="world-tab-18" aria-selected="false">Features</a>
+                     <a class="nav-link" id="tab7" data-toggle="tab" href="#post-foto" role="tab" aria-controls="world-tab-7" aria-selected="false">Foto</a>
+                     <a class="nav-link" id="tab8" data-toggle="tab" href="#post-musik" role="tab" aria-controls="world-tab-8" aria-selected="false">Musik</a>
+                     <a class="nav-link" id="tab9" data-toggle="tab" href="#post-desain" role="tab" aria-controls="world-tab-9" aria-selected="false">Desain</a>
+                     <a class="nav-link" id="tab9" data-toggle="tab" href="#post-poster" role="tab" aria-controls="world-tab-9" aria-selected="false">Poster</a>
                   </div>
                </li>
             </ul>
-            <div class="tab-content" id="myTabContent2">
-               <div class="tab-pane fade show active" id="world-tab-10" role="tabpanel" aria-labelledby="tab10">
+            <div class="tab-content" id="myTabContent" style="margin-top: 5px !important">
+               <div class="tab-pane fade show active" id="post-semua" role="tabpanel" aria-labelledby="post-semua">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($posts != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @foreach ($posts as $post)
+                        @if ($loop->iteration == 3)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
 
-                        <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                           <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
+   
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
+   
+                                 <div class="post-cta"><a href="#">{{ $post->category->name }}</a></div>
+                              </div>
+   
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{{ $post->title }}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.3s">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 mt-50">
+                     @endforeach
+                     
+                     <div class="col-12 mt-1">
                         <div class="world-catagory-slider2 owl-carousel wow fadeInUpBig" data-wow-delay="0.4s">
 
                            <div class="single-cata-slide">
                               <div class="row">
-                                 <div class="col-12 col-md-6">
+                                 @foreach ($posts as $post)
+                                    @if ($loop->iteration > 4)
+                                       @break
+                                    @endif
+                                    <div class="col-12 col-md-6">
 
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                                       <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                                       </div>
+                                          <div class="post-thumbnail">
+                                             <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
 
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
+                                             <div class="post-cta"><a href="#">{{ $post->category->name }}</a></div>
+                                          </div>
 
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                                          <div class="post-content">
+                                             <a href="#" class="headline">
+                                                <h5>{{ $post->title }}</h5>
+                                             </a>
+
+                                             <div class="post-meta">
+                                                <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                                      {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
-                                 </div>
-                                 <div class="col-12 col-md-6">
-
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-12 col-md-6">
-
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-12 col-md-6">
-
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
+                                 @endforeach
                               </div>
                            </div>
-
                            <div class="single-cata-slide">
                               <div class="row">
-                                 <div class="col-12 col-md-6">
-
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                 <div class="col-12 col-md-6">
-
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
+                                 @foreach ($posts as $post)
+                                 @if ($loop->iteration > 4)
+                                    @break
+                                 @endif
                                  <div class="col-12 col-md-6">
 
                                     <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
                                        <div class="post-thumbnail">
                                           <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+
+                                          <div class="post-cta post-all-cta"><a href="#">{{ $post->category->name }}</a></div>
                                        </div>
 
                                        <div class="post-content">
                                           <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
+                                             <h5>{{ $post->title }}</h5>
                                           </a>
 
                                           <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                                             <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                                   {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
-                                 <div class="col-12 col-md-6">
+                                 @endforeach
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="tab-pane fade" id="post-artikel" role="tabpanel" aria-labelledby="post-artikel">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postArtikel != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
+                  <div class="row">
+                     @forelse ($postArtikel as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                                       <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                                       </div>
-
-                                       <div class="post-content">
-                                          <a href="#" class="headline">
-                                             <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                                          </a>
-
-                                          <div class="post-meta">
-                                             <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                                          </div>
-                                       </div>
-                                    </div>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
                                  </div>
                               </div>
                            </div>
                         </div>
-                     </div>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-11" role="tabpanel" aria-labelledby="tab11">
+               <div class="tab-pane fade" id="post-ebook" role="tabpanel" aria-labelledby="post-ebook">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postEbook != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postEbook as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-12" role="tabpanel" aria-labelledby="tab12">
+               <div class="tab-pane fade" id="post-event" role="tabpanel" aria-labelledby="post-event">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postEvent != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postEvent as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-13" role="tabpanel" aria-labelledby="tab13">
+               <div class="tab-pane fade" id="post-audio" role="tabpanel" aria-labelledby="post-audio">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postAudio != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postAudio as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-14" role="tabpanel" aria-labelledby="tab14">
+               <div class="tab-pane fade" id="post-video" role="tabpanel" aria-labelledby="post-video">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postVideo != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postVideo as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail py-0">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-15" role="tabpanel" aria-labelledby="tab15">
+               <div class="tab-pane fade" id="post-desain" role="tabpanel" aria-labelledby="post-desain">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postDesain != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postDesain as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-16" role="tabpanel" aria-labelledby="tab16">
+               <div class="tab-pane fade" id="post-poster" role="tabpanel" aria-labelledby="post-poster">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postPoster != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postPoster as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-17" role="tabpanel" aria-labelledby="tab17">
+               <div class="tab-pane fade" id="post-foto" role="tabpanel" aria-labelledby="post-foto">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postFoto != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postFoto as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
-               <div class="tab-pane fade" id="world-tab-18" role="tabpanel" aria-labelledby="tab18">
+               <div class="tab-pane fade" id="post-musik" role="tabpanel" aria-labelledby="post-musik">
+                  <div class="row d-flex justify-content-end mt-0 mb-3">
+                     @if ($postMusik != null)   
+                        <div class="mr-3">
+                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        </div>
+                     @endif
+                  </div>
                   <div class="row">
-                     <div class="col-12 col-md-6">
+                     @forelse ($postMusik as $post)
+                        @if ($loop->iteration > 4)
+                           @break
+                        @endif
+                        <div class="col-12 col-md-6">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
-                        <div class="single-blog-post">
+                              <div class="post-thumbnail">
+                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                              </div>
 
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                              <div class="post-content">
+                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                    <h5>{!! Str::limit($post->title, 20) !!}</h5>
+                                 </a>
+                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+   
+                                 <div class="post-meta">
+                                    <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                                 </div>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b3.jpg" alt="">
-
-                              <div class="post-cta"><a href="#">travel</a></div>
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                              </a>
-                              <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                     @empty
+                       <div class="col-12 col-md-12">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                              <div class="post-content ml-2">
+                                 <a href="#" class="headline text-center">
+                                    <h5>{{ __('Data Masih Kosong') }}</h5>
+                                 </a>
                               </div>
                            </div>
                         </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b15.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b16.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-12 col-md-6">
-
-                        <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
-
-                           <div class="post-thumbnail">
-                              <img src="assets/Landing/world/img/blog-img/b17.jpg" alt="">
-                           </div>
-
-                           <div class="post-content">
-                              <a href="#" class="headline">
-                                 <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                              </a>
-
-                              <div class="post-meta">
-                                 <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+                     @endforelse
                   </div>
                </div>
             </div>
          </div>
+
+         <div class="world-latest-articles">
+            <div class="row">
+               <div class="col-12 col-lg-12">
+                  <div class="title">
+                     <h5>Latest Articles</h5>
+                  </div>
+         
+                  @forelse ($postArtikel as $post)
+                  @if ($loop->iteration > 4)
+                     @break
+                  @endif
+                  <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.{{ $loop->iteration+1 }}s">
+         
+                     <div class="post-thumbnail">
+                        <img src="assets/Landing/world/img/blog-img/b{{ 15 + $loop->iteration }}.jpg" alt="">
+                     </div>
+         
+                     <div class="post-content">
+                        <a href="#" class="headline">
+                           <h5>{{ $post->title }}</h5>
+                        </a>
+                        <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+
+                        <div class="post-meta">
+                           <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                 {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  @empty
+                  <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
+                     <div class="post-content">
+                        <a href="#" class="headline">
+                           <h5>Belum ada artikel yang dibuat.</h5>
+                        </a>
+                        <p>Mari bergabung dan ramaikan komunitas ini!</p>
+         
+                        {{-- <div class="post-meta">
+                           <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                        </div> --}}
+                     </div>
+                  </div>
+                  @endforelse
+               </div>
+            </div>
+         </div>
+
+         @if (!$postArtikel->count() > 4)
+         <div class="row mb-3">
+            <div class="col-12">
+               <div class="load-more-btn mt-50 text-center">
+                  <a href="#" class="btn world-btn">Load More</a>
+               </div>
+            </div>
+         </div>
+         @else
+         <div class="row my-3 justify-content-center">
+            <div class="col-4 d-flex justify-content-center align-items-center">
+               <p>Tidak ada artikel lagi.</p>
+            </div>
+         </div>
+         @endif
+         
       </div>
    </div>
 
    <div class="col-12 col-md-8 col-lg-4">
       <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
-
-         <div class="sidebar-widget-area">
-            <h5 class="title">About World</h5>
-            <div class="widget-content">
-               <p>
-                  REAN (Rumah Edukasi Anti Narkoba) mengajak generasi milenial dan generasi Z dalam berkarya yang bersih dari Narkotika. REAN.ID merupakan media informasi, edukasi dan sumber informasi dan edukasi yang dikemas dalam bentuk muda inovasi dengan tujuan sebagai jejaring belajar, berbagi cerita dan inspirasi dalam mengekspresikan karya, menggali potensi dan membangun kepercayaan diri guna memperkuat citra remaja yang gemar mencoba hal baru, Yang mana Informasi dan edukasi ini difokuskan dalam pembuatan konten yang berliterasi di bidang pencegahan narkoba.
-               </p>
-            </div>
-         </div>
-
-         <div class="sidebar-widget-area">
-            <h5 class="title">Top Stories</h5>
-            <div class="widget-content">
-
-               <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b11.jpg" alt="">
-                  </div>
-
-                  <div class="post-content">
-                     <a href="#" class="headline">
-                        <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                     </a>
-                  </div>
-               </div>
-
-               <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b13.jpg" alt="">
-                  </div>
-
-                  <div class="post-content">
-                     <a href="#" class="headline">
-                        <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                     </a>
-                  </div>
-               </div>
-
-               <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-                  </div>
-
-                  <div class="post-content">
-                     <a href="#" class="headline">
-                        <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                     </a>
-                  </div>
-               </div>
-
-               <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b10.jpg" alt="">
-                  </div>
-
-                  <div class="post-content">
-                     <a href="#" class="headline">
-                        <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                     </a>
-                  </div>
-               </div>
-
-               <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b12.jpg" alt="">
-                  </div>
-
-                  <div class="post-content">
-                     <a href="#" class="headline">
-                        <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-
-         <div class="sidebar-widget-area">
-            <h5 class="title">Stay Connected</h5>
-            <div class="widget-content">
-               <div class="social-area d-flex justify-content-between">
-                  <a href="#"><i class="fa fa-facebook"></i></a>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                  <a href="#"><i class="fa fa-pinterest"></i></a>
-                  <a href="#"><i class="fa fa-vimeo"></i></a>
-                  <a href="#"><i class="fa fa-instagram"></i></a>
-                  <a href="#"><i class="fa fa-google"></i></a>
-               </div>
-            </div>
-         </div>
-
-         <div class="sidebar-widget-area">
-            <h5 class="title">Today’s Pick</h5>
-            <div class="widget-content">
-
-               <div class="single-blog-post todays-pick">
-
-                  <div class="post-thumbnail">
-                     <img src="assets/Landing/world/img/blog-img/b22.jpg" alt="">
-                  </div>
-
-                  <div class="post-content px-0 pb-0">
-                     <a href="#" class="headline">
-                        <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
+         @include('landing.world.partials.content.about')
+         @include('landing.world.partials.content.topartikel')
+         @include('landing.world.partials.content.stayconnected')
+         @include('landing.world.partials.content.popularvideo')
       </div>
    </div>
 </div>
-
-{{-- <div class="row justify-content-center">
-
-   <div class="col-12 col-md-6 col-lg-4">
-      <div class="single-blog-post post-style-3 mt-50 wow fadeInUpBig" data-wow-delay="0.2s">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b4.jpg" alt="">
-
-            <div class="post-content d-flex align-items-center justify-content-between">
-
-               <div class="post-tag"><a href="#">travel</a></div>
-
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-
-   <div class="col-12 col-md-6 col-lg-4">
-      <div class="single-blog-post post-style-3 mt-50 wow fadeInUpBig" data-wow-delay="0.4s">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b5.jpg" alt="">
-
-            <div class="post-content d-flex align-items-center justify-content-between">
-
-               <div class="post-tag"><a href="#">travel</a></div>
-
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-
-   <div class="col-12 col-md-6 col-lg-4">
-      <div class="single-blog-post post-style-3 mt-50 wow fadeInUpBig" data-wow-delay="0.6s">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b6.jpg" alt="">
-
-            <div class="post-content d-flex align-items-center justify-content-between">
-
-               <div class="post-tag"><a href="#">travel</a></div>
-
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div> --}}
-
-<div class="world-latest-articles">
-   <div class="row">
-      <div class="col-12 col-lg-8">
-         <div class="title">
-            <h5>Latest Articles</h5>
-         </div>
-
-         <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b18.jpg" alt="">
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>Pick the yellow peach that looks like a sunset with its red, orange, and pink coat skin, peel it off with your teeth. Sink them into unripened...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-
-         <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.3s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b19.jpg" alt="">
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>Pick the yellow peach that looks like a sunset with its red, orange, and pink coat skin, peel it off with your teeth. Sink them into unripened...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-
-         <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.4s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b20.jpg" alt="">
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>Pick the yellow peach that looks like a sunset with its red, orange, and pink coat skin, peel it off with your teeth. Sink them into unripened...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-
-         <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.5s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b21.jpg" alt="">
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>Pick the yellow peach that looks like a sunset with its red, orange, and pink coat skin, peel it off with your teeth. Sink them into unripened...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-12 col-lg-4">
-         <div class="title">
-            <h5>Most Popular Videos</h5>
-         </div>
-
-         <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b7.jpg" alt="">
-
-               <div class="post-cta"><a href="#">travel</a></div>
-
-               <a href="https://www.youtube.com/watch?v=IhnqEwFSJRg" class="video-btn"><i class="fa fa-play"></i></a>
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-
-         <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.4s">
-
-            <div class="post-thumbnail">
-               <img src="assets/Landing/world/img/blog-img/b8.jpg" alt="">
-
-               <div class="post-cta"><a href="#">travel</a></div>
-
-               <a href="https://www.youtube.com/watch?v=IhnqEwFSJRg" class="video-btn"><i class="fa fa-play"></i></a>
-            </div>
-
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in Physics?</h5>
-               </a>
-               <p>How Did van Gogh’s Turbulent Mind Depict One of the Most Complex Concepts in...</p>
-
-               <div class="post-meta">
-                  <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-<div class="row">
-   <div class="col-12">
-      <div class="load-more-btn mt-50 text-center">
-         <a href="#" class="btn world-btn">Load More</a>
-      </div>
-   </div>
-</div>
+@endsection
+@section('hero')
+   @include('landing.world.partials.hero.hero-index')
 @endsection
