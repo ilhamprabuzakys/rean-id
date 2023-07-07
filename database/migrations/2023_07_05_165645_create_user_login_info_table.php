@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('login_data', function (Blueprint $table) {
+        Schema::create('login_info', function (Blueprint $table) {
             $table->id();
             $table->string('browser')->nullable();
             $table->string('os')->nullable();
             $table->string('device')->nullable();
+            $table->foreignId('user_id')->nullable();
+            $table->string('login_at')->nullable();
+            $table->string('login_ip')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('login_data');
+        Schema::dropIfExists('login_info');
     }
 };

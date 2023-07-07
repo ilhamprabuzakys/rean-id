@@ -5513,7 +5513,7 @@ body[data-layout-mode="dark"] .apexcharts-pie line {
     margin: 0 auto;
 }
 .auth-logo .auth-logo-light {
-    display: none;
+    display: block;
     margin: 0 auto;
 }
 .authentication-bg {

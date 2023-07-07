@@ -50,6 +50,29 @@
                   @endif
                </div>
             </div>
+
+            <div class="row mt-3">
+               <div id="disqus_thread"></div>
+               <script>
+                  /**
+                   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                  /*
+                  var disqus_config = function () {
+                  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  };
+                  */
+                  (function() { // DON'T EDIT BELOW THIS LINE
+                     var d = document,
+                        s = d.createElement('script');
+                     s.src = 'https://rean-id.disqus.com/embed.js';
+                     s.setAttribute('data-timestamp', +new Date());
+                     (d.head || d.body).appendChild(s);
+                  })();
+               </script>
+               <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
          </div>
 
          {{-- <div class="comment_area clearfix mb-2">
@@ -172,14 +195,14 @@
    </div> --}}
 
 
-   <div class="row my-5">
-      @foreach ($postRelated as $post)
-         @if ($loop->iteration > 3)
-         @break
-      @endif
-      <div class="col-12 col-md-6 col-lg-4">
-         <div class="single-blog-post">
-            {{-- <div class="post-thumbnail">
+      <div class="row my-5">
+         @foreach ($postRelated as $post)
+            @if ($loop->iteration > 3)
+            @break
+         @endif
+         <div class="col-12 col-md-6 col-lg-4">
+            <div class="single-blog-post">
+               {{-- <div class="post-thumbnail">
                <img src="img/blog-img/b1.jpg" alt="" />
 
                <div class="post-cta">
@@ -187,45 +210,45 @@
                </div>
             </div> --}}
 
-            <div class="post-content">
-               <a href="#" class="headline">
-                  <h5>
-                     {{ Str::limit($post->title, 20, '') }}
-                  </h5>
-               </a>
-               <p>
-                  {{ Str::limit($post->body, 30) }}
-               </p>
-
-               <div class="post-meta">
+               <div class="post-content">
+                  <a href="#" class="headline">
+                     <h5>
+                        {{ Str::limit($post->title, 20, '') }}
+                     </h5>
+                  </a>
                   <p>
-                     <a href="#" class="post-author">{{ $post->user->name }}</a>
-                     on
-                     <a href="#" class="post-date">{{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a>
+                     {{ Str::limit($post->body, 30) }}
                   </p>
+
+                  <div class="post-meta">
+                     <p>
+                        <a href="#" class="post-author">{{ $post->user->name }}</a>
+                        on
+                        <a href="#" class="post-date">{{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      @endforeach
+   </div>
+@endsection
+@section('hero')
+   <div
+      class="hero-area height-700 bg-img background-overlay"
+      style="background-image: url(assets/Landing/world/img/blog-img/bg-custom-1.jpg)">
+      <div class="container h-100">
+         <div
+            class="row h-100 align-items-center justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+               <div class="single-blog-title text-center">
+                  <div class="post-cta py-2"><a href="#">{{ $heropost->category->name }}</a></div>
+                  <h3>
+                     {{ $heropost->title }}
+                  </h3>
                </div>
             </div>
          </div>
       </div>
-   @endforeach
-</div>
-@endsection
-@section('hero')
-<div
-   class="hero-area height-700 bg-img background-overlay"
-   style="background-image: url(assets/Landing/world/img/blog-img/bg-custom-1.jpg)">
-   <div class="container h-100">
-      <div
-         class="row h-100 align-items-center justify-content-center">
-         <div class="col-12 col-md-8 col-lg-6">
-            <div class="single-blog-title text-center">
-               <div class="post-cta py-2"><a href="#">{{ $heropost->category->name }}</a></div>
-               <h3>
-                  {{ $heropost->title }}
-               </h3>
-            </div>
-         </div>
-      </div>
    </div>
-</div>
 @endsection

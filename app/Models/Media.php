@@ -9,6 +9,7 @@ class Media extends Model
 {
     use HasFactory;
     protected $table = 'media_posts';
+    protected $guarded = 'id';
 
     public function user()
     {

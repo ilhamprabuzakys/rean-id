@@ -106,7 +106,7 @@
             <div class="row mb-3">
                <div class="col-lg-12">
                   <label for="body" class="form-label">Body <sup class="text-danger">*</sup></label>
-                  <input type="hidden" id="body" name="body" value="{{ old('body') }}">
+                  <input type="hidden" id="body" name="body">
                   <trix-editor input="body" class="@error('body')
                   is-invalid
                @enderror">{!! old('body') !!}</trix-editor>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LoginInfo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Authenticatable;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Rules\Username;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Jenssegers\Agent\Agent;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
@@ -79,7 +81,25 @@ class LoginController extends Controller
                 'last_login_ip' => $request->getClientIp()
             ]);
 
-            
+            $agent = new Agent();
+            $device = '';
+            if ($agent->isDesktop()) {
+                $device = 'Desktop';
+            } elseif ($agent->isMobile()) {
+                $device = 'Mobile';
+            }
+
+            if ($device == 'WebKit') {
+                $device = 'Desktop';
+            }
+            LoginInfo::create([
+                'browser' => $agent->browser(),
+                'os' => $agent->platform(),
+                'device' => $device,
+                'user_id' => auth()->user()->id,
+                'login_at' => Carbon::now()->toDateTimeString(),
+                'login_ip' => $request->getClientIp()
+            ]);
             
             Alert::success('Berhasil Login!', 'Selamat datang di dashboard.');
             return redirect()->intended('/dashboard')->with('success', 'Login successfully!');

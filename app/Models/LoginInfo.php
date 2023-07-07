@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class LoginInfo extends Model
 {
     use HasFactory;
-    protected $table = 'login_info'
+    protected $guarded = ['id'];
+    protected $table = 'login_info';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

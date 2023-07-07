@@ -83,6 +83,7 @@ class PostController extends Controller
         }
 
         $validatedData = $validator->validated();
+        $file_path = '';
         // Validasi File Upload
         if ($request->file('file_path')) {
             // $validatedData['file_path'] = $request->file('file_path')->store('posts-file');
@@ -96,19 +97,23 @@ class PostController extends Controller
             $validatedData['file_path'] = $file->storeAs('posts-file', $newFileName);
         }
         // dd($validatedData['file_path']);
+        $file_path = $validatedData['file_path'];
         $post = Post::create($validatedData);
         if ($request->has('tags')) {
             $post->tags()->sync($request->input('tags'));
             $post->save();
         }
         $postCategory = $post->category->name;
-
+        $postId = $post->id;
+        $authId = auth()->user()->id;
         // Alert::success('Data Postingan berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
         // Insert Media
+        // dd($file_path, auth()->user()->id, $post->id);
+
         Media::create([
-            'media_path' => $post->file_path,
-            'user_id' => auth()->user()->id,
-            'post_id' => $post->id
+            'media_path' => $file_path,
+            'post_id' => $postId,
+            'authId' => $authId
         ]);
 
         toast('Data Postingan berhasil ditambahkan!','success');
