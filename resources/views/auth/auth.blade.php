@@ -31,6 +31,7 @@
          height: 470px;
       }
    </style>
+   @stack('style')
 </head>
 
 <body>
@@ -161,7 +162,7 @@
    <script src="{{ asset('assets/borex/js/pages/eva-icon.init.js') }}"></script>
 
    @include('auth.partials.script')
-
+   @stack('script')
 </body>
 
 </html>

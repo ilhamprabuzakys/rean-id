@@ -65,11 +65,20 @@ class LoginController extends Controller
 
         $user = User::where($login_type, $request->input($login_type))->first();
         // dd($login_type);
+        // dd($user);
         // dd(Hash::check($request->input('password'), $user->password));
-        if (!$user || !Hash::check($request->input('password'), $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.']
-            ]);
+        if (!$user) {
+            if (!Hash::check($request->input('password'), $user->password)) {
+                throw ValidationException::withMessages([
+                    'email' => ['The provided credentials are incorrect.']
+                ]);
+            } 
+
+            if ($user->email_verified_at == \null) {
+                throw ValidationException::withMessages([
+                    'email' => ['Akun anda belum teraktivasi.']
+                ]);
+            }
         }
 
         $user->createToken('user login')->plainTextToken;
@@ -102,7 +111,7 @@ class LoginController extends Controller
             ]);
             
             Alert::success('Berhasil Login!', 'Selamat datang di dashboard.');
-            return redirect()->intended('/dashboard')->with('success', 'Login successfully!');
+            return redirect()->intended('/dashboard')->with('success', 'Berhasil Login!');
         }
 
         return back()->with(
@@ -118,6 +127,6 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         Alert::success('Berhasil logout!', 'Terimakasih telah menggunakan layanan kami.');
-        return redirect('/login')->with('success', 'Logout successfully!');
+        return redirect('/login')->with('success', 'Berhasil Logout, Sampai jumpa lagi!');
     }
 }

@@ -26,8 +26,20 @@ class TagSeeder extends Seeder
             'slug' => '2021'
         ]);
         Tag::create([
-            'name' => '2020',
-            'slug' => '2020'
+            'name' => 'Kesehatan',
+            'slug' => 'kesehatan'
+        ]);
+        Tag::create([
+            'name' => 'Narkotika',
+            'slug' => 'narkotika'
+        ]);
+        Tag::create([
+            'name' => 'Pendidikan',
+            'slug' => 'pendidikan'
+        ]);
+        Tag::create([
+            'name' => 'Bahaya',
+            'slug' => 'bahaya'
         ]);
     }
 }

@@ -20,7 +20,7 @@ class HomeController extends Controller
         $versionBrowser = $agent->version($browser);
 
         
-        $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
+        $posts = Post::with(['category', 'user'])->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
         $categories = Category::orderBy('updated_at', 'desc')->get();
         return view('landing.world.index', [
             'title' => '',

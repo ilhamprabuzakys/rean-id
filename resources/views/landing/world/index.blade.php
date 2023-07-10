@@ -68,11 +68,15 @@
             </ul>
             <div class="tab-content" id="myTabContent" style="margin-top: 5px !important">
                <div class="tab-pane fade show active" id="post-semua" role="tabpanel" aria-labelledby="post-semua">
+               @if (!$posts->count() < 2)
+                     
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($posts != null)   
-                        <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
-                        </div>
+                     @if (empty($posts))   
+                        {{ empty($posts) }}
+                     @else 
+                     <div class="mr-3">
+                        <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                     </div>
                      @endif
                   </div>
                   <div class="row">
@@ -83,19 +87,19 @@
                         <div class="col-12 col-md-6">
 
                            <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
-   
+
                               <div class="post-thumbnail">
                                  <img src="assets/Landing/world/img/blog-img/b2.jpg" alt="">
-   
+
                                  <div class="post-cta"><a href="#">{{ $post->category->name }}</a></div>
                               </div>
-   
+
                               <div class="post-content">
                                  <a href="{{ route('home.show_post', $post) }}" class="headline">
                                     <h5>{{ $post->title }}</h5>
                                  </a>
                                  <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
-   
+
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
                                        {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
@@ -125,7 +129,7 @@
                                           </div>
 
                                           <div class="post-content">
-                                             <a href="#" class="headline">
+                                             <a href="{{ route('home.show_post', $post) }}" class="headline">
                                                 <h5>{{ $post->title }}</h5>
                                              </a>
 
@@ -173,10 +177,19 @@
                         </div>
                      </div>
                   </div>
+               @else 
+               <div class="single-blog-post post-style-2 d-flex align-items-center mt-4">
+                  <div class="post-content ml-2">
+                     <a href="#" class="headline text-center">
+                        <h5>{{ __('Data Postingan Masih Kosong') }}</h5>
+                     </a>
+                  </div>
+               </div>
+               @endif 
                </div>
                <div class="tab-pane fade" id="post-artikel" role="tabpanel" aria-labelledby="post-artikel">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postArtikel != null)   
+                     @if ($postArtikel->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -222,7 +235,7 @@
                </div>
                <div class="tab-pane fade" id="post-ebook" role="tabpanel" aria-labelledby="post-ebook">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postEbook != null)   
+                     @if ($postEbook->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -268,7 +281,7 @@
                </div>
                <div class="tab-pane fade" id="post-event" role="tabpanel" aria-labelledby="post-event">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postEvent != null)   
+                     @if ($postEvent->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -314,7 +327,7 @@
                </div>
                <div class="tab-pane fade" id="post-audio" role="tabpanel" aria-labelledby="post-audio">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postAudio != null)   
+                     @if ($postAudio->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -360,7 +373,7 @@
                </div>
                <div class="tab-pane fade" id="post-video" role="tabpanel" aria-labelledby="post-video">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postVideo != null)   
+                     @if ($postVideo->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -406,7 +419,7 @@
                </div>
                <div class="tab-pane fade" id="post-desain" role="tabpanel" aria-labelledby="post-desain">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postDesain != null)   
+                     @if ($postDesain->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -452,7 +465,7 @@
                </div>
                <div class="tab-pane fade" id="post-poster" role="tabpanel" aria-labelledby="post-poster">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postPoster != null)   
+                     @if ($postPoster->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -498,7 +511,7 @@
                </div>
                <div class="tab-pane fade" id="post-foto" role="tabpanel" aria-labelledby="post-foto">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postFoto != null)   
+                     @if ($postFoto->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -544,7 +557,7 @@
                </div>
                <div class="tab-pane fade" id="post-musik" role="tabpanel" aria-labelledby="post-musik">
                   <div class="row d-flex justify-content-end mt-0 mb-3">
-                     @if ($postMusik != null)   
+                     @if ($postMusik->count() > 1)   
                         <div class="mr-3">
                            <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
                         </div>
@@ -609,7 +622,7 @@
                      </div>
          
                      <div class="post-content">
-                        <a href="#" class="headline">
+                        <a href="{{ route('home.show_post', $post) }}" class="headline">
                            <h5>{{ $post->title }}</h5>
                         </a>
                         <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
@@ -621,12 +634,12 @@
                      </div>
                   </div>
                   @empty
-                  <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
+                  <div class="single-blog-post d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
                      <div class="post-content">
                         <a href="#" class="headline">
                            <h5>Belum ada artikel yang dibuat.</h5>
                         </a>
-                        <p>Mari bergabung dan ramaikan komunitas ini!</p>
+                        <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none">Bergabung Disini</a></p>
          
                         {{-- <div class="post-meta">
                            <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>

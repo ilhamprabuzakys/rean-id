@@ -40,6 +40,7 @@
 
    @include('landing.world.partials.footer')
 
+   <a id="whatsapp-icon-main" href="https://wa.me/625280800064?text=Hi,%20saya%20ingin%20bergabung%20dengan%20anda!%20Senang%20bertemu%20dengan%20anda!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
 
    @include('landing.world.partials.script')
    @stack('script')

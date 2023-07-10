@@ -4,7 +4,7 @@
          <div class="col-12">
             <nav class="navbar navbar-expand-lg">
 
-               <a class="navbar-brand" href="index.html"><img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="Logo" class="logo-brand"></a>
+               <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="Logo" class="logo-brand"></a>
 
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span
                      class="navbar-toggler-icon"></span></button>
@@ -17,7 +17,7 @@
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                           <a class="dropdown-item" href="index.html">Home</a>
+                           <a class="dropdown-item" href="{{ route('index') }}">Home</a>
                            <a class="dropdown-item" href="catagory.html">Catagory</a>
                            <a class="dropdown-item" href="single-blog.html">Single Blog</a>
                            <a class="dropdown-item" href="regular-page.html">Regular Page</a>
@@ -64,7 +64,7 @@
 
                   <div id="search-wrapper">
                      <form action="#">
-                        <input type="text" id="search" placeholder="Search something...">
+                        <input type="text" id="search" name="search" placeholder="Search something...">
                         <div id="close-icon"></div>
                         <input class="d-none" type="submit" value="">
                      </form>

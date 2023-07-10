@@ -7,6 +7,7 @@ use App\Mail\MailOtp;
 use App\Models\TempUser;
 use App\Models\User;
 use App\Models\VerificationCode;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -33,10 +34,56 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function email_again(TempUser $user)
+    {
+        return view('auth.email-again', [
+            'title' => 'Change Email Verification',
+            'user' => $user
+        ]);
+    }
+
+    public function email_again_authenticate(Request $request, TempUser $user)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => ['required', 'email'],
+            ]);
+            $validatedData = $validator->validated();
+            $otpM = VerificationCode::where('user_email', $user->email)
+            ->where('expired', false)
+            ->orderBy('created_at', 'desc')->first();
+            $otpM->update([
+                'expired' => true,
+                'expired_at' => Carbon::now()->toDateTimeString()
+            ]);
+            $email = $validatedData['email'];
+            $username = explode('@', $email)[0];
+            $user->update([
+                'email' => $email,
+                'username' => $username,
+            ]);
+            $data = [];
+            $otp = $this->generateOTP();
+            $verification_code = VerificationCode::create([
+                'otp' => $otp,
+                'user_email' => $user->email,
+            ]);
+            $data = [
+                'user_nama' => $user->name,
+                'user_email' => $user->email,
+                'otp' =>$verification_code->otp,
+            ];
+            Mail::to($user->email)->send(new MailOtp($data));
+            return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ke email: <b>$user->email</b>! ");
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->getMessage())->withInput();
+        }
+    }
+
     public function code_verification(TempUser $user)
     {
         return view('auth.email-verification', [
-            'title' => 'Register',
+            'title' => 'Verify Your Email',
             'temp_user' => $user,
         ]);
     }
@@ -44,7 +91,9 @@ class RegisterController extends Controller
     public function verification_authenticate(Request $request, TempUser $user)
     {
         $otp = '';
-        $otpM = VerificationCode::where('user_email', $user->email)->first();
+        $otpM = VerificationCode::where('user_email', $user->email)
+        ->where('expired', false)
+        ->orderBy('created_at', 'desc')->first();
         $otp = $otpM->otp;
         try {
             $validator = Validator::make($request->all(), [
@@ -59,11 +108,14 @@ class RegisterController extends Controller
                     'email' => $user->email,
                     'username' => $user->username,
                     'password' => $user->password,
+                    'role' => 'member',
+                    'email_verified_at' => now(),
                 ]);
                 $otpM->update([
-                    'expired_at' => \now()
+                    'expired' => true,
+                    'expired_at' => Carbon::now()->toDateTimeString()
                 ]);
-                return redirect()->route('login')->with('success', "Your account has been <b>successfully</b> created!");
+                return redirect()->route('login')->with('success', "Akun anda telah <b>berhasil</b> dibuat, silahkan login!");
             }
         } catch (\Throwable $th) {
             dd('error something went wrong', $th);
@@ -121,7 +173,7 @@ class RegisterController extends Controller
                 'user_email' => $user->email,
             ]);
             $data = [
-                'user_nama' => $user->nama,
+                'user_nama' => $user->name,
                 'user_email' => $user->email,
                 'otp' =>$verification_code->otp,
             ];
@@ -137,7 +189,7 @@ class RegisterController extends Controller
                 // 'mobile_no' => $validatedData['mobile_no'],
             ]); */
 
-            return redirect()->route('register.code_verification', $user)->with('success', "Please check your entered email <b>$user->email</b>! ");
+            return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ke email: <b>$user->email</b>! ");
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->getMessage())->withInput();
         }

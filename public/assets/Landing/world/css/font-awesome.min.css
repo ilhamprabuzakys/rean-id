@@ -75,6 +75,12 @@
 .fa-vimeo:before {
     content: "\f27d";
 }
+.fa-heart:before {
+    content: "\f004";
+}
+.fa-heart-o:before {
+    content: "\f08a";
+}
 .sr-only {
     position: absolute;
     width: 1px;

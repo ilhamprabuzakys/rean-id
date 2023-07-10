@@ -1,25 +1,103 @@
 /* Styling for Landing */
 .post-category {
-   padding: 0 10px;
-   display: inline-block;
-   height: 20px;
-   background-color: #ffffff;
-   border: 1px solid #0000ff;
-   text-transform: uppercase;
-   font-size: 10px;
-   color: #0000ff;
-   font-weight: 500;
-   line-height: 20px;
-   letter-spacing: 0.75px;
+    padding: 0 10px;
+    display: inline-block;
+    height: 20px;
+    background-color: #ffffff;
+    border: 1px solid #0000ff;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #0000ff;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0.75px;
 }
 
-.post-category a:hover, .post-category a:focus {
-   background-color: #0000ff;
-   color: #ffffff; 
-   border: 1px solid #00ffc8;
+.post-category a:hover,
+.post-category a:focus {
+    background-color: #0000ff;
+    color: #ffffff;
+    border: 1px solid #00ffc8;
+}
+
+.post-image {
+    max-height: 365px;
+    float: left;
+    margin-right: 20px;
 }
 
 img.logo-brand {
-   height: 30px !important;
- }
- 
+    height: 30px !important;
+}
+
+a#whatsapp-icon-main {
+    display: block;
+    position: fixed;
+    background-color: #16aa54;
+    border-radius: 50%;
+    bottom: 80px;
+    right: 30px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-size: 30px;
+    height: 50px;
+    text-align: center;
+    width: 50px;
+    /* line-height: 46px; */
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    z-index: 2147483647;
+}
+a#whatsapp-icon-main:hover {
+    background-color: #136e13;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    a#whatsapp-icon-main {
+        bottom: 30px;
+        right: 30px;
+    }
+}
+@media only screen and (max-width: 767px) {
+    a#whatsapp-icon-main {
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+.love-icon i {
+    color: #ff1e00;
+}
+
+.love-icon:hover,
+.love-icon:focus {
+  color: red;
+  transition: 0.3s;
+}
+
+.love-icon:hover i::before,
+.love-icon:focus i::before {
+  content: "\f004";
+  transition: 0.3s;
+}
+
+.love-text {
+    color:#ff1e00;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.like-container {
+    display: inline-flex;
+    align-items: center;
+}
+  
+footer.footer-last {
+    background-color: #313131;
+    position: relative;
+    padding: 10px 0;
+    z-index: 1;
+}
+
+footer.footer-last p {
+    margin-bottom: 0;
+}

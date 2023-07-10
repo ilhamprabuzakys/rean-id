@@ -60,7 +60,7 @@
    
    controls.enablePan = true; // Menonaktifkan panning (geser kamera)
    controls.enableRotate = true; // Mengaktifkan rotasi
-   controls.enableZoom = true; // Menonaktifkan zoom
+   controls.enableZoom = false; // Menonaktifkan zoom
    // controls.minAzimuthAngle = -Math.PI; // Batas sudut minimum putaran (ke kiri)
    // controls.maxAzimuthAngle = Math.PI; // Batas sudut maksimum putaran (ke kanan)
    // controls.minPolarAngle = 100; // Batas sudut minimum polar (ke atas)

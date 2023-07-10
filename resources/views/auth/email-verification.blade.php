@@ -3,7 +3,7 @@
 @section('auth-content')
 <div class="text-center">
    <h5 class="mb-0">Verify your email</h5>
-   <p class="text-muted mt-2">We must verify your email now.</p>
+   <p class="text-muted mt-2">Untuk menggunakan aplikasi ini, tolong verifikasi email mu.</p>
 </div>
 @include('auth.session')
 
@@ -28,7 +28,7 @@
 </form>
 
 <div class="mt-4 pt-3 text-center">
-   <p class="text-muted mb-0">Entered a wrong email? <a href="{{ route('register') }}" class="text-primary fw-semibold"> Click here </a> </p>
+   <p class="text-muted mb-0">Salah memasukkan email? <a href="{{ route('register.email-again', $temp_user) }}" class="text-primary fw-semibold"> Klik disini </a> </p>
 </div>
 @endsection
 

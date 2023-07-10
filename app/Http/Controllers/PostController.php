@@ -110,11 +110,11 @@ class PostController extends Controller
         // Insert Media
         // dd($file_path, auth()->user()->id, $post->id);
 
-        Media::create([
-            'media_path' => $file_path,
-            'post_id' => $postId,
-            'authId' => $authId
-        ]);
+        // Media::create([
+        //     'media_path' => $file_path,
+        //     'post_id' => $postId,
+        //     'authId' => $authId
+        // ]);
 
         toast('Data Postingan berhasil ditambahkan!','success');
 
