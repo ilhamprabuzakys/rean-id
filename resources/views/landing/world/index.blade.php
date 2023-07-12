@@ -2,7 +2,7 @@
 @php
    $postArtikel = $posts->filter(function ($post) {
         return $post->category->name === 'Artikel';
-    });
+    })->sortByDesc('updated_at');
    $postFoto = $posts->filter(function ($post) {
         return $post->category->name === 'Foto';
     });
@@ -28,7 +28,10 @@
         return $post->category->name === 'Event';
     });
    $firstPostSemua = $posts->first();
+   // $mostViewedArticles = \App\Models\Post::mostViewed($posts, 5, 'Artikel');
+   // $mostViewedArticles2 = $posts->mostViewed2(5, 'Artikel');
 @endphp
+@section('parent', 'container-fluid')
 @section('content')
 <div class="row justify-content-center">
 
@@ -98,7 +101,8 @@
                                  <a href="{{ route('home.show_post', $post) }}" class="headline">
                                     <h5>{{ $post->title }}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 {{-- <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p> --}}
+                                 <p>{!! Str::of(strip_tags($post->body))->words(6, '...') !!}</p>
 
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -608,7 +612,7 @@
             <div class="row">
                <div class="col-12 col-lg-12">
                   <div class="title">
-                     <h5>Latest Articles</h5>
+                     <h5>Artikel Terbaru</h5>
                   </div>
          
                   @forelse ($postArtikel as $post)
@@ -673,6 +677,7 @@
    <div class="col-12 col-md-8 col-lg-4">
       <div class="post-sidebar-area wow fadeInUpBig" data-wow-delay="0.2s">
          @include('landing.world.partials.content.about')
+         @include('landing.world.partials.content.chatango')
          @include('landing.world.partials.content.topartikel')
          @include('landing.world.partials.content.stayconnected')
          @include('landing.world.partials.content.popularvideo')

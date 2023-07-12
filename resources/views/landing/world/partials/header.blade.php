@@ -1,3 +1,8 @@
+@php
+   $categories = cache()->remember('categories', 60*60*60, function() {
+      return \App\Models\Category::orderBy('name', 'desc')->get();
+   })
+@endphp
 <header class="header-area">
    <div class="container">
       <div class="row">
@@ -18,23 +23,21 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                            <a class="dropdown-item" href="{{ route('index') }}">Home</a>
-                           <a class="dropdown-item" href="catagory.html">Catagory</a>
-                           <a class="dropdown-item" href="single-blog.html">Single Blog</a>
-                           <a class="dropdown-item" href="regular-page.html">Regular Page</a>
+                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Kategori</a>
                            <a class="dropdown-item" href="contact.html">Contact</a>
                         </div>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Artikel</a>
+                        <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Artikel')->first()) }}">Artikel</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Ebook</a>
+                        <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Ebook')->first()) }}">Ebook</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Events</a>
+                        <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Event')->first()) }}">Events</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="{{ route('home.contact') }}">Contact</a>
                      </li>
                      <li class="nav-item">
                         @auth

@@ -1,14 +1,14 @@
-<script src="assets/Landing/world/js/jquery/jquery-2.2.4.min.js"></script>
+{{-- <script src="{{ asset('assets/Landing/world/js/jquery/jquery-2.2.4.min.js') }}"></script> --}}
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
 crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
-<script src="assets/Landing/world/js/popper.min.js"></script>
+<script src="{{ asset('assets/Landing/world/js/popper.min.js') }}"></script>
 
-<script src="assets/Landing/world/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets/Landing/world/js/bootstrap.min.js') }}"></script>
 
-<script src="assets/Landing/world/js/plugins.js"></script>
+<script src="{{ asset('assets/Landing/world/js/plugins.js') }}"></script>
 
-<script src="assets/Landing/world/js/active.js"></script>
+<script src="{{ asset('assets/Landing/world/js/active.js') }}"></script>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
 <script>

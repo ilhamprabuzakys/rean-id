@@ -1,70 +1,61 @@
-<div class="sidebar-widget-area">
+@php
+   $posts = \App\Models\Post::orderBy('updated_at', 'desc')->get();
+   $mostViewedArticles = \App\Models\Post::mostViewed($posts, 5, 'Artikel');
+@endphp
+<div class="sidebar-widget-area" id="sidebar-top-artikel">
    <h5 class="title">Top Artikel</h5>
    <div class="widget-content">
-
-      <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b11.jpg" alt="">
-         </div>
-
-         <div class="post-content">
-            <a href="#" class="headline">
-               <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-            </a>
+      @foreach ($mostViewedArticles as $post)
+      @if ($post->views == 0) 
+      <div class="card-mb-1" id="card-top-artikel">
+         <div class="card-body">
+            <h6>Semua artikel dalam kondisi yang sama..</h6>
          </div>
       </div>
-
-      <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b13.jpg" alt="">
-         </div>
-
-         <div class="post-content">
-            <a href="#" class="headline">
-               <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-            </a>
-         </div>
-      </div>
-
-      <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
-         </div>
-
-         <div class="post-content">
-            <a href="#" class="headline">
-               <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-            </a>
+      @break 
+      @endif
+      <div class="card mb-1" id="card-top-artikel">
+         <div class="row no-gutters">
+            <div class="col-md-3">
+               <img class="card-img-left" src="{{ asset('assets/Landing/world/img/blog-img/b14.jpg') }}" alt="Card image">
+            </div>
+            <div class="col-md-9">
+               <div class="card-body">
+                  <div class="row justify-content-between">
+                     <div class="col-9">
+                        <a href="{{ route('home.show_post', $post) }}"><h6>{{ $post->title }}</h6></a>
+                     </div>
+                     <div class="col-3 d-flex justify-content-end align-items-center">
+                        <span><i class="fa fa-eye mr-1"></i>{{ $post->views }}</span>
+                     </div>
+                  </div>
+                  <p>{{ $post->updated_at->format('M d, Y \a\t g:i a') }}</p>
+               </div>
+            </div>
          </div>
       </div>
-
-      <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b10.jpg" alt="">
+      @endforeach
+      {{-- <div class="card" style="width: 18rem;">
+         <img class="card-img-top" src="{{ asset('assets/Landing/world/img/blog-img/b14.jpg') }}" alt="Card image cap">
+         <div class="card-body">
+           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
          </div>
+       </div> --}}
+   </div>
+</div>
 
-         <div class="post-content">
-            <a href="#" class="headline">
-               <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-            </a>
-         </div>
-      </div>
-
-      <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
-
-         <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b12.jpg" alt="">
-         </div>
-
-         <div class="post-content">
-            <a href="#" class="headline">
-               <h5 class="mb-0">How Did van Gogh’s Turbulent Mind Depict One of the Most</h5>
-            </a>
+{{-- <div class="single-blog-post post-style-2 d-flex align-items-center widget-post">
+   <div class="post-thumbnail">
+      <img src="{{ asset('storage/' . $post->file_path) }}" alt="">
+   </div>
+   <div class="post-content">
+      <div class="row">
+         <div class="col"><a href="{{ route('home.show_post', $post) }}" class="headline">
+            <h5 class="mb-0">{{ $post->title }}</h5>
+         </a></div>
+         <div>
+            <p class="text-primary end"><i class="fa fa-eye"></i>{{ $post->views }}</p>
          </div>
       </div>
    </div>
-</div>
+</div> --}}

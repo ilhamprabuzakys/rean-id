@@ -6,7 +6,7 @@
    <div class="single-blog-post wow fadeInUpBig" data-wow-delay="0.2s">
 
       <div class="post-thumbnail">
-         <img src="assets/Landing/world/img/blog-img/b7.jpg" alt="">
+         <img src="{{ asset('assets/Landing/world/img/blog-img/b7.jpg') }}" alt="">
 
          <div class="post-cta"><a href="#">travel</a></div>
 

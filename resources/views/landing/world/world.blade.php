@@ -20,7 +20,11 @@
 </head>
 
 <body>
-
+   @php
+      $company = cache()->remember('company', 60*60*7, function() {
+         return \App\Models\Company::with('social_media')->first();
+      })
+   @endphp
    <div id="preloader">
       <div class="preload-content">
          <div id="world-load"></div>
@@ -33,7 +37,7 @@
    @yield('hero')
 
    <div class="main-content-wrapper py-3">
-      <div class="container">
+      <div class="@yield('parent')">
          @yield('content')
       </div>
    </div>

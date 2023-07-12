@@ -45,4 +45,8 @@ Route::middleware(['auth'])->group(function() {
 Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'index')->name('index');
     Route::get('/{post}', 'show_post')->name('home.show_post');
+    Route::get('/categories', 'category_list')->name('home.category_list');
+    Route::get('/category/{category}', 'category_view')->name('home.category_view');
+    Route::get('/features/contact', 'contact')->name('home.contact');
+    Route::post('/features/contact', 'contact_send')->name('home.contact_send');
 });

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
-use App\Models\Category;
 use App\Models\Media;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Cache;
@@ -98,6 +99,11 @@ class PostController extends Controller
         }
         // dd($validatedData['file_path']);
         $file_path = $validatedData['file_path'];
+        $validatedData['date'] = date('Y-m-d'); // Mengatur tanggal saat ini;
+        $validatedData['title'] = Str::of($request->input('title'))->title();
+        if (auth()->user()->role != 'member') {
+            $validatedData['status'] = 'approved';
+        }
         $post = Post::create($validatedData);
         if ($request->has('tags')) {
             $post->tags()->sync($request->input('tags'));

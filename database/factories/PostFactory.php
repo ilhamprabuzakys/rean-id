@@ -26,6 +26,7 @@ class PostFactory extends Factory
             'title' => $title,
             'slug' => $slug,
             'body' => $body,
+            'date' => date('Y-m-d'),
             'category_id' => \random_int(1, 7),
             'user_id' => \random_int(1, 20),
         ];

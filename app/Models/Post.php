@@ -56,6 +56,39 @@ class Post extends Model
         });
     }
 
+    // public function mostViewed($limit = 5)
+    // {
+    //     return $this->orderBy('views', 'desc')->take($limit)->get();
+    // }
+
+    public static function mostViewed($posts, $limit = 5, $category = null)
+    {
+        $filteredPosts = $posts;
+    
+        if ($category) {
+            $filteredPosts = $filteredPosts->filter(function ($post) use ($category) {
+                return $post->category->name == $category;
+            });
+        }
+        
+        return $filteredPosts->sortByDesc('views')->take($limit);
+    }
+
+    public function mostViewed2($limit = 5, $category = null)
+    {
+        $filteredPosts = $this;
+        
+        if ($category) {
+            $filteredPosts = $filteredPosts->whereHas('category', function ($query) use ($category) {
+                $query->where('name', $category);
+            });
+        }
+        
+        return $filteredPosts->sortByDesc('views')->take($limit);
+    }
+
+
+
     public function category()
     {
         return $this->belongsTo(Category::class);

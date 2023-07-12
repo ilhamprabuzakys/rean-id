@@ -136,13 +136,6 @@
             <li><a href="{{ route('users.create') }}" data-key="t-users-add">Tambah Data</a></li>
         </ul>
       </li>
-
-      <li class="{{ Request::is('log*') ? 'mm-active' : '' }}">
-         <a href="{{ route('logs.index') }}">
-            <i class="icon nav-icon" data-eva="activity-outline"></i>
-            <span class="menu-item" data-key="t-utility">Log</span>
-         </a>
-      </li> 
       @elsecan('member')
       <li class="menu-title" data-key="t-pages">Data Utama</li>
 

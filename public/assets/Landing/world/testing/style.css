@@ -1,0 +1,195 @@
+@import url("https://font..googleapis.com/css?family=Rubik&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta2/css/all.min.css");
+
+.sidebar {
+    position: fixed;
+    width: 250px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #dfdfdf;
+    padding-top: 50px;
+    z-index: 0;
+    transition: 0.4s;
+    border-right: 1px solid #444444;
+
+}
+
+.sidebar h1 {
+    display: block;
+    padding: 5px 5px;
+    color: #fff;
+    text-decoration: none;
+    font-family: "Rubik";
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px 20px;
+    color: #bbb;
+    text-decoration: none;
+    font-family: "Rubik";
+    letter-spacing: 2px;
+}
+
+.sidebar a:hover {
+    color: #fff;
+    margin-left: 5px;
+    transition: 0.2s;
+}
+
+.sidebar .toggle-button {
+    font-size: 26px;
+}
+
+.sidebar.minimized {
+    width: 50px;
+    height: 20px;
+    top: 50%;
+    left: 0px;
+    transition: 0.4s;
+}
+
+.sidebar.minimized .toggle-button {
+    position: fixed;
+    top: 50%;
+    left: -3px;
+    color: white;
+    font-size: 26px;
+    border: 0;
+    outline: none;
+}
+
+.sidebar.minimized h1,
+.sidebar.minimized a,
+.sidebar.minimized iframe,
+.sidebar.minimized audio,
+.sidebar.minimized img {
+    display: none;
+}
+
+.toggle-button {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    margin: 5px 0px 0px 15px;
+    cursor: pointer;
+    outline: none;
+}
+
+.toggle-button:active,
+.toggle-button:after,
+.toggle-button:hover,
+.toggle-button:focus {
+    outline: none;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.container h1 {
+    margin-right: 10px;
+}
+
+.container button.toggle-button {
+    margin-bottom: 35px;
+}
+
+.container button.toggle-button:hover {
+    margin-bottom: 40px;
+    transition: 0.4s;
+}
+
+#sidebar-toggle::before {
+    content: "<";
+}
+
+.sidebar.minimized #sidebar-toggle::before {
+    content: ">";
+}
+
+.text-cegah {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+    color: white;
+}
+
+.text-narkoba {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 36px;
+    color: #ee2222;
+}
+
+audio {
+    background: #580931;
+    border: 1px solid #fa5aaa;
+    border-radius: 25px;
+    width: 220px;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
+    /* z-index: 3; */
+}
+
+@font-face {
+    font-family: "Font Awesome 6 Free";
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../webfonts/fa-solid-900.woff2) format("woff2"),
+        url(../webfonts/fa-solid-900.ttf) format("truetype");
+}
+
+.fa {
+    font-family: var(--fa-style-family, "Font Awesome 6 Free");
+    font-weight: var(--fa-style, 900);
+}
+.fa,
+.fa-brands,
+.fa-classic,
+.fa-regular,
+.fa-sharp,
+.fa-solid,
+.fab,
+.far,
+.fas {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: var(--fa-display, inline-block);
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+.fa-classic,
+.fa-regular,
+.fa-solid,
+.far,
+.fas {
+    font-family: "Font Awesome 6 Free";
+}
+
+.fa-bars:before {
+    content: "\f0c9";
+}
+
+#front-page-audio audio {
+    display: none;
+}
+
+#front-page-logo-cns img {
+    display: none;
+}

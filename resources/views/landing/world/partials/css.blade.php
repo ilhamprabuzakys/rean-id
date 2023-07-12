@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="{{ asset('assets/Landing/world/style.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('assets/Landing/world/css/font-awesome6.min.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('assets/Landing/world/css/custom.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/Landing/world/vendor/bootstrap-icons/bootstrap-icons.css') }}">
 <script nonce="28376c94-0920-41cf-90d5-77ff6a603ffe">
    (function(w, d) {
       ! function(dK, dL, dM, dN) {
@@ -64,3 +65,4 @@
       }(w, d, "zarazData", "script");
    })(window, document);
 </script>
+<script src="{{ asset('assets/Landing/world/js/jquery/jquery-2.2.4.min.js') }}"></script>

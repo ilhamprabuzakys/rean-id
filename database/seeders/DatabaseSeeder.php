@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\CompanySocialMedia;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +19,8 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             CategorySeeder::class,
             TagSeeder::class,
+            CompanySeeder::class,
+            CompanySocialMediaSeeder::class,
         ];
 
         try {

@@ -15,6 +15,16 @@
     font-weight: normal;
     font-style: normal;
 }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
 .fa {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
@@ -81,13 +91,13 @@
 .fa-heart-o:before {
     content: "\f08a";
 }
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+.fa-eye:before {
+    content: "\f06e";
+}
+.fa-copy:before,
+.fa-files-o:before {
+    content: "\f0c5";
+}
+.fa-check:before {
+    content: "\f00c";
 }

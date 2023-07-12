@@ -65,7 +65,9 @@
                 <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="icon-sm" data-eva="bell-outline"></i>
+                    @if ($notifications->count() > 1)
                     <span class="noti-dot bg-danger rounded-pill">{{ $notifications->count() }}</span>
+                    @endif
                 </button>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
                     aria-labelledby="page-header-notifications-dropdown">

@@ -2,12 +2,14 @@
 
    <div class="hero-slides owl-carousel">
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url(assets/Landing/world/img/blog-img/bg-custom-1.jpg);"></div>
+      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/Landing/world/img/blog-img/bg2.jpg') }});"></div>
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url(assets/Landing/world/img/blog-img/bg1.jpg);"></div>
+      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/Landing/world/img/blog-img/bg3.jpg') }});"></div>
    </div>
    @php
-      $posts = \App\Models\Post::orderBy('updated_at', 'desc')->get();
+      $posts = \App\Models\Post::orderBy('updated_at', 'desc')->get()->filter(function ($post) {
+        return $post->status == 'Approved';
+    })->sortByDesc('updated_at');
    @endphp
    <div class="hero-post-area">
       <div class="container">

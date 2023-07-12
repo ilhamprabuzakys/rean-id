@@ -5,7 +5,7 @@
       <div class="single-blog-post todays-pick">
 
          <div class="post-thumbnail">
-            <img src="assets/Landing/world/img/blog-img/b22.jpg" alt="">
+            <img src="{{ asset('assets/Landing/world/img/blog-img/b22.jpg') }}" alt="">
          </div>
 
          <div class="post-content px-0 pb-0">

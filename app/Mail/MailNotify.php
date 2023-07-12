@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\ContactMessage;
 use App\Models\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,14 +17,14 @@ class MailNotify extends Mailable
 {
     use Queueable, SerializesModels;
     private $data = [];
-    public Message $message;
+    public ContactMessage $message;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(ContactMessage $message)
     {
         $this->message = $message;
     }
@@ -40,12 +41,16 @@ class MailNotify extends Mailable
      */
     public function envelope()
     {
+        $subject = '';
+        if (!$this->message->subject == '') {
+            $subject = $this->message->subject;
+        }
         return new Envelope(
-            from: new Address($this->message->email_pengirim, $this->message->nama_pengirim . ' ' . $this->message->jabatan_pengirim),
-            subject: $this->message->sekolah_nama . ' - ' . $this->message->magang_bidang,
+            from: new Address($this->message->email, $this->message->name),
+            subject: $subject,
             // subject: "Permintaan",
             replyTo: [
-                new Address($this->message->email_pengirim, $this->message->nama_pengirim),
+                new Address($this->message->email, $this->message->name),
             ],
         );
     }
@@ -60,15 +65,10 @@ class MailNotify extends Mailable
         return new Content(
             view: 'mails.index',
             with: [
-                'sekolah' => $this->message->sekolah_nama,
-                'sekolah_jurusan' => $this->message->sekolah_jurusan,
-                'sekolah_kelas' => $this->message->sekolah_kelas . '-' . $this->message->sekolah_jurusan . '-' . $this->message->sekolah_tingkat,
-                'magang_bidang' => $this->message->magang_bidang,
-                'body' => $this->message->pesan_utama,
-                'jabatan_pengirim' => $this->message->jabatan_pengirim,
-                'nama_pengirim' => $this->message->nama_pengirim,
-                'email_pengirim' => $this->message->email_pengirim,
-                'phone_pengirim' => $this->message->phone_pengirim,
+                'nama_pengirim' => $this->message->name,
+                'body' => $this->message->message,
+                'email_pengirim' => $this->message->email,
+                'subjek_pengirim' => $this->message->subject,
 
             ],
         );
