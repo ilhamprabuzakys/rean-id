@@ -32,13 +32,21 @@ class HomeController extends Controller
         ], compact('posts', 'categories'));
     }
     
-    public function show_post(Post $post)
+    public function show_post($category, Post $post)
     {
         $post->increment('views');
         return view('landing.world.detail', [
             'title' => $post->title,
             'heropost' => $post,
         ], compact('post'));
+    }
+    
+    public function all_post()
+    {
+        $posts = Post::with(['category', 'user', 'tags'])->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
+        return view('landing.world.posts', [
+            'title' => 'Semua Postingan',
+        ], compact('posts'));
     }
 
     public function category_list()
@@ -51,7 +59,7 @@ class HomeController extends Controller
     
     public function category_view(Category $category)
     {
-        $posts = Post::with(['category', 'user', 'tags'])->where('category_id', $category->id)->where('status', 'Approved')->get();
+        $posts = Post::with(['category', 'user', 'tags'])->where('category_id', $category->id)->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
         return view('landing.world.category', [
             'title' => 'Daftar ' . $category->name,
         ], compact('posts', 'category'));

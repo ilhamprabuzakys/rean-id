@@ -2,14 +2,12 @@
 
    <div class="hero-slides owl-carousel">
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/Landing/world/img/blog-img/bg2.jpg') }});"></div>
+      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/img/hero-image/bg-1.png') }});"></div>
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/Landing/world/img/blog-img/bg3.jpg') }});"></div>
+      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/img/hero-image/bg-2.jpg') }});"></div>
    </div>
    @php
-      $posts = \App\Models\Post::orderBy('updated_at', 'desc')->get()->filter(function ($post) {
-        return $post->status == 'Approved';
-    })->sortByDesc('updated_at');
+    $posts = \App\Models\Post::where('status', 'approved')->orderBy('updated_at', 'desc')->get();
    @endphp
    <div class="hero-post-area">
       <div class="container">
@@ -35,7 +33,7 @@
                         <p>{{ $loop->iteration }}</p>
                      </div>
                      <div class="post-title">
-                        <a href="{{ route('home.show_post', $post) }}">{{ $post->title }}</a>
+                        <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}">{{ $post->title }}</a>
                      </div>
                   </div>
                @endforeach

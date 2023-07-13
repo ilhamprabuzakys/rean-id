@@ -1,6 +1,5 @@
 <div
-   class="hero-area height-700 bg-img background-overlay"
-   style="background-image: url({{ asset('assets/Landing/world/img/blog-img/bg4.jpg') }})">
+   class="hero-area height-700 bg-img background-overlay hero-category-list">
    <div class="container h-100">
       <div
          class="row h-100 align-items-center justify-content-center">

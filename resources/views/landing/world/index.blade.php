@@ -1,31 +1,31 @@
 @extends('landing.world.world')
 @php
    $postArtikel = $posts->filter(function ($post) {
-        return $post->category->name === 'Artikel';
+      return $post->category->name === 'Artikel';
     })->sortByDesc('updated_at');
    $postFoto = $posts->filter(function ($post) {
-        return $post->category->name === 'Foto';
+      return $post->category->name === 'Foto';
     });
    $postVideo = $posts->filter(function ($post) {
-        return $post->category->name === 'Video';
+      return $post->category->name === 'Video';
     });
    $postPoster = $posts->filter(function ($post) {
-        return $post->category->name === 'Poster';
+      return $post->category->name === 'Poster';
     });
    $postDesain = $posts->filter(function ($post) {
-        return $post->category->name === 'Desain';
+      return $post->category->name === 'Desain';
     });
    $postMusik = $posts->filter(function ($post) {
-        return $post->category->name === 'Musik';
+      return $post->category->name === 'Musik';
     });
    $postAudio = $posts->filter(function ($post) {
-        return $post->category->name === 'Audio';
+      return $post->category->name === 'Audio';
     });
    $postEbook = $posts->filter(function ($post) {
-        return $post->category->name === 'Ebook';
+      return $post->category->name === 'Ebook';
     });
    $postEvent = $posts->filter(function ($post) {
-        return $post->category->name === 'Event';
+      return $post->category->name === 'Event';
     });
    $firstPostSemua = $posts->first();
    // $mostViewedArticles = \App\Models\Post::mostViewed($posts, 5, 'Artikel');
@@ -71,14 +71,14 @@
             </ul>
             <div class="tab-content" id="myTabContent" style="margin-top: 5px !important">
                <div class="tab-pane fade show active" id="post-semua" role="tabpanel" aria-labelledby="post-semua">
-               @if (!$posts->count() < 2)
+                  @if (!$posts->count() < 2)
                      
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if (empty($posts))   
                         {{ empty($posts) }}
                      @else 
                      <div class="mr-3">
-                        <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                        <a style="word-spacing: 1px;" href="{{ route('home.all_post') }}">Lihat semua konten..</a>
                      </div>
                      @endif
                   </div>
@@ -98,11 +98,11 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post]) }}" class="headline">
                                     <h5>{{ $post->title }}</h5>
                                  </a>
                                  {{-- <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p> --}}
-                                 <p>{!! Str::of(strip_tags($post->body))->words(6, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(10, '...') !!}</p>
 
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -133,7 +133,7 @@
                                           </div>
 
                                           <div class="post-content">
-                                             <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                             <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                                 <h5>{{ $post->title }}</h5>
                                              </a>
 
@@ -195,7 +195,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postArtikel->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postArtikel->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -212,10 +212,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -241,7 +241,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postEbook->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postEbook->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -258,10 +258,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -287,7 +287,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postEvent->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postEvent->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -304,10 +304,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -333,7 +333,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postAudio->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postAudio->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -350,10 +350,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -379,7 +379,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postVideo->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postVideo->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -396,10 +396,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -425,7 +425,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postDesain->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postDesain->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -442,10 +442,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -471,7 +471,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postPoster->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postPoster->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -488,10 +488,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -517,7 +517,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postFoto->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postFoto->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -534,10 +534,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -563,7 +563,7 @@
                   <div class="row d-flex justify-content-end mt-0 mb-3">
                      @if ($postMusik->count() > 1)   
                         <div class="mr-3">
-                           <a style="word-spacing: 1px;" href="?category=semua">Lihat semua konten..</a>
+                           <a style="word-spacing: 1px;" href="{{ route('home.category_view', $postMusik->first()->category) }}">Lihat semua konten..</a>
                         </div>
                      @endif
                   </div>
@@ -580,10 +580,10 @@
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', $post) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -626,10 +626,10 @@
                      </div>
          
                      <div class="post-content">
-                        <a href="{{ route('home.show_post', $post) }}" class="headline">
+                        <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
                            <h5>{{ $post->title }}</h5>
                         </a>
-                        <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p>
+                        <p>{!! Str::of(strip_tags($post->body))->words(14, '...') !!}</p>
 
                         <div class="post-meta">
                            <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -684,6 +684,7 @@
       </div>
    </div>
 </div>
+@include('landing.world.partials.sidebar-cns')
 @endsection
 @section('hero')
    @include('landing.world.partials.hero.hero-index')

@@ -17,7 +17,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->sentence();
+        $title = Str::of(fake()->sentence())->title();
         $slug = Str::slug($title);
         $paragraphs = fake()->paragraphs(10);
         $body = implode('<br>', $paragraphs);
@@ -29,6 +29,7 @@ class PostFactory extends Factory
             'date' => date('Y-m-d'),
             'category_id' => \random_int(1, 7),
             'user_id' => \random_int(1, 20),
+            'status' => fake()->randomElement(['approved', 'rejected']),
         ];
     }
 }

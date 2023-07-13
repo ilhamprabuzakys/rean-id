@@ -23,8 +23,9 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                            <a class="dropdown-item" href="{{ route('index') }}">Home</a>
-                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Kategori</a>
-                           <a class="dropdown-item" href="contact.html">Contact</a>
+                           <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
+                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Kategori</a>
+                           <a class="dropdown-item" href="{{ route('home.contact') }}">Halaman Kontak</a>
                         </div>
                      </li>
                      <li class="nav-item">

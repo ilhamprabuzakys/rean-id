@@ -29,11 +29,11 @@
 
 
          <div class="post-content">
-            @if ($post->category->name == 'Artikel' || $post->category->name == 'Foto' && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
-               <img class="post-image my-2" src="{{ asset('storage/' . $post->file_path) }}" alt="Title">
+            @if ($post->file_path)
+               @if ($post->category->name == 'Artikel' || $post->category->name == 'Foto' && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
+                  <img class="post-image my-2" src="{{ asset('storage/' . $post->file_path) }}" alt="Title">
+               @endif
             @endif
-
-            <iframe src="https://a5.siar.us/public/cnsradio/history?theme=light"></iframe>
             
             {!! $post->body !!}
 
@@ -114,21 +114,5 @@
 </div>
 @endsection
 @section('hero')
-<div
-   class="hero-area height-700 bg-img background-overlay"
-   style="background-image: url(assets/Landing/world/img/blog-img/bg-custom-1.jpg)">
-   <div class="container h-100">
-      <div
-         class="row h-100 align-items-center justify-content-center">
-         <div class="col-12 col-md-8 col-lg-6">
-            <div class="single-blog-title text-center">
-               <div class="post-cta py-2"><a href="#">{{ $heropost->category->name }}</a></div>
-               <h3>
-                  {{ $heropost->title }}
-               </h3>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+@include('landing.world.partials.hero.hero-detail')
 @endsection
