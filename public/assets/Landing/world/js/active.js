@@ -24,7 +24,7 @@
 
     // :: Sticky Active Code
     $window.on('scroll', function () {
-        if ($window.scrollTop() > 20) {
+        if ($window.scrollTop() > 580) {
             $('.header-area').addClass('sticky');
         } else {
             $('.header-area').removeClass('sticky');

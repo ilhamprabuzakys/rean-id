@@ -147,6 +147,7 @@
                            <th>Author</th>
                            <th class="text-center">Kategori</th>
                            <th>Status</th>
+                           {{-- <th>StatusAct</th> --}}
                            <th>Terakhir diupdate</th>
                            <th class="text-center">
                               <i class="bx bx bx-edit font-size-16"></i>
@@ -159,7 +160,7 @@
                               <th scope="row">{{ $loop->iteration }}</th>
                               <td>
                                  <a href="{{ route('posts.show', $post) }}" class="text-decoration-none text-dark">
-                                    {{ $post->title }}
+                                    {!! Str::of(strip_tags($post->title))->words(8, '...') !!}
                                  </a>
                               </td>
                               <td><a href="{{ route('users.show', $post->user) }}" class="text-decoration-none text-dark">
@@ -175,7 +176,7 @@
                                     Belum diset
                                  @endif
                               </td>
-                              <td class="text-center">
+                              {{-- <td class="text-center">
                                  @if ($post->status == 'pending')
                                     <span class="badge badge-soft-primary">Pending</span>
                                  @elseif ($post->status == 'approved')
@@ -183,6 +184,96 @@
                                  @else
                                     <span class="badge badge-soft-danger">Rejected</span>
                                  @endif
+                              </td> --}}
+                              <td class="text-center">
+                                 @if ($post->status != 'pending')
+                                    <button type="button" disabled class="bg-transparent border-0">
+                                       @if ($post->status == 'approved')
+                                          <span class="badge rounded-pill bg-approval opacity-50 p-2 font-size-12 text-decoration-none d-flex align-items-center">
+                                             Approved
+                                             <i class="bx bx-check-circle ms-2"></i>
+                                          </span>
+                                       @elseif($post->status == 'rejected')
+                                          <span class="badge rounded-pill bg-reject opacity-50 p-2 font-size-12 text-decoration-none d-flex align-items-center">
+                                             Rejected
+                                             <i class="bx bx-x ms-2"></i>
+                                          </span>
+                                       @endif
+                                    </button>
+
+                                    <div class="dropdown">
+                                       <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                                          <i class="bx bx-dots-horizontal-rounded"></i>
+                                       </a>
+
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item text-decoration-none" href="#">
+                                             <form action="{{ route('posts.approval.form') }}" method="post">
+                                                @csrf
+                                                {{-- @method('PUT') --}}
+                                                <input type="hidden" name="status" value="pending">
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                <button type="submit" class="bg-transparent border-0">
+                                                <span class="text-primary">Revert to Pending</span>
+                                                </button>
+                                             </form>
+                                          </a>
+                                          @if ($post->status == 'rejected')
+                                             <a class="dropdown-item text-decoration-none" href="#">
+                                                <form action="{{ route('posts.approval.form') }}" method="post">
+                                                   @csrf
+                                                   {{-- @method('PUT') --}}
+                                                   <input type="hidden" name="status" value="approved">
+                                                   <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                   <button type="submit" class="bg-transparent border-0">
+                                                   <span class="text-success">Approve it</span>
+                                                   </button>
+                                                </form>
+                                             </a>
+                                          @elseif ($post->status == 'approved')
+                                             <a class="dropdown-item text-decoration-none" href="#">
+                                                <form action="{{ route('posts.approval.form') }}" method="post">
+                                                   @csrf
+                                                   {{-- @method('PUT') --}}
+                                                   <input type="hidden" name="status" value="rejected">
+                                                   <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                                   <button type="submit" class="bg-transparent border-0">
+                                                   <span class="text-danger">Reject it</span>
+                                                   </button>
+                                                </form>
+                                             </a>
+                                          @endif
+                                       </div>
+                                    </div>
+                                 @else
+                                    <form action="{{ route('posts.approval.form') }}" method="post">
+                                       @csrf
+                                       {{-- @method('PUT') --}}
+                                       <input type="hidden" name="status" value="approved">
+                                       <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                       <button type="submit" class="bg-transparent border-0">
+                                          <span class="badge rounded-pill bg-approval p-2 font-size-12 text-decoration-none d-flex align-items-center">
+                                             Approve?
+                                             <i class="bx bx-check-circle font-size-14 ms-2"></i>
+                                          </span>
+                                       </button>
+                                    </form>
+                                    <form action="{{ route('posts.approval.form') }}" method="post">
+                                       @csrf
+                                       {{-- @method('PUT') --}}
+                                       <input type="hidden" name="status" value="rejected">
+                                       <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                       <button type="submit" class="bg-transparent border-0">
+                                          <span class="badge rounded-pill bg-reject p-2 font-size-12 text-decoration-none d-flex align-items-center">
+                                             Reject?
+                                             <i class="bx bx-x font-size-14 ms-2"></i>
+                                          </span>
+                                       </button>
+                                    </form>
+                                 @endif
+
                               </td>
                               <td>
                                  @php

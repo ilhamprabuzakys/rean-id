@@ -4,7 +4,7 @@
    })
 @endphp
 <header class="header-area">
-   <div class="container">
+   <div class="container-navbar">
       <div class="row">
          <div class="col-12">
             <nav class="navbar navbar-expand-lg">
@@ -16,11 +16,11 @@
 
                <div class="collapse navbar-collapse" id="worldNav">
                   <ul class="navbar-nav ml-auto">
-                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                     <li class="nav-item {{ request()->url() == route('index') ? ' active' : '' }}">
+                        <a class="nav-link" href="{{ route('index') }}">Home</a>
                      </li>
                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Data</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                            <a class="dropdown-item" href="{{ route('index') }}">Home</a>
                            <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
@@ -28,16 +28,19 @@
                            <a class="dropdown-item" href="{{ route('home.contact') }}">Halaman Kontak</a>
                         </div>
                      </li>
-                     <li class="nav-item">
+                     <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Artikel')->first()) ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Artikel')->first()) }}">Artikel</a>
                      </li>
-                     <li class="nav-item">
+                     <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Ebook')->first()) ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Ebook')->first()) }}">Ebook</a>
                      </li>
-                     <li class="nav-item">
+                     <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Event')->first()) ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Event')->first()) }}">Events</a>
                      </li>
-                     <li class="nav-item">
+                     <li class="nav-item {{ request()->url() == route('home.cns') ? ' active' : '' }}">
+                        <a class="nav-link" href="{{ route('home.cns') }}">CNS Radio</a>
+                     </li>
+                     <li class="nav-item {{ request()->url() == route('home.contact') ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.contact') }}">Contact</a>
                      </li>
                      <li class="nav-item">

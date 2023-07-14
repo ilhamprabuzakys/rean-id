@@ -76,6 +76,7 @@
             </div>
          </div>
       </div>
+      
       <div class="col-xxl-9">
          <div class="row d-flex justify-content-between">
             @if (auth()->user()->role != 'member')
@@ -322,6 +323,100 @@
                 </div>
             </div>
         </div> --}}
+      </div>
+
+      <div class="col-xxl-12">
+         <div class="row d-flex justify-content-between">
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-header">
+                     Browser
+                  </div>
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th scope="col">Name</th>
+                                 <th scope="col">Users</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr class="">
+                                 <td>Chrome</td>
+                                 <td>Firefox</td>
+                                 <td>Vivaldi</td>
+                                 <td>Opera</td>
+                              </tr>
+                              <tr class="">
+                                 <td>Item</td>
+                                 <td>Item</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-header">
+                     Device
+                  </div>
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th scope="col">Name</th>
+                                 <th scope="col">Users</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr class="">
+                                 <td>Mobile</td>
+                                 <td>Desktop</td>
+                              </tr>
+                              <tr class="">
+                                 <td>0</td>
+                                 <td>3</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="card">
+                  <div class="card-header">
+                     OS
+                  </div>
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th scope="col">Name</th>
+                                 <th scope="col">Users</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr class="">
+                                 <td>R1C2</td>
+                                 <td>R1C3</td>
+                              </tr>
+                              <tr class="">
+                                 <td>Item</td>
+                                 <td>Item</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </div>
    <!-- end row -->

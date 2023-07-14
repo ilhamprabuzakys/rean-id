@@ -113,7 +113,7 @@
                         </div>
                      @endforeach
                      
-                     <div class="col-12 mt-1">
+                     <div class="col-12 mt-4">
                         <div class="world-catagory-slider2 owl-carousel wow fadeInUpBig" data-wow-delay="0.4s">
 
                            <div class="single-cata-slide">

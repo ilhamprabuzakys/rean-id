@@ -104,5 +104,5 @@
    </div>
 @endsection
 @section('hero')
-   @include('landing.world.partials.hero.hero-contact')
+   @include('landing.world.partials.hero.hero-basic')
 @endsection

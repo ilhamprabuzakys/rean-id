@@ -190,7 +190,7 @@
                                                    <input type="hidden" name="status" value="approved">
                                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
                                                    <button type="submit" class="bg-transparent border-0">
-                                                   <span class="text-success">Reject it</span>
+                                                   <span class="text-success">Approve it</span>
                                                    </button>
                                                 </form>
                                              </a>

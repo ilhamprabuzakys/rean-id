@@ -87,7 +87,7 @@
          </div>
       </div>
       <div class="form-floating form-floating-custom mb-4">
-         <input type="password" class="form-control @error('password') is-invalid @enderror" id="input-password_confirmation" placeholder="Enter Password_confirmation" name="password_confirmation"
+         <input type="password" class="form-control @error('password') is-invalid @enderror" id="input-password_confirmation" placeholder="Enter Password Confirmation" name="password_confirmation"
             value="{{ old('password_confirmation') }}" required>
          @error('password_confirmation')
             <div class="invalid-feedback">

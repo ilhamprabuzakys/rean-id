@@ -4,7 +4,7 @@
    <div class="row justify-content-center">
       <div class="col-12 col-lg-8">
          <div class="post-content-area mb-100">
-           
+
             <div class="world-latest-articles">
                <div class="row">
                   <div class="col-12 col-lg-12">
@@ -18,10 +18,12 @@
                            </div>
                         </div>
                      </div>
-            
+
                      <div class="row">
-                     @forelse ($posts as $post)
-                        @if ($loop->iteration > 5) @break @endif
+                        @forelse ($posts as $post)
+                           @if ($loop->iteration > 5)
+                           @break
+                        @endif
                         <div class="col-lg-12 mb-2">
                            <div class="card post-item">
                               <div class="card-body">
@@ -64,40 +66,46 @@
                               </div>
                            </div>
                         </div>
-                     @empty
+                     </div>
+                  @empty
                      <div class="col-lg-12 mb-2">
-                        <div class="card category-item shadow-md">
+                        <div class="card post-item shadow-md">
                            <div class="card-body">
                               <h5>Belum ada post yang dibuat.</h5>
-                              <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none text-primary">Bergabung Disini</a></p>
+                              <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none text-primary" data-toggle="modal"
+                                    data-target="#bergabungModal">Bergabung Disini</a></p>
+
+
+                              <!-- Modal -->
+                              @include('landing.world.partials.content.modal.bergabung')
                            </div>
                         </div>
                      </div>
-                     @endforelse
-                     @if ($posts->count() > 5)
-                           <div class="col-12 d-flex align-items-center justify-content-center">
-                              <div class="load-more-btn mt-50 text-center">
-                                 <a href="#" class="btn world-btn">Load More</a>
-                              </div>
-                           </div>
-                     @endif
-                  </div>
-                  </div>
+                  @endforelse
+                  @if ($posts->count() > 5)
+                     <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="load-more-btn mt-50 text-center">
+                           <a href="#" class="btn world-btn">Load More</a>
+                        </div>
+                     </div>
+                  @endif
                </div>
             </div>
          </div>
       </div>
-
-      <div class="col-12 col-md-8 col-lg-4">
-         <div class="post-sidebar-area">
-            @include('landing.world.partials.content.chatango')
-            @include('landing.world.partials.content.topartikel')
-            @include('landing.world.partials.content.stayconnected')
-            @include('landing.world.partials.content.popularvideo')
-         </div>
-      </div>
    </div>
+</div>
+
+<div class="col-12 col-md-8 col-lg-4">
+   <div class="post-sidebar-area">
+      @include('landing.world.partials.content.chatango')
+      @include('landing.world.partials.content.topartikel')
+      @include('landing.world.partials.content.stayconnected')
+      @include('landing.world.partials.content.popularvideo')
+   </div>
+</div>
+</div>
 @endsection
 @section('hero')
-   @include('landing.world.partials.hero.hero-category-detail')
+@include('landing.world.partials.hero.hero-basic')
 @endsection

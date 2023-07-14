@@ -65,6 +65,13 @@ class HomeController extends Controller
         ], compact('posts', 'category'));
     }
 
+    public function cns_radio()
+    {
+        return view('landing.world.cns-radio', [
+            'title' => 'CNS Radio',
+        ]);
+    }
+
     public function contact()
     {
         return view('landing.world.contact', [

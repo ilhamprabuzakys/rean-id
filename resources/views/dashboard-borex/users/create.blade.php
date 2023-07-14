@@ -1,10 +1,7 @@
 {{-- @push('scripts')
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 @endpush --}}
-@extends('layouts.app')
-@section('title')
-   <h4 class="page-title">Create Users</h4>
-@endsection
+@extends('dashboard-borex.layouts.app')
 @section('content')
    <div class="row">
       <div class="col-12">
@@ -20,20 +17,15 @@
                <form action="{{ route('users.store') }}" method="post">
                   @csrf
                   <div class="mb-3 row">
-                     <div class="col-md-8">
-                        <label for="firstname" class="form-label">Firstname</label>
-                        <input class="form-control @error('firstname') is-invalid @enderror" type="text" value="{{ old('firstname') }}" name="firstname"
-                           id="firstname">
-                        @error('firstname')
+                     <div class="col-md-12">
+                        <label for="name" class="form-label">Name</label>
+                        <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ old('name') }}" name="name"
+                           id="name">
+                        @error('name')
                            <div class="invalid-feedback">
                               {{ $message }}
                            </div>
                         @enderror
-                     </div>
-                     <div class="col-md-4">
-                        <label for="lastname" class="form-label">Lastname</label>
-                        <input class="form-control" type="text" value="{{ old('lastname') }}" name="lastname"
-                           id="lastname">
                      </div>
                   </div>
                   <div class="mb-3 row">
@@ -91,40 +83,6 @@
                      </div>
                   </div>
                   <div class="mb-3 row">
-                     <div class="col-md-6">
-                        <label class="form-label">Kota</label>
-                        <select class="form-select  @error('kota_id')
-                        is-invalid
-                       @enderror" name="kota_id" id="kota">
-                           <option selected disabled>Pilih kota</option>
-                           @foreach ($kotas as $key => $kota)
-                              <option value="{{ $kota->id }}" {{ old('kota_id') == $kota->id ? 'selected' : '' }}>{{ $key + 1 . '- ' . $kota->name }}</option>
-                           @endforeach
-                        </select>
-                        @error('kota_id')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                     <div class="col-md-6">
-                        <label class="form-label">Kecamatan</label>
-                        <select class="form-select @error('kecamatan_id')
-                          is-invalid
-                         @enderror" name="kecamatan_id" id="kecamatan">
-                           <option selected disabled>Pilih kecamatan</option>
-                           {{-- @foreach ($kecamatans as $key => $kecamatan)
-                           <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>{{ $key+1 . '- ' . $kecamatan->name }}</option>
-                           @endforeach --}}
-                        </select>
-                        @error('kecamatan_id')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="mb-3 row">
                      <div class="col-md-12">
                         <label class="form-label">Role</label>
                         <select class="form-select  @error('role')
@@ -132,7 +90,7 @@
                        @enderror" name="role">
                            <option selected disabled>Pilih role</option>
                            @foreach ($roles as $r)
-                              <option value="{{ $r }}" {{ old('role') == $r ? 'selected' : '' }}>{{ $r }}</option>
+                              <option value="{{ $r->key }}" {{ old('role') == $r->label ? 'selected' : '' }}>{{ $r->label }}</option>
                            @endforeach
                         </select>
                         @error('role')
@@ -142,22 +100,8 @@
                         @enderror
                      </div>
                   </div>
-                  <div class="mb-3 row">
-                     <div class="col-md-12">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea id="alamat" class="form-control @error('alamat')
-                          is-invalid
-                      @enderror"
-                           placeholder="Masukan alamat" rows="4" value="{{ old('alamat') }}" name="alamat">{{ old('alamat') }}</textarea>
-                        @error('alamat')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                  </div>
                   <div class="d-flex justify-content-end">
-                     <button class="btn btn-primary" type="submit">Submit form</button>
+                     <button class="btn btn-primary" type="submit">Simpan Data</button>
                   </div>
                </form>
             </div>

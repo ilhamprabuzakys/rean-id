@@ -13,9 +13,11 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = cache()->remember('users', now()->addDays(1), function() {
-            return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
-        });
+        // $users = cache()->remember('users', now()->addDays(1), function() {
+        //     return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
+        // });
+
+        $users = User::with(['posts'])->orderBy('updated_at', 'desc')->get();
 
         $roles = collect([
             (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
@@ -37,7 +39,7 @@ class UserController extends Controller
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
 
-        return view('dashboard.users.create', [
+        return view('dashboard-borex.users.create', [
             'title' => 'Tambah Users',
         ], compact('roles'));
     }
@@ -47,8 +49,9 @@ class UserController extends Controller
         $rules = [
             'name' => ['required'],
             'email' => ['required', 'email', Rule::unique('users')],
-            'username' => ['required', 'string'],
-            'password' => ['required'],
+            'username' => ['string'],
+            'role' => ['required', 'string'],
+            'password' => ['required', 'confirmed'],
         ];
     
         if (!$request->has('username')) {
@@ -99,8 +102,9 @@ class UserController extends Controller
         $rules = [
             'name' => ['required'],
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
-            'username' => ['required', 'string'],
-            'password' => ['required'],
+            'username' => ['string'],
+            'role' => ['required', 'string'],
+            'password' => ['required', 'confirmed'],
         ];
 
         if (!$request->has('username')) {

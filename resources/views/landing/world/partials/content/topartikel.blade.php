@@ -3,7 +3,7 @@
    $mostViewedArticles = \App\Models\Post::mostViewed($posts, 5, 'Artikel');
 @endphp
 <div class="sidebar-widget-area" id="sidebar-top-artikel">
-   <h5 class="title">Top Artikel</h5>
+   <h5 class="title">Artikel popular</h5>
    <div class="widget-content">
       @php
          $hasPosts = false; // Membuat variabel untuk menandai apakah ada post yang tampil

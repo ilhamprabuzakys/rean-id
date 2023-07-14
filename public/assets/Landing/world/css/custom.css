@@ -54,7 +54,7 @@ a#whatsapp-icon-main {
     /* line-height: 46px; */
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
-    z-index: 2147483647;
+    z-index: 255;
 }
 a#whatsapp-icon-main:hover {
     background-color: #136e13;
@@ -100,20 +100,21 @@ a#whatsapp-icon-main:hover {
 }
 
 footer.footer-area {
-    background: black url(../img/footer-bg.png) no-repeat right bottom;
+    background: #ffffff url(../img/footer-bg.png) no-repeat right bottom;
     background-size: contain;
-    border-top: 1px solid #383838;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
     padding: 70px 0;
 }
 footer.footer-last {
-    background-color: #313131;
+    background-color: #fdfdfd;
     position: relative;
     padding: 10px 0;
     z-index: 1;
 }
 
 footer.footer-last p {
+    color: #6e6e6e;
     margin-bottom: 0;
 }
 
@@ -124,7 +125,7 @@ footer.footer-last p {
 .footer-contact h4 {
     font-size: 16px;
     font-weight: bold;
-    color: #ffffff;
+    color: #575757;
     text-transform: uppercase;
     position: relative;
     padding-bottom: 12px;
@@ -268,7 +269,7 @@ footer.footer-last p {
 .hero-area.hero-detail,
 .hero-area.hero-category-list,
 .hero-area.hero-category,
-.hero-area.hero-contact {
+.hero-area.hero-basic {
     background-image: url("../../../../assets/img/hero-image/bg-1.png");
 }
 
@@ -287,7 +288,7 @@ footer.footer-last p {
     padding-top: 50px;
     z-index: 301;
     transition: 0.4s;
-    border-right: 2px solid #444444;
+    border-right: 2px solid #949494;
     box-shadow: 6px 0 6px rgba(0, 0, 0, 0.2);
  }
 
@@ -322,14 +323,14 @@ footer.footer-last p {
  }
 
  .sidebar.minimized {
-    width: 50px;
+    width: 55px;
     height: 20px;
     top: 50%;
     left: 0px;
     transition: 0.4s;
-    border-top: 2px solid #444444;
-    border-right: 2px solid #444444;
-    border-bottom: 2px solid #444444;
+    border-top: 2px solid #949494;
+    border-right: 2px solid #949494;
+    border-bottom: 2px solid #949494;
     border-radius: 0 10px 10px 0;
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.2);
  }
@@ -472,4 +473,25 @@ footer.footer-last p {
     font-weight: 500;
     line-height: 20px;
     letter-spacing: 0.75px;
+ }
+
+ /* CNS Radio Page */
+ .card.cns-radio .card-body {
+    padding: 3rem 1.25rem;
+ }
+ .card.cns-radio h3.program-siaran {
+    color: #0C71C3;
+ }
+
+ .card.cns-radio iframe.playlist {
+    border: 0;
+ }
+
+ /* Navbar */
+ .header-area .container-navbar {
+    width: 100%;
+    padding-right: 65px;
+    padding-left: 95px;
+    margin-right: auto;
+    margin-left: auto;
  }

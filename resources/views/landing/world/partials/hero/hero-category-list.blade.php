@@ -5,10 +5,10 @@
          class="row h-100 align-items-center justify-content-center">
          <div class="col-12 col-md-8 col-lg-6">
             <div class="single-blog-title text-center">
-               <div class="post-cta py-2"><a href="#">Total Kategori {{ $categories->count() }}</a></div>
                <h3>
                   Daftar Kategori
                </h3>
+               <div class="post-cta py-2"><a href="#">Total Kategori {{ $categories->count() }}</a></div>
             </div>
          </div>
       </div>

@@ -3,7 +3,7 @@
       <div class="row">
          <div class="col-12 col-md-4">
             <div class="footer-single-widget">
-               <a href="#"><img src="{{ asset('assets/img/footer-rean-gabung.png') }}" alt="" style="height: 90px;"></a>
+               <a href="#"><img src="{{ asset('assets/img/footer-rean-gabung-dark.png') }}" alt="" style="height: 90px;"></a>
                <div class="copywrite-text mt-30">
                   <p>
                      {{ $company->short_address }}
@@ -51,7 +51,7 @@
    <div class="container">
       <div class="row justify-content-start">
          <div class="d-flex align-items-center">
-            <p>2023 &copy; Copyright.</p>
+            <p>REAN.ID - BNN Cegah Narkoba 2023 <b>&copy;</b></p>
          </div>
       </div>
    </div>

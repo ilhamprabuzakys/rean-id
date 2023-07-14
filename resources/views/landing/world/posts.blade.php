@@ -69,10 +69,35 @@
                      </div>
                   @empty
                      <div class="col-lg-12 mb-2">
-                        <div class="card category-item shadow-md">
+                        <div class="card post-item shadow-md">
                            <div class="card-body">
                               <h5>Belum ada post yang dibuat.</h5>
-                              <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none text-primary">Bergabung Disini</a></p>
+                              <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none text-primary" data-toggle="modal"
+                                    data-target="#bergabungModal">Bergabung Disini</a></p>
+
+
+                              <!-- Modal -->
+                              <div class="modal fade" id="bergabungModal" tabindex="-1" role="dialog">
+                                 <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                       <div class="modal-header">
+                                          <h5 class="modal-title">Bergabung Dengan Kami</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                             <span aria-hidden="true">&times;</span>
+                                          </button>
+                                       </div>
+                                       <div class="modal-body">
+                                          <div class="container">
+                                             <a class="btn btn-primary" href="{{ route('register') }}">Daftar dan Buat akun disini</a>
+                                             <a class="btn btn-primary" href="{{ route('login') }}">Masuk disini</a>
+                                          </div>
+                                       </div>
+                                       <div class="modal-footer">
+                                          <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -102,5 +127,5 @@
 </div>
 @endsection
 @section('hero')
-@include('landing.world.partials.hero.hero-category-detail')
+@include('landing.world.partials.hero.hero-basic')
 @endsection

@@ -5,6 +5,5 @@
 <!-- Tabler Core -->
 <script src="{{ asset('dist/js/tabler.min.js') }}" defer></script>
 <script src="{{ asset('dist/js/demo.min.js') }}" defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="https://kit.fontawesome.com/f6618a1cd4.js" crossorigin="anonymous"></script>
