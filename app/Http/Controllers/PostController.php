@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Post;
-use App\Models\Media;
 use App\Models\Category;
+use App\Models\MediaPost;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -48,13 +48,13 @@ class PostController extends Controller
     public function create()
     {
         $categories = cache()->remember('categories', now()->addDays(7), function () {
-            return Category::orderBy('updated_at', 'desc')->get();
+            return Category::orderBy('name', 'asc')->get();
         });
 
         $tags = cache()->remember('tags', now()->addDays(7), function () {
             return Tag::orderBy('updated_at', 'desc')->get();
         });
-        
+
         return view('dashboard-borex.posts.create', [
             'title' => 'Tambah Postingan',
         ], compact('categories', 'tags'));
@@ -84,8 +84,10 @@ class PostController extends Controller
         }
 
         $validatedData = $validator->validated();
+        $authId = auth()->user()->id;
         $file_path = '';
         // Validasi File Upload
+        $media = '';
         if ($request->file('file_path')) {
             // $validatedData['file_path'] = $request->file('file_path')->store('posts-file');
 
@@ -96,9 +98,9 @@ class PostController extends Controller
 
             $newFileName = $timestamp . '_' . $originalName;
             $validatedData['file_path'] = $file->storeAs('posts-file', $newFileName);
+            $file_path = $validatedData['file_path'];
         }
         // dd($validatedData['file_path']);
-        $file_path = $validatedData['file_path'];
         $validatedData['date'] = date('Y-m-d'); // Mengatur tanggal saat ini;
         $validatedData['title'] = Str::of($request->input('title'))->title();
         if (auth()->user()->role != 'member') {
@@ -111,18 +113,19 @@ class PostController extends Controller
         }
         $postCategory = $post->category->name;
         $postId = $post->id;
-        $authId = auth()->user()->id;
+        // Simpan link file ke MediaPost
+        $mediaPost = new MediaPost();
+        $mediaPost->post_id = $post->id;
+        $mediaPost->file_path = $file_path; // Ganti dengan path file yang sesuai
+        $mediaPost->user_id = $authId; // Ganti dengan path file yang sesuai
+        $mediaPost->save();
         // Alert::success('Data Postingan berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
         // Insert Media
         // dd($file_path, auth()->user()->id, $post->id);
 
-        // Media::create([
-        //     'media_path' => $file_path,
-        //     'post_id' => $postId,
-        //     'authId' => $authId
-        // ]);
 
-        toast('Data Postingan berhasil ditambahkan!','success');
+
+        toast('Data Postingan berhasil ditambahkan!', 'success');
 
         return redirect()->route('posts.index')->with('message', "Data Postingan <b>$post->title</b> dengan tipe <b>$postCategory</b> telah berhasil <b>ditambahkan!</b>");
     }
@@ -187,7 +190,7 @@ class PostController extends Controller
 
 
         // Alert::success('Data Postingan berhasil diperbarui!', 'Tabel berhasil diperbarui.');
-        toast('Data postingan berhasil diperbarui!','success');
+        toast('Data postingan berhasil diperbarui!', 'success');
 
         return redirect()->route('posts.index')->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diperbarui!</b>");
     }
@@ -229,7 +232,7 @@ class PostController extends Controller
             'title' => 'Perizinan Postingan',
         ], compact('posts', 'categories', 'statuses'));
     }
-   
+
     public function approvalForm(Request $request)
     {
         $rules = [
@@ -249,7 +252,7 @@ class PostController extends Controller
         $post->update($validatedData);
 
         // Alert::success('Data Postingan berhasil diperbarui!', 'Tabel berhasil diperbarui.');
-        toast('Data postingan berhasil diperbarui!','success');
+        toast('Data postingan berhasil diperbarui!', 'success');
 
         return redirect()->back()->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diperbarui!</b>");
     }

@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('media_posts', function (Blueprint $table) {
+        Schema::create('hero_images', function (Blueprint $table) {
             $table->id();
-            $table->text('media_path');
-            $table->foreignId('user_id');
-            $table->foreignId('post_id');
+            $table->enum('type', ['main', 'detail', 'basic']);
+            $table->text('file_path');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('media_posts');
+        Schema::dropIfExists('hero_images');
     }
 };

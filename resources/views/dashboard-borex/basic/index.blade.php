@@ -344,13 +344,19 @@
                            <tbody>
                               <tr class="">
                                  <td>Chrome</td>
-                                 <td>Firefox</td>
-                                 <td>Vivaldi</td>
-                                 <td>Opera</td>
+                                 <td>1</td>
                               </tr>
                               <tr class="">
-                                 <td>Item</td>
-                                 <td>Item</td>
+                                 <td>Firefox</td>
+                                 <td>1</td>
+                              </tr>
+                              <tr class="">
+                                 <td>Opera</td>
+                                 <td>0</td>
+                              </tr>
+                              <tr class="">
+                                 <td>Edge</td>
+                                 <td>0</td>
                               </tr>
                            </tbody>
                         </table>
@@ -375,11 +381,11 @@
                            <tbody>
                               <tr class="">
                                  <td>Mobile</td>
-                                 <td>Desktop</td>
+                                 <td>0</td>
                               </tr>
                               <tr class="">
-                                 <td>0</td>
-                                 <td>3</td>
+                                 <td>Desktop</td>
+                                 <td>1</td>
                               </tr>
                            </tbody>
                         </table>
@@ -403,12 +409,12 @@
                            </thead>
                            <tbody>
                               <tr class="">
-                                 <td>R1C2</td>
-                                 <td>R1C3</td>
+                                 <td>Windows</td>
+                                 <td>0</td>
                               </tr>
                               <tr class="">
-                                 <td>Item</td>
-                                 <td>Item</td>
+                                 <td>Linux</td>
+                                 <td>1</td>
                               </tr>
                            </tbody>
                         </table>

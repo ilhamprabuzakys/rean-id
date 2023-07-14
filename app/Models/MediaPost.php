@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Media extends Model
+class MediaPost extends Model
 {
     use HasFactory;
-    protected $table = 'media_posts';
     protected $guarded = 'id';
 
     public function user()

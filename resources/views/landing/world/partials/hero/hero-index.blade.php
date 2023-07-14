@@ -2,9 +2,9 @@
 
    <div class="hero-slides owl-carousel">
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/img/hero-image/bg-1.png') }});"></div>
+      <div class="single-hero-slide bg-img" style="background-image: url({{ asset('assets/img/hero-image-light/bg1.jpg') }});"></div>
 
-      <div class="single-hero-slide bg-img background-overlay" style="background-image: url({{ asset('assets/img/hero-image/bg-2.jpg') }});"></div>
+      <div class="single-hero-slide bg-img" style="background-image: url({{ asset('assets/img/hero-image-light/bg2.jpg') }});"></div>
    </div>
    @php
     $posts = \App\Models\Post::where('status', 'approved')->orderBy('updated_at', 'desc')->get();

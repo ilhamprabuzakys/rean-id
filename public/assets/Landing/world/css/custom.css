@@ -28,10 +28,19 @@
     border: 1px solid #00ffc8;
 }
 
-.post-image {
-    max-height: 365px;
+.post-content .post-image {
     float: left;
     margin-right: 20px;
+}
+
+.post-content .post-image .post-content-image {
+    max-height: 365px;
+}
+
+.post-content .row.post-info {
+    margin-top: 120px;
+    margin-bottom: 0;
+    border-bottom: 0;
 }
 
 img.logo-brand {
@@ -243,7 +252,7 @@ footer.footer-last p {
 }
 
 .widget-content#chatango-widget iframe {
-    width: 390px;
+    width: 400px;
     height: 250px;
     border-width: 2px 2px 2px 2px;
     border-style: solid;
@@ -270,7 +279,7 @@ footer.footer-last p {
 .hero-area.hero-category-list,
 .hero-area.hero-category,
 .hero-area.hero-basic {
-    background-image: url("../../../../assets/img/hero-image/bg-1.png");
+    background-image: url("../../../../assets/img/hero-image-light/bg1.jpg");
 }
 
 /* .hero-area.hero-contact h3 {

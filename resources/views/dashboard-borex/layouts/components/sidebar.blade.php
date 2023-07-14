@@ -117,6 +117,13 @@
 
       <li class="menu-title" data-key="t-pages">Data Manajemen</li>
 
+      <li class="{{ Request::is('media/posts') ? 'mm-active' : '' }}">
+         <a href="{{ route('media.posts') }}">
+            <i class="icon nav-icon" data-eva="folder-outline"></i>
+            <span class="menu-item" data-key="t-dashboards">Media Post</span>
+         </a>
+      </li>
+      
       <li class="{{ Request::is('posts/approval') ? 'mm-active' : '' }}">
          <a href="{{ route('posts.approval') }}">
             <i class="icon nav-icon" data-eva="checkmark-circle-outline"></i>

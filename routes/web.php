@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\MediaPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
@@ -25,19 +27,24 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['except:role:member'])->group(function () {
+        
         Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
         Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
+        Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
         Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
-        Route::resource('/categories', CategoryController::class);
-        Route::resource('/tags', TagController::class);
+        Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
+        Route::resource('/users', UserController::class);
     });
 
     Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
     Route::resource('/posts', PostController::class);
 
     Route::middleware(['role:superadmin,admin'])->group(function () {
-        Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
-        Route::resource('/users', UserController::class);
+        Route::resource('/categories', CategoryController::class);
+        Route::resource('/tags', TagController::class);
+        Route::get('/hero/main', [HeroImageController::class, 'main'])->name('hero.name');
+        Route::get('/hero/detail', [HeroImageController::class, 'detail'])->name('hero.detail');
+        Route::get('/hero/basic', [HeroImageController::class, 'basic'])->name('hero.basic');
     });
 
     

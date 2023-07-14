@@ -1,5 +1,5 @@
 <div
-   class="hero-area height-700 bg-img background-overlay hero-detail">
+   class="hero-area height-700 bg-img hero-detail">
    <div class="container h-100">
       <div
          class="row h-100 align-items-center justify-content-center">
