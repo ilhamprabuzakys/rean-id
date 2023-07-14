@@ -17,7 +17,7 @@
             <div class="card mb-1" id="card-top-artikel">
                <div class="row no-gutters">
                   <div class="col-md-3">
-                     <img class="card-img-left" src="{{ asset('assets/Landing/world/img/blog-img/b14.jpg') }}" alt="Card image">
+                     <img class="card-img-left" src="{{ asset('storage/' . $post->file_path) }}" alt="Card image">
                   </div>
                   <div class="col-md-9">
                      <div class="card-body">

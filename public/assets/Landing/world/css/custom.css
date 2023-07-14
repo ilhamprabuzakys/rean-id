@@ -29,8 +29,9 @@
 }
 
 .post-content .post-image {
-    float: left;
-    margin-right: 20px;
+    /* float: left;
+    margin-right: 20px; */
+    margin-bottom: 40px;
 }
 
 .post-content .post-image .post-content-image {
@@ -246,6 +247,21 @@ footer.footer-last p {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.sidebar-widget-area .widget-content #card-top-artikel .card-img-left {
+    height: 100px;
+    object-fit: cover;
+}
+
+.sidebar-widget-area .widget-content #card-top-artikel .card-body {
+    padding: 0.5rem 1.25rem;
+}
+
+.sidebar-widget-area .widget-content #card-top-artikel .card-body p {
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 10px;
+}
+
 /* Chatango Plugin */
 .widget-content#chatango-widget {
     padding: 10px 0 5px 10px;
@@ -334,7 +350,7 @@ footer.footer-last p {
  .sidebar.minimized {
     width: 55px;
     height: 20px;
-    top: 50%;
+    top: 16%;
     left: 0px;
     transition: 0.4s;
     border-top: 2px solid #949494;
@@ -346,7 +362,7 @@ footer.footer-last p {
 
  .sidebar.minimized .toggle-button {
     position: fixed;
-    top: 50.5%;
+    top: 17%;
     left: -15px;
     color: black;
     font-size: 26px;
@@ -503,4 +519,12 @@ footer.footer-last p {
     padding-left: 95px;
     margin-right: auto;
     margin-left: auto;
+ }
+
+ .single-blog-post .post-content p a.bergabung-link {
+    color: #0b75d8;
+ }
+
+ .single-blog-post .post-content p a.bergabung-link:hover, .single-blog-post .post-content p a.bergabung-link:focus {
+    color: #0760b3;
  }

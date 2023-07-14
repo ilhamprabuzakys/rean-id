@@ -99,7 +99,7 @@
 
                               <div class="post-content">
                                  <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post]) }}" class="headline">
-                                    <h5>{{ $post->title }}</h5>
+                                    <h5>{!! Str::limit(strip_tags($post->title), 30) !!}</h5>
                                  </a>
                                  {{-- <p>{!! Str::limit(strip_tags($post->body), 40) !!}</p> --}}
                                  <p>{!! Str::of(strip_tags($post->body))->words(10, '...') !!}</p>
@@ -124,19 +124,19 @@
                                     @endif
                                     <div class="col-12 col-md-6">
 
-                                       <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                                       <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                                           <div class="post-thumbnail">
-                                             <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                             <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
 
                                              <div class="post-cta"><a href="#">{{ $post->category->name }}</a></div>
                                           </div>
 
                                           <div class="post-content">
                                              <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
-                                                <h5>{{ $post->title }}</h5>
+                                                <h5>{!! Str::limit(strip_tags($post->title), 20) !!}</h5>
                                              </a>
-
+                                             <p class="post-body">{!! Str::limit(strip_tags($post->body), 30) !!}</p>
                                              <div class="post-meta">
                                                 <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
                                                       {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
@@ -155,19 +155,19 @@
                                  @endif
                                  <div class="col-12 col-md-6">
 
-                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                                    <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                                        <div class="post-thumbnail">
-                                          <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                          <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
 
                                           <div class="post-cta post-all-cta"><a href="#">{{ $post->category->name }}</a></div>
                                        </div>
 
                                        <div class="post-content">
                                           <a href="#" class="headline">
-                                             <h5>{{ $post->title }}</h5>
+                                             <h5>{!! Str::limit(strip_tags($post->title), 20) !!}</h5>
                                           </a>
-
+                                          <p class="post-body">{!! Str::limit(strip_tags($post->body), 30) !!}</p>
                                           <div class="post-meta">
                                              <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
                                                    {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
@@ -205,17 +205,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -226,7 +226,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -251,17 +251,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -272,7 +272,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -297,17 +297,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -318,7 +318,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -343,17 +343,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -364,7 +364,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -389,17 +389,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail py-0">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -410,7 +410,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -435,17 +435,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -456,7 +456,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -481,17 +481,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -530,14 +530,14 @@
                            <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -573,17 +573,17 @@
                            @break
                         @endif
                         <div class="col-12 col-md-6">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
 
                               <div class="post-thumbnail">
-                                 <img src="assets/Landing/world/img/blog-img/b14.jpg" alt="">
+                                 <img src="assets/Landing/world/img/blog-img/b{{ $loop->iteration }}.jpg" alt="">
                               </div>
 
                               <div class="post-content">
-                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                                 <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="post_title">
                                     <h5>{!! Str::limit($post->title, 20) !!}</h5>
                                  </a>
-                                 <p>{!! Str::of(strip_tags($post->body))->words(16, '...') !!}</p>
+                                 <p>{!! Str::of(strip_tags($post->body))->words(8, '...') !!}</p>
    
                                  <div class="post-meta">
                                     <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
@@ -594,7 +594,7 @@
                         </div>
                      @empty
                        <div class="col-12 col-md-12">
-                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-1">
+                           <div class="single-blog-post post-style-2 d-flex align-items-center mb-3">
                               <div class="post-content ml-2">
                                  <a href="#" class="headline text-center">
                                     <h5>{{ __('Data Masih Kosong') }}</h5>
@@ -608,6 +608,52 @@
             </div>
          </div>
 
+         <div class="world-latest-articles">
+            <div class="row">
+               <div class="col-12 col-lg-12">
+                  <div class="title">
+                     <h5>Event saat ini</h5>
+                  </div>
+         
+                  @forelse ($postEvent as $post)
+                  @if ($loop->iteration > 3)
+                     @break
+                  @endif
+                  <div class="single-blog-post post-style-4 d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.{{ $loop->iteration+1 }}s">
+         
+                     <div class="post-thumbnail">
+                        <img src="assets/Landing/world/img/blog-img/b{{ 1 + $loop->iteration }}.jpg" alt="">
+                     </div>
+         
+                     <div class="post-content">
+                        <a href="{{ route('home.show_post', ['category' => $post->category->slug, 'post' => $post->slug]) }}" class="headline">
+                           <h5>{{ $post->title }}</h5>
+                        </a>
+                        <p>{!! Str::of(strip_tags($post->body))->words(14, '...') !!}</p>
+
+                        <div class="post-meta">
+                           <p><a href="#" class="post-author">{{ $post->user->name }}</a> on <a href="#" class="post-date">
+                                 {{ $post->updated_at->format('M d, Y \a\t g:i a') }}</a></p>
+                        </div>
+                     </div>
+                  </div>
+                  @empty
+                  <div class="single-blog-post d-flex align-items-center wow fadeInUpBig" data-wow-delay="0.2s">
+                     <div class="post-content">
+                        <a href="#" class="headline">
+                           <h5>Belum ada event saat ini.</h5>
+                        </a>
+                        <p>Tetap nantikan event seru dari kami dengan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none bergabung-link">Bergabung Disini</a></p>
+         
+                        {{-- <div class="post-meta">
+                           <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
+                        </div> --}}
+                     </div>
+                  </div>
+                  @endforelse
+               </div>
+            </div>
+         </div>
          <div class="world-latest-articles">
             <div class="row">
                <div class="col-12 col-lg-12">
@@ -643,7 +689,7 @@
                         <a href="#" class="headline">
                            <h5>Belum ada artikel yang dibuat.</h5>
                         </a>
-                        <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none">Bergabung Disini</a></p>
+                        <p>Mari bergabung dan ramaikan komunitas ini! <a href="{{ route('login') }}" class="text-decoration-none bergabung-link">Bergabung Disini</a></p>
          
                         {{-- <div class="post-meta">
                            <p><a href="#" class="post-author">Katy Liu</a> on <a href="#" class="post-date">Sep 29, 2017 at 9:48 am</a></p>
