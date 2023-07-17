@@ -24,13 +24,14 @@
                         <div class="row justify-content-between">
                            <div class="col-9">
                               <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post]) }}">
-                                 <h6>{{ $post->title }}</h6>
+                                 <h6>{!! Str::limit(strip_tags($post->title), 15) !!}</h6>
                               </a>
                            </div>
                            <div class="col-3 d-flex justify-content-end align-items-center">
                               <span><i class="fa fa-eye mr-1"></i>{{ $post->views }}</span>
                            </div>
                         </div>
+                        <p class="post-body">{!! Str::limit(strip_tags($post->body), 30) !!}</p>
                         <p>{{ $post->updated_at->format('M d, Y \a\t g:i a') }}</p>
                      </div>
                   </div>

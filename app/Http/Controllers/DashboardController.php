@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard-borex.basic.index', [
+        return view('dashboard.pages.basic', [
             'title' => 'Dashboard',
         ]);
     }

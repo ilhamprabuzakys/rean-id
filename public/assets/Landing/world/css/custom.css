@@ -262,6 +262,13 @@ footer.footer-last p {
     bottom: 10px;
 }
 
+.sidebar-widget-area .widget-content #card-top-artikel .card-body p.post-body {
+    position: absolute;
+    bottom: 40px;
+}
+
+
+
 /* Chatango Plugin */
 .widget-content#chatango-widget {
     padding: 10px 0 5px 10px;

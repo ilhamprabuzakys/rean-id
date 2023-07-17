@@ -1,0 +1,11 @@
+/* SIDEBAR */
+#sidebar .sidebar-content .sidebar-brand img.sidebar-image-brand {
+   height: 26px !important;
+}
+
+#sidebar .sidebar-content .sidebar-brand img.sidebar-image-brand-sm {
+   position: relative;
+   right: 9px;
+   width: 45px;
+   height: 32px;
+}
