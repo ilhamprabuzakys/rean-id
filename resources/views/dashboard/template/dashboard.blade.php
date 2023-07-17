@@ -16,7 +16,8 @@
    <title>{{ $title . ' - ' . config('app.name') }}</title>
 
    @include('dashboard.template.partials.css')
-	
+	@stack('style')
+	@stack('head')
 </head>
 
 <!--

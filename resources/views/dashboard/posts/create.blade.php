@@ -3,16 +3,16 @@
    <script src="{{ asset('assets/borex/libs/ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
    <script>
-      // ClassicEditor
-      //    .create( document.querySelector('#body') )
-      //    .catch( error => {
-      //       console.error( error );
-      //    } );
+      ClassicEditor
+         .create(document.querySelector('#body-editor'))
+         .catch(error => {
+            console.error(error);
+         });
    </script>
    <script src="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.js') }}"></script>
    @include('dashboard-borex.components.select2')
    <script>
-			new Choices(document.querySelector("#tags-multi-select"));
+      new Choices(document.querySelector("#tags-multi-select"));
    </script>
 @endpush
 @push('head')
@@ -27,7 +27,7 @@
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+               <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" id="createPost">
                   @csrf
                   <div class="row mb-3">
                      <div class="col-lg-9">
@@ -79,16 +79,16 @@
                         <select class="form-select form-select-md @error('tags')
                            is-invalid
                         @enderror" name="tags[]" id="tags-multi-select" multiple>
-                        <optgroup label="HashTags">
-                           @foreach ($tags as $tag)
-                              @if (in_array($tag->id, old('tags', [])))
-                                 <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
-                              @else
-                                 <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                              @endif
-                           @endforeach
-                        </optgroup>
-                           
+                           <optgroup label="HashTags">
+                              @foreach ($tags as $tag)
+                                 @if (in_array($tag->id, old('tags', [])))
+                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                                 @else
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                 @endif
+                              @endforeach
+                           </optgroup>
+
                         </select>
                      </div>
                      <div class="col-lg-2">
@@ -114,11 +114,14 @@
                   <div class="row mb-3">
                      <div class="col-lg-12">
                         <label for="body" class="form-label">Body <sup class="text-danger">*</sup></label>
-                        <input type="hidden" id="body" name="body">
+                        {{-- <input type="hidden" id="body" name="body"> --}}
                         {{-- <div id="body"></div> --}}
-                        <trix-editor input="body" class="@error('body')
+                        <textarea name="body-editor" id="body-editor" cols="30" rows="20" class="d-none @error('body')
                         is-invalid
-                     @enderror">{!! old('body') !!}</trix-editor>
+                     @enderror">{!! old('body') !!}</textarea>
+                        {{-- <trix-editor input="body" class="@error('body')
+                        is-invalid
+                     @enderror">{!! old('body') !!}</trix-editor> --}}
                         @error('body')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -161,6 +164,19 @@
          $('#category_id').select2({
             theme: 'bootstrap-5'
          });
+      });
+
+      document.getElementById('createPost').addEventListener('submit', function(event) {
+         event.preventDefault(); // Mencegah pengiriman formulir secara langsung
+
+         // Tangkap nilai dari editor CKEditor
+         var editorData = CKEditor.instances['body-editor'].getData();
+
+         // Setel nilai pada elemen input
+         document.getElementById('body').value = editorData;
+
+         // Kirim formulir
+         this.submit();
       });
    </script>
 @endsection
