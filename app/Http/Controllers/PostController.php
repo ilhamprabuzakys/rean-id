@@ -40,7 +40,7 @@ class PostController extends Controller
 
         // $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
         confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.posts.index', [
+        return view('dashboard.posts.index', [
             'title' => 'Daftar Postingan',
         ], compact('posts', 'categories', 'tags', 'statuses'));
     }
@@ -55,7 +55,7 @@ class PostController extends Controller
             return Tag::orderBy('updated_at', 'desc')->get();
         });
 
-        return view('dashboard-borex.posts.create', [
+        return view('dashboard.posts.create', [
             'title' => 'Tambah Postingan',
         ], compact('categories', 'tags'));
     }
@@ -132,7 +132,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('dashboard-borex.posts.show', [
+        return view('dashboard.posts.show', [
             'title' => $post->title,
         ], compact('post'));
     }
@@ -155,7 +155,7 @@ class PostController extends Controller
 
         // dd($statuses);
 
-        return view('dashboard-borex.posts.edit', [
+        return view('dashboard.posts.edit', [
             'title' => 'Edit Postingan ' . $post->title,
             'statuses' => $statuses,
         ], compact('post', 'categories', 'tags'));
@@ -228,7 +228,7 @@ class PostController extends Controller
 
         // $posts = Post::with(['category', 'user'])->orderBy('updated_at', 'desc')->get();
         confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.posts.approval', [
+        return view('dashboard.posts.approval', [
             'title' => 'Perizinan Postingan',
         ], compact('posts', 'categories', 'statuses'));
     }

@@ -51,19 +51,19 @@
          </li>
          
          <li class="sidebar-item {{ request()->url() == route('dashboard') ? ' active' : '' }}">
-            <a class="sidebar-link" href="pages-profile.html">
+            <a class="sidebar-link" href="{{ route('dashboard') }}">
                <i class="align-middle" data-feather="airplay"></i> <span class="align-middle">Dashboard</span>
             </a>
          </li>
          
          <li class="sidebar-item {{ request()->url() == route('logs.index') ? ' active' : '' }}">
-            <a class="sidebar-link" href="pages-profile.html">
+            <a class="sidebar-link" href="{{ route('logs.index') }}">
                <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Log Aktivitas</span>
             </a>
          </li>
 
          <li class="sidebar-item">
-            <a class="sidebar-link" href="pages-invoice.html">
+            <a class="sidebar-link" href="/social-media">
                <i class="align-middle" data-feather="instagram"></i> <span class="align-middle">Sosial Media</span>
             </a>
          </li>

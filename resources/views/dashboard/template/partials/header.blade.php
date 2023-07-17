@@ -75,10 +75,11 @@
                         }
                         $time = $formatted_time;
                      @endphp
+                     
                       <a href="#" class="list-group-item">
                         <div class="row g-0 align-items-center">
                            <div class="col-2">
-                              <i class="text-danger" data-feather="alert-circle"></i>
+                              <i class="text-success" data-feather="check"></i>
                            </div>
                            <div class="col-10">
                               <div class="text-dark">Data {{ $subject_type }} {{ $event }}.</div>
@@ -89,6 +90,9 @@
                            </div>
                         </div>
                      </a>
+                     @if ($loop->iteration > 3)
+                     	@break
+                     @endif
                   @empty
                   <a href="#" class="list-group-item">
                      <div class="row g-0 align-items-center">
@@ -106,7 +110,7 @@
                  
                </div>
                <div class="dropdown-menu-footer">
-                  <a href="#" class="text-muted">Show all notifications</a>
+                  <a href="{{ route('logs.index') }}" class="text-muted">Show all notifications</a>
                </div>
             </div>
          </li>

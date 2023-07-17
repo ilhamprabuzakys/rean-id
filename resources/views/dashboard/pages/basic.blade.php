@@ -6,7 +6,12 @@
       </div>
 
       <div class="col-auto ms-auto text-end mt-n1">
-         <a href="#" class="btn btn-danger me-2">Simpan ke PDF</a>
+         <a href="#" class="btn btn-danger me-2" onclick="printToPDF()" target="_blank">Simpan ke PDF</a>
+         <script>
+            function printToPDF() {
+               window.print();
+            }
+         </script>
          <a href="#" class="btn btn-primary">Menu Cepat</a>
       </div>
    </div>

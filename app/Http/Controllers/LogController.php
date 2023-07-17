@@ -10,7 +10,7 @@ class LogController extends Controller
     public function index()
     {
         $logs = EventLog::with(['subject', 'user'])->orderBy('updated_at', 'desc')->get();
-        return view('dashboard-borex.logs.index', [
+        return view('dashboard.logs.index', [
             'title' => 'Daftar Log',
         ], compact('logs'));
     }
