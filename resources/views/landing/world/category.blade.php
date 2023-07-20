@@ -30,7 +30,11 @@
                                  <div class="row">
                                     <div class="col-3">
                                        <div class="post-image">
-                                          <img src="{{ asset('assets/Landing/world/img/blog-img/b14.jpg') }}" alt="" width="180" height="110">
+                                          @if (!empty($post->file_path) && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
+                                          <img src="{{ asset('storage/' . $post->file_path) }}" alt="post-image" id="post-image-content">
+                                          @else
+                                          <img src="{{ asset('assets/Landing/world/img/blog-img/b' . random_int(1,57) .'.jpg') }}" alt="post-image" id="post-image-content">
+                                          @endif
                                           <div class="post-category-label">
                                              <a href="{{ route('home.category_view', $post->category) }}">{{ $post->category->name }}</a>
                                           </div>

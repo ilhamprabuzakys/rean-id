@@ -110,14 +110,14 @@ a#whatsapp-icon-main:hover {
 }
 
 footer.footer-area {
-    background: #ffffff url(../img/footer-bg.png) no-repeat right bottom;
+    background: #000000 url(../img/footer-bg.png) no-repeat right bottom;
     background-size: contain;
-    border-top: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #181818;
+    border-bottom: 1px solid #181818;
     padding: 70px 0;
 }
 footer.footer-last {
-    background-color: #fdfdfd;
+    background-color: #101010;
     position: relative;
     padding: 10px 0;
     z-index: 1;
@@ -143,7 +143,7 @@ footer.footer-last p {
 
 .footer-map {
     border: 0;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     transition: 0.2s;
 }
 
@@ -226,6 +226,12 @@ footer.footer-last p {
     padding: 10px 0;
 }
 
+.world-latest-articles .post-image img#post-image-content {
+    object-fit: cover;
+    height: 150px;
+    width: 200px;
+}
+
 /* Disqus Threads */
 .card.card-comments .card-header {
     padding: 0.15rem 1.25rem;
@@ -266,8 +272,6 @@ footer.footer-last p {
     position: absolute;
     bottom: 40px;
 }
-
-
 
 /* Chatango Plugin */
 .widget-content#chatango-widget {

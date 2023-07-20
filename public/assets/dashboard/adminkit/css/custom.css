@@ -9,3 +9,42 @@
    width: 45px;
    height: 32px;
 }
+
+.dropdown-menu a.dropdown-item:active, 
+.dropdown-menu a.dropdown-item:focus {
+   background-color: #c7ddff2b !important;
+}
+
+.image-preview-container {
+   height: 225px;
+   width: 350px;
+   background-color: black;
+}
+.image-preview-container img#image-preview {
+   min-height: 225px;
+   min-width: 350px;
+   max-height: 225px;
+   max-width: 350px;
+   object-fit: contain;
+}
+.image-preview-container button#cancel-button {
+   position: relative;
+   left: 85%;
+   bottom: 93%;
+   z-index: 1;
+}
+
+
+/* Datatable Override */
+table.dataTable thead tr th.sorting.sorting_asc {
+   width: 20.5px !important;
+}
+
+.dada {
+   color: #acacac;
+}
+
+/* UTILS */
+.not-allowed {
+   cursor: not-allowed;
+}

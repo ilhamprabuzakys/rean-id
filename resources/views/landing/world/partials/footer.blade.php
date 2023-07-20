@@ -4,7 +4,7 @@
          <div class="col-12 col-md-4">
             <div class="footer-single-widget">
                <a href="#">
-                  <img src="{{ asset('assets/img/footer-rean-gabung-dark.png') }}" alt="" style="height: 90px;">
+                  <img src="{{ asset('assets/img/footer-rean-gabung.png') }}" alt="" style="height: 90px;">
                   {{-- <div class="row justify-content-start">
                      <div class="col-4">
                         <img src="{{ asset('assets/img/rean-putih-hitam2.png') }}" alt="" class="" style="height: 90px;">

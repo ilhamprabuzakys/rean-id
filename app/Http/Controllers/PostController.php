@@ -62,7 +62,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $rules = [
             'title' => ['required', Rule::unique('posts')],
             'slug' => ['required', Rule::unique('posts')],

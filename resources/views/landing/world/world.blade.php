@@ -14,7 +14,7 @@
    @endif
 
    <link rel="icon" href="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}">
-
+   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
    @include('landing.world.partials.css')
    @stack('head')
 </head>
@@ -36,7 +36,7 @@
 
    @yield('hero')
 
-   <div class="main-content-wrapper py-3">
+   <div class="main-content-wrapper pt-5 pb-3">
       <div class="@yield('parent')">
          @yield('content')
       </div>
@@ -45,7 +45,7 @@
    @include('landing.world.partials.footer')
 
    <a id="whatsapp-icon-main" href="https://wa.me/625280800064?text=Hi,%20saya%20ingin%20bergabung%20dengan%20anda!%20Senang%20bertemu%20dengan%20anda!"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-
+   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
    @include('landing.world.partials.script')
    @stack('script')
 </body>

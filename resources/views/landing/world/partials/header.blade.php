@@ -17,14 +17,14 @@
                <div class="collapse navbar-collapse" id="worldNav">
                   <ul class="navbar-nav ml-auto">
                      <li class="nav-item {{ request()->url() == route('index') ? ' active' : '' }}">
-                        <a class="nav-link" href="{{ route('index') }}">Home</a>
+                        <a class="nav-link" href="{{ route('index') }}">Beranda</a>
                      </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                           <a class="dropdown-item" href="{{ route('index') }}">Home</a>
                            <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
                            <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Kategori</a>
+                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Label</a>
                            <a class="dropdown-item" href="{{ route('home.contact') }}">Halaman Kontak</a>
                         </div>
                      </li>
@@ -41,11 +41,11 @@
                         <a class="nav-link" href="{{ route('home.cns') }}">CNS Radio</a>
                      </li>
                      <li class="nav-item {{ request()->url() == route('home.contact') ? ' active' : '' }}">
-                        <a class="nav-link" href="{{ route('home.contact') }}">Contact</a>
+                        <a class="nav-link" href="{{ route('home.contact') }}">Kontak</a>
                      </li>
                      <li class="nav-item">
                         @auth
-                           <a class="nav-link logout-link" href="#">Logout</a>
+                           <a class="nav-link logout-link" href="#">{{ __('Keluar') }}</a>
                            @push('script')
                               <script>
                                  $(document).ready(function() {
@@ -64,14 +64,14 @@
                               <button type="submit">Logout</button>
                            </form> --}}
                         @else
-                           <a class="nav-link" href="{{ route('login') }}">Login</a>
+                           <a class="nav-link" href="{{ route('login') }}">{{ __('Masuk') }}</a>
                         @endauth
                      </li>
                   </ul>
 
                   <div id="search-wrapper">
                      <form action="#">
-                        <input type="text" id="search" name="search" placeholder="Search something...">
+                        <input type="text" id="search" name="search" placeholder="Cari karya...">
                         <div id="close-icon"></div>
                         <input class="d-none" type="submit" value="">
                      </form>

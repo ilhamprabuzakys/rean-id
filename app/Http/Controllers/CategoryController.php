@@ -18,14 +18,14 @@ class CategoryController extends Controller
             return Category::with('posts')->orderBy('updated_at', 'desc')->get();
         });
         confirmDelete('Apakah anda yakin untuk menghapus kategori ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.categories.index', [
+        return view('dashboard.categories.index', [
             'title' => 'Daftar Kategori',
         ], compact('categories'));
     }
 
     public function create()
     {
-        return view('dashboard-borex.categories.create', [
+        return view('dashboard.categories.create', [
             'title' => 'Tambah Kategori',
         ]);
     }
@@ -58,14 +58,14 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
 
-        return view('dashboard-borex.categories.show', [
+        return view('dashboard.categories.show', [
             'title' => 'Postingan dengan kategori ' . $category->name,
         ], compact('category'));
     }
 
     public function edit(Category $category)
     {
-        return view('dashboard-borex.categories.edit', [
+        return view('dashboard.categories.edit', [
             'title' => 'Edit Kategori',
         ], compact('category'));
     }

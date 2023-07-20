@@ -17,14 +17,14 @@ class TagController extends Controller
             return Tag::orderBy('updated_at', 'desc')->get();
         });
         confirmDelete('Apakah anda yakin untuk menghapus tag ini?', 'Data yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.tags.index', [
+        return view('dashboard.tags.index', [
             'title' => 'Daftar Tag',
         ], compact('tags'));
     }
 
     public function create()
     {
-        return view('dashboard-borex.tags.create', [
+        return view('dashboard.tags.create', [
             'title' => 'Tambah Tag',
         ]);
     }
@@ -56,14 +56,14 @@ class TagController extends Controller
 
     public function show(Tag $tag)
     {
-        return view('dashboard-borex.tags.show', [
+        return view('dashboard.tags.show', [
             'title' => 'Postingan dengan tag ' . $tag->name,
         ], compact('tag'));
     }
 
     public function edit(Tag $tag)
     {
-        return view('dashboard-borex.tags.edit', [
+        return view('dashboard.tags.edit', [
             'title' => 'Edit Tag',
         ], compact('tag'));
     }
