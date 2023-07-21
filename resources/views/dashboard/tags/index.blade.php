@@ -24,7 +24,7 @@
    <!-- end page title -->
    <div class="row">
       <div class="col-12 d-flex justify-content-end">
-         <button data-bs-toggle="modal" data-bs-target="tambahLabel" class="btn btn-soft-primary mb-2 waves-effect waves-light">Buat label</button>
+         <button data-bs-toggle="modal" data-bs-target="#tambahLabel" class="btn btn-soft-primary mb-2 waves-effect waves-light">Buat label</button>
          @include('dashboard.tags.modal.create')
       </div>
       <div class="col-12">

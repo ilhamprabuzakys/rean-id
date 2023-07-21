@@ -237,9 +237,11 @@
     border: 1px solid #aaa;
     border-radius: 4px;
     cursor: text;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     padding-right: 5px;
     position: relative;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 .select2-container--default
     .select2-selection--multiple.select2-selection--clearable {
@@ -442,6 +444,8 @@
 .select2-container--default .select2-results__option--selected {
    background-color: #0c67c5;
    color: #fff;
+   /* edit */
+   display: none;
 }
 .select2-container--default
     .select2-results__option--highlighted.select2-results__option--selectable {

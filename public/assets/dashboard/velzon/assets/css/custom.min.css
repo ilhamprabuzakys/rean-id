@@ -127,7 +127,10 @@
    background-color: var(--bs-gray-300)
 }
 
-
+/* Change app.min.css */
+.empty-notification-elem {
+   display: none !important;
+}
 
 
 

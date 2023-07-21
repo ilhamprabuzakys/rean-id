@@ -1,14 +1,15 @@
 @extends('dashboard.template.dashboard')
 @push('script')
-   {{-- <script src="{{ asset('assets/borex/libs/ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
-   <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+   {{-- <script src="{{ asset('assets/borex/libs/ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
+   <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+   {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script> --}}
    <script>
       ClassicEditor
          .create(document.querySelector('#body-editor'))
          .catch(error => {
             console.error(error);
          });
-   </script> --}}
+   </script>
    {{-- <script src="{{ asset('assets/dashboard/velzon/assets/libs/choices-js/scripts/choices.min.js') }}"></script> --}}
    {{-- <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script> --}}
 
@@ -29,8 +30,8 @@
 @endpush
 @push('head')
    <!-- Trix Editor -->
-   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+   {{-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script> --}}
 
    <!-- Choice JS -->
    {{-- <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/choices-js/styles/choices.min.css') }}"> --}}
@@ -38,7 +39,7 @@
    rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"
    /> --}}
-{{-- 
+   {{-- 
    <link
    rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
@@ -193,19 +194,17 @@
                            $(this).hide();
                         });
                      </script>
-                     
                   </div>
                   <div class="row mb-3">
                      <div class="col-lg-12">
                         <label for="body" class="form-label">Body <sup class="text-danger">*</sup></label>
-                        <input type="hidden" id="body" name="body">
                         {{-- <div id="body"></div> --}}
-                        {{-- <textarea name="body-editor" id="body-editor" cols="30" rows="20" class="d-none @error('body')
+                        <textarea name="body" id="body-editor" rows="3" class="@error('body')
                         is-invalid
-                     @enderror">{!! old('body') !!}</textarea> --}}
-                        <trix-editor input="body" class="@error('body')
+                     @enderror">{!! old('body') !!}</textarea>
+                        {{-- <trix-editor input="body" class="@error('body')
                         is-invalid
-                     @enderror">{!! old('body') !!}</trix-editor>
+                     @enderror">{!! old('body') !!}</trix-editor> --}}
                         @error('body')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -215,13 +214,16 @@
                   </div>
                   <div class="row justify-content-end mx-1">
                      <button class="btn btn-primary px-2">
-                        <i class="fas fa-save fa-md me-2"></i>
-                        Simpan Data</button>
+                        Simpan Data
+                        <i class="ri-save-3-line ms-2"></i>
+                     </button>
                   </div>
                   <div class="row justify-content-end mx-1 mt-2">
                      <a class="btn btn-danger px-2 text-decoration-none" href="{{ route('posts.index') }}">
-                        <i class="fas fa-step-backward fa-md me-2"></i>
-                        Kembali</a>
+                        Kembali
+                        <i class="ri-arrow-go-back-fill ms-2"></i>
+                     </a>
+                        
                   </div>
                </form>
             </div>

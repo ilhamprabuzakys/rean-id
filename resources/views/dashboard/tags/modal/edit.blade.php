@@ -18,7 +18,7 @@
                      <input type="text"
                         class="form-control @error('name')
                            is-invalid
-                        @enderror" name="name" id="name"
+                        @enderror" name="name" id="edit-name"
                         value="{{ old('name', $tag->name) }}" required>
                      @error('name')
                         <div class="invalid-feedback">
@@ -30,10 +30,10 @@
                <p class="text-muted mb-0 mt-4 text-sm"><span class="text-danger">Perhatikan</span> dengan mengedit data label ini akan <strong>mengganti</strong> seluruh label postingan yang berkaitan dengan label ini.</p>
          </div>
          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn-dismiss-modal">
                <i class="fas fa-xmark fa-md me-2"></i>
                Tutup</button>
-            <button id="save-button" class="btn btn-primary px-2 not-allowed" disabled>
+            <button id="edit-save-button" class="btn btn-primary px-2 not-allowed" disabled>
                <i class="fas fa-save fa-md me-2"></i>
                Simpan Data</button>
             </form>
@@ -44,13 +44,18 @@
 
 <script>
    $(document).ready(function() {
-      $('#name').on('input', function() {
+      $('#edit-name').on('input', function() {
          var nameValue = $(this).val().trim();
+         console.log(nameValue);
          if (nameValue !== '') {
-            $('#save-button').prop('disabled', false).removeClass('not-allowed');
+            $('#edit-save-button').prop('disabled', false).removeClass('not-allowed');
          } else {
-            $('#save-button').prop('disabled', true).addClass('not-allowed');
+            $('#edit-save-button').prop('disabled', true).addClass('not-allowed');
          }
       });
+
+      $('#btn-dismiss-modal').on('click', function() {
+         $('#edit-name').val('{{ $tag->name }}');
+      }) ;
    });
 </script>

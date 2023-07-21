@@ -60,6 +60,7 @@ class Category extends Model
         Cache::forget('categoriesCount');
     }
 
+    // Eloquent Relationship
     public function posts() 
     {
         return $this->hasMany(Post::class);

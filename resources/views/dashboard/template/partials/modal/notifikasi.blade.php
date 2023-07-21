@@ -4,7 +4,7 @@ $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)
       ->orderBy('updated_at', 'desc')
       ->get();
 @endphp
-<div class="modal fade" id="SemuaNotifikasi" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade zoomIn" id="notifikasiModal" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -55,21 +55,36 @@ $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)
                      }
                      $time = $formatted_time;
                   @endphp
-                  <a href="#" class="list-group-item">
-                     <div class="row g-0 align-items-center">
-                        <div class="col-2">
-                           <i class="text-success" data-feather="check"></i>
-                        </div>
-                        <div class="col-10">
-                           <div class="text-dark">Data {{ $subject_type }} {{ $event }}.</div>
-                           <div class="text-muted small mt-1">Tabel {{ $subject_type }} {{ $event }}, silahkan cek kembali dilaman nya masing-masing.</div>
-                           <div class="text-muted small mt-1">
-                              <i class="text-secondary" data-feather="clock"></i>
-                              {{ $time }}
+                   <div data-simplebar style="max-height: 300px;" class="pe-2">
+                     <div class="text-reset notification-item d-block dropdown-item position-relative">
+                        <div class="d-flex">
+                           <div class="avatar-xs me-3 flex-shrink-0">
+                              <span class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                 <i class="bx bx-badge-check"></i>
+                              </span>
+                           </div>
+                           <div class="flex-grow-1">
+                              <a href="#!" class="stretched-link">
+                                 <h6 class="mt-0 mb-1 fs-13 fw-semibold">Data {{ $subject_type }} {{ $event }}
+                                 </h6>
+                              </a>
+                              <div class="fs-13 text-muted">
+                                 <p class="mb-1">Tabel {{ $subject_type }} {{ $event }}, perubahan telah diterapkan, cek dimasing-masing tabel</p>
+                              </div>
+
+                              <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                 <span><i class="mdi mdi-clock-outline"></i> {{ $time }}</span>
+                              </p>
+                           </div>
+                           <div class="px-2 fs-15">
+                              <div class="form-check notification-check">
+                                 <input class="form-check-input" type="checkbox" value="" id="all-notification-check01">
+                                 <label class="form-check-label" for="all-notification-check01"></label>
+                              </div>
                            </div>
                         </div>
                      </div>
-                  </a>
+                   </div>
                @endforeach
             </div>
          </div>

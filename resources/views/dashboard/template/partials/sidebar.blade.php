@@ -2,7 +2,7 @@
    <!-- LOGO -->
    <div class="navbar-brand-box">
       <!-- Dark Logo-->
-      <a href="index.html" class="logo logo-dark">
+      <a href="{{ route('dashboard') }}" class="logo logo-dark">
          <span class="logo-sm">
             <img src="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}" alt="" height="25">
          </span>
@@ -11,7 +11,7 @@
          </span>
       </a>
       <!-- Light Logo-->
-      <a href="index.html" class="logo logo-light">
+      <a href="{{ route('dashboard') }}" class="logo logo-light">
          <span class="logo-sm">
             <img src="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}" alt="" height="25">
          </span>
@@ -32,7 +32,7 @@
          <ul class="navbar-nav" id="navbar-nav">
             <li class="menu-title"><span data-key="t-menu">Menu</span></li>
             <li class="nav-item">
-               <a class="nav-link menu-link" href="{{ route('dashboard') }}">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">
                   <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboard">Dashboard</span>
                </a>
             </li>
@@ -40,46 +40,46 @@
             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Data</span></li>
 
             <li class="nav-item">
-               <a class="nav-link menu-link" href="#posts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="posts">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('posts.index')) ? 'collapsed active' : '' }}" href="#posts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="posts">
                   <i class="ri-book-open-line"></i> <span data-key="t-posts">Postingan</span>
                </a>
                <div class="collapse menu-dropdown" id="posts">
                   <ul class="nav nav-sm flex-column">
                      <li class="nav-item">
-                        <a href="{{ route('posts.index') }}" class="nav-link" data-key="t-posts-all">Semua Data</a>
+                        <a href="{{ route('posts.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('posts.index')) ? 'active' : '' }}" data-key="t-posts-all">Semua Data</a>
                      </li>
                      <li class="nav-item">
-                        <a href="{{ route('posts.create') }}" class="nav-link" data-key="t-posts-create">Tambah Data</a>
+                        <a href="{{ route('posts.create') }}" class="nav-link {{ str_starts_with(request()->url(), route('posts.create')) ? 'active' : '' }}" data-key="t-posts-create">Tambah Data</a>
                      </li>
                   </ul>
                </div>
             </li>
             <li class="nav-item">
-               <a class="nav-link menu-link" href="#categories" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="categories">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('categories.index')) ? 'collapsed active' : '' }}" href="#categories" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="categories">
                   <i class="ri-price-tag-3-line"></i> <span data-key="t-categories">Kategori</span>
                </a>
                <div class="collapse menu-dropdown" id="categories">
                   <ul class="nav nav-sm flex-column">
                      <li class="nav-item">
-                        <a href="{{ route('categories.index') }}" class="nav-link" data-key="t-categories-all">Semua Data</a>
+                        <a href="{{ route('categories.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('categories.index')) ? 'active' : '' }}" data-key="t-categories-all">Semua Data</a>
                      </li>
                      <li class="nav-item">
-                        <a href="{{ route('categories.create') }}" class="nav-link" data-key="t-categories-create">Tambah Data</a>
+                        <a href="{{ route('categories.create') }}" class="nav-link {{ str_starts_with(request()->url(), route('categories.create')) ? 'active' : '' }}" data-key="t-categories-create">Tambah Data</a>
                      </li>
                   </ul>
                </div>
             </li>
             <li class="nav-item">
-               <a class="nav-link menu-link" href="#tags" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="tags">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('tags.index')) ? 'collapsed active' : '' }}" href="#tags" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="tags">
                   <i class="ri-hashtag"></i> <span data-key="t-tags">Label</span>
                </a>
                <div class="collapse menu-dropdown" id="tags">
                   <ul class="nav nav-sm flex-column">
                      <li class="nav-item">
-                        <a href="{{ route('tags.index') }}" class="nav-link" data-key="t-tags-all">Semua Data</a>
+                        <a href="{{ route('tags.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('tags.index')) ? 'active' : '' }}" data-key="t-tags-all">Semua Data</a>
                      </li>
                      <li class="nav-item">
-                        <a href="{{ route('tags.create') }}" class="nav-link" data-key="t-tags-create">Tambah Data</a>
+                        <a href="{{ route('tags.create') }}" class="nav-link {{ str_starts_with(request()->url(), route('tags.create')) ? 'active' : '' }}" data-key="t-tags-create">Tambah Data</a>
                      </li>
                   </ul>
                </div>
@@ -88,23 +88,23 @@
             <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-components">Manajemen</span></li>
 
             <li class="nav-item">
-               <a class="nav-link menu-link" href="#users" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="users">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('users.index')) ? 'collapsed active' : '' }}" href="#users" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="users">
                   <i class="ri-group-line"></i> <span data-key="t-users">Data Pengguna</span>
                </a>
                <div class="collapse menu-dropdown" id="users">
                   <ul class="nav nav-sm flex-column">
                      <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link" data-key="t-users-all">Semua Data</a>
+                        <a href="{{ route('users.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('users.index')) ? 'active' : '' }}" data-key="t-users-all">Semua Data</a>
                      </li>
                      <li class="nav-item">
-                        <a href="{{ route('users.create') }}" class="nav-link" data-key="t-users-create">Tambah Data</a>
+                        <a href="{{ route('users.create') }}" class="nav-link {{ str_starts_with(request()->url(), route('users.create')) ? 'active' : '' }}" data-key="t-users-create">Tambah Data</a>
                      </li>
                   </ul>
                </div>
             </li>
 
             <li class="nav-item">
-               <a class="nav-link menu-link" href="{{ route('logs.index') }}">
+               <a class="nav-link menu-link {{ str_starts_with(request()->url(), route('logs.index')) ? 'active' : '' }}" href="{{ route('logs.index') }}">
                   <i class="ri-line-chart-line"></i> <span data-key="t-log">Log Aktivitas</span>
                </a>
             </li>

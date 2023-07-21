@@ -145,7 +145,7 @@
                   <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
                      <div class="row align-items-center">
                         <div class="col">
-                           <h6 class="m-0 fw-semibold fs-15"> Website Lainnya</h6>
+                           <h6 class="m-0 fw-semibold fs-12"> Website Lainnya</h6>
                         </div>
                         <div class="col-auto">
                            <a href="#!" class="btn btn-sm btn-soft-info"> Lihat semua website
@@ -158,19 +158,19 @@
                      <div class="row g-0">
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/github.png" alt="Github">
+                              <img src="{{ asset('assets/img/LogoBNN.png') }}" alt="Github">
                               <span>Cegah Narkoba</span>
                            </a>
                         </div>
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/bitbucket.png" alt="bitbucket">
+                              <img src="{{ asset('assets/img/LogoBNN.png') }}" alt="bitbucket">
                               <span>Sidepe</span>
                            </a>
                         </div>
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/dribbble.png" alt="dribbble">
+                              <img src="{{ asset('assets/img/siparel.png') }}" alt="dribbble">
                               <span>Siparel</span>
                            </a>
                         </div>
@@ -179,19 +179,19 @@
                      <div class="row g-0">
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/dropbox.png" alt="dropbox">
+                              <img src="{{ asset('assets/img/LogoBNN.png') }}" alt="dropbox">
                               <span>Simpeg</span>
                            </a>
                         </div>
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/mail_chimp.png" alt="mail_chimp">
+                              <img src="{{ asset('assets/img/LogoBNN.png') }}" alt="mail_chimp">
                               <span>BNN</span>
                            </a>
                         </div>
                         <div class="col">
                            <a class="dropdown-icon-item" href="#!">
-                              <img src="assets/dashboard/velzon/assets/images/brands/slack.png" alt="slack">
+                              <img src="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}" alt="slack">
                               <span>REAN</span>
                            </a>
                         </div>
@@ -364,7 +364,14 @@
                <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" id="page-header-notifications-dropdown" data-bs-toggle="dropdown"
                   data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                   <i class='bx bx-bell fs-22'></i>
-                  <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span class="visually-hidden">unread messages</span></span>
+                  @php
+                     $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)
+                         ->orderBy('updated_at', 'desc')
+                         ->get();
+                  @endphp
+                  @if ($notifications->count() > 0)
+                     <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">{{ $notifications->count() }}</span>
+                  @endif
                </button>
                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
 
@@ -372,29 +379,29 @@
                      <div class="p-3">
                         <div class="row align-items-center">
                            <div class="col">
-                              <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
+                              <h6 class="m-0 fs-16 fw-semibold text-white"> Notifikasi </h6>
                            </div>
                            <div class="col-auto dropdown-tabs">
-                              <span class="badge bg-light-subtle text-body fs-13"> 4 New</span>
+                              <span class="badge bg-light-subtle text-body fs-13">Total : {{ $notifications->count() }}</span>
                            </div>
                         </div>
                      </div>
 
                      <div class="px-2 pt-2">
                         <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
-                           <li class="nav-item waves-effect waves-light">
+                           {{-- <li class="nav-item waves-effect waves-light">
                               <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab" aria-selected="true">
-                                 All (4)
+                                 Notifikasi
+                              </a>
+                           </li> --}}
+                           <li class="nav-item waves-effect waves-light">
+                              <a class="nav-link active" data-bs-toggle="tab" href="#notifikasi-tab" role="tab" aria-selected="false">
+                                 Notifikasi
                               </a>
                            </li>
                            <li class="nav-item waves-effect waves-light">
-                              <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab" aria-selected="false">
-                                 Messages
-                              </a>
-                           </li>
-                           <li class="nav-item waves-effect waves-light">
-                              <a class="nav-link" data-bs-toggle="tab" href="#alerts-tab" role="tab" aria-selected="false">
-                                 Alerts
+                              <a class="nav-link" data-bs-toggle="tab" href="#peringatan-tab" role="tab" aria-selected="false">
+                                 Peringatan
                               </a>
                            </li>
                         </ul>
@@ -403,7 +410,7 @@
                   </div>
 
                   <div class="tab-content position-relative" id="notificationItemsTabContent">
-                     <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
+                     {{-- <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                         <div data-simplebar style="max-height: 300px;" class="pe-2">
                            <div class="text-reset notification-item d-block dropdown-item position-relative">
                               <div class="d-flex">
@@ -510,116 +517,105 @@
                            </div>
                         </div>
 
-                     </div>
+                     </div> --}}
 
-                     <div class="tab-pane fade py-2 ps-2" id="messages-tab" role="tabpanel" aria-labelledby="messages-tab">
+                     <div class="tab-pane fade show active py-2 ps-2" id="notifikasi-tab" role="tabpanel" aria-labelledby="notifikasi-tab">
                         <div data-simplebar style="max-height: 300px;" class="pe-2">
-                           <div class="text-reset notification-item d-block dropdown-item">
-                              <div class="d-flex">
-                                 <img src="assets/dashboard/velzon/assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                 <div class="flex-grow-1">
-                                    <a href="#!" class="stretched-link">
-                                       <h6 class="mt-0 mb-1 fs-13 fw-semibold">James Lemire</h6>
-                                    </a>
-                                    <div class="fs-13 text-muted">
-                                       <p class="mb-1">We talked about a project on linkedin.</p>
-                                    </div>
-                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                       <span><i class="mdi mdi-clock-outline"></i> 30 min ago</span>
-                                    </p>
-                                 </div>
-                                 <div class="px-2 fs-15">
-                                    <div class="form-check notification-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="messages-notification-check01">
-                                       <label class="form-check-label" for="messages-notification-check01"></label>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
+                           @if ($notifications->count() > 1)
+                              @foreach ($notifications as $notification)
+                                 @php
+                                    $event = '';
+                                    switch ($notification->event) {
+                                        case 'created':
+                                            $event = ' telah dibuat';
+                                            break;
+                                        case 'updated':
+                                            $event = ' telah diperbarui';
+                                            break;
+                                        case 'deleted':
+                                            $event = ' telah dihapus';
+                                            break;
+                                        default:
+                                            $event = ' ?';
+                                            break;
+                                    }
+                                    
+                                    $namespace = 'App\Models\\';
+                                    $subject_type = substr($notification->subject_type, strlen($namespace));
+                                    
+                                    if ($subject_type == 'Category') {
+                                        $subject_type = 'Kategori';
+                                    } elseif ($subject_type == 'Post') {
+                                        $subject_type = 'Postingan';
+                                    }
+                                    
+                                    $created_time = $notification->created_at;
+                                    $now = now();
+                                    $time_diff = $created_time->diff($now);
+                                    $formatted_time = '';
+                                    if ($time_diff->days > 0) {
+                                        $formatted_time = $time_diff->days . ' hari yang lalu';
+                                    } elseif ($time_diff->h > 0) {
+                                        $formatted_time = $time_diff->h . ' jam yang lalu';
+                                    } elseif ($time_diff->i > 0) {
+                                        $formatted_time = $time_diff->i . ' menit yang lalu';
+                                    } else {
+                                        $formatted_time = 'Baru saja';
+                                    }
+                                    $time = $formatted_time;
+                                 @endphp
+                                 <div class="text-reset notification-item d-block dropdown-item position-relative">
+                                    <div class="d-flex">
+                                       <div class="avatar-xs me-3 flex-shrink-0">
+                                          <span class="avatar-title bg-info-subtle text-info rounded-circle fs-16">
+                                             <i class="bx bx-badge-check"></i>
+                                          </span>
+                                       </div>
+                                       <div class="flex-grow-1">
+                                          <a href="#!" class="stretched-link">
+                                             <h6 class="mt-0 mb-1 fs-13 fw-semibold">Data {{ $subject_type }} {{ $event }}
+                                             </h6>
+                                          </a>
+                                          <div class="fs-13 text-muted">
+                                             <p class="mb-1">Tabel {{ $subject_type }} {{ $event }}, perubahan telah diterapkan, cek dimasing-masing tabel</p>
+                                          </div>
 
-                           <div class="text-reset notification-item d-block dropdown-item">
-                              <div class="d-flex">
-                                 <img src="assets/dashboard/velzon/assets/images/users/avatar-2.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                 <div class="flex-grow-1">
-                                    <a href="#!" class="stretched-link">
-                                       <h6 class="mt-0 mb-1 fs-13 fw-semibold">Angela Bernier</h6>
-                                    </a>
-                                    <div class="fs-13 text-muted">
-                                       <p class="mb-1">Answered to your comment on the cash flow forecast's
-                                          graph 🔔.</p>
-                                    </div>
-                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                       <span><i class="mdi mdi-clock-outline"></i> 2 hrs ago</span>
-                                    </p>
-                                 </div>
-                                 <div class="px-2 fs-15">
-                                    <div class="form-check notification-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="messages-notification-check02">
-                                       <label class="form-check-label" for="messages-notification-check02"></label>
+                                          <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                             <span><i class="mdi mdi-clock-outline"></i> {{ $time }}</span>
+                                          </p>
+                                       </div>
+                                       <div class="px-2 fs-15">
+                                          <div class="form-check notification-check">
+                                             <input class="form-check-input" type="checkbox" value="" id="all-notification-check01">
+                                             <label class="form-check-label" for="all-notification-check01"></label>
+                                          </div>
+                                       </div>
                                     </div>
                                  </div>
-                              </div>
-                           </div>
-
-                           <div class="text-reset notification-item d-block dropdown-item">
-                              <div class="d-flex">
-                                 <img src="assets/dashboard/velzon/assets/images/users/avatar-6.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                 <div class="flex-grow-1">
-                                    <a href="#!" class="stretched-link">
-                                       <h6 class="mt-0 mb-1 fs-13 fw-semibold">Kenneth Brown</h6>
-                                    </a>
-                                    <div class="fs-13 text-muted">
-                                       <p class="mb-1">Mentionned you in his comment on 📃 invoice #12501.
-                                       </p>
-                                    </div>
-                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                       <span><i class="mdi mdi-clock-outline"></i> 10 hrs ago</span>
-                                    </p>
-                                 </div>
-                                 <div class="px-2 fs-15">
-                                    <div class="form-check notification-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="messages-notification-check03">
-                                       <label class="form-check-label" for="messages-notification-check03"></label>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-
-                           <div class="text-reset notification-item d-block dropdown-item">
-                              <div class="d-flex">
-                                 <img src="assets/dashboard/velzon/assets/images/users/avatar-8.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                 <div class="flex-grow-1">
-                                    <a href="#!" class="stretched-link">
-                                       <h6 class="mt-0 mb-1 fs-13 fw-semibold">Maureen Gibson</h6>
-                                    </a>
-                                    <div class="fs-13 text-muted">
-                                       <p class="mb-1">We talked about a project on linkedin.</p>
-                                    </div>
-                                    <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
-                                       <span><i class="mdi mdi-clock-outline"></i> 3 days ago</span>
-                                    </p>
-                                 </div>
-                                 <div class="px-2 fs-15">
-                                    <div class="form-check notification-check">
-                                       <input class="form-check-input" type="checkbox" value="" id="messages-notification-check04">
-                                       <label class="form-check-label" for="messages-notification-check04"></label>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-
+                              @endforeach
+                           @else
+                           @endif
                            <div class="my-3 text-center view-all">
-                              <button type="button" class="btn btn-soft-success waves-effect waves-light">View
-                                 All Messages <i class="ri-arrow-right-line align-middle"></i></button>
+                              <button type="button" class="btn btn-soft-success waves-effect waves-light"
+                                 data-bs-toggle="modal" data-bs-target="#notifikasiModal">Lihat semua notifikasi<i class="ri-arrow-right-line align-middle"></i></button>
                            </div>
                         </div>
                      </div>
-                     <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab"></div>
+                     <div class="tab-pane fade p-4" id="peringatan-tab" role="tabpanel" aria-labelledby="peringatan-tab">
+
+                        <div class="notifikasi-kosong">
+                           <div class="w-25 w-sm-50 pt-3 mx-auto"> <img src="{{ asset('assets/dashboard/velzon/assets/images/svg/bell.svg') }}" class="img-fluid" alt="user-pic"> </div>
+                           <div class="text-center pb-5 mt-2">
+                              <h6 class="fs-18 fw-semibold lh-base">Tidak ada peringatan. </h6>
+                           </div>
+                        </div>
+
+                     </div>
 
                      <div class="notification-actions" id="notification-actions">
                         <div class="d-flex text-muted justify-content-center">
-                           Select <div id="select-content" class="text-body fw-semibold px-1">0</div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3"
-                              data-bs-toggle="modal" data-bs-target="#removeNotificationModal">Remove</button>
+                           Terpilih <div id="select-content" class="text-body fw-semibold px-1">0</div> Hasil <button type="button" class="btn btn-link link-danger p-0 ms-3"
+                              data-bs-toggle="modal" data-bs-target="#removeNotificationModal">Hapus</button>
                         </div>
                      </div>
                   </div>

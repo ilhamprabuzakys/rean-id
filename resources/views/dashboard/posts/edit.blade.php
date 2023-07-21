@@ -1,6 +1,5 @@
 @extends('dashboard.template.dashboard')
 @push('script')
-   {{-- <script src="{{ asset('assets/borex/libs/ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script>
    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
    <script>
       ClassicEditor
@@ -8,10 +7,9 @@
          .catch(error => {
             console.error(error);
          });
-   </script> --}}
-   <script src="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.js') }}"></script>
+   </script>
    @include('dashboard.plugin.select2')
-   <script>
+   {{-- <script>
       let multitagsSelect = document.querySelector("#tags-multi-select");
       new Choices(multitagsSelect, {
          removeItems: true,
@@ -21,14 +19,12 @@
          noChoicesText: 'Tidak ada label tersisa',
          itemSelectText: 'Klik untuk memilih',
       });
-   </script>
+   </script> --}}
 @endpush
 @push('head')
    <!-- Trix Editor -->
-   <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
-   <!-- dropzone css -->
-   <link href="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+   {{-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script> --}}
 @endpush
 @section('content')
    <!-- start page title -->
@@ -38,11 +34,11 @@
             <h4 class="mb-sm-0">Edit Postingan</h4>
 
             <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Postingan</a></li>
-                     <li class="breadcrumb-item active">Edit Postingan</li>
-                  </ol>
+               <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Postingan</a></li>
+                  <li class="breadcrumb-item active">Edit Postingan</li>
+               </ol>
             </div>
 
          </div>
@@ -62,7 +58,8 @@
                         <input type="text"
                            class="form-control @error('title')
                               is-invalid
-                           @enderror" name="title" id="title" value="{{ old('title', $post->title) }}">
+                           @enderror" name="title" id="title"
+                           value="{{ old('title', $post->title) }}">
                         @error('title')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -124,6 +121,28 @@
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                      </div>
                   </div>
+                 
+                  @cannot('member')
+                     <div class="row mb-3">
+                        <div class="col-lg-12">
+                           <label for="status" class="form-label">Status <sup class="text-danger">*</sup></label>
+                           <select class="form-select form-select-sm @error('status')
+                              is-invalid
+                           @enderror" name="status" id="status">
+                              <option selected disabled>Pilih Kategori</option>
+                              @foreach ($statuses as $status)
+                                 <option value="{{ $status->key }}" {{ old('status', $post->status) == $status->key ? 'selected' : '' }}>{{ $status->label }}</option>
+                              @endforeach
+                           </select>
+                           @error('status')
+                              <div class="invalid-feedback">
+                                 {{ $message }}
+                              </div>
+                           @enderror
+                        </div>
+                     </div>
+                  @endcannot
+                  
                   <div class="row mb-3">
                      <div class="col-lg-12">
                         <label for="body" class="form-label">File</label>
@@ -137,29 +156,46 @@
                         @enderror
                      </div>
                      <div class="col-lg-12 mt-3">
-                        <div class="image-preview-container" style="display: none;">
-                           <img id="image-preview" src="#" alt="Preview" style="display: none;">
-                           <button id="cancel-button" class="btn btn-danger" style="display: none;"> <i class="fas fa-xmark"></i></button>
-                        </div>
+                        @if ($post->file_path && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
+                           <div class="image-preview-container">
+                              <img id="image-preview" src="{{ asset($post->file_path) }}" alt="Preview">
+                              <button id="cancel-button" class="btn btn-danger">
+                                 <i class="ri-close-fill" style="font-size: 26px"></i>
+                              </button>
+                           </div>
+                        @endif
                      </div>
+
                      <script>
+                        // Fungsi untuk menampilkan preview gambar
                         function readImage(input) {
                            if (input.files && input.files[0]) {
                               var reader = new FileReader();
 
-                              reader.onload = function (e) {
+                              reader.onload = function(e) {
                                  $('#image-preview').attr('src', e.target.result).show();
                                  $('.image-preview-container').show();
                                  $('#cancel-button').show();
-                                 
                               };
 
                               reader.readAsDataURL(input.files[0]);
                            }
                         }
 
-                        $("#file_path").change(function () {
-                           var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+                        // Cek apakah ada file_path pada $post dan validasi ekstensi
+                        @if ($post->file_path && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
+                           // Tampilkan preview jika file ada dan ekstensi valid
+                           $('#image-preview').attr('src', "{{ asset('storage/' . $post->file_path) }}").show();
+                           $('.image-preview-container').show();
+                           $('#cancel-button').show();
+
+                           // Isi nilai input file dengan file_path yang sudah ada
+                           $('#file_path').attr('value', "{{ $post->file_path }}");
+                        @endif
+
+                        // Event listener ketika input file berubah
+                        $("#file_path").change(function() {
+                           var fileExtension = ['jpeg', 'jpg', 'png'];
 
                            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
                               readImage(this);
@@ -169,26 +205,25 @@
                            }
                         });
 
-                        $("#cancel-button").click(function () {
+                        // Event listener untuk tombol Cancel
+                        $("#cancel-button").click(function() {
                            $('#file_path').val('');
                            $('#image-preview').hide();
                            $('.image-preview-container').hide();
                            $(this).hide();
                         });
                      </script>
-                     
+
                   </div>
                   <div class="row mb-3">
                      <div class="col-lg-12">
                         <label for="body" class="form-label">Body <sup class="text-danger">*</sup></label>
-                        <input type="hidden" id="body" name="body">
-                        {{-- <div id="body"></div> --}}
-                        {{-- <textarea name="body-editor" id="body-editor" cols="30" rows="20" class="d-none @error('body')
+                        <textarea name="body" id="body-editor" cols="30" rows="20" class="d-none @error('body')
                         is-invalid
-                     @enderror">{!! old('body', $post->body) !!}</textarea> --}}
-                        <trix-editor input="body" class="@error('body')
+                     @enderror">{!! old('body', $post->body) !!}</textarea>
+                        {{-- <trix-editor input="body" class="@error('body')
                         is-invalid
-                     @enderror">{!! old('body', $post->body) !!}</trix-editor>
+                     @enderror">{!! old('body', $post->body) !!}</trix-editor> --}}
                         @error('body')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -223,12 +258,15 @@
 
 
       $(document).ready(function() {
-         // $('#tags-multi-select').select2({
-         //    theme: 'bootstrap-5',
-         //    placeholder: 'Pilih Tag',
-         //    allowClear: true,
-         // });
+         $('#tags-multi-select').select2({
+            // theme: 'bootstrap-5',
+            placeholder: 'Pilih Tag',
+            allowClear: true,
+         });
          $('#category_id').select2({
+            theme: 'bootstrap-5'
+         });
+         $('#status').select2({
             theme: 'bootstrap-5'
          });
       });

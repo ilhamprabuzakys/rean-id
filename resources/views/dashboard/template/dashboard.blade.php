@@ -43,6 +43,7 @@
 
       <!-- removeNotificationModal -->
       @include('dashboard.template.partials.modal.remove-notification')
+      @include('dashboard.template.partials.modal.notifikasi')
       
       <!-- ========== App Menu or Sidebar ========== -->
       @include('dashboard.template.partials.sidebar')
@@ -123,6 +124,8 @@
 
    <!-- App js -->
    <script src="{{ asset('assets/dashboard/velzon/assets/js/app.js') }}"></script>
+   
+   @include('sweetalert::alert')
    @stack('modal')
 	@stack('script')
 	@stack('javascript')
