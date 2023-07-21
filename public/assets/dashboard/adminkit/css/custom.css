@@ -44,7 +44,3 @@ table.dataTable thead tr th.sorting.sorting_asc {
    color: #acacac;
 }
 
-/* UTILS */
-.not-allowed {
-   cursor: not-allowed;
-}

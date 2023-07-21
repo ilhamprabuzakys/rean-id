@@ -4,26 +4,29 @@
        return App\Models\Category::count();
    });
 @endphp
-@section('headline')
-<div class="row mb-2 mb-xl-3">
-   <div class="col-auto d-none d-sm-block">
-      <h3>Data <strong>Label</strong></h3>
-   </div>
-
-   <div class="col-auto ms-auto text-end mt-n1">
-      <a href="#" class="btn btn-danger me-2" onclick="printToPDF()" target="_blank">Simpan ke PDF</a>
-      <script>
-         function printToPDF() {
-            window.print();
-         }
-      </script>
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahTag">Tambah Data</a>
-      @include('dashboard.tags.modal.create')
-   </div>
-</div>
-@endsection
 @section('content')
+   <!-- start page title -->
    <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Daftar Label</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item active">Label</li>
+                  </ol>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- end page title -->
+   <div class="row">
+      <div class="col-12 d-flex justify-content-end">
+         <button data-bs-toggle="modal" data-bs-target="tambahLabel" class="btn btn-soft-primary mb-2 waves-effect waves-light">Buat label</button>
+         @include('dashboard.tags.modal.create')
+      </div>
       <div class="col-12">
          <div class="card shadow-md">
             <div class="card-body">

@@ -1,26 +1,15 @@
 <footer class="footer">
    <div class="container-fluid">
-      <div class="row text-muted">
-         <div class="col-6 text-start">
-            <p class="mb-0">
-               <a href="{{ route('index') }}" target="_blank" class="text-muted"><strong>REAN.ID</strong></a> &copy;
-            </p>
+      <div class="row">
+         <div class="col-sm-6">
+            <script>
+               document.write(new Date().getFullYear())
+            </script> © REAN.ID
          </div>
-         <div class="col-6 text-end">
-            <ul class="list-inline">
-               <li class="list-inline-item">
-                  <a class="text-muted" href="#">CegahNarkoba</a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="text-muted" href="#">SiDePe</a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="text-muted" href="#">SimPekNew</a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="text-muted" href="#">SiPaReL</a>
-               </li>
-            </ul>
+         <div class="col-sm-6">
+            <div class="text-sm-end d-none d-sm-block">
+               Design & Develop by IoT
+            </div>
          </div>
       </div>
    </div>

@@ -1,13 +1,28 @@
 @extends('dashboard.template.dashboard')
-@section('headline')
-<div class="row mb-2 mb-xl-3">
-   <div class="col-auto d-none d-sm-block">
-      <h3><strong>Edit </strong>Data</h3>
-   </div>
-</div>
-@endsection
 @section('content')
+   <!-- start page title -->
    <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Edit Kategori</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Kategori</a></li>
+                     <li class="breadcrumb-item active">Edit Kategori</li>
+                  </ol>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- end page title -->
+   <div class="row">
+      {{-- <div class="col-12">
+         <button data-bs-toggle="modal" data-bs-target="tambahKategori" class="btn btn-soft-primary waves-effect waves-light">Buat label</button>
+         @include('dashboard.categories.modal.create')
+      </div> --}}
       <div class="col-12">
          <div class="card shadow-md">
             <div class="card-body">

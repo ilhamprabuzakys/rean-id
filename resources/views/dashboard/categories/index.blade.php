@@ -4,27 +4,29 @@
        return App\Models\Category::count();
    });
 @endphp
-@section('headline')
-<div class="row mb-2 mb-xl-3">
-   <div class="col-auto d-none d-sm-block">
-      <h3>Data <strong>Kategori</strong></h3>
-   </div>
-
-   <div class="col-auto ms-auto text-end mt-n1">
-      <a href="#" class="btn btn-danger me-2" onclick="printToPDF()" target="_blank">Simpan ke PDF</a>
-      <script>
-         function printToPDF() {
-            window.print();
-         }
-      </script>
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tambahKategori">Tambah Data</a>
-      @include('dashboard.categories.modal.create')
-   </div>
-</div>
-
-@endsection
 @section('content')
+   <!-- start page title -->
    <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Daftar Kategori</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item active">Kategori</li>
+                  </ol>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- end page title -->
+   <div class="row">
+      <div class="col-12">
+         <button data-bs-toggle="modal" data-bs-target="tambahKategori" class="btn btn-soft-primary waves-effect waves-light">Buat Kategori</button>
+         @include('dashboard.categories.modal.create')
+      </div>
       <div class="col-12">
          <div class="card shadow-md">
             <div class="card-body">

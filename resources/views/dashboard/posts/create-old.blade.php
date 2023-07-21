@@ -30,31 +30,19 @@
    <!-- dropzone css -->
    <link href="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
-@section('content')
-   <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Edit Postingan</h4>
-
-            <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Postingan</a></li>
-                     <li class="breadcrumb-item active">Edit Postingan</li>
-                  </ol>
-            </div>
-
-         </div>
-      </div>
+@section('headline')
+<div class="row mb-2 mb-xl-3">
+   <div class="col-auto d-none d-sm-block">
+      <h3><strong>Edit </strong>Postingan</h3>
    </div>
-   <!-- end page title -->
+</div>
+@endsection
+@section('content')
    <div class="row">
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               <form action="{{ route('posts.update', $post) }}" method="post" enctype="multipart/form-data" id="editPost">
-                  @method('PUT')
+               <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" id="createPost">
                   @csrf
                   <div class="row mb-3">
                      <div class="col-lg-9">
@@ -62,7 +50,7 @@
                         <input type="text"
                            class="form-control @error('title')
                               is-invalid
-                           @enderror" name="title" id="title" value="{{ old('title', $post->title) }}">
+                           @enderror" name="title" id="title" value="{{ old('title') }}">
                         @error('title')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -72,7 +60,7 @@
                      <div class="col-lg-3">
                         <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
                         <input type="text"
-                           class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug', $post->slug) }}">
+                           class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}">
                         @error('slug')
                            <div class="invalid-feedback">
                               {{ $message }}
@@ -88,7 +76,7 @@
                         @enderror" name="category_id" id="category_id">
                            <option selected disabled>Pilih Kategori</option>
                            @foreach ($categories as $category)
-                              @if (old('category_id', $post->category_id) == $category->id)
+                              @if (old('category_id') == $category->id)
                                  <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
                               @else
                                  <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -108,13 +96,14 @@
                         @enderror" name="tags[]" id="tags-multi-select" multiple>
                            <optgroup label="Pilih label">
                               @foreach ($tags as $tag)
-                                 @if (in_array($tag->id, $post->tags->pluck('id')->toArray()))
+                                 @if (in_array($tag->id, old('tags', [])))
                                     <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
                                  @else
                                     <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                  @endif
                               @endforeach
                            </optgroup>
+
                         </select>
                      </div>
                      <div class="col-lg-2">
@@ -185,10 +174,10 @@
                         {{-- <div id="body"></div> --}}
                         {{-- <textarea name="body-editor" id="body-editor" cols="30" rows="20" class="d-none @error('body')
                         is-invalid
-                     @enderror">{!! old('body', $post->body) !!}</textarea> --}}
+                     @enderror">{!! old('body') !!}</textarea> --}}
                         <trix-editor input="body" class="@error('body')
                         is-invalid
-                     @enderror">{!! old('body', $post->body) !!}</trix-editor>
+                     @enderror">{!! old('body') !!}</trix-editor>
                         @error('body')
                            <div class="invalid-feedback">
                               {{ $message }}

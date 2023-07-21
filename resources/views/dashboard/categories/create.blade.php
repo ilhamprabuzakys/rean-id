@@ -1,10 +1,23 @@
 @extends('dashboard.template.dashboard')
 @section('content')
-   <div class="row mb-2 mb-xl-3">
-      <div class="col-auto d-none d-sm-block">
-         <h3><strong>Tambah </strong>Data</h3>
+   <!-- start page title -->
+   <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Buat Kategori</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Kategori</a></li>
+                     <li class="breadcrumb-item active">Buat Kategori</li>
+                  </ol>
+            </div>
+
+         </div>
       </div>
    </div>
+   <!-- end page title -->
 
    <div class="row">
       <div class="col-12">

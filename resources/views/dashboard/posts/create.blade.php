@@ -9,9 +9,11 @@
             console.error(error);
          });
    </script> --}}
-   <script src="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.js') }}"></script>
+   {{-- <script src="{{ asset('assets/dashboard/velzon/assets/libs/choices-js/scripts/choices.min.js') }}"></script> --}}
+   {{-- <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script> --}}
+
    @include('dashboard.plugin.select2')
-   <script>
+   {{-- <script>
       let multitagsSelect = document.querySelector("#tags-multi-select");
       new Choices(multitagsSelect, {
          removeItems: true,
@@ -21,23 +23,48 @@
          noChoicesText: 'Tidak ada label tersisa',
          itemSelectText: 'Klik untuk memilih',
       });
-   </script>
+   </script> --}}
+
+
 @endpush
 @push('head')
    <!-- Trix Editor -->
    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
    <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
-   <!-- dropzone css -->
-   <link href="{{ asset('assets/borex/libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+
+   <!-- Choice JS -->
+   {{-- <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/choices-js/styles/choices.min.css') }}"> --}}
+   {{-- <link
+   rel="stylesheet"
+   href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"
+   /> --}}
+{{-- 
+   <link
+   rel="stylesheet"
+   href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+   /> --}}
+
 @endpush
-@section('headline')
-<div class="row mb-2 mb-xl-3">
-   <div class="col-auto d-none d-sm-block">
-      <h3><strong>Edit </strong>Postingan</h3>
-   </div>
-</div>
-@endsection
 @section('content')
+   <!-- start page title -->
+   <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Buat Postingan</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Postingan</a></li>
+                     <li class="breadcrumb-item active">Buat Postingan</li>
+                  </ol>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- end page title -->
+
    <div class="row">
       <div class="col-12">
          <div class="card">
@@ -103,7 +130,6 @@
                                  @endif
                               @endforeach
                            </optgroup>
-
                         </select>
                      </div>
                      <div class="col-lg-2">
@@ -128,7 +154,9 @@
                      <div class="col-lg-12 mt-3">
                         <div class="image-preview-container" style="display: none;">
                            <img id="image-preview" src="#" alt="Preview" style="display: none;">
-                           <button id="cancel-button" class="btn btn-danger" style="display: none;"> <i class="fas fa-xmark"></i></button>
+                           <button id="cancel-button" class="btn btn-danger" style="display: none;">
+                              <i class="ri-close-fill" style="font-size: 26px"></i>
+                           </button>
                         </div>
                      </div>
                      <script>
@@ -212,14 +240,15 @@
 
 
       $(document).ready(function() {
-         // $('#tags-multi-select').select2({
-         //    theme: 'bootstrap-5',
-         //    placeholder: 'Pilih Tag',
-         //    allowClear: true,
-         // });
+         $('#tags-multi-select').select2({
+            // theme: 'bootstrap-5',
+            placeholder: 'Pilih Tag',
+            allowClear: true,
+         });
          $('#category_id').select2({
             theme: 'bootstrap-5'
          });
+         
       });
 
       // document.getElementById('createPost').addEventListener('submit', function(event) {
@@ -234,5 +263,7 @@
       //    // Kirim formulir
       //    this.submit();
       // });
+
+     
    </script>
 @endsection

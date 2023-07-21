@@ -8,25 +8,25 @@
    }
    $postsCount = $postsCustom->count();
 @endphp
-@section('headline')
-<div class="row mb-2 mb-xl-3">
-   <div class="col-auto d-none d-sm-block">
-      <h3>Data <strong>Postingan</strong></h3>
-   </div>
-
-   <div class="col-auto ms-auto text-end mt-n1">
-      <a href="#" class="btn btn-danger me-2" onclick="printToPDF()" target="_blank">Simpan ke PDF</a>
-      <script>
-         function printToPDF() {
-            window.print();
-         }
-      </script>
-      <a href="{{ route('posts.create') }}" class="btn btn-primary">Tambah Data</a>
-   </div>
-</div>
-
-@endsection
 @section('content')
+   <!-- start page title -->
+   <div class="row">
+      <div class="col-12">
+         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Daftar Postingan</h4>
+
+            <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                     <li class="breadcrumb-item active">Postingan</li>
+                  </ol>
+            </div>
+
+         </div>
+      </div>
+   </div>
+   <!-- end page title -->
+
    <div class="row">
       <div class="col-12">
          <div class="card">
@@ -95,11 +95,11 @@
                            </td>
                            <td class="text-center">
                               @if ($post->status == 'pending')
-                                 <span class="badge badge-primary-light">Pending</span>
+                                 <span class="badge bg-primary-subtle text-primary rounded-pill">Pending</span>
                               @elseif ($post->status == 'approved')
-                                 <span class="badge badge-success-light">Approved</span>
+                                 <span class="badge bg-success-subtle text-success rounded-pill">Approved</span>
                               @else
-                                 <span class="badge badge-danger-light">Rejected</span>
+                                 <span class="badge bg-danger-subtle text-danger rounded-pill">Rejected</span>
                               @endif
                            </td>
                            @cannot('member')
