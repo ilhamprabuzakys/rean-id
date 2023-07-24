@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Utils\TableController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -59,4 +60,10 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/contact-us', 'contact')->name('home.contact');
     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
+});
+
+Route::controller(TableController::class)->group(function() {
+    Route::get('/table/posts', 'posts')->name('table.posts');
+    Route::get('/table/categories', 'categories')->name('table.categories');
+    Route::get('/table/tags', 'tags')->name('table.tags');
 });

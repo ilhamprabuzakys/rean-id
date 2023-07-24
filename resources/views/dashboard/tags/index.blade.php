@@ -4,6 +4,12 @@
        return App\Models\Category::count();
    });
 @endphp
+@push('head')
+   {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"> --}}
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/css/dataTables.bootstrap5.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/css/responsive.bootstrap.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/css/buttons.dataTables.min.css') }}">
+@endpush
 @section('content')
    <!-- start page title -->
    <div class="row">
@@ -30,7 +36,7 @@
       <div class="col-12">
          <div class="card shadow-md">
             <div class="card-body">
-               <div class="table-responsive">
+               {{-- <div class="table-responsive">
                   <table class="table table-sm mb-0" id="tags-table">
 
                      <thead class="table-light">
@@ -97,45 +103,55 @@
                         @endforeach
                      </tbody>
                   </table>
-               </div>
+               </div> --}}
+               {{ $dataTable->table() }}
             </div>
          </div>
       </div>
    </div>
 @endsection
 @push('script')
-   <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> --}}
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.print.min.js') }}"></script>
+    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+@endpush
+@push('script')
+   {{-- <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script> --}}
    <script>
-      $(document).ready(function() {
-         var table = $('#tags-table').DataTable({
-            responsive: true,
-            columnDefs: [
-               {
-                  orderable: false,
-                  targets: 1
-               },
-               {
-                  orderable: false,
-                  targets: 2
-               },
-               {
-                  orderable: false,
-                  targets: 3
-               },
-               {
-                  orderable: false,
-                  targets: 4
-               },
-               {
-                  orderable: false,
-                  targets: 5
-               },
-               {
-                  orderable: false,
-                  targets: 6
-               },
-            ],
-         });
-      });
+      // $(document).ready(function() {
+      //    var table = $('#tags-table').DataTable({
+      //       responsive: true,
+      //       columnDefs: [
+      //          {
+      //             orderable: false,
+      //             targets: 1
+      //          },
+      //          {
+      //             orderable: false,
+      //             targets: 2
+      //          },
+      //          {
+      //             orderable: false,
+      //             targets: 3
+      //          },
+      //          {
+      //             orderable: false,
+      //             targets: 4
+      //          },
+      //          {
+      //             orderable: false,
+      //             targets: 5
+      //          },
+      //          {
+      //             orderable: false,
+      //             targets: 6
+      //          },
+      //       ],
+      //    });
+      // });
    </script>
 @endpush

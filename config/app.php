@@ -171,6 +171,7 @@ return [
         App\Providers\FortifyServiceProvider::class, 
         Jenssegers\Agent\AgentServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
     ])->toArray(),
 
     /*

@@ -1,15 +1,15 @@
 <!--  Large modal example -->
-<div class="modal fade" id="postinganKategori{{ $category->id }}" tabindex="-1" role="dialog">
+<div class="modal fade" id="postinganKategori{{ $data->id }}" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
          <div class="modal-header">
-            <h3 class="modal-title" id="postinganKategori{{ $category->id }}">Postingan dengan kategori {{ $category->name }}</h5>
+            <h3 class="modal-title" id="postinganKategori{{ $data->id }}">Postingan dengan kategori {{ $data->name }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
             <ul class="list-group">
                @php
-                  $posts = $category->posts()->orderBy('updated_at', 'desc')->get();
+                  $posts = $data->posts()->orderBy('updated_at', 'desc')->get();
                @endphp
                @forelse ($posts as $post)
                   <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -18,7 +18,7 @@
                   </li>
                @empty
                   <li class="list-group-item d-flex justify-content-between align-items-center">
-                     Postingan dengan Kategori {{ $category->name }} masih kosong!
+                     Postingan dengan Kategori {{ $data->name }} masih kosong!
                   </li>
                @endforelse
             </ul>

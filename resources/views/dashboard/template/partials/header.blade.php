@@ -521,7 +521,7 @@
 
                      <div class="tab-pane fade show active py-2 ps-2" id="notifikasi-tab" role="tabpanel" aria-labelledby="notifikasi-tab">
                         <div data-simplebar style="max-height: 300px;" class="pe-2">
-                           @if ($notifications->count() > 1)
+                           @if ($notifications->count() > 0)
                               @foreach ($notifications as $notification)
                                  @php
                                     $event = '';

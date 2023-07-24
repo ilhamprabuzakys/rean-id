@@ -4,6 +4,12 @@
        return App\Models\Category::count();
    });
 @endphp
+@push('head')
+   {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"> --}}
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/css/dataTables.bootstrap5.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/css/responsive.bootstrap.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/css/buttons.dataTables.min.css') }}">
+@endpush
 @section('content')
    <!-- start page title -->
    <div class="row">
@@ -23,8 +29,8 @@
    </div>
    <!-- end page title -->
    <div class="row">
-      <div class="col-12">
-         <button data-bs-toggle="modal" data-bs-target="tambahKategori" class="btn btn-soft-primary waves-effect waves-light">Buat Kategori</button>
+      <div class="col-12 d-flex justify-content-end">
+         <button data-bs-toggle="modal" data-bs-target="tambahKategori" class="btn btn-soft-primary waves-effect waves-light mb-2">Buat Kategori</button>
          @include('dashboard.categories.modal.create')
       </div>
       <div class="col-12">
@@ -38,16 +44,16 @@
                            <th>#</th>
                            <th>Nama</th>
                            <th>Slug</th>
-                           <th>Jumlah Postingan</th>
+                           {{-- <th>Jumlah Postingan</th> --}}
                            <th>Dibuat</th>
-                           <th>Detail</th>
+                           {{-- <th>Detail</th> --}}
                            <th class="text-center">
                               <i class="align-middle" data-feather="edit"></i>
                            </th>
                         </tr>
                      </thead>
-                     <tbody>
-                        @foreach ($categories as $category)
+                     {{-- <tbody>
+                         @foreach ($categories as $category)
                            <tr>
                               <th scope="row">{{ $loop->iteration }}</th>
                               <td>
@@ -95,7 +101,7 @@
                               @include('dashboard.categories.modal.edit')
                            @endpush
                         @endforeach
-                     </tbody>
+                     </tbody> --}}
                   </table>
                </div>
             </div>
@@ -104,7 +110,52 @@
    </div>
 @endsection
 @push('script')
-   <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>
+{{-- <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> --}}
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.print.min.js') }}"></script>
+    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+    <script>
+
+         $(document).ready(function() {
+            $('#categories-table').DataTable({
+               processing: true,
+               serverside: true,
+               ajax: "{{ route('api.categories.index') }}",
+               columns: [
+                  {
+                     data: 'DT_RowIndex',
+                     name: 'DT_RowIndex',
+                     orderable: false,
+                  },
+                  {
+                     data: 'name',
+                     name: 'Nama',
+                     orderable: false,
+                  },
+                  {
+                     data: 'slug',
+                     name: 'Slug',
+                     orderable: false,
+                  },
+                  {
+                     data: 'created_at',
+                     name: 'Dibuat',
+                  },
+                  {
+                     data: 'action',
+                     name: '#',
+                  }
+               ]
+            });
+         })
+
+    </script>
+@endpush
+@push('script')
+   {{-- <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>
    <script>
       $(document).ready(function() {
          var table = $('#categories-table').DataTable({
@@ -137,5 +188,5 @@
             ],
          });
       });
-   </script>
+   </script> --}}
 @endpush

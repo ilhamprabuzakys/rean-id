@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\TagsDataTable;
 use App\Models\Tag;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
@@ -11,13 +12,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TagController extends Controller
 {
-    public function index()
+    public function index(TagsDataTable $dataTable)
     {
         $tags = cache()->remember('tags', now()->addDays(7), function () {
             return Tag::orderBy('updated_at', 'desc')->get();
         });
         confirmDelete('Apakah anda yakin untuk menghapus tag ini?', 'Data yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard.tags.index', [
+        return $dataTable->render('dashboard.tags.index', [
             'title' => 'Daftar Tag',
         ], compact('tags'));
     }

@@ -1,5 +1,5 @@
 <!--  Large modal example -->
-<div class="modal fade" id="editKategori{{ $category->id }}" tabindex="-1" role="dialog">
+<div class="modal fade" id="editKategori{{ $data->id }}" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-header">
@@ -7,7 +7,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            <form action="{{ route('categories.update', $category) }}" method="post">
+            <form action="{{ route('categories.update', $data) }}" method="post">
                @method('PUT')
                @csrf
                <div class="row justify-content-between">
@@ -16,15 +16,13 @@
                   </div>
                   <div class="col-10">
                      <input type="text"
-                        class="form-control @error('name')
-                           is-invalid
-                        @enderror" name="name" id="name"
-                        value="{{ old('name', $category->name) }}" required>
-                     @error('name')
+                        class="form-control" name="name" id="name"
+                        value="{{ old('name', $data->name) }}" required>
+                     {{-- @error('name')
                         <div class="invalid-feedback">
                            {{ $message }}
                         </div>
-                     @enderror
+                     @enderror --}}
                   </div>
                </div>
                <p class="text-muted mb-0 mt-4 text-sm"><span class="text-danger">Perhatikan</span> dengan mengedit data kategori ini akan <strong>mengganti</strong> seluruh kategori postingan yang berkaitan dengan kategori ini.</p>

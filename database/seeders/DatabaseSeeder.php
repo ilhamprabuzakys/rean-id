@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             }
             \App\Models\Post::factory(200)->create();
             \App\Models\User::factory(20)->create();
+            \App\Models\Tag::factory(5000)->create();
         } catch (\Throwable $th) {
             dd($th, 'something went wrong');
         }

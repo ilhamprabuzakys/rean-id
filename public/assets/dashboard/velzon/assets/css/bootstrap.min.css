@@ -85,7 +85,8 @@
     --vz-body-line-height: 1.5;
     --vz-body-color: #272a3a;
     --vz-body-color-rgb: 39, 42, 58;
-    --vz-body-bg: #fbf7f4;
+    /* --vz-body-bg: #fbf7f4; */
+    --vz-body-bg: #f4f6f9;
     --vz-body-bg-rgb: 251, 247, 244;
     --vz-emphasis-color: #272a3a;
     --vz-emphasis-color-rgb: 39, 42, 58;
@@ -361,7 +362,8 @@ body {
     line-height: var(--vz-body-line-height);
     color: var(--vz-body-color);
     text-align: var(--vz-body-text-align);
-    background-color: var(--vz-body-bg);
+    /* background-color: var(--vz-body-bg); */
+    background-color: #f4f6f9;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
 }
