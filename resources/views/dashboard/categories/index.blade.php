@@ -5,41 +5,42 @@
    });
 @endphp
 @push('head')
-   {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css"> --}}
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/css/dataTables.bootstrap5.min.css') }}">
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/css/responsive.bootstrap.min.css') }}">
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/css/buttons.dataTables.min.css') }}">
+   <!-- DataTable CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+   <!-- Row Group CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}"/>
+   <!-- Form Validation -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}"/>
 @endpush
 @section('content')
    <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Daftar Kategori</h4>
-
-            <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                     <li class="breadcrumb-item active">Kategori</li>
-                  </ol>
-            </div>
-
-         </div>
-      </div>
-   </div>
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      Daftar Kategori
+   </h4>
    <!-- end page title -->
    <div class="row">
-      <div class="col-12 d-flex justify-content-end">
-         <button data-bs-toggle="modal" data-bs-target="tambahKategori" class="btn btn-soft-primary waves-effect waves-light mb-2">Buat Kategori</button>
-         @include('dashboard.categories.modal.create')
-      </div>
       <div class="col-12">
          <div class="card shadow-md">
-            <div class="card-body">
+            <div class="card-header">
+               <div class="text-end">
+                  <button class="btn btn-primary" id="btnTambahKategori">
+                     <span><i class="mdi mdi-plus me-sm-1"></i>
+                     <span class="d-none d-sm-inline-block">Tambah Data</span></span>
+                  </button>
+                  @include('dashboard.categories.modal.create')
+               </div>
+            </div>
+            <div class="card-datatable text-nowrap">
                <div class="table-responsive">
-                  <table class="table table-sm mb-0" id="categories-table">
+                  <table class="dt-complex-header table table-bordered" id="categories-table">
 
-                     <thead class="table-light">
+                     <thead>
                         <tr>
                            <th>#</th>
                            <th>Nama</th>
@@ -48,7 +49,8 @@
                            <th>Dibuat</th>
                            {{-- <th>Detail</th> --}}
                            <th class="text-center">
-                              <i class="align-middle" data-feather="edit"></i>
+                              {{-- <i class="align-middle" data-feather="edit"></i> --}}
+                              Action
                            </th>
                         </tr>
                      </thead>
@@ -109,50 +111,20 @@
       </div>
    </div>
 @endsection
-@push('script')
-{{-- <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script> --}}
-<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/responsive/2.2.9/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('assets/dashboard/velzon/assets/libs/datatable/buttons/2.2.2/js/buttons.print.min.js') }}"></script>
-    {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
-    <script>
-
-         $(document).ready(function() {
-            $('#categories-table').DataTable({
-               processing: true,
-               serverside: true,
-               ajax: "{{ route('api.categories.index') }}",
-               columns: [
-                  {
-                     data: 'DT_RowIndex',
-                     name: 'DT_RowIndex',
-                     orderable: false,
-                  },
-                  {
-                     data: 'name',
-                     name: 'Nama',
-                     orderable: false,
-                  },
-                  {
-                     data: 'slug',
-                     name: 'Slug',
-                     orderable: false,
-                  },
-                  {
-                     data: 'created_at',
-                     name: 'Dibuat',
-                  },
-                  {
-                     data: 'action',
-                     name: '#',
-                  }
-               ]
-            });
-         })
-
-    </script>
+@push('page-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/tables-datatables-basic.js') }}"></script>
+@endpush
+@push('vendor-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+   <!-- Flat Picker -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/moment/moment.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+   <!-- Form Validation -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+   {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+   @include('dashboard.categories.script')
 @endpush
 @push('script')
    {{-- <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>

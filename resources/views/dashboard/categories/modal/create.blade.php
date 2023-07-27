@@ -9,20 +9,16 @@
          <div class="modal-body">
             <form action="{{ route('categories.store') }}" method="post">
                @csrf
+               <div class="alert alert-success d-none" id="create-modal-alert-success"></div>
                <div class="row justify-content-between">
                   <div class="col-2">
                      <label for="title" class="form-label">Nama <sup class="text-danger">*</sup></label>
                   </div>
                   <div class="col-10">
                      <input type="text"
-                        class="form-control @error('name')
-                           is-invalid
-                        @enderror" name="name" id="name" value="{{ old('name') }}" required>
-                     @error('name')
-                        <div class="invalid-feedback">
-                           {{ $message }}
+                        class="form-control" name="name" id="name" value="{{ old('name') }}" required>
+                        <div class="invalid-feedback d-none">
                         </div>
-                     @enderror
                   </div>
                  </div>
          </div>
@@ -30,7 +26,7 @@
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                <i class="fas fa-xmark fa-md me-2"></i>
                Tutup</button>
-            <button id="save-button" class="btn btn-primary px-2 not-allowed" disabled>
+            <button id="save-button" class="btn btn-primary px-2 not-allowed" type="button">
                <i class="fas fa-save fa-md me-2"></i>
                Simpan Data</button>
             </form>
@@ -42,12 +38,13 @@
 <script>
    $(document).ready(function() {
       $('#name').on('input', function() {
-         var nameValue = $(this).val().trim();
-         if (nameValue !== '') {
-            $('#save-button').prop('disabled', false).removeClass('not-allowed');
-         } else {
-            $('#save-button').prop('disabled', true).addClass('not-allowed');
-         }
+         var name = $(this).val();
+         console.log(`name : ${name}`);
+         // if (nameValue !== '') {
+         //    $('#save-button').prop('disabled', false).removeClass('not-allowed');
+         // } else {
+         //    $('#save-button').prop('disabled', true).addClass('not-allowed');
+         // }
       });
    });
 </script>

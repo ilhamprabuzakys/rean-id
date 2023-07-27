@@ -10,27 +10,39 @@
 @endphp
 @section('content')
    <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Daftar Postingan</h4>
-
-            <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                     <li class="breadcrumb-item active">Postingan</li>
-                  </ol>
-            </div>
-
-         </div>
-      </div>
-   </div>
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      Daftar Postingan 
+   </h4>
    <!-- end page title -->
 
    <div class="row">
       <div class="col-12">
          <div class="card">
-            <div class="card-body">
+            <div class="card-header flex-column flex-md-row">
+
+               <div class="head-label text-start">
+                  <h5 class="card-title mb-0">Daftar Postingan</h5>
+               </div>
+
+               <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                  <div class="dt-buttons btn-group flex-wrap">
+                     <div class="btn-group">
+                        <button class="btn btn-secondary buttons-collection dropdown-toggle btn-label-primary me-2" tabindex="0" aria-controls="DataTables_Table_0" type="button"
+                           aria-haspopup="dialog" aria-expanded="false"><span>
+                              <i class="mdi mdi-export-variant me-sm-1"></i>
+                              <span class="d-none d-sm-inline-block">Export</span></span>
+
+                           <span
+                              class="dt-down-arrow"></span></button>
+                     </div>
+                     <a class="btn btn-primary"
+                        href="{{ route('posts.create') }}">
+                        <span><i class="mdi mdi-plus me-sm-1"></i>
+                        <span class="d-none d-sm-inline-block">Tambah Data</span></span>
+                     </a>
+                  </div>
+               </div>
                <div class="row mb-3 justify-content-start">
                   <div class="col-lg-6">
                      <label for="filter-category" class="form-label">Kategori</label>
@@ -52,6 +64,9 @@
                      </select>
                   </div>
                </div>
+            </div>
+            <div class="card-datatable text-nowrap">
+
                <table id="posts-table" class="table table-sm" style="width:100%">
                   <thead class="table-light">
                      <tr>
@@ -61,9 +76,9 @@
                         <th class="text-center">Kategori</th>
                         <th class="text-center">Status</th>
                         @cannot('member')
-                        <th class="text-center">
-                           <i class="align-middle" data-feather="edit"></i>
-                        </th>
+                           <th class="text-center">
+                              <i class="align-middle" data-feather="edit"></i>
+                           </th>
                         @endcannot
                         <th>Terakhir diupdate</th>
                         <th class="text-center">
@@ -95,11 +110,11 @@
                            </td>
                            <td class="text-center">
                               @if ($post->status == 'pending')
-                                 <span class="badge bg-primary-subtle text-primary rounded-pill">Pending</span>
+                                 <span class="badge bg-label-primary rounded-pill">Pending</span>
                               @elseif ($post->status == 'approved')
-                                 <span class="badge bg-success-subtle text-success rounded-pill">Approved</span>
+                                 <span class="badge bg-label-success rounded-pill">Approved</span>
                               @else
-                                 <span class="badge bg-danger-subtle text-danger rounded-pill">Rejected</span>
+                                 <span class="badge bg-label-danger rounded-pill">Rejected</span>
                               @endif
                            </td>
                            @cannot('member')
@@ -224,10 +239,35 @@
       </div>
    </div>
 @endsection
-
+@push('head')
+   <!-- DataTable CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+   <!-- Row Group CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}"/>
+   <!-- Form Validation -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}"/>
+@endpush
+@push('page-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/tables-datatables-basic.js') }}"></script>
+@endpush
+@push('vendor-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+   <!-- Flat Picker -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/moment/moment.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+   <!-- Form Validation -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+   {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+   @include('dashboard.categories.script')
+@endpush
 @push('script')
-   <script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>
-
    {{-- @include('dashboard-borex.components.datatable') --}}
    <script>
       $(document).ready(function() {
@@ -236,8 +276,7 @@
                $('#posts-table').removeClass('table-loader');
             },
             responsive: true,
-            columnDefs: [
-               {
+            columnDefs: [{
                   orderable: false,
                   targets: 1
                },

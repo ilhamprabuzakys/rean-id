@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\Username;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 use Jenssegers\Agent\Agent;
 use RealRashid\SweetAlert\Facades\Alert;
+use Stevebauman\Location\Facades\Location;
+
 
 class LoginController extends Controller
 {
@@ -50,6 +53,13 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        // $ip = $request->getClientIp();
+        $response = Http::get('http://ipecho.net/plain');
+        $ip = $response->body();
+        // $ip = '110.136.109.16';
+        $location = Location::get($ip);
+        // dd($ip, $location);
+
         $this->validate($request, [
             'login'    => 'required',
             'password' => 'required',
@@ -65,28 +75,34 @@ class LoginController extends Controller
 
         $user = User::where($login_type, $request->input($login_type))->first();
         // dd($login_type);
-        // dd($user);
+        // dd($user == null);
         // dd(Hash::check($request->input('password'), $user->password));
-        if (!$user) {
+        if ($user != null) {
             if (!Hash::check($request->input('password'), $user->password)) {
                 throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.']
+                    'email' => ['Kredensial yang anda masukkan salah atau tidak ditemukan.']
                 ]);
-            } 
+            }
 
             if ($user->email_verified_at == \null) {
                 throw ValidationException::withMessages([
                     'email' => ['Akun anda belum teraktivasi.']
                 ]);
             }
+        } else {
+            return back()->with(
+                'fails',
+                'Kredensial yang anda masukkan salah atau tidak ditemukan.',
+            )->withInput();
         }
 
         $user->createToken('user login')->plainTextToken;
 
-        if (Auth::attempt($request->only($login_type, 'password'))) {
+        if (Auth::attempt($request->only($login_type, 'password'), $request->filled('remember'))) {
             $request->session()->regenerate();
             Auth::user()->update([
-                'last_login_at' => Carbon::now()->toDateTimeString(),
+                'last_login_at' => Carbon::parse(Carbon::now())->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss'),
+                // 'last_login_at' => Carbon::now()->toDateTimeString(),
                 'last_login_ip' => $request->getClientIp()
             ]);
 
@@ -97,26 +113,34 @@ class LoginController extends Controller
             } elseif ($agent->isMobile()) {
                 $device = 'Mobile';
             }
-
             if ($device == 'WebKit') {
                 $device = 'Desktop';
             }
+
             LoginInfo::create([
+                'user_id' => auth()->user()->id,
                 'browser' => $agent->browser(),
                 'os' => $agent->platform(),
                 'device' => $device,
-                'user_id' => auth()->user()->id,
-                'login_at' => Carbon::now()->toDateTimeString(),
-                'login_ip' => $request->getClientIp()
+                'login_at' => Carbon::parse(Carbon::now())->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss'),
+                'login_ip' => $ip,
+                'country' => $location->countryName,
+                'country_code' => $location->countryCode,
+                'region' => $location->regionName,
+                'region_code' => $location->regionCode,
+                'city' => $location->cityName,
+                'zip_code' => $location->zipCode,
+                'latitude' => $location->latitude,
+                'longitude' => $location->longitude,
             ]);
-            
+
             Alert::success('Berhasil Login!', 'Selamat datang di dashboard.');
             return redirect()->intended('/dashboard')->with('success', 'Berhasil Login!');
         }
 
         return back()->with(
             'fails',
-            'These credentials do not match our records.',
+            'Kredensial yang anda masukkan salah atau tidak ditemukan.',
         )->withInput();
     }
 

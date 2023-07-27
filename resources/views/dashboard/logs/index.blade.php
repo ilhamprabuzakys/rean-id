@@ -1,13 +1,45 @@
 @extends('dashboard.template.dashboard')
+@push('head')
+   <!-- DataTable CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-select-bs5/select.bootstrap5.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+   <!-- Row Group CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-rowgroup-bs5/rowgroup.bootstrap5.css') }}"/>
+   <!-- Form Validation -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}"/>
+@endpush
+@push('page-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/tables-datatables-basic.js') }}"></script>
+@endpush
+@push('vendor-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+   <!-- Flat Picker -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/moment/moment.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+   <!-- Form Validation -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+   {{-- {{ $dataTable->scripts(attributes: ['type' => 'module']) }} --}}
+@endpush
 @section('content')
+<!-- start page title -->
+<h4 class="fw-bold py-3 mb-4">
+   <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+   Log Aktivitas 
+</h4>
 <div class="row">
    <div class="col-12">
-      <div class="card">
+      <div class="card shadow-md">
          <div class="card-header">
             <h5 class="card-title">Aktivitas Log</h5>
             <h6 class="card-subtitle text-muted">Rekapan aktivitas yang terjadi pada aplikasi.</h6>
          </div>
-         <div class="card-body">
+         <div class="card-datatable">
             <table id="datatables-column-search-text-inputs" class="table table-sm" style="width:100%">
                <tfoot class="search">
                   <tr>
@@ -85,8 +117,6 @@
 @endsection
 
 @push('script')
-<script src="{{ asset('assets/dashboard/adminkit/js/datatables.js') }}"></script>
-
 <script>
    // DataTables with Column Search by Text Inputs
    document.addEventListener("DOMContentLoaded", function() {

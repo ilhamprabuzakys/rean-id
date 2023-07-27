@@ -52,4 +52,7 @@ $app->singleton(
 |
 */
 
+\Carbon\Carbon::setLocale('id');
+
+
 return $app;

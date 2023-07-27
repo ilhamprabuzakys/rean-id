@@ -1,1293 +1,1335 @@
 @extends('dashboard.template.dashboard')
+@include('components.datatables')
 @section('content')
-@php
-   $posts = \App\Models\Post::all();
-   $users = \App\Models\User::all();
-@endphp
-<div class="row">
-   <div class="col">
+   @php
+      $posts = \App\Models\Post::all();
+      $users = \App\Models\User::all();
+      $user = auth()->user();
+   @endphp
+   @push('page-css')
+      <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/pages/cards-statistics.css') }}" />
+      <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/pages/cards-analytics.css') }}" />
+   @endpush
+   @push('vendor-js')
+      <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+      <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/swiper/swiper.js') }}"></script>
+   @endpush
+   @push('page-js')
+      <script src="{{ asset('assets/dashboard/materialize/assets/js/dashboards-crm.js') }}"></script>
+   @endpush
+   @push('script')
+      <script>
+         $(document).ready(function() {
+            var table = $('#aktivitas-table').DataTable({
+               columnDefs: [{
+                     orderable: false,
+                     targets: 0
+                  },
+                  {
+                     orderable: false,
+                     targets: 1
+                  },
+                  {
+                     orderable: false,
+                     targets: 2
+                  },
+                  {
+                     orderable: false,
+                     targets: 3
+                  },
+                  {
+                     orderable: false,
+                     targets: 4
+                  },
+                  {
+                     orderable: false,
+                     targets: 5
+                  },
+                  {
+                     orderable: true,
+                     targets: 6
+                  },
+               ],
+            });
+         });
+      </script>
+   @endpush
+   <h3 class="fw-bold py-3 mb-4">
+      Dashboard
+   </h3>
 
-      <div class="h-100">
-         <div class="row mb-3 pb-1">
-            <div class="col-12">
-               <div class="d-flex align-items-lg-center flex-lg-row flex-column">
-                  <div class="flex-grow-1">
-                     <h4 class="fs-16 mb-1">Good Morning, Anna!</h4>
-                     <p class="text-muted mb-0">Here's what's happening with your store today.</p>
+   <div class="row gy-4 mb-4">
+      <!-- Cards with few info -->
+      <div class="col-lg-3 col-sm-6">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center flex-wrap gap-2">
+                  <div class="avatar me-3">
+                     <div class="avatar-initial bg-label-primary rounded">
+                        <i class="mdi mdi-account-outline mdi-24px">
+                        </i>
+                     </div>
                   </div>
-                  <div class="mt-3 mt-lg-0">
-                     <form action="javascript:void(0);">
-                        <div class="row g-3 mb-0 align-items-center">
-                           <div class="col-sm-auto">
-                              <div class="input-group">
-                                 <input type="text" class="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true"
-                                    data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022">
-                                 <div class="input-group-text bg-primary border-primary text-white">
-                                    <i class="ri-calendar-2-line"></i>
-                                 </div>
-                              </div>
-                           </div>
-                           <!--end col-->
-                           <div class="col-auto">
-                              <button type="button" class="btn btn-soft-success"><i class="ri-add-circle-line align-middle me-1"></i> Add Product</button>
-                           </div>
-                           <!--end col-->
-                           <div class="col-auto">
-                              <button type="button" class="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i class="ri-pulse-line"></i></button>
-                           </div>
-                           <!--end col-->
-                        </div>
-                        <!--end row-->
-                     </form>
+                  <div class="card-info">
+                     <div class="d-flex align-items-center">
+                        <h4 class="mb-0">{{ $jumlahUser }}</h4>
+                        {{-- <i class="mdi mdi-chevron-down text-danger mdi-24px"></i> --}}
+                        {{-- <small class="text-danger">8.10%</small> --}}
+                     </div>
+                     <small class="text-muted">Data Pengguna</small>
                   </div>
-               </div><!-- end card header -->
+               </div>
             </div>
-            <!--end col-->
          </div>
-         <!--end row-->
-
-         <div class="row">
-            <div class="col-xl-3 col-md-6">
-               <!-- card -->
-               <div class="card card-animate">
-                  <div class="card-body">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1 overflow-hidden">
-                           <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Total Earnings</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <h5 class="text-success fs-14 mb-0">
-                              <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                           </h5>
-                        </div>
-                     </div>
-                     <div class="d-flex align-items-end justify-content-between mt-4">
-                        <div>
-                           <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="559.25">0</span>k </h4>
-                           <a href="#" class="text-decoration-underline">View net earnings</a>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                           <span class="avatar-title bg-success-subtle rounded fs-3">
-                              <i class="bx bx-dollar-circle text-success"></i>
-                           </span>
-                        </div>
-                     </div>
-                  </div><!-- end card body -->
-               </div><!-- end card -->
-            </div><!-- end col -->
-
-            <div class="col-xl-3 col-md-6">
-               <!-- card -->
-               <div class="card card-animate">
-                  <div class="card-body">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1 overflow-hidden">
-                           <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Orders</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <h5 class="text-danger fs-14 mb-0">
-                              <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                           </h5>
-                        </div>
-                     </div>
-                     <div class="d-flex align-items-end justify-content-between mt-4">
-                        <div>
-                           <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36894">0</span></h4>
-                           <a href="#" class="text-decoration-underline">View all orders</a>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                           <span class="avatar-title bg-info-subtle rounded fs-3">
-                              <i class="bx bx-shopping-bag text-info"></i>
-                           </span>
-                        </div>
-                     </div>
-                  </div><!-- end card body -->
-               </div><!-- end card -->
-            </div><!-- end col -->
-
-            <div class="col-xl-3 col-md-6">
-               <!-- card -->
-               <div class="card card-animate">
-                  <div class="card-body">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1 overflow-hidden">
-                           <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Customers</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <h5 class="text-success fs-14 mb-0">
-                              <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
-                           </h5>
-                        </div>
-                     </div>
-                     <div class="d-flex align-items-end justify-content-between mt-4">
-                        <div>
-                           <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183.35">0</span>M </h4>
-                           <a href="#" class="text-decoration-underline">See details</a>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                           <span class="avatar-title bg-warning-subtle rounded fs-3">
-                              <i class="bx bx-user-circle text-warning"></i>
-                           </span>
-                        </div>
-                     </div>
-                  </div><!-- end card body -->
-               </div><!-- end card -->
-            </div><!-- end col -->
-
-            <div class="col-xl-3 col-md-6">
-               <!-- card -->
-               <div class="card card-animate">
-                  <div class="card-body">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1 overflow-hidden">
-                           <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> My Balance</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <h5 class="text-muted fs-14 mb-0">
-                              +0.00 %
-                           </h5>
-                        </div>
-                     </div>
-                     <div class="d-flex align-items-end justify-content-between mt-4">
-                        <div>
-                           <h4 class="fs-22 fw-semibold ff-secondary mb-4">$<span class="counter-value" data-target="165.89">0</span>k </h4>
-                           <a href="#" class="text-decoration-underline">Withdraw money</a>
-                        </div>
-                        <div class="avatar-sm flex-shrink-0">
-                           <span class="avatar-title bg-primary-subtle rounded fs-3">
-                              <i class="bx bx-wallet text-primary"></i>
-                           </span>
-                        </div>
-                     </div>
-                  </div><!-- end card body -->
-               </div><!-- end card -->
-            </div><!-- end col -->
-         </div> <!-- end row-->
-
-         <div class="row">
-            <div class="col-xl-8">
-               <div class="card">
-                  <div class="card-header border-0 align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Revenue</h4>
-                     <div>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                           ALL
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                           1M
-                        </button>
-                        <button type="button" class="btn btn-soft-secondary btn-sm">
-                           6M
-                        </button>
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                           1Y
-                        </button>
-                     </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-header p-0 border-0 bg-light-subtle">
-                     <div class="row g-0 text-center">
-                        <div class="col-6 col-sm-3">
-                           <div class="p-3 border border-dashed border-start-0">
-                              <h5 class="mb-1"><span class="counter-value" data-target="7585">0</span></h5>
-                              <p class="text-muted mb-0">Orders</p>
-                           </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                           <div class="p-3 border border-dashed border-start-0">
-                              <h5 class="mb-1">$<span class="counter-value" data-target="22.89">0</span>k</h5>
-                              <p class="text-muted mb-0">Earnings</p>
-                           </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                           <div class="p-3 border border-dashed border-start-0">
-                              <h5 class="mb-1"><span class="counter-value" data-target="367">0</span></h5>
-                              <p class="text-muted mb-0">Refunds</p>
-                           </div>
-                        </div>
-                        <!--end col-->
-                        <div class="col-6 col-sm-3">
-                           <div class="p-3 border border-dashed border-start-0 border-end-0">
-                              <h5 class="mb-1 text-success"><span class="counter-value" data-target="18.92">0</span>%</h5>
-                              <p class="text-muted mb-0">Conversation Ratio</p>
-                           </div>
-                        </div>
-                        <!--end col-->
-                     </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-body p-0 pb-2">
-                     <div class="w-100">
-                        <div id="customer_impression_charts" data-colors='["--vz-primary", "--vz-success", "--vz-danger"]' class="apex-charts" dir="ltr"></div>
-                     </div>
-                  </div><!-- end card body -->
-               </div><!-- end card -->
-            </div><!-- end col -->
-
-            <div class="col-xl-4">
-               <!-- card -->
-               <div class="card card-height-100">
-                  <div class="card-header align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Sales by Locations</h4>
-                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-soft-primary btn-sm">
-                           Export Report
-                        </button>
-                     </div>
-                  </div><!-- end card header -->
-
-                  <!-- card body -->
-                  <div class="card-body">
-
-                     <div id="sales-by-locations" data-colors='["--vz-light", "--vz-success", "--vz-primary"]' style="height: 269px" dir="ltr"></div>
-
-                     <div class="px-2 py-2 mt-1">
-                        <p class="mb-1">Canada <span class="float-end">75%</span></p>
-                        <div class="progress mt-2" style="height: 6px;">
-                           <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
-                              aria-valuemax="75"></div>
-                        </div>
-
-                        <p class="mt-3 mb-1">Greenland <span class="float-end">47%</span>
-                        </p>
-                        <div class="progress mt-2" style="height: 6px;">
-                           <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 47%" aria-valuenow="47" aria-valuemin="0"
-                              aria-valuemax="47"></div>
-                        </div>
-
-                        <p class="mt-3 mb-1">Russia <span class="float-end">82%</span></p>
-                        <div class="progress mt-2" style="height: 6px;">
-                           <div class="progress-bar progress-bar-striped bg-primary" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0"
-                              aria-valuemax="82"></div>
-                        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center flex-wrap gap-2">
+                  <div class="avatar me-3">
+                     <div class="avatar-initial bg-label-danger rounded">
+                        <i class="mdi mdi-library-outline mdi-24px">
+                        </i>
                      </div>
                   </div>
-                  <!-- end card body -->
+                  <div class="card-info">
+                     <div class="d-flex align-items-center">
+                        <h4 class="mb-0">{{ $jumlahPostingan }}</h4>
+                        {{-- <i class="mdi mdi-chevron-up text-success mdi-24px"></i> --}}
+                        {{-- <small class="text-success">25.8%</small> --}}
+                     </div>
+                     <small class="text-muted">Data Postingan</small>
+                  </div>
                </div>
-               <!-- end card -->
             </div>
-            <!-- end col -->
          </div>
-
-         <div class="row">
-            <div class="col-xl-6">
-               <div class="card">
-                  <div class="card-header align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Best Selling Products</h4>
-                     <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                           <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="fw-semibold text-uppercase fs-12">Sort by:
-                              </span><span class="text-muted">Today<i class="mdi mdi-chevron-down ms-1"></i></span>
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">Today</a>
-                              <a class="dropdown-item" href="#">Yesterday</a>
-                              <a class="dropdown-item" href="#">Last 7 Days</a>
-                              <a class="dropdown-item" href="#">Last 30 Days</a>
-                              <a class="dropdown-item" href="#">This Month</a>
-                              <a class="dropdown-item" href="#">Last Month</a>
-                           </div>
-                        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center flex-wrap gap-2">
+                  <div class="avatar me-3">
+                     <div class="avatar-initial bg-label-info rounded">
+                        <i class="mdi mdi-layers-outline mdi-24px">
+                        </i>
                      </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-body">
-                     <div class="table-responsive table-card">
-                        <table class="table table-hover table-centered align-middle table-nowrap mb-0">
-                           <tbody>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-sm bg-light rounded p-1 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/products/img-1.png" alt="" class="img-fluid d-block" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Branded T-Shirts</a></h5>
-                                          <span class="text-muted">24 Apr 2021</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$29.00</h5>
-                                    <span class="text-muted">Price</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">62</h5>
-                                    <span class="text-muted">Orders</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">510</h5>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$1,798</h5>
-                                    <span class="text-muted">Amount</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-sm bg-light rounded p-1 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/products/img-2.png" alt="" class="img-fluid d-block" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Bentwood Chair</a></h5>
-                                          <span class="text-muted">19 Mar 2021</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$85.20</h5>
-                                    <span class="text-muted">Price</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">35</h5>
-                                    <span class="text-muted">Orders</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal"><span class="badge bg-danger-subtle text-danger">Out of stock</span> </h5>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$2982</h5>
-                                    <span class="text-muted">Amount</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-sm bg-light rounded p-1 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/products/img-3.png" alt="" class="img-fluid d-block" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Borosil Paper Cup</a></h5>
-                                          <span class="text-muted">01 Mar 2021</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$14.00</h5>
-                                    <span class="text-muted">Price</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">80</h5>
-                                    <span class="text-muted">Orders</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">749</h5>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$1120</h5>
-                                    <span class="text-muted">Amount</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-sm bg-light rounded p-1 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/products/img-4.png" alt="" class="img-fluid d-block" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">One Seater Sofa</a></h5>
-                                          <span class="text-muted">11 Feb 2021</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$127.50</h5>
-                                    <span class="text-muted">Price</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">56</h5>
-                                    <span class="text-muted">Orders</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal"><span class="badge bg-danger-subtle text-danger">Out of stock</span></h5>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$7140</h5>
-                                    <span class="text-muted">Amount</span>
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="avatar-sm bg-light rounded p-1 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/products/img-5.png" alt="" class="img-fluid d-block" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1"><a href="apps-ecommerce-product-details.html" class="text-reset">Stillbird Helmet</a></h5>
-                                          <span class="text-muted">17 Jan 2021</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$54</h5>
-                                    <span class="text-muted">Price</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">74</h5>
-                                    <span class="text-muted">Orders</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">805</h5>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 my-1 fw-normal">$3996</h5>
-                                    <span class="text-muted">Amount</span>
-                                 </td>
-                              </tr>
-                           </tbody>
-                        </table>
+                  </div>
+                  <div class="card-info">
+                     <div class="d-flex align-items-center">
+                        <h4 class="mb-0">{{ $jumlahKategori }}</h4>
+                        {{-- <i class="mdi mdi-chevron-down text-danger mdi-24px"></i> --}}
+                        {{-- <small class="text-danger">12.1%</small> --}}
                      </div>
-
-                     <div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
-                        <div class="col-sm">
-                           <div class="text-muted">
-                              Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">25</span> Results
-                           </div>
-                        </div>
-                        <div class="col-sm-auto  mt-3 mt-sm-0">
-                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
-                              <li class="page-item disabled">
-                                 <a href="#" class="page-link">←</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">1</a>
-                              </li>
-                              <li class="page-item active">
-                                 <a href="#" class="page-link">2</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">3</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">→</a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-
+                     <small class="text-muted">Data Kategori</small>
                   </div>
                </div>
             </div>
-
-            <div class="col-xl-6">
-               <div class="card card-height-100">
-                  <div class="card-header align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Top Sellers</h4>
-                     <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                           <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="text-muted">Report<i class="mdi mdi-chevron-down ms-1"></i></span>
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">Download Report</a>
-                              <a class="dropdown-item" href="#">Export</a>
-                              <a class="dropdown-item" href="#">Import</a>
-                           </div>
-                        </div>
-                     </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-body">
-                     <div class="table-responsive table-card">
-                        <table class="table table-centered table-hover align-middle table-nowrap mb-0">
-                           <tbody>
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-1.png" alt="" class="avatar-sm p-2" />
-                                       </div>
-                                       <div>
-                                          <h5 class="fs-14 my-1 fw-medium">
-                                             <a href="apps-ecommerce-seller-details.html" class="text-reset">iTest Factory</a>
-                                          </h5>
-                                          <span class="text-muted">Oliver Tyler</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">Bags and Wallets</span>
-                                 </td>
-                                 <td>
-                                    <p class="mb-0">8547</p>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">$541200</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 mb-0">32%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5>
-                                 </td>
-                              </tr><!-- end -->
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-2.png" alt="" class="avatar-sm p-2" />
-                                       </div>
-                                       <div class="flex-grow-1">
-                                          <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Digitech Galaxy</a></h5>
-                                          <span class="text-muted">John Roberts</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">Watches</span>
-                                 </td>
-                                 <td>
-                                    <p class="mb-0">895</p>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">$75030</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 mb-0">79%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5>
-                                 </td>
-                              </tr><!-- end -->
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-3.png" alt="" class="avatar-sm p-2" />
-                                       </div>
-                                       <div class="flex-gow-1">
-                                          <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Nesta Technologies</a></h5>
-                                          <span class="text-muted">Harley Fuller</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">Bike Accessories</span>
-                                 </td>
-                                 <td>
-                                    <p class="mb-0">3470</p>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">$45600</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 mb-0">90%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5>
-                                 </td>
-                              </tr><!-- end -->
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-8.png" alt="" class="avatar-sm p-2" />
-                                       </div>
-                                       <div class="flex-grow-1">
-                                          <h5 class="fs-14 my-1 fw-medium"><a href="apps-ecommerce-seller-details.html" class="text-reset">Zoetic Fashion</a></h5>
-                                          <span class="text-muted">James Bowen</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">Clothes</span>
-                                 </td>
-                                 <td>
-                                    <p class="mb-0">5488</p>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">$29456</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 mb-0">40%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5>
-                                 </td>
-                              </tr><!-- end -->
-                              <tr>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-5.png" alt="" class="avatar-sm p-2" />
-                                       </div>
-                                       <div class="flex-grow-1">
-                                          <h5 class="fs-14 my-1 fw-medium">
-                                             <a href="apps-ecommerce-seller-details.html" class="text-reset">Meta4Systems</a>
-                                          </h5>
-                                          <span class="text-muted">Zoe Dennis</span>
-                                       </div>
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">Furniture</span>
-                                 </td>
-                                 <td>
-                                    <p class="mb-0">4100</p>
-                                    <span class="text-muted">Stock</span>
-                                 </td>
-                                 <td>
-                                    <span class="text-muted">$11260</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 mb-0">57%<i class="ri-bar-chart-fill text-success fs-16 align-middle ms-2"></i></h5>
-                                 </td>
-                              </tr><!-- end -->
-                           </tbody>
-                        </table><!-- end table -->
-                     </div>
-
-                     <div class="align-items-center mt-4 pt-2 justify-content-between row text-center text-sm-start">
-                        <div class="col-sm">
-                           <div class="text-muted">
-                              Showing <span class="fw-semibold">5</span> of <span class="fw-semibold">25</span> Results
-                           </div>
-                        </div>
-                        <div class="col-sm-auto  mt-3 mt-sm-0">
-                           <ul class="pagination pagination-separated pagination-sm mb-0 justify-content-center">
-                              <li class="page-item disabled">
-                                 <a href="#" class="page-link">←</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">1</a>
-                              </li>
-                              <li class="page-item active">
-                                 <a href="#" class="page-link">2</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">3</a>
-                              </li>
-                              <li class="page-item">
-                                 <a href="#" class="page-link">→</a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-
-                  </div> <!-- .card-body-->
-               </div> <!-- .card-->
-            </div> <!-- .col-->
-         </div> <!-- end row-->
-
-         <div class="row">
-            <div class="col-xl-4">
-               <div class="card card-height-100">
-                  <div class="card-header align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Store Visits by Source</h4>
-                     <div class="flex-shrink-0">
-                        <div class="dropdown card-header-dropdown">
-                           <a class="text-reset dropdown-btn" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span class="text-muted">Report<i class="mdi mdi-chevron-down ms-1"></i></span>
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-end">
-                              <a class="dropdown-item" href="#">Download Report</a>
-                              <a class="dropdown-item" href="#">Export</a>
-                              <a class="dropdown-item" href="#">Import</a>
-                           </div>
-                        </div>
-                     </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-body">
-                     <div id="store-visits-source" data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]' class="apex-charts" dir="ltr">
+         </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center flex-wrap gap-2">
+                  <div class="avatar me-3">
+                     <div class="avatar-initial bg-label-success rounded">
+                        <i class="mdi mdi-tag-multiple-outline mdi-24px">
+                        </i>
                      </div>
                   </div>
-               </div> <!-- .card-->
-            </div> <!-- .col-->
-
-            <div class="col-xl-8">
-               <div class="card">
-                  <div class="card-header align-items-center d-flex">
-                     <h4 class="card-title mb-0 flex-grow-1">Recent Orders</h4>
-                     <div class="flex-shrink-0">
-                        <button type="button" class="btn btn-soft-info btn-sm">
-                           <i class="ri-file-list-3-line align-middle"></i> Generate Report
-                        </button>
+                  <div class="card-info">
+                     <div class="d-flex align-items-center">
+                        <h4 class="mb-0">{{ $jumlahLabel }}</h4>
+                        {{-- <i class="mdi mdi-chevron-up text-success mdi-24px"></i> --}}
+                        {{-- <small class="text-success">54.6%</small> --}}
                      </div>
-                  </div><!-- end card header -->
-
-                  <div class="card-body">
-                     <div class="table-responsive table-card">
-                        <table class="table table-borderless table-centered align-middle table-nowrap mb-0">
-                           <thead class="text-muted table-light">
-                              <tr>
-                                 <th scope="col">Order ID</th>
-                                 <th scope="col">Customer</th>
-                                 <th scope="col">Product</th>
-                                 <th scope="col">Amount</th>
-                                 <th scope="col">Vendor</th>
-                                 <th scope="col">Status</th>
-                                 <th scope="col">Rating</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>
-                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2112</a>
-                                 </td>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/users/avatar-1.jpg" alt="" class="avatar-xs rounded-circle" />
-                                       </div>
-                                       <div class="flex-grow-1">Alex Smith</div>
-                                    </div>
-                                 </td>
-                                 <td>Clothes</td>
-                                 <td>
-                                    <span class="text-success">$109.00</span>
-                                 </td>
-                                 <td>Zoetic Fashion</td>
-                                 <td>
-                                    <span class="badge bg-success-subtle text-success">Paid</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 fw-medium mb-0">5.0<span class="text-muted fs-11 ms-1">(61 votes)</span></h5>
-                                 </td>
-                              </tr><!-- end tr -->
-                              <tr>
-                                 <td>
-                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2111</a>
-                                 </td>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-circle" />
-                                       </div>
-                                       <div class="flex-grow-1">Jansh Brown</div>
-                                    </div>
-                                 </td>
-                                 <td>Kitchen Storage</td>
-                                 <td>
-                                    <span class="text-success">$149.00</span>
-                                 </td>
-                                 <td>Micro Design</td>
-                                 <td>
-                                    <span class="badge bg-warning-subtle text-warning">Pending</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 fw-medium mb-0">4.5<span class="text-muted fs-11 ms-1">(61 votes)</span></h5>
-                                 </td>
-                              </tr><!-- end tr -->
-                              <tr>
-                                 <td>
-                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2109</a>
-                                 </td>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-circle" />
-                                       </div>
-                                       <div class="flex-grow-1">Ayaan Bowen</div>
-                                    </div>
-                                 </td>
-                                 <td>Bike Accessories</td>
-                                 <td>
-                                    <span class="text-success">$215.00</span>
-                                 </td>
-                                 <td>Nesta Technologies</td>
-                                 <td>
-                                    <span class="badge bg-success-subtle text-success">Paid</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 fw-medium mb-0">4.9<span class="text-muted fs-11 ms-1">(89 votes)</span></h5>
-                                 </td>
-                              </tr><!-- end tr -->
-                              <tr>
-                                 <td>
-                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2108</a>
-                                 </td>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/users/avatar-4.jpg" alt="" class="avatar-xs rounded-circle" />
-                                       </div>
-                                       <div class="flex-grow-1">Prezy Mark</div>
-                                    </div>
-                                 </td>
-                                 <td>Furniture</td>
-                                 <td>
-                                    <span class="text-success">$199.00</span>
-                                 </td>
-                                 <td>Syntyce Solutions</td>
-                                 <td>
-                                    <span class="badge bg-danger-subtle text-danger">Unpaid</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 fw-medium mb-0">4.3<span class="text-muted fs-11 ms-1">(47 votes)</span></h5>
-                                 </td>
-                              </tr><!-- end tr -->
-                              <tr>
-                                 <td>
-                                    <a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2107</a>
-                                 </td>
-                                 <td>
-                                    <div class="d-flex align-items-center">
-                                       <div class="flex-shrink-0 me-2">
-                                          <img src="assets/dashboard/velzon/assets/images/users/avatar-6.jpg" alt="" class="avatar-xs rounded-circle" />
-                                       </div>
-                                       <div class="flex-grow-1">Vihan Hudda</div>
-                                    </div>
-                                 </td>
-                                 <td>Bags and Wallets</td>
-                                 <td>
-                                    <span class="text-success">$330.00</span>
-                                 </td>
-                                 <td>iTest Factory</td>
-                                 <td>
-                                    <span class="badge bg-success-subtle text-success">Paid</span>
-                                 </td>
-                                 <td>
-                                    <h5 class="fs-14 fw-medium mb-0">4.7<span class="text-muted fs-11 ms-1">(161 votes)</span></h5>
-                                 </td>
-                              </tr><!-- end tr -->
-                           </tbody><!-- end tbody -->
-                        </table><!-- end table -->
-                     </div>
-                  </div>
-               </div> <!-- .card-->
-            </div> <!-- .col-->
-         </div> <!-- end row-->
-
-      </div> <!-- end .h-100-->
-
-   </div> <!-- end col -->
-
-   <div class="col-auto layout-rightside-col">
-      <div class="overlay"></div>
-      <div class="layout-rightside">
-         <div class="card h-100 rounded-0">
-            <div class="card-body p-0">
-               <div class="p-3">
-                  <h6 class="text-muted mb-0 text-uppercase fw-semibold">Recent Activity</h6>
-               </div>
-               <div data-simplebar style="max-height: 410px;" class="p-3 pt-0">
-                  <div class="acitivity-timeline acitivity-main">
-                     <div class="acitivity-item d-flex">
-                        <div class="flex-shrink-0 avatar-xs acitivity-avatar">
-                           <div class="avatar-title bg-success-subtle text-success rounded-circle">
-                              <i class="ri-shopping-cart-2-line"></i>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Purchase by James Price</h6>
-                           <p class="text-muted mb-1">Product noise evolve smartwatch </p>
-                           <small class="mb-0 text-muted">02:14 PM Today</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0 avatar-xs acitivity-avatar">
-                           <div class="avatar-title bg-danger-subtle text-danger rounded-circle">
-                              <i class="ri-stack-fill"></i>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Added new <span class="fw-semibold">style collection</span></h6>
-                           <p class="text-muted mb-1">By Nesta Technologies</p>
-                           <div class="d-inline-flex gap-2 border border-dashed p-2 mb-2">
-                              <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                 <img src="assets/dashboard/velzon/assets/images/products/img-8.png" alt="" class="img-fluid d-block" />
-                              </a>
-                              <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                 <img src="assets/dashboard/velzon/assets/images/products/img-2.png" alt="" class="img-fluid d-block" />
-                              </a>
-                              <a href="apps-ecommerce-product-details.html" class="bg-light rounded p-1">
-                                 <img src="assets/dashboard/velzon/assets/images/products/img-10.png" alt="" class="img-fluid d-block" />
-                              </a>
-                           </div>
-                           <p class="mb-0 text-muted"><small>9:47 PM Yesterday</small></p>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0">
-                           <img src="assets/dashboard/velzon/assets/images/users/avatar-2.jpg" alt="" class="avatar-xs rounded-circle acitivity-avatar">
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Natasha Carey have liked the products</h6>
-                           <p class="text-muted mb-1">Allow users to like products in your WooCommerce store.</p>
-                           <small class="mb-0 text-muted">25 Dec, 2021</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0">
-                           <div class="avatar-xs acitivity-avatar">
-                              <div class="avatar-title rounded-circle bg-secondary">
-                                 <i class="mdi mdi-sale fs-14"></i>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Today offers by <a href="apps-ecommerce-seller-details.html" class="link-secondary">Digitech Galaxy</a></h6>
-                           <p class="text-muted mb-2">Offer is valid on orders of Rs.500 Or above for selected products only.</p>
-                           <small class="mb-0 text-muted">12 Dec, 2021</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0">
-                           <div class="avatar-xs acitivity-avatar">
-                              <div class="avatar-title rounded-circle bg-danger-subtle text-danger">
-                                 <i class="ri-bookmark-fill"></i>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Favorite Product</h6>
-                           <p class="text-muted mb-2">Esther James have Favorite product.</p>
-                           <small class="mb-0 text-muted">25 Nov, 2021</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0">
-                           <div class="avatar-xs acitivity-avatar">
-                              <div class="avatar-title rounded-circle bg-secondary">
-                                 <i class="mdi mdi-sale fs-14"></i>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Flash sale starting <span class="text-primary">Tomorrow.</span></h6>
-                           <p class="text-muted mb-0">Flash sale by <a href="javascript:void(0);" class="link-secondary fw-medium">Zoetic Fashion</a></p>
-                           <small class="mb-0 text-muted">22 Oct, 2021</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item py-3 d-flex">
-                        <div class="flex-shrink-0">
-                           <div class="avatar-xs acitivity-avatar">
-                              <div class="avatar-title rounded-circle bg-info-subtle text-info">
-                                 <i class="ri-line-chart-line"></i>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Monthly sales report</h6>
-                           <p class="text-muted mb-2"><span class="text-danger">2 days left</span> notification to submit the monthly sales report. <a href="javascript:void(0);"
-                                 class="link-warning text-decoration-underline">Reports Builder</a></p>
-                           <small class="mb-0 text-muted">15 Oct</small>
-                        </div>
-                     </div>
-                     <div class="acitivity-item d-flex">
-                        <div class="flex-shrink-0">
-                           <img src="assets/dashboard/velzon/assets/images/users/avatar-3.jpg" alt="" class="avatar-xs rounded-circle acitivity-avatar" />
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                           <h6 class="mb-1 lh-base">Frank Hook Commented</h6>
-                           <p class="text-muted mb-2 fst-italic">" A product that has reviews is more likable to be sold than a product. "</p>
-                           <small class="mb-0 text-muted">26 Aug, 2021</small>
-                        </div>
-                     </div>
+                     <small class="text-muted">Data label</small>
                   </div>
                </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Cards with few info -->
 
-               <div class="p-3 mt-2">
-                  <h6 class="text-muted mb-3 text-uppercase fw-semibold">Top 10 Categories
+      {{-- Cards Role --}}
+      <div class="col-xl-4 col-lg-6 col-md-6">
+         <div class="card">
+            <div class="card-body">
+               <div
+                  class="d-flex justify-content-between mb-2">
+                  <h6 class="fw-normal">
+                     Total {{ $jumlahSuperadmin }} users
                   </h6>
-
-                  <ol class="ps-3 text-muted">
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Mobile & Accessories <span class="float-end">(10,294)</span></a>
+                  <ul
+                     class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Vinnie Mostowy"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/5.png') }}"
+                           alt="Avatar" />
                      </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Desktop <span class="float-end">(6,256)</span></a>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Allen Rieske"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/12.png') }}"
+                           alt="Avatar" />
                      </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Electronics <span class="float-end">(3,479)</span></a>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Julee Rossignol"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/6.png') }}"
+                           alt="Avatar" />
                      </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Home & Furniture <span class="float-end">(2,275)</span></a>
+                     <li class="avatar">
+                        <span
+                           class="avatar-initial rounded-circle pull-up bg-lighter text-body"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="3 more">+3</span>
                      </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Grocery <span class="float-end">(1,950)</span></a>
-                     </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Fashion <span class="float-end">(1,582)</span></a>
-                     </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Appliances <span class="float-end">(1,037)</span></a>
-                     </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Beauty, Toys & More <span class="float-end">(924)</span></a>
-                     </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Food & Drinks <span class="float-end">(701)</span></a>
-                     </li>
-                     <li class="py-1">
-                        <a href="#" class="text-muted">Toys & Games <span class="float-end">(239)</span></a>
-                     </li>
-                  </ol>
-                  <div class="mt-3 text-center">
-                     <a href="javascript:void(0);" class="text-muted text-decoration-underline">View all Categories</a>
-                  </div>
+                  </ul>
                </div>
-               <div class="p-3">
-                  <h6 class="text-muted mb-3 text-uppercase fw-semibold">Products Reviews</h6>
-                  <!-- Swiper -->
-                  <div class="swiper vertical-swiper" style="height: 250px;">
-                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                           <div class="card border border-dashed shadow-none">
-                              <div class="card-body">
-                                 <div class="d-flex">
-                                    <div class="flex-shrink-0 avatar-sm">
-                                       <div class="avatar-title bg-light rounded">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-1.png" alt="" height="30">
-                                       </div>
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                       <div>
-                                          <p class="text-muted mb-1 fst-italic text-truncate-two-lines"> " Great product and looks great, lots of features. "</p>
-                                          <div
-                                             class="fs-11 align-middle text-warning">
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                          </div>
-                                       </div>
-                                       <div class="text-end mb-0 text-muted">
-                                          - by <cite title="Source Title">Force Medicines</cite>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="swiper-slide">
-                           <div class="card border border-dashed shadow-none">
-                              <div class="card-body">
-                                 <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                       <img src="assets/dashboard/velzon/assets/images/users/avatar-3.jpg" alt="" class="avatar-sm rounded">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                       <div>
-                                          <p class="text-muted mb-1 fst-italic text-truncate-two-lines"> " Amazing template, very easy to understand and manipulate. "</p>
-                                          <div class="fs-11 align-middle text-warning">
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-half-fill"></i>
-                                          </div>
-                                       </div>
-                                       <div class="text-end mb-0 text-muted">
-                                          - by <cite title="Source Title">Henry Baird</cite>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="swiper-slide">
-                           <div class="card border border-dashed shadow-none">
-                              <div class="card-body">
-                                 <div class="d-flex">
-                                    <div class="flex-shrink-0 avatar-sm">
-                                       <div class="avatar-title bg-light rounded">
-                                          <img src="assets/dashboard/velzon/assets/images/companies/img-8.png" alt="" height="30">
-                                       </div>
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                       <div>
-                                          <p class="text-muted mb-1 fst-italic text-truncate-two-lines"> "Very beautiful product and Very helpful customer service."</p>
-                                          <div class="fs-11 align-middle text-warning">
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-line"></i>
-                                             <i class="ri-star-line"></i>
-                                          </div>
-                                       </div>
-                                       <div class="text-end mb-0 text-muted">
-                                          - by <cite title="Source Title">Zoetic Fashion</cite>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="swiper-slide">
-                           <div class="card border border-dashed shadow-none">
-                              <div class="card-body">
-                                 <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                       <img src="assets/dashboard/velzon/assets/images/users/avatar-2.jpg" alt="" class="avatar-sm rounded">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                       <div>
-                                          <p class="text-muted mb-1 fst-italic text-truncate-two-lines">" The product is very beautiful. I like it. "</p>
-                                          <div class="fs-11 align-middle text-warning">
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-fill"></i>
-                                             <i class="ri-star-half-fill"></i>
-                                             <i class="ri-star-line"></i>
-                                          </div>
-                                       </div>
-                                       <div class="text-end mb-0 text-muted">
-                                          - by <cite title="Source Title">Nancy Martino</cite>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
+               <div
+                  class="d-flex justify-content-between align-items-end">
+                  <div class="role-heading">
+                     <h4 class="mb-1 text-body">
+                        Super Admin
+                     </h4>
+                     <a
+                        href="javascript:;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addRoleModal"
+                        class="role-edit-modal"><span>Edit Role</span></a>
                   </div>
+                  <a
+                     href="javascript:void(0);"
+                     class="text-muted"><i
+                        class="mdi mdi-content-copy mdi-20px"></i></a>
                </div>
-
-               <div class="p-3">
-                  <h6 class="text-muted mb-3 text-uppercase fw-semibold">Customer Reviews</h6>
-                  <div class="bg-light px-3 py-2 rounded-2 mb-2">
-                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
-                           <div class="fs-16 align-middle text-warning">
-                              <i class="ri-star-fill"></i>
-                              <i class="ri-star-fill"></i>
-                              <i class="ri-star-fill"></i>
-                              <i class="ri-star-fill"></i>
-                              <i class="ri-star-half-fill"></i>
-                           </div>
-                        </div>
-                        <div class="flex-shrink-0">
-                           <h6 class="mb-0">4.5 out of 5</h6>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="text-center">
-                     <div class="text-muted">Total <span class="fw-medium">5.50k</span> reviews</div>
-                  </div>
-
-                  <div class="mt-3">
-                     <div class="row align-items-center g-2">
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0">5 star</h6>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="p-1">
-                              <div class="progress animated-progress progress-sm">
-                                 <div class="progress-bar bg-success" role="progressbar" style="width: 50.16%" aria-valuenow="50.16" aria-valuemin="0" aria-valuemax="100">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0 text-muted">2758</h6>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end row -->
-
-                     <div class="row align-items-center g-2">
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0">4 star</h6>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="p-1">
-                              <div class="progress animated-progress progress-sm">
-                                 <div class="progress-bar bg-success" role="progressbar" style="width: 29.32%" aria-valuenow="29.32" aria-valuemin="0" aria-valuemax="100">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0 text-muted">1063</h6>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end row -->
-
-                     <div class="row align-items-center g-2">
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0">3 star</h6>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="p-1">
-                              <div class="progress animated-progress progress-sm">
-                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 18.12%" aria-valuenow="18.12" aria-valuemin="0" aria-valuemax="100">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0 text-muted">997</h6>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end row -->
-
-                     <div class="row align-items-center g-2">
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0">2 star</h6>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="p-1">
-                              <div class="progress animated-progress progress-sm">
-                                 <div class="progress-bar bg-success" role="progressbar" style="width: 4.98%" aria-valuenow="4.98" aria-valuemin="0" aria-valuemax="100">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0 text-muted">227</h6>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end row -->
-
-                     <div class="row align-items-center g-2">
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0">1 star</h6>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="p-1">
-                              <div class="progress animated-progress progress-sm">
-                                 <div class="progress-bar bg-danger" role="progressbar" style="width: 7.42%" aria-valuenow="7.42" aria-valuemin="0" aria-valuemax="100">
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <div class="p-1">
-                              <h6 class="mb-0 text-muted">408</h6>
-                           </div>
-                        </div>
-                     </div><!-- end row -->
-                  </div>
-               </div>
-
-               <div class="card sidebar-alert bg-light border-0 text-center mx-4 mb-0 mt-3">
-                  <div class="card-body">
-                     <img src="assets/dashboard/velzon/assets/images/giftbox.png" alt="">
-                     <div class="mt-4">
-                        <h5>Invite New Seller</h5>
-                        <p class="text-muted lh-base">Refer a new seller to us and earn $100 per refer.</p>
-                        <button type="button" class="btn btn-primary btn-label rounded-pill"><i class="ri-mail-fill label-icon align-middle rounded-pill fs-16 me-2"></i> Invite
-                           Now</button>
-                     </div>
-                  </div>
-               </div>
-
             </div>
-         </div> <!-- end card-->
-      </div> <!-- end .rightbar-->
+         </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-6">
+         <div class="card">
+            <div class="card-body">
+               <div
+                  class="d-flex justify-content-between mb-2">
+                  <h6 class="fw-normal">
+                     Total {{ $jumlahAdmin }} users
+                  </h6>
+                  <ul
+                     class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Jimmy Ressula"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/4.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="John Doe"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Kristi Lawker"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/2.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li class="avatar">
+                        <span
+                           class="avatar-initial rounded-circle pull-up bg-lighter text-body"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="3 more">+3</span>
+                     </li>
+                  </ul>
+               </div>
+               <div
+                  class="d-flex justify-content-between align-items-end">
+                  <div class="role-heading">
+                     <h4 class="mb-1 text-body">
+                        Admin
+                     </h4>
+                     <a
+                        href="javascript:;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addRoleModal"
+                        class="role-edit-modal"><span>Edit Role</span></a>
+                  </div>
+                  <a
+                     href="javascript:void(0);"
+                     class="text-muted"><i
+                        class="mdi mdi-content-copy mdi-20px"></i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-xl-4 col-lg-6 col-md-6">
+         <div class="card">
+            <div class="card-body">
+               <div
+                  class="d-flex justify-content-between mb-2">
+                  <h6 class="fw-normal">
+                     Total {{ $jumlahMember }} users
+                  </h6>
+                  <ul
+                     class="list-unstyled d-flex align-items-center avatar-group mb-0">
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Andrew Tye"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/6.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Rishi Swaat"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/9.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li
+                        data-bs-toggle="tooltip"
+                        data-popup="tooltip-custom"
+                        data-bs-placement="top"
+                        title="Rossie Kim"
+                        class="avatar pull-up">
+                        <img
+                           class="rounded-circle"
+                           src="{{ asset('assets/dashboard/materialize/assets/img/avatars/12.png') }}"
+                           alt="Avatar" />
+                     </li>
+                     <li class="avatar">
+                        <span
+                           class="avatar-initial rounded-circle pull-up bg-lighter text-body"
+                           data-bs-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="3 more">+3</span>
+                     </li>
+                  </ul>
+               </div>
+               <div
+                  class="d-flex justify-content-between align-items-end">
+                  <div class="role-heading">
+                     <h4 class="mb-1 text-body">
+                        Member
+                     </h4>
+                     <a
+                        href="javascript:;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addRoleModal"
+                        class="role-edit-modal"><span>Edit Role</span></a>
+                  </div>
+                  <a
+                     href="javascript:void(0);"
+                     class="text-muted"><i
+                        class="mdi mdi-content-copy mdi-20px"></i></a>
+               </div>
+            </div>
+         </div>
+      </div>
+      {{-- / End Cards Role  --}}
 
-   </div> <!-- end col -->
-</div>
+      <!-- Congratulations card -->
+      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-8 col-12">
+         <div class="card h-100">
+            <div class="card-body text-nowrap">
+               <h4 class="card-title mb-1 d-flex gap-2 flex-wrap">Welcome <strong>{{ $user->name }}!</strong> </h4>
+               <p class="pb-0">Best seller of the month</p>
+               <h4 class="text-primary mb-1">$42.8k</h4>
+               <p class="mb-2 pb-1">78% of target 🚀</p>
+               <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+            </div>
+            <img src="assets/dashboard/materialize/assets/img/illustrations/trophy.png" class="position-absolute bottom-0 end-0 me-3" height="140" alt="view sales">
+         </div>
+      </div>
+      <!--/ Congratulations card -->
+
+      <!-- Total Profit -->
+      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+         <div class="card h-100">
+            <div class="card-body">
+               <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                  <div class="avatar">
+                     <div class="avatar-initial bg-label-primary rounded">
+                        <i class="mdi mdi-cart-plus mdi-24px"></i>
+                     </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                     <p class="mb-0 text-success me-1">+22%</p>
+                     <i class="mdi mdi-chevron-up text-success"></i>
+                  </div>
+               </div>
+               <div class="card-info mt-4 pt-1">
+                  <h5 class="mb-2">155k</h5>
+                  <p class="text-muted">Total Order</p>
+                  <div class="badge bg-label-secondary rounded-pill">Last 4 Month</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Total Profit -->
+
+      <!-- Total Expenses -->
+      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+         <div class="card h-100">
+            <div class="card-body">
+               <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                  <div class="avatar">
+                     <div class="avatar-initial bg-label-success rounded">
+                        <i class="mdi mdi-currency-usd mdi-24px"></i>
+                     </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                     <p class="mb-0 text-success me-1">+38%</p>
+                     <i class="mdi mdi-chevron-up text-success"></i>
+                  </div>
+               </div>
+               <div class="card-info mt-4 pt-1">
+                  <h5 class="mb-2">$13.4k</h5>
+                  <p class="text-muted">Total Sales</p>
+                  <div class="badge bg-label-secondary rounded-pill">Last Six Month</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Total Expenses -->
+
+      <!-- Total Profit chart -->
+      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+         <div class="card h-100">
+            <div class="card-header pb-0">
+               <div class="d-flex align-items-end mb-1 flex-wrap gap-2">
+                  <h4 class="mb-0 me-2">$88.5k</h4>
+                  <p class="mb-0 text-danger">-18%</p>
+               </div>
+               <span class="d-block mb-2 text-muted">Total Profit</span>
+            </div>
+            <div class="card-body">
+               <div id="totalProfitChart"></div>
+            </div>
+         </div>
+      </div>
+      <!--/ Total Profit chart -->
+
+      <!-- Total Growth chart -->
+      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-6">
+         <div class="card h-100">
+            <div class="card-header pb-0">
+               <div class="d-flex align-items-end mb-1 flex-wrap gap-2">
+                  <h4 class="mb-0 me-2">$27.9k</h4>
+                  <p class="mb-0 text-success">+16%</p>
+               </div>
+               <span class="d-block mb-2 text-muted">Total Growth</span>
+            </div>
+            <div class="card-body">
+               <div id="totalGrowthChart"></div>
+            </div>
+         </div>
+      </div>
+      <!--/ Total Sales chart -->
+
+      <!-- Recent Logged In Activity -->
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+         <div class="card mb-4">
+            <h5 class="card-header">
+               {{ __('Aktivitas Login') }}
+            </h5>
+            <div class="card-datatable">
+               <div class="table-responsive">
+                  <table class="table" id="aktivitas-table">
+                     <thead class="table-light">
+                        <tr>
+                           <th
+                              class="text-truncate">
+                              User
+                           </th>
+                           <th
+                              class="text-truncate">
+                              Role
+                           </th>
+                           <th
+                              class="text-truncate">
+                              Browser
+                           </th>
+                           <th
+                              class="text-truncate">
+                              OS
+                           </th>
+                           <th
+                              class="text-truncate">
+                              Perangkat
+                           </th>
+                           <th
+                              class="text-truncate">
+                              Lokasi
+                           </th>
+                           {{-- <th
+                              class="text-truncate">
+                              IP
+                           </th> --}}
+                           <th
+                              class="text-truncate">
+                              Waktu Login
+                           </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($user->login_info->sortByDesc('login_at') as $info)
+                           <tr>
+                              @php
+                                 $deviceIcon =
+                                     $info->device == 'Desktop'
+                                         ? '<i
+                              class="mdi mdi-laptop mdi-20px text-primary me-2"></i>'
+                                         : '<i
+                              class="mdi mdi-cellphone mdi-20px text-primary me-2"></i>';
+                                 $osIcon = '';
+                                 $browserIcon = '';
+                                 if ($info->os == 'Windows') {
+                                     $osIcon = '<i
+                              class="mdi mdi-microsoft-windows mdi-20px text-primary me-2"></i>';
+                                 } elseif ($info->os == 'Linux') {
+                                     $osIcon = '<i
+                              class="mdi mdi-penguin mdi-20px text-warning me-2"></i>';
+                                 } elseif ($info->os == 'MacOS') {
+                                     $osIcon = '<i
+                              class="mdi mdi-apple mdi-20px text-dark me-2"></i>';
+                                 } elseif ($info->os == 'AndroidOS') {
+                                     $osIcon = '<i
+                              class="mdi mdi-android mdi-20px text-success me-2"></i>';
+                                 }
+                                 if ($info->browser == 'Chrome') {
+                                     $browserIcon = '<i
+                              class="mdi mdi-google-chrome mdi-20px text-success me-2"></i>';
+                                 } elseif ($info->browser == 'Firefox') {
+                                     $browserIcon = '<i
+                              class="mdi mdi-firefox mdi-20px text-danger me-2"></i>';
+                                 } elseif ($info->browser == 'Safari') {
+                                     $browserIcon = '<i
+                              class="mdi mdi-apple-safari mdi-20px text-primary me-2"></i>';
+                                 } elseif ($info->browser == 'Opera') {
+                                     $browserIcon = '<i
+                              class="mdi mdi-opera mdi-20px text-danger me-2"></i>';
+                                 }
+                                 $city = $info->city == 'Bandung' ? 'Kota Bandung' : $info->city;
+                                 $region = $info->region == 'West Java' ? 'Jawa Barat' : $info->region;
+                                 $roleIcon = '';
+                                 if ($info->user->role == 'superadmin') {
+                                     $role = 'SuperAdmin';
+                                     $roleIcon = '<i
+                              class="mdi mdi-cog-outline mdi-20px text-danger me-2"></i>';
+                                 } elseif ($info->user->role == 'admin') {
+                                     $roleIcon = '<i
+                              class="mdi mdi-chart-donut mdi-20px text-success me-2"></i>';
+                                     $role = 'Admin';
+                                 } else {
+                                     $roleIcon = '<i
+                              class="mdi mdi-account-online mdi-20px text-primary me-2"></i>';
+                                     $role = 'Member';
+                                 }
+                              @endphp
+                              <td class="text-truncate">
+                                 {{ $info->user->name }}
+                              </td>
+                              <td
+                                 class="text-truncate text-heading">
+                                 <div class="d-flex align-items-center">
+                                    {!! $roleIcon !!}{{ $role }}
+                                 </div>
+                              </td>
+                              <td
+                                 class="text-truncate text-heading">
+                                 <div class="d-flex align-items-center">
+                                    {!! $browserIcon !!}{{ $info->browser }}
+                                 </div>
+                              </td>
+                              <td class="text-truncate">
+                                 <div class="d-flex align-items-center">
+                                    {!! $osIcon !!} {{ $info->os }}
+                                 </div>
+                              </td>
+                              <td
+                                 class="text-truncate d-flex align-items-center">
+                                 {!! $deviceIcon !!}
+                                 {{ $info->device }}
+                              </td>
+                              <td
+                                 class="text-truncate">
+                                 {{ $city . ', ' . $region . ' ' . $info->country }}
+                              </td>
+                              {{-- <td
+                                 class="text-truncate">
+                                 {{ $info->login_ip }}
+                              </td> --}}
+                              <td
+                                 class="text-truncate">
+                                 {{ $info->login_at }}
+                              </td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Recent Logged In Activity -->
+   </div>
+   <div class="row gy-4">
+      <!-- Organic Sessions Chart-->
+      <div class="col-lg-4 col-12">
+         <div class="card">
+            <div class="card-header pb-1">
+               <div class="d-flex justify-content-between">
+                  <h5 class="mb-1">Organic Sessions</h5>
+                  <div class="dropdown">
+                     <button class="btn p-0" type="button" id="organicSessionsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="organicSessionsDropdown">
+                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div id="organicSessionsChart"></div>
+            </div>
+         </div>
+      </div>
+      <!--/ Organic Sessions Chart-->
+
+      <!-- Project Timeline Chart-->
+      <div class="col-lg-8 col-12">
+         <div class="card">
+            <div class="row">
+               <div class="col-md-8 col-12">
+                  <div class="card-header">
+                     <h5 class="mb-1">Project Timeline</h5>
+                     <small class="mb-0 text-body">Total 840 Task Completed</small>
+                  </div>
+                  <div class="card-body px-2">
+                     <div id="projectTimelineChart"></div>
+                  </div>
+               </div>
+               <div class="col-md-4 col-12 border-start">
+                  <div class="card-header">
+                     <div class="d-flex justify-content-between">
+                        <h5 class="mb-1">Project List</h5>
+                        <div class="dropdown">
+                           <button class="btn p-0" type="button" id="projectTimeline" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                           </button>
+                           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectTimeline">
+                              <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                              <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                              <a class="dropdown-item" href="javascript:void(0);">Update</a>
+                           </div>
+                        </div>
+                     </div>
+                     <small class="text-body mb-0">4 Ongoing Project</small>
+                  </div>
+                  <div class="card-body">
+                     <div class="d-flex align-items-center mb-3 pb-1">
+                        <div class="avatar">
+                           <div class="avatar-initial bg-label-primary rounded">
+                              <i class="mdi mdi-cellphone mdi-24px"></i>
+                           </div>
+                        </div>
+                        <div class="ms-3 d-flex flex-column">
+                           <h6 class="mb-1 fw-semibold">IOS Application</h6>
+                           <small class="text-muted">Task 840/2.5K</small>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center mb-3 pb-1">
+                        <div class="avatar">
+                           <div class="avatar-initial bg-label-success rounded">
+                              <i class="mdi mdi-creation mdi-24px"></i>
+                           </div>
+                        </div>
+                        <div class="ms-3 d-flex flex-column">
+                           <h6 class="mb-1 fw-semibold">Web Application</h6>
+                           <small class="text-muted">Task 99/1.42k</small>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center mb-3 pb-1">
+                        <div class="avatar">
+                           <div class="avatar-initial bg-label-secondary rounded">
+                              <i class="mdi mdi-credit-card-outline mdi-24px"></i>
+                           </div>
+                        </div>
+                        <div class="ms-3 d-flex flex-column">
+                           <h6 class="mb-1 fw-semibold">Bank Dashboard</h6>
+                           <small class="text-muted">Task 58/100</small>
+                        </div>
+                     </div>
+                     <div class="d-flex align-items-center">
+                        <div class="avatar">
+                           <div class="avatar-initial bg-label-info rounded">
+                              <i class="mdi mdi-pencil-ruler-outline mdi-24px"></i>
+                           </div>
+                        </div>
+                        <div class="ms-3 d-flex flex-column">
+                           <h6 class="mb-1 fw-semibold">UI Kit Design</h6>
+                           <small class="text-muted">Task 120/350</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Project Timeline Chart-->
+
+      <!-- Weekly Overview Chart -->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card">
+            <div class="card-header">
+               <div class="d-flex justify-content-between">
+                  <h5 class="mb-1">Weekly Overview</h5>
+                  <div class="dropdown">
+                     <button class="btn p-0" type="button" id="weeklyOverviewDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="weeklyOverviewDropdown">
+                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div id="weeklyOverviewChart"></div>
+               <div class="mt-1">
+                  <div class="d-flex align-items-center gap-3">
+                     <h3 class="mb-0">62%</h3>
+                     <p class="mb-0 text-muted">Your sales performance is 35% 😎 better compared to last month</p>
+                  </div>
+                  <div class="d-grid mt-3">
+                     <button class="btn btn-primary" type="button">Details</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Weekly Overview Chart -->
+
+      <!-- Social Network Visits -->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+               <h5 class="card-title m-0 me-2">Social Network Visits</h5>
+               <div class="dropdown">
+                  <button class="btn p-0" type="button" id="socialNetworkList" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="socialNetworkList">
+                     <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div class="mb-3">
+                  <div class="d-flex align-items-center mb-1">
+                     <h4 class="mb-0">28,468</h4>
+                     <span class="text-success ms-2 fw-semibold">
+                        <i class="mdi mdi-menu-up"></i>
+                        <small>62%</small>
+                     </span>
+                  </div>
+                  <small class="text-muted">Last 1 Year Visits</small>
+               </div>
+               <ul class="p-0 m-0">
+                  <li class="d-flex pb-1 mb-3">
+                     <div class="flex-shrink-0">
+                        <img src="assets/dashboard/materialize/assets/img/icons/brands/facebook-rounded.png" alt="facebook" class="me-3" height="34">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0">Facebook</h6>
+                           <small class="text-muted">Social Media</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                           <span class="fw-semibold text-heading">12,348</span>
+                           <div class="ms-3 badge bg-label-success rounded-pill">+12%</div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="d-flex pb-1 mb-3">
+                     <div class="flex-shrink-0">
+                        <img src="assets/dashboard/materialize/assets/img/icons/brands/dribbble-rounded.png" alt="dribbble" class="me-3" height="34">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0">Dribbble</h6>
+                           <small class="text-muted">Community</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                           <span class="fw-semibold text-heading">8,450</span>
+                           <div class="ms-3 badge bg-label-success rounded-pill">+32%</div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="d-flex pb-1 mb-3">
+                     <div class="flex-shrink-0">
+                        <img src="assets/dashboard/materialize/assets/img/icons/brands/twitter-rounded.png" alt="facebook" class="me-3" height="34">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0">Twitter</h6>
+                           <small class="text-muted">Social Media</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                           <span class="fw-semibold text-heading">350</span>
+                           <div class="ms-3 badge bg-label-danger rounded-pill">-18%</div>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="d-flex pb-1">
+                     <div class="flex-shrink-0">
+                        <img src="assets/dashboard/materialize/assets/img/icons/brands/instagram-rounded.png" alt="instagram" class="me-3" height="34">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0">Instagram</h6>
+                           <small class="text-muted">Social Media</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                           <span class="fw-semibold text-heading">25,566</span>
+                           <div class="ms-3 badge bg-label-success rounded-pill">+42%</div>
+                        </div>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <!--/ Social Network Visits -->
+
+      <!-- Monthly Budget Chart-->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card h-100">
+            <div class="card-header pb-1">
+               <div class="d-flex justify-content-between">
+                  <h5 class="mb-1">Monthly Budget</h5>
+                  <div class="dropdown">
+                     <button class="btn p-0" type="button" id="monthlyBudgetDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="monthlyBudgetDropdown">
+                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div id="monthlyBudgetChart"></div>
+               <div class="mt-3">
+                  <p class="mb-0 text-muted">Last month you had $2.42 expense transactions, 12 savings entries and 4 bills.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Monthly Budget Chart-->
+
+      <!-- Meeting Schedule -->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+               <h5 class="card-title mb-0 me-2">Meeting Schedule</h5>
+               <div class="dropdown">
+                  <button class="btn p-0" type="button" id="meetingSchedule" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="meetingSchedule">
+                     <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body pt-2">
+               <ul class="p-0 m-0">
+                  <li class="d-flex mb-4 pb-1">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/4.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Call with Woods</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-primary rounded-pill">Business</div>
+                     </div>
+                  </li>
+                  <li class="d-flex mb-4 pb-1">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/5.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Conference call</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-warning rounded-pill">Dinner</div>
+                     </div>
+                  </li>
+                  <li class="d-flex mb-4 pb-1">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/3.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Meeting with Mark</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-secondary rounded-pill">Meetup</div>
+                     </div>
+                  </li>
+                  <li class="d-flex mb-4 pb-1">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/14.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Meeting in Oakland</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-danger rounded-pill">Dinner</div>
+                     </div>
+                  </li>
+                  <li class="d-flex mb-4 pb-1">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/8.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Call with hilda</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-success rounded-pill">Meditation</div>
+                     </div>
+                  </li>
+                  <li class="d-flex">
+                     <div class="avatar flex-shrink-0 me-3">
+                        <img src="assets/dashboard/materialize/assets/img/avatars/1.png" alt="avatar" class="rounded">
+                     </div>
+                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                        <div class="me-2">
+                           <h6 class="mb-0 fw-semibold">Meeting with Carl</h6>
+                           <small class="text-muted">
+                              <i class="mdi mdi-calendar-blank-outline mdi-14px"></i>
+                              <span>21 Jul | 08:20-10:30</span>
+                           </small>
+                        </div>
+                        <div class="badge bg-label-primary rounded-pill">Business</div>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <!--/ Meeting Schedule -->
+
+
+      <!-- External Links Chart -->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card">
+            <div class="card-header">
+               <div class="d-flex justify-content-between">
+                  <h5 class="mb-1">External Links</h5>
+                  <div class="dropdown">
+                     <button class="btn p-0" type="button" id="externalLinksDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="externalLinksDropdown">
+                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div id="externalLinksChart"></div>
+               <div class="table-responsive text-nowrap">
+                  <table class="table table-borderless">
+                     <tbody>
+                        <tr>
+                           <td class="text-start pb-0 ps-0">
+                              <div class="d-flex align-items-center">
+                                 <div class="badge badge-dot bg-primary me-2"></div>
+                                 <h6 class="mb-0 fw-semibold">Google Analytics</h6>
+                              </div>
+                           </td>
+                           <td class="pb-0">
+                              <p class="mb-0 text-muted">$845k</p>
+                           </td>
+                           <td class="pe-0 pb-0">
+                              <div class="d-flex align-items-center justify-content-end">
+                                 <h6 class="mb-0 fw-semibold me-2">82%</h6>
+                                 <i class="mdi mdi-chevron-up text-success"></i>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-start pb-0 ps-0">
+                              <div class="d-flex align-items-center">
+                                 <div class="badge badge-dot bg-secondary me-2"></div>
+                                 <h6 class="mb-0 fw-semibold">Facebook Ads</h6>
+                              </div>
+                           </td>
+                           <td class="pb-0">
+                              <p class="mb-0 text-muted">$12.5k</p>
+                           </td>
+                           <td class="pe-0 pb-0">
+                              <div class="d-flex align-items-center justify-content-end">
+                                 <h6 class="mb-0 fw-semibold me-2">52%</h6>
+                                 <i class="mdi mdi-chevron-down text-danger"></i>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ External Links Chart -->
+
+      <!-- Payment History -->
+      <div class="col-lg-4 col-md-6 col-12">
+         <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+               <h5 class="card-title m-0 me-2">Payment History</h5>
+               <div class="dropdown">
+                  <button class="btn p-0" type="button" id="paymentHistory" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="paymentHistory">
+                     <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                  </div>
+               </div>
+            </div>
+            <div class="table-responsive text-nowrap">
+               <table class="table table-borderless">
+                  <thead>
+                     <tr>
+                        <th class="text-capitalize text-body fw-medium fs-6">Card</th>
+                        <th class="text-capitalize text-body fw-medium fs-6">Date</th>
+                        <th class="text-end text-capitalize text-body fw-medium fs-6">Spend</th>
+                     </tr>
+                  </thead>
+                  <tbody class="border-top">
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-visa.png" alt="credit-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*4399</h6>
+                              <small class="text-muted">Credit Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">05/Jan</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$2,820</h6>
+                              <small class="text-muted">$10,450</small>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-mastercard.png" alt="debit-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*5545</h6>
+                              <small class="text-muted">Debit Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">12/Feb</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$345</h6>
+                              <small class="text-muted">$8,709</small>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-american-express.png" alt="atm-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*9860</h6>
+                              <small class="text-muted">ATM Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">24/Feb</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$999</h6>
+                              <small class="text-muted">$25,900</small>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-visa.png" alt="debit-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*4300</h6>
+                              <small class="text-muted">Credit Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">08/Mar</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$8,453</h6>
+                              <small class="text-muted">$9,233</small>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-mastercard.png" alt="credit-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*5545</h6>
+                              <small class="text-muted">Debit Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">15/Apr</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$24</h6>
+                              <small class="text-muted">$500</small>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="d-flex">
+                           <div class="px-2 rounded bg-lighter d-flex align-items-center h-px-30">
+                              <img src="assets/dashboard/materialize/assets/img/icons/payments/logo-visa.png" alt="credit-card" width="30">
+                           </div>
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">*4399</h6>
+                              <small class="text-muted">Credit Card</small>
+                           </div>
+                        </td>
+                        <td class="text-muted small">28/Apr</td>
+
+                        <td class="text-end">
+                           <div class="ms-2">
+                              <h6 class="mb-0 fw-semibold">-$299</h6>
+                              <small class="text-muted">$1,380</small>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+
+               </table>
+            </div>
+         </div>
+      </div>
+      <!--/ Payment History -->
+
+
+      <!-- Most Sales in Countries -->
+      <div class="col-lg-4 col-12">
+         <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+               <h5 class="card-title m-0 me-2">Most Sales in Countries</h5>
+               <div class="dropdown">
+                  <button class="btn p-0" type="button" id="mostSales" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="mostSales">
+                     <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                     <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
+                  </div>
+               </div>
+            </div>
+            <div class="card-body">
+               <div class="mt-1">
+                  <div class="d-flex align-items-center">
+                     <h1 class="mb-0 me-3 display-3">22,842</h1>
+                     <div class="badge bg-label-success rounded-pill">+42%</div>
+                  </div>
+                  <small class="text-muted mt-1">Sales Last 90 Days</small>
+               </div>
+            </div>
+            <div class="table-responsive text-nowrap border-top">
+               <table class="table">
+                  <tbody class="table-border-bottom-0">
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">Australia</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">18,879</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">15%</span>
+                              <i class="mdi mdi-chevron-down mdi-20px text-danger"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">Canada</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">10,357</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">85%</span>
+                              <i class="mdi mdi-chevron-up mdi-20px text-success"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">India</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">4,860</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">48%</span>
+                              <i class="mdi mdi-chevron-up mdi-20px text-success"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">France</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">2,560</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">36%</span>
+                              <i class="mdi mdi-chevron-up mdi-20px text-success"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">United State</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">899</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">16%</span>
+                              <i class="mdi mdi-chevron-down mdi-20px text-danger"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">Japan</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">43</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">35%</span>
+                              <i class="mdi mdi-chevron-up mdi-20px text-success"></i>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="pe-5"><span class="text-heading">Brazil</span></td>
+                        <td class="ps-5 d-flex justify-content-end"><span class="text-heading fw-semibold">18</span></td>
+                        <td>
+                           <div class="d-flex align-items-center justify-content-end">
+                              <span class="text-heading fw-semibold me-2">12%</span>
+                              <i class="mdi mdi-chevron-up mdi-20px text-success"></i>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <!--/ Most Sales in Countries -->
+
+      <!-- Roles Datatables -->
+      <div class="col-lg-8 col-12">
+         <div class="card">
+            <div class="table-responsive rounded-3">
+               <table class="datatables-crm table table-sm">
+                  <thead class="table-light">
+                     <tr>
+                        <th class="py-3"></th>
+                        <th class="py-3">User</th>
+                        <th class="py-3">Email</th>
+                        <th class="py-3">Role</th>
+                        <th class="py-3">Status</th>
+                     </tr>
+                  </thead>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
 @endsection

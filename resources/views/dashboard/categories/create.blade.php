@@ -1,22 +1,11 @@
 @extends('dashboard.template.dashboard')
 @section('content')
    <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Buat Kategori</h4>
-
-            <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                     <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Kategori</a></li>
-                     <li class="breadcrumb-item active">Buat Kategori</li>
-                  </ol>
-            </div>
-
-         </div>
-      </div>
-   </div>
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      <a class="text-muted fw-light" href="{{ route('categories.index') }}">Daftar Kategori /</a>
+      Tambah Kategori
+   </h4>
    <!-- end page title -->
 
    <div class="row">
@@ -25,16 +14,18 @@
             <div class="card-body">
                <form action="{{ route('categories.store') }}" method="post">
                   @csrf
-                  <div class="row mb-3">
-                     <div class="col-lg-12">
-                        <label for="name" class="form-label">Nama</label>
+                  <div class="row mb-3 align-items-center">
+                     <div class="col-2">
+                        <label for="name" class="col-form-label-lg">Nama Kategori <sup class="text-danger">*</sup></label>
+                     </div>
+                     <div class="col-10">
                         <input type="text"
-                           class="form-control @error('name')
+                           class="form-control form-control-sm @error('name')
                               is-invalid
                            @enderror" name="name" id="name" value="{{ old('name') }}">
                      </div>
                   </div>
-                  <div class="row justify-content-end mx-1">
+                  <div class="row justify-content-end mx-1 mt-5">
                      <button class="btn btn-primary px-2">
                         <i class="fas fa-save fa-md me-2"></i>
                         Simpan Data</button>

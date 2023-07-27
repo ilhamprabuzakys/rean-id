@@ -12,6 +12,9 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Utils\TableController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+
+URL::forceRootUrl(config('app.url'));
 
 require __DIR__ . '/auth.php';
 
@@ -21,14 +24,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::controller(ProfileController::class)->group(function () {
-        Route::get('/profile/{user}', 'index')->name('profile.index');
-        Route::put('/profile', 'update')->name('profile.update');
-        Route::get('/profile/password/{user}/edit', 'password')->name('profile.password');
-        Route::put('/profile/password/{user}', 'update_password')->name('profile.update-password');
+        Route::get('/settings/{user}/profile', 'index')->name('settings.profile');
+        Route::get('/settings/{user}/social-media', 'social_media')->name('settings.social-media');
+        Route::get('/settings/{user}/security', 'security')->name('settings.security');
+        Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
+
+
+        // Route::put('/profile', 'update')->name('profile.update');
+        // Route::get('/profile/password/{user}/edit', 'password')->name('profile.password');
+        // Route::put('/profile/password/{user}', 'update_password')->name('profile.update-password');
     });
 
     Route::middleware(['except:role:member'])->group(function () {
-        
         Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
         Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
         Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');

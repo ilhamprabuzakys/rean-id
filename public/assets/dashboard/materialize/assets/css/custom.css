@@ -1,0 +1,48 @@
+/* Add Post Form */
+.row.form-button .badge {
+   padding-left: 120px;
+   padding-right: 120px;
+}
+
+.row.form-button .col {
+   padding: 0;
+}
+
+.row.form-button .col .btn {
+   width: 95%;
+}
+
+.image-preview-container {
+   background: #000;
+   height: 200px;
+   width: 400px;
+   padding: 0 5%;
+}
+
+.image-preview-container #image-preview {
+   width: 300px;
+   height: 200px;
+   max-width: 300px;
+   object-fit: cover;
+   max-height: 200px;
+}
+
+.image-preview-container #cancel-button {
+   padding: 0px 8px 2px 8px;
+   position: relative;
+   bottom: 94%;
+   left: 102%;
+}
+
+/* Authentication */
+.w-650px {
+   max-width: 650px !important;
+}
+.w-550px {
+   max-width: 550px !important;
+}
+
+/* Main Template */
+#template-customizer {
+   visibility: hidden !important;
+}

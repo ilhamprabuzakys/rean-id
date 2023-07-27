@@ -1,168 +1,198 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+
+
+<html lang="en" class="light-style  customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
+   data-template="vertical-menu-template">
 
 <head>
-
    <meta charset="utf-8" />
-   <title>{{ $title }} - {{ config('app.name') }}</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-   <meta content="Themesbrand" name="author" />
-   <!-- App favicon -->
-   <link rel="shortcut icon" href="{{ asset('assets/img/rean-berwarna-logo-saja.png') }}">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-   {{-- Box Icons Css --}}
-   <link rel="stylesheet" href="{{ asset('assets/borex/libs/box-icons/css/boxicons.min.css') }}">
-   <!-- Bootstrap Css -->
-   <link href="{{ asset('assets/borex/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
-   <!-- Icons Css -->
-   <link href="{{ asset('assets/borex/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-   <!-- App Css-->
-   <link href="{{ asset('assets/borex/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-   <style>
-      #auth3dcontainer {
-         height: 440px;
-         width: auto;
-         /* border: 1px solid red; */
-         /* padding: 10px s0px 0px 0px; */
-      }
+   <title>{{ $title . ' - ' . config('app.name') }}</title>
 
-      #cardauth3d {
-         height: 470px;
-      }
-   </style>
+
+   <meta name="description" content="Materialize – is the most developer friendly &amp; highly customizable Admin Dashboard Template." />
+   <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+   <!-- Canonical SEO -->
+   <link rel="canonical"
+      href="https://themeforest.net/item/materialize-material-design-admin-template/11446068?irgwc=1&amp;clickid=&amp;iradid=275988&amp;irpid=1244113&amp;iradtype=ONLINE_TRACKING_LINK&amp;irmptype=mediapartner&amp;mp_value1=&amp;utm_campaign=af_impact_radius_1244113&amp;utm_medium=affiliate&amp;utm_source=impact_radius">
+
+   <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+   {{-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-5J3LMKC');</script> --}}
+   <!-- End Google Tag Manager -->
+
+   <!-- Favicon -->
+   <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/rean-logo-brand.png') }}" />
+
+   <!-- Fonts -->
+   <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/index.html') }}">
+   <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.gstatic.com/index.html') }}" crossorigin>
+   <link href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Inter:wght@300;400;500;600;700&amp;display=swap') }}" rel="stylesheet">
+
+   <!-- Icons -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/materialdesignicons.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/fontawesome.css') }}" />
+
+   <!-- Core CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/css/demo.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/css/custom.css') }}" />
+
+   <!-- Vendors CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.css') }}"/>
+
+   <!-- Vendor -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+
+   <!-- Page CSS -->
+   <!-- Page -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/pages/page-auth.css') }}">
+   <!-- Helpers -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/helpers.js') }}"></script>
+    <!-- Pace CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
+
+   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/template-customizer.js') }}"></script>
+   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/config.js') }}"></script>
+
+   <!-- Jquery  -->
+   <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+   
+   @stack('head')
    @stack('style')
+   @stack('css')
 </head>
 
 <body>
-   <div class="auth-page">
-      <div class="container-fluid p-0">
-         <div class="row g-0 align-items-center d-flex justify-content-center mt-5">
-            <div class="col-xxl-6 col-lg-6 col-md-6">
-               <div class="row justify-content-center g-0">
-                  <div class="col-xl-9">
-                     <div class="p-4">
-                        <div class="card mb-0">
-                           <div class="card-body">
-                              <div class="auth-full-page-content rounded d-flex p-3 my-2">
-                                 <div class="w-100">
-                                    <div class="d-flex flex-column h-100">
-                                       <div class="mb-3">
-                                          <a href="{{ route('login') }}" class="auth-logo">
-                                             <img src="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}" alt="" height="120" class="auth-logo-light me-start">
-                                          </a>
-                                       </div>
-                                       <div class="auth-content my-auto">
-                                          @yield('auth-content')
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+
+
+   <!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
+   {{-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript> --}}
+   <!-- End Google Tag Manager (noscript) -->
+
+   <!-- Content -->
+
+   <div class="position-relative">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+         <div class="authentication-inner py-4 @yield('custom-width')">
+
+            <!-- Login -->
+            <div class="card p-2">
+               <!-- Logo -->
+               <div class="app-brand justify-content-start mt-5">
+                  <a href="{{ route('index') }}" class="app-brand-link gap-2">
+                     <span class="app-brand-logo demo ms-4">
+                        {{-- <span style="color:#666cff;">
+                           <svg width="268" height="150" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                 d="M30.0944 2.22569C29.0511 0.444187 26.7508 -0.172113 24.9566 0.849138C23.1623 1.87039 22.5536 4.14247 23.5969 5.92397L30.5368 17.7743C31.5801 19.5558 33.8804 20.1721 35.6746 19.1509C37.4689 18.1296 38.0776 15.8575 37.0343 14.076L30.0944 2.22569Z"
+                                 fill="currentColor" />
+                              <path
+                                 d="M30.171 2.22569C29.1277 0.444187 26.8274 -0.172113 25.0332 0.849138C23.2389 1.87039 22.6302 4.14247 23.6735 5.92397L30.6134 17.7743C31.6567 19.5558 33.957 20.1721 35.7512 19.1509C37.5455 18.1296 38.1542 15.8575 37.1109 14.076L30.171 2.22569Z"
+                                 fill="url(#paint0_linear_2989_100980)" fill-opacity="0.4" />
+                              <path
+                                 d="M22.9676 2.22569C24.0109 0.444187 26.3112 -0.172113 28.1054 0.849138C29.8996 1.87039 30.5084 4.14247 29.4651 5.92397L22.5251 17.7743C21.4818 19.5558 19.1816 20.1721 17.3873 19.1509C15.5931 18.1296 14.9843 15.8575 16.0276 14.076L22.9676 2.22569Z"
+                                 fill="currentColor" />
+                              <path
+                                 d="M14.9558 2.22569C13.9125 0.444187 11.6122 -0.172113 9.818 0.849138C8.02377 1.87039 7.41502 4.14247 8.45833 5.92397L15.3983 17.7743C16.4416 19.5558 18.7418 20.1721 20.5361 19.1509C22.3303 18.1296 22.9391 15.8575 21.8958 14.076L14.9558 2.22569Z"
+                                 fill="currentColor" />
+                              <path
+                                 d="M14.9558 2.22569C13.9125 0.444187 11.6122 -0.172113 9.818 0.849138C8.02377 1.87039 7.41502 4.14247 8.45833 5.92397L15.3983 17.7743C16.4416 19.5558 18.7418 20.1721 20.5361 19.1509C22.3303 18.1296 22.9391 15.8575 21.8958 14.076L14.9558 2.22569Z"
+                                 fill="url(#paint1_linear_2989_100980)" fill-opacity="0.4" />
+                              <path
+                                 d="M7.82901 2.22569C8.87231 0.444187 11.1726 -0.172113 12.9668 0.849138C14.7611 1.87039 15.3698 4.14247 14.3265 5.92397L7.38656 17.7743C6.34325 19.5558 4.04298 20.1721 2.24875 19.1509C0.454514 18.1296 -0.154233 15.8575 0.88907 14.076L7.82901 2.22569Z"
+                                 fill="currentColor" />
+                              <defs>
+                                 <linearGradient id="paint0_linear_2989_100980" x1="5.36642" y1="0.849138" x2="10.532" y2="24.104" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-opacity="1" />
+                                    <stop offset="1" stop-opacity="0" />
+                                 </linearGradient>
+                                 <linearGradient id="paint1_linear_2989_100980" x1="5.19475" y1="0.849139" x2="10.3357" y2="24.1155" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-opacity="1" />
+                                    <stop offset="1" stop-opacity="0" />
+                                 </linearGradient>
+                              </defs>
+                           </svg>
+                        </span> --}}
+                        <img src="{{ asset('assets/img/rean-logo-brand.png') }}" alt="logo-brand" style="height: 60px">
+                     </span>
+                     {{-- <span class="app-brand-text demo text-heading fw-bold ms-3">
+                        <img src="{{ asset('assets/img/rean-text-logo-dark.png') }}" alt="logo-brand-text" style="
+                           height: 35px;"
+                        >
+                     </span> --}}
+                  </a>
                </div>
-               <!-- end auth full page content -->
+               <!-- /Logo -->
+
+               <div class="card-body mt-2">
+                  
+                  @yield('header')
+
+                  @include('auth.session')
+
+                  @yield('content')
+               </div>
+
+               
             </div>
-            <!-- end col -->
-            {{-- <div class="col-xxl-5 col-lg-5 col-md-5">
-               <div class="auth-bg bg-white py-md-5 p-4 d-flex">
-                  <div class="bg-overlay bg-white"></div>
-                  <!-- end bubble effect -->
-                  <div class="row justify-content-center align-items-center">
-                     <div class="col-xl-8">
-                        <div class="mt-4">
-                           <img src="{{ asset('assets/borex/images/login-img.png') }}" class="img-fluid" alt="">
-                        </div>
-                        <div class="p-0 p-sm-4 px-xl-0 py-5">
-                           <div id="reviewcarouselIndicators" class="carousel slide auth-carousel" data-bs-ride="carousel">
-                              <div class="carousel-indicators carousel-indicators-rounded">
-                                 <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                 <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                 <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                              </div>
-
-                              <!-- end carouselIndicators -->
-                              <div class="carousel-inner w-75 mx-auto">
-                                 <div class="carousel-item active">
-                                    <div class="testi-contain text-center">
-                                       <h5 class="font-size-20 mt-4">“I feel confident
-                                          imposing change
-                                          on myself”
-                                       </h5>
-                                       <p class="font-size-15 text-muted mt-3 mb-0">Vestibulum auctor orci in risus iaculis consequat suscipit felis rutrum aliquet iaculis
-                                          augue sed tempus In elementum ullamcorper lectus vitae pretium Aenean sed odio dolor Nullam ultricies diam
-                                          eu ultrices tellus eifend sagittis.</p>
-                                    </div>
-                                 </div>
-
-                                 <div class="carousel-item">
-                                    <div class="testi-contain text-center">
-                                       <h5 class="font-size-20 mt-4">“Our task must be to
-                                          free widening our circle”</h5>
-                                       <p class="font-size-15 text-muted mt-3 mb-0">
-                                          Curabitur eget nulla eget augue dignissim condintum Nunc imperdiet ligula porttitor commodo elementum
-                                          Vivamus justo risus fringilla suscipit faucibus orci luctus
-                                          ultrices posuere cubilia curae lectus non ultricies cursus.
-                                       </p>
-                                    </div>
-                                 </div>
-
-                                 <div class="carousel-item">
-                                    <div class="testi-contain text-center">
-                                       <h5 class="font-size-20 mt-4">“I've learned that
-                                          people will forget what you”</h5>
-                                       <p class="font-size-15 text-muted mt-3 mb-0">
-                                          Pellentesque lacinia scelerisque arcu in aliquam augue molestie rutrum magna Fusce dignissim dolor id auctor accumsan
-                                          vehicula dolor
-                                          vivamus feugiat odio erat sed vehicula lorem tempor quis Donec nec scelerisque magna
-                                       </p>
-                                    </div>
-                                 </div>
-                              </div>
-                              <!-- end carousel-inner -->
-                           </div>
-                           <!-- end review carousel -->
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div> --}}
-            {{-- <div class="col-xxl-8 col-lg-6 col-md-6">
-               <div class="row justify-content-center g-0">
-                  <div class="col-xl-9">
-                     <div class="p-4">
-                        <div class="card mb-0" id="cardauth3d">
-                           <div class="card-body">
-                              <div id="auth3dcontainer">
-                                 <div id="auth3d"></div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div> --}}
+            <!-- /Login -->
+            @yield('bg-img')
+            {{-- <img alt="mask" src="{{ asset('assets/dashboard/materialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}" class="authentication-image d-none d-lg-block"
+               data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark-img="illustrations/auth-basic-login-mask-dark.html" /> --}}
          </div>
-         <!-- end col -->
       </div>
-      <!-- end row -->
-   </div>
-   <!-- end container fluid -->
    </div>
 
-   <!-- JAVASCRIPT -->
-   <script src="{{ asset('assets/borex/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-   <script src="{{ asset('assets/borex/libs/metismenujs/metismenujs.min.js') }}"></script>
-   <script src="{{ asset('assets/borex/libs/simplebar/simplebar.min.js') }}"></script>
-   <script src="{{ asset('assets/borex/libs/eva-icons/eva.min.js') }}"></script>
+   <!-- / Content -->
 
-   <script src="{{ asset('assets/borex/js/pages/pass-addon.init.js') }}"></script>
-   <script src="{{ asset('assets/borex/js/pages/eva-icon.init.js') }}"></script>
+   <!-- Core JS -->
+   <!-- build:js assets/vendor/js/core.js -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/jquery/jquery.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/popper/popper.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/bootstrap.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
 
-   @include('auth.partials.script')
-   @stack('script')
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/hammer/hammer.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/i18n/i18n.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/menu.js') }}"></script>
+   <!-- endbuild -->
+
+   <!-- Vendors JS -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+
+   <!-- Main JS -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/main.js') }}"></script>
+
+   <!-- Page JS -->
+   @stack('page-js')
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/pages-auth.js') }}"></script>
+   
+   <!-- Pace JS -->
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
 </body>
 
 </html>

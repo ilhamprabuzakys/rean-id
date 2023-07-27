@@ -28,22 +28,11 @@
 @endpush
 @section('content')
    <!-- start page title -->
-   <div class="row">
-      <div class="col-12">
-         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0">Edit Postingan</h4>
-
-            <div class="page-title-right">
-               <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                  <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Postingan</a></li>
-                  <li class="breadcrumb-item active">Edit Postingan</li>
-               </ol>
-            </div>
-
-         </div>
-      </div>
-   </div>
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      <a class="text-muted fw-light" href="{{ route('posts.index') }}">Daftar Postingan /</a>
+      Edit Postingan
+   </h4>
    <!-- end page title -->
    <div class="row">
       <div class="col-12">

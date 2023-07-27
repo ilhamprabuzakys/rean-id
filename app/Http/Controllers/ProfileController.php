@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Social;
 use App\Models\User;
+use App\Rules\MatchingPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -14,11 +16,11 @@ class ProfileController extends Controller
 {
     public function index(User $user)
     {
-        $user = Cache::remember('user', now()->addDays(1), function() use ($user) {
+        $user = Cache::remember('user', now()->addDays(1), function () use ($user) {
             return $user;
         });
 
-        $jenis_kelamin = Cache::remember('jenis_kelamin', now()->addDays(1), function() {
+        $jenis_kelamin = Cache::remember('jenis_kelamin', now()->addDays(1), function () {
             $data = [
                 (object) ['name' => 'Laki-laki', 'singkatan' => 'l'],
                 (object) ['name' => 'Perempuan', 'singkatan' => 'p'],
@@ -26,7 +28,7 @@ class ProfileController extends Controller
             return $data;
         });
 
-        return view('dashboard.profile.index', [
+        return view('dashboard.pages.profile.profile-details', [
             'title' => 'Profile'
         ], compact('user', 'jenis_kelamin'));
     }
@@ -73,44 +75,81 @@ class ProfileController extends Controller
         return redirect()->route('profile.index', $user->id)->with('message', "Data Profile kamu <b>telah berhasil</b> diperbarui.");
     }
 
-    public function password(User $user)
+    // public function password(User $user)
+    // {
+    //     $user = Cache::remember('user', now()->addDays(1), function() use ($user) {
+    //         return $user;
+    //     });
+    //     return view('dashboard.profile.password', [
+    //         'title' => 'Change Password'
+    //     ], compact('user'));
+    // }
+
+    // public function update_password(Request $request, User $user)
+    // {
+    //     // dd($request->all());
+    //     $validator = Validator::make($request->all(), [
+    //         'password' => 'required|confirmed',
+    //     ]);
+    //     if ($validator->fails()) {
+    //         dd($validator->errors());
+    //         // return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     $validatedData = $validator->validated();
+
+    //     // dd(!Hash::check($request->input('current_password'), $user->password));
+    //     // dd($validatedData);
+
+    //     if (!Hash::check($request->input('current_password'), $user->password)) {
+    //         $user->update([
+    //             'password' => bcrypt($validatedData['password']),
+    //         ]);
+    //     } else {
+    //         dd('gagal');
+    //     }
+    //     // $user->update($validatedData);
+
+    //     // dd($user);
+
+    //     return redirect()->route('profile.index', $user)->with('message', "Password anda telah berhasil <b>diperbarui!</b>");
+
+    // }
+
+    public function social_media(User $user)
     {
-        $user = Cache::remember('user', now()->addDays(1), function() use ($user) {
+        $user = Cache::remember('user', now()->addDays(1), function () use ($user) {
             return $user;
         });
-        return view('dashboard.profile.password', [
-            'title' => 'Change Password'
+
+        $socials = Social::orderBy('name', 'asc')->get();
+
+        return view('dashboard.pages.profile.profile-social-media', [
+            'title' => 'Sosial Media'
+        ], compact('user', 'socials'));
+    }
+
+    public function security(User $user)
+    {
+        $user = Cache::remember('user', now()->addDays(1), function () use ($user) {
+            return $user;
+        });
+
+        return view('dashboard.pages.profile.security', [
+            'title' => 'Keamanan'
         ], compact('user'));
     }
-    
-    public function update_password(Request $request, User $user)
+
+    public function change_password(Request $request, User $user)
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'password' => 'required|confirmed',
+        $request->validate([
+            'currentPassword' => ['required', new MatchingPassword],
+            'newPassword' => ['required'],
+            'confirmPassword' => ['same:newPassword'],
         ]);
-        if ($validator->fails()) {
-            dd($validator->errors());
-            // return redirect()->back()->withErrors($validator)->withInput();
-        }
 
-        $validatedData = $validator->validated();
+        User::find(auth()->user()->id)->update(['password' => Hash::make($request->newPassword)]);
 
-        // dd(!Hash::check($request->input('current_password'), $user->password));
-        // dd($validatedData);
-
-        if (!Hash::check($request->input('current_password'), $user->password)) {
-            $user->update([
-                'password' => bcrypt($validatedData['password']),
-            ]);
-        } else {
-            dd('gagal');
-        }
-        // $user->update($validatedData);
-        
-        // dd($user);
-
-        return redirect()->route('profile.index', $user)->with('message', "Password anda telah berhasil <b>diperbarui!</b>");
-        
+        return back()->with('success', 'Password berhasil diganti!');
     }
 }

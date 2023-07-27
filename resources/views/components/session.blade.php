@@ -3,7 +3,7 @@
          <div class="d-flex align-items-center">
             <i class="bx bxs-badge-check me-2"></i>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <span>{!! session('danger') !!}</span>
+            <span>{!! session('fails') !!}</span>
          </div>
       </div>
    @elseif(session('success'))

@@ -25,8 +25,6 @@
          itemSelectText: 'Klik untuk memilih',
       });
    </script> --}}
-
-
 @endpush
 @push('head')
    <!-- Trix Editor -->
@@ -44,11 +42,15 @@
    rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
    /> --}}
-
 @endpush
 @section('content')
    <!-- start page title -->
-   <div class="row">
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      <a class="text-muted fw-light" href="{{ route('posts.index') }}">Daftar Postingan /</a>
+      Tambah Postingan
+   </h4>
+   {{-- <div class="row">
       <div class="col-12">
          <div class="page-title-box d-sm-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">Buat Postingan</h4>
@@ -63,7 +65,7 @@
 
          </div>
       </div>
-   </div>
+   </div> --}}
    <!-- end page title -->
 
    <div class="row">
@@ -73,23 +75,13 @@
                <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" id="createPost">
                   @csrf
                   <div class="row mb-3">
-                     <div class="col-lg-9">
+                     <div class="col-lg-12">
                         <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
                         <input type="text"
                            class="form-control @error('title')
                               is-invalid
                            @enderror" name="title" id="title" value="{{ old('title') }}">
                         @error('title')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                     <div class="col-lg-3">
-                        <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
-                        <input type="text"
-                           class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}">
-                        @error('slug')
                            <div class="invalid-feedback">
                               {{ $message }}
                            </div>
@@ -105,9 +97,9 @@
                            <option selected disabled>Pilih Kategori</option>
                            @foreach ($categories as $category)
                               @if (old('category_id') == $category->id)
-                                 <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                 <option value="{{ $category->id }}" data-slug="{{ $category->slug }}" selected>{{ $category->name }}</option>
                               @else
-                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                 <option value="{{ $category->id }}" data-slug="{{ $category->slug }}">{{ $category->name }}</option>
                               @endif
                            @endforeach
                         </select>
@@ -142,7 +134,22 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-lg-12">
-                        <label for="body" class="form-label">File</label>
+                        <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
+                        <div class="input-group">
+                           <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}/posts/</span>
+                           <input type="text"
+                              class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}">
+                        </div>
+                        @error('slug')
+                           <div class="invalid-feedback">
+                              {{ $message }}
+                           </div>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="row mb-3">
+                     <div class="col-lg-12">
+                        <label for="body" class="form-label" id="label-file">File</label>
                         <input type="file" name="file_path" id="file_path" class="form-control @error('file_path')
                            is-invalid
                         @enderror">
@@ -156,7 +163,7 @@
                         <div class="image-preview-container" style="display: none;">
                            <img id="image-preview" src="#" alt="Preview" style="display: none;">
                            <button id="cancel-button" class="btn btn-danger" style="display: none;">
-                              <i class="ri-close-fill" style="font-size: 26px"></i>
+                              <i class="mdi mdi-close" style="font-size: 26px"></i>
                            </button>
                         </div>
                      </div>
@@ -165,18 +172,18 @@
                            if (input.files && input.files[0]) {
                               var reader = new FileReader();
 
-                              reader.onload = function (e) {
+                              reader.onload = function(e) {
                                  $('#image-preview').attr('src', e.target.result).show();
                                  $('.image-preview-container').show();
                                  $('#cancel-button').show();
-                                 
+
                               };
 
                               reader.readAsDataURL(input.files[0]);
                            }
                         }
 
-                        $("#file_path").change(function () {
+                        $("#file_path").change(function() {
                            var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
 
                            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
@@ -187,7 +194,7 @@
                            }
                         });
 
-                        $("#cancel-button").click(function () {
+                        $("#cancel-button").click(function() {
                            $('#file_path').val('');
                            $('#image-preview').hide();
                            $('.image-preview-container').hide();
@@ -212,19 +219,29 @@
                         @enderror
                      </div>
                   </div>
-                  <div class="row justify-content-end mx-1">
-                     <button class="btn btn-primary px-2">
-                        Simpan Data
-                        <i class="ri-save-3-line ms-2"></i>
-                     </button>
+                  <div class="row form-button mx-1">
+                     <div class="col">
+                        <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
+                           Kembali
+                           <i class="ri-arrow-go-back-fill ms-2"></i>
+                        </a>
+                     </div>
+                     <div class="col">
+                        <button class="btn btn-primary">
+                           Simpan Data
+                           <i class="ri-save-3-line ms-2"></i>
+                        </button>
+                     </div>
+                     <div class="col">
+                        <button class="btn btn-primary">
+                           Simpan Data Dan Isi Kembali
+                           <i class="ri-save-3-line ms-2"></i>
+                        </button>
+                     </div>
                   </div>
-                  <div class="row justify-content-end mx-1 mt-2">
-                     <a class="btn btn-danger px-2 text-decoration-none" href="{{ route('posts.index') }}">
-                        Kembali
-                        <i class="ri-arrow-go-back-fill ms-2"></i>
-                     </a>
+                  {{-- <div class="row justify-content-end mx-1 mt-2">
                         
-                  </div>
+                  </div> --}}
                </form>
             </div>
          </div>
@@ -250,7 +267,74 @@
          $('#category_id').select2({
             theme: 'bootstrap-5'
          });
-         
+         // $('#category_id').on('change', function() {
+         //    var url = "{{ config('app.url') }}/" + this.value + "/";
+         //    $('#slug-input-addon').text(url);
+         // });
+
+         $('#category_id').change(function() {
+            var selectedText = $('option:selected', this).text();
+            var selectedSlug = $('option:selected', this).data('slug');
+            console.log("selectedText : " + selectedText);
+            var url = "{{ config('app.url') }}/" + selectedSlug + "/";
+            $('#slug-input-addon').text(url);
+            var fileExtension;
+            if (selectedText == 'Ebook') {
+               $('#label-file').text('Ebook File (PDF)')
+               fileExtension = ['pdf'];
+            } else if (selectedText == 'Video' || selectedText == 'Musik' || selectedText == 'Audio') {
+               $('#label-file').text('Media Pilihan')
+               fileExtension = ['mp4', 'mp3']; // tambahkan format file media yang diperbolehkan di sini
+            } else {
+               $('#label-file').text('Image Pilihan')
+               fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+            }
+
+            function readImage(input) {
+               if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = function(e) {
+                     $('#image-preview').attr('src', e.target.result).show();
+                     $('.image-preview-container').show();
+                     $('#cancel-button').show();
+
+                  };
+                  reader.readAsDataURL(input.files[0]);
+               }
+            }
+
+            $("#file_path").change(function() {
+               if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                  alert('Format file tidak diperbolehkan!');
+                  $(this).val(''); // mengosongkan input file
+                  $('#image-preview').hide();
+                  $('#cancel-button').hide();
+               } else {
+                  // panggil fungsi readImage atau yang lainnya di sini
+                  readImage(this);
+               }
+            });
+
+
+            // $("#file_path").change(function() {
+            //    var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+
+            //    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
+            //       readImage(this);
+            //    } else {
+            //       $('#image-preview').hide();
+            //       $('#cancel-button').hide();
+            //    }
+            // });
+
+            $("#cancel-button").click(function() {
+               $('#file_path').val('');
+               $('#image-preview').hide();
+               $('.image-preview-container').hide();
+               $(this).hide();
+            });
+         });
+
       });
 
       // document.getElementById('createPost').addEventListener('submit', function(event) {
@@ -265,7 +349,5 @@
       //    // Kirim formulir
       //    this.submit();
       // });
-
-     
    </script>
 @endsection

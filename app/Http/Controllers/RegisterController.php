@@ -50,8 +50,8 @@ class RegisterController extends Controller
             ]);
             $validatedData = $validator->validated();
             $otpM = VerificationCode::where('user_email', $user->email)
-            ->where('expired', false)
-            ->orderBy('created_at', 'desc')->first();
+                ->where('expired', false)
+                ->orderBy('created_at', 'desc')->first();
             $otpM->update([
                 'expired' => true,
                 'expired_at' => Carbon::now()->toDateTimeString()
@@ -71,7 +71,7 @@ class RegisterController extends Controller
             $data = [
                 'user_nama' => $user->name,
                 'user_email' => $user->email,
-                'otp' =>$verification_code->otp,
+                'otp' => $verification_code->otp,
             ];
             Mail::to($user->email)->send(new MailOtp($data));
             return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ke email: <b>$user->email</b>! ");
@@ -80,8 +80,57 @@ class RegisterController extends Controller
         }
     }
 
-    public function code_verification(TempUser $user)
+    public function resend_code_verification(TempUser $user)
     {
+        $otpM = VerificationCode::where('user_email', $user->email)
+            ->where('expired', false)
+            ->orderBy('created_at', 'desc')->first();
+        $otpM->update([
+            'expired' => true,
+            'expired_at' => Carbon::now()->toDateTimeString()
+        ]);
+        $data = [];
+        $otp = $this->generateOTP();
+        $verification_code = VerificationCode::create([
+            'otp' => $otp,
+            'user_email' => $user->email,
+        ]);
+        $data = [
+            'user_nama' => $user->name,
+            'user_email' => $user->email,
+            'otp' => $verification_code->otp,
+        ];
+        Mail::to($user->email)->send(new MailOtp($data));
+        return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ulang ke email: <b>$user->email</b>! ");
+    }
+
+    public function code_verification(TempUser $user, Request $request)
+    {
+        if ($request->input('resend') == 'true') {
+            // kode untuk mengirim ulang verifikasi
+            $otpM = VerificationCode::where('user_email', $user->email)
+                ->where('expired', false)
+                ->orderBy('created_at', 'desc')->first();
+            $otpM->update([
+                'expired' => true,
+                'expired_at' => Carbon::now()->toDateTimeString()
+            ]);
+            $data = [];
+            $otp = $this->generateOTP();
+            $verification_code = VerificationCode::create([
+                'otp' => $otp,
+                'user_email' => $user->email,
+            ]);
+            $data = [
+                'user_nama' => $user->name,
+                'user_email' => $user->email,
+                'otp' => $verification_code->otp,
+            ];
+            Mail::to($user->email)->send(new MailOtp($data));
+            session()->flash('success', "Kode verifikasi berhasil dikirim ulang ke email: <b>$user->email</b>!");
+            // Redirect back to the same route without query string
+            return redirect(route('register.code_verification', $user));
+        }
         return view('auth.email-verification', [
             'title' => 'Verify Your Email',
             'temp_user' => $user,
@@ -92,8 +141,8 @@ class RegisterController extends Controller
     {
         $otp = '';
         $otpM = VerificationCode::where('user_email', $user->email)
-        ->where('expired', false)
-        ->orderBy('created_at', 'desc')->first();
+            ->where('expired', false)
+            ->orderBy('created_at', 'desc')->first();
         $otp = $otpM->otp;
         try {
             $validator = Validator::make($request->all(), [
@@ -102,7 +151,7 @@ class RegisterController extends Controller
             $validatedData = $validator->validated();
             if ($validatedData['verification_code'] != $otp) {
                 dd('error not same otp', $otp, $validatedData['verification_code']);
-            } elseif( $validatedData['verification_code'] == $otp ) {
+            } elseif ($validatedData['verification_code'] == $otp) {
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
@@ -124,6 +173,7 @@ class RegisterController extends Controller
 
     public function authenticate(Request $request)
     {
+        // dd($request->all());
         try {
             // $validatedData = $request->validate([
             //     'name' => ['required', 'max:50'],
@@ -133,14 +183,22 @@ class RegisterController extends Controller
             //     // 'password' => 'required|min:5|max:255|confirmed'
             //     'username' => ['required', 'min:4', 'max:255', 'unique:users'],
             // ]);
-            $data = [];
-            $validator = Validator::make($request->all(), [
+            $rules = [
                 'name' => ['required', 'max:50'],
                 'auth_field' => ['required'],
                 'password' => ['required', 'min:5', 'max:50', 'confirmed'],
-                'username' => ['required', 'min:4', 'max:255', 'unique:users'],
                 // 'email' => ['required', 'email:dns', 'unique:users'],
-            ]);
+            ];
+            if ($request->input('username') !== null) {
+                $rules = [
+                    'name' => ['required', 'max:50'],
+                    'auth_field' => ['required'],
+                    'password' => ['required', 'min:5', 'max:50', 'confirmed'],
+                    'username' => ['min:4', 'max:255', 'unique:users'],
+                ];  
+            }
+            $data = [];
+            $validator = Validator::make($request->all(), $rules);
 
             $authField = $request->input('auth_field');
 
@@ -150,7 +208,12 @@ class RegisterController extends Controller
             } else {
                 if (filter_var($authField, FILTER_VALIDATE_EMAIL)) {
                     $data['email'] = $authField;
-                    $username = explode('@', $data['email'])[0];
+                    // if ($request->input('username') == '') {
+                    //     $data['username'] = explode('@', $data['email'])[0];
+                    // } else {
+                    //     $data['username'] = $request->input('username');
+                    // }
+
                 } elseif (is_numeric($authField)) {
                     $data['mobile_no'] = $authField;
                 } else {
@@ -161,7 +224,9 @@ class RegisterController extends Controller
             $validatedData['password'] = bcrypt($validatedData['password']);
             if ($data['email']) {
                 $validatedData['email'] = $data['email'];
-                $validatedData['username'] = $username;
+                if ($request->input('username') == '') {
+                    $validatedData['username'] = explode('@', $validatedData['email'])[0];
+                } 
             } elseif ($data['mobile_no']) {
                 $validatedData['email'] = $data['mobile_no'];
             }
@@ -175,7 +240,7 @@ class RegisterController extends Controller
             $data = [
                 'user_nama' => $user->name,
                 'user_email' => $user->email,
-                'otp' =>$verification_code->otp,
+                'otp' => $verification_code->otp,
             ];
             Mail::to($user->email)->send(new MailOtp($data));
             // dd($user);
