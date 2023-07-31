@@ -46,3 +46,7 @@
 #template-customizer {
    visibility: hidden !important;
 }
+
+#card-social-media-user .input-group-text {
+   font-weight: 400;
+}

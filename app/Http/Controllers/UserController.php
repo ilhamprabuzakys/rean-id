@@ -17,7 +17,7 @@ class UserController extends Controller
         //     return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
         // });
 
-        $users = User::with(['posts'])->orderBy('updated_at', 'desc')->get();
+        $users = User::with(['posts', 'login_info', 'event_logs'])->orderBy('updated_at', 'desc')->get();
 
         $roles = collect([
             (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
@@ -26,7 +26,7 @@ class UserController extends Controller
         ]);
 
         confirmDelete('Apakah anda yakin untuk menghapus data user ini?', 'Data yang dihapus akan masuk ke tempat sampah.');
-        return view('dashboard-borex.users.list', [
+        return view('dashboard.users.index', [
             'title' => 'Daftar Users',
         ], compact('users', 'roles'));
     }
@@ -39,7 +39,7 @@ class UserController extends Controller
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
 
-        return view('dashboard-borex.users.create', [
+        return view('dashboard.users.create', [
             'title' => 'Tambah Users',
         ], compact('roles'));
     }
@@ -79,7 +79,7 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('dashboard-borex.users.show', [
+        return view('dashboard.users.show', [
             'title' => 'Postingan User ' . $user->name,
         ], compact('user'));
     }
@@ -92,7 +92,7 @@ class UserController extends Controller
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
 
-        return view('dashboard-borex.users.edit', [
+        return view('dashboard.users.edit', [
             'title' => 'Edit User ' . $user->name,
         ], compact('user'));
     }
@@ -141,12 +141,14 @@ class UserController extends Controller
 
     public function roles()
     {
-        $users = cache()->remember('users', now()->addDays(1), function() {
-            return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
-        });
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
 
-        return view('dashboard-borex.users.list', [
-            'title' => 'Daftar Users',
-        ], compact('users'));
+        return view('dashboard.users.roles', [
+            'title' => 'Daftar Roles',
+        ], compact('roles'));
     }
 }

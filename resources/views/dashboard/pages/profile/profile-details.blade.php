@@ -1,8 +1,5 @@
 @extends('dashboard.template.dashboard')
 @push('vendor-css')
-   {{-- <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" /> --}}
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/animate-css/animate.css') }}" />
@@ -49,57 +46,171 @@
                      class="mdi mdi-link mdi-20px me-1"></i>Sosial Media</a>
             </li>
          </ul>
-         <div class="card mb-4">
-            <h4 class="card-header">
-               Detail Profile
-            </h4>
-            <!-- Account -->
-            <div class="card-body">
-               <div
-                  class="d-flex align-items-start align-items-sm-center gap-4">
-                  <img
-                     src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}"
-                     alt="user-avatar"
-                     class="d-block w-px-120 h-px-120 rounded"
-                     id="uploadedAvatar" />
-                  <div class="button-wrapper">
-                     <label
-                        for="upload"
-                        class="btn btn-primary me-2 mb-3"
-                        tabindex="0">
-                        <span
-                           class="d-none d-sm-block">Unggah Foto Baru</span>
-                        <i
-                           class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                        <input
-                           type="file"
-                           id="upload"
-                           class="account-file-input"
-                           hidden
-                           accept="image/png, image/jpeg" />
-                     </label>
-                     <button
-                        type="button"
-                        class="btn btn-outline-secondary account-image-reset mb-3">
-                        <i
-                           class="mdi mdi-reload d-block d-sm-none"></i>
-                        <span
-                           class="d-none d-sm-block">Urungkan</span>
-                     </button>
+         <div class="col-xl-6">
+            <h6 class="text-muted">Filled Pills</h6>
+            <div class="nav-align-top mb-4">
+              <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                <li class="nav-item">
+                  <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home" aria-selected="true"><i class="tf-icons mdi mdi-home-outline me-1"></i> Home <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger ms-1">3</span></button>
+                </li>
+                <li class="nav-item">
+                  <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile" aria-selected="false"><i class="tf-icons mdi mdi-account-outline me-1"></i> Profile</button>
+                </li>
+                <li class="nav-item">
+                  <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-pills-justified-messages" aria-controls="navs-pills-justified-messages" aria-selected="false"><i class="tf-icons mdi mdi-message-text-outline me-1"></i> Messages</button>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
+                  <p>
+                    Icing pastry pudding oat cake. Lemon drops cotton candy caramels cake caramels sesame snaps powder. Bear
+                    claw
+                    candy topping.
+                  </p>
+                  <p class="mb-0">
+                    Tootsie roll fruitcake cookie. Dessert topping pie. Jujubes wafer carrot cake jelly. Bonbon jelly-o
+                    jelly-o ice
+                    cream jelly beans candy canes cake bonbon. Cookie jelly beans marshmallow jujubes sweet.
+                  </p>
+                </div>
+                <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                  <p>
+                    Donut dragée jelly pie halvah. Danish gingerbread bonbon cookie wafer candy oat cake ice cream. Gummies
+                    halvah
+                    tootsie roll muffin biscuit icing dessert gingerbread. Pastry ice cream cheesecake fruitcake.
+                  </p>
+                  <p class="mb-0">
+                    Jelly-o jelly beans icing pastry cake cake lemon drops. Muffin muffin pie tiramisu halvah cotton candy
+                    liquorice caramels.
+                  </p>
+                </div>
+                <div class="tab-pane fade" id="navs-pills-justified-messages" role="tabpanel">
+                  <p>
+                    Oat cake chupa chups dragée donut toffee. Sweet cotton candy jelly beans macaroon gummies cupcake gummi
+                    bears
+                    cake chocolate.
+                  </p>
+                  <p class="mb-0">
+                    Cake chocolate bar cotton candy apple pie tootsie roll ice cream apple pie brownie cake. Sweet roll icing
+                    sesame snaps caramels danish toffee. Brownie biscuit dessert dessert. Pudding jelly jelly-o tart brownie
+                    jelly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+         <form
+            id=""
+            method="POST"
+            action="{{ route('settings.profile.update', $user) }}" enctype="multipart/form-data">
+            @csrf
+            <div class="card mb-4">
+               <h4 class="card-header">
+                  Detail Profile
+               </h4>
+               <!-- Account -->
+               <div class="card-body">
+                  <div
+                     class="d-flex align-items-start align-items-sm-center gap-4">
+                     @if ($user->profile_path == null)
+                     <img
+                        src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}"
+                        alt="user-avatar"
+                        class="d-block w-px-120 h-px-120 rounded"
+                        id="uploadedAvatar" />
+                     @else
+                     <img
+                        src="{{ asset('storage/' . $user->profile_path) }}"
+                        alt="user-avatar"
+                        class="d-block w-px-120 h-px-120 rounded"
+                        id="uploadedAvatar" />
+                     @endif
+                     <div class="button-wrapper">
+                        <label
+                           for="upload"
+                           class="btn btn-primary me-2 mb-3"
+                           tabindex="0">
+                           <span
+                              class="d-none d-sm-block">Unggah Foto Baru</span>
+                           <i
+                              class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
+                           @if ($user->profile_path == null)
+                              <input
+                              type="file"
+                              id="upload"
+                              name="profile_path"
+                              class="account-file-input"
+                              hidden
+                              >
+                           @else
+                           <input
+                              type="file"
+                              id="upload"
+                              name="profile_path"
+                              value="{{ $user->profile_path }}"
+                              class="account-file-input"
+                              hidden
+                              >
+                           <input
+                              type="text"
+                              id="old_profile_path"
+                              name="old_profile_path"
+                              value="{{ $user->profile_path }}"
+                              hidden   
+                              >
+                           @endif
+                        </label>
+                        <button
+                           type="button"
+                           class="btn btn-outline-secondary account-image-reset mb-3">
+                           <i
+                              class="mdi mdi-reload d-block d-sm-none"></i>
+                           <span
+                              class="d-none d-sm-block">Urungkan</span>
+                        </button>
 
-                     <div
-                        class="text-muted small">
-                        Hanya JPG, JPEG dan PNG yang diperbolehkan.
-                        Ukuran maksimal 800KB
+                        <div
+                           class="text-muted small">
+                           Hanya JPG, JPEG dan PNG yang diperbolehkan.
+                           Ukuran maksimal 800KB
+                        </div>
                      </div>
                   </div>
+                  <script>
+                     function readImage(input) {
+                           if (input.files && input.files[0]) {
+                              var reader = new FileReader();
+
+                              reader.onload = function(e) {
+                                 $('#uploadedAvatar').attr('src', e.target.result).show();
+                                 // $('.image-preview-container').show();
+                                 // $('#cancel-button').show();
+
+                              };
+
+                              reader.readAsDataURL(input.files[0]);
+                           }
+                        }
+
+                        $("#upload").change(function() {
+                           var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+
+                           if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
+                              readImage(this);
+                           } else {
+                              alert('format tidak boleh');
+                           }
+                        });
+
+                        $(".account-image-reset").click(function() {
+                           $('#upload').val('');
+                           // $('#image-preview').hide();
+                           // $('.image-preview-container').hide();
+                           // $(this).hide();
+                        });
+                  </script>
                </div>
-            </div>
-            <div class="card-body pt-2 mt-1">
-               <form
-                  id="formAccountSettings"
-                  method="POST"
-                  onsubmit="return false">
+               <div class="card-body pt-2 mt-1">
                   <div class="row mt-2 gy-4">
                      <div class="col-md-12">
                         <div
@@ -109,10 +220,10 @@
                               type="text"
                               id="name"
                               name="name"
-                              value="{{ auth()->user()->name }}"
+                              value="{{ $user->name }}"
                               autofocus />
                            <label
-                              for="firstName">Nama Lengkap</label>
+                              for="name">Nama Lengkap</label>
                         </div>
                      </div>
                      <div class="col-md-6">
@@ -124,9 +235,20 @@
                               id="email"
                               name="email"
                               value="{{ $user->email }}"
-                              disabled
-                              />
+                              readonly />
                            <label for="email">E-mail</label>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div
+                           class="form-floating form-floating-outline">
+                           <input
+                              class="form-control"
+                              type="username"
+                              id="username"
+                              name="username"
+                              value="{{ $user->username }}" />
+                           <label for="username">Username</label>
                         </div>
                      </div>
                      <div class="col-md-6">
@@ -136,19 +258,20 @@
                               class="form-floating form-floating-outline">
                               <input
                                  type="text"
-                                 id="phoneNumber"
+                                 id="notelp"
                                  name="notelp"
                                  class="form-control"
+                                 value="{{ $user->notelp }}"
                                  placeholder="0851 6278 3743" />
                               <label
-                                 for="phoneNumber">Phone
+                                 for="notelp">Phone
                                  Number</label>
                            </div>
                            <span
-                              class="input-group-text">US (+1)</span>
+                              class="input-group-text">ID (+62)</span>
                         </div>
                      </div>
-                     <div class="col-md-12">
+                     <div class="col-md-6">
                         <div
                            class="form-floating form-floating-outline">
                            <input
@@ -156,345 +279,11 @@
                               class="form-control"
                               id="address"
                               name="address"
+                              value="{{ $user->address }}"
                               placeholder="Address" />
                            <label for="address">Address</label>
                         </div>
                      </div>
-                     {{-- <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <input
-                              class="form-control"
-                              type="text"
-                              id="state"
-                              name="state"
-                              placeholder="California" />
-                           <label for="state">State</label>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="zipCode"
-                              name="zipCode"
-                              placeholder="231465"
-                              maxlength="6" />
-                           <label for="zipCode">Zip Code</label>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <select
-                              id="country"
-                              class="select2 form-select">
-                              <option
-                                 value="">
-                                 Select
-                              </option>
-                              <option
-                                 value="Australia">
-                                 Australia
-                              </option>
-                              <option
-                                 value="Bangladesh">
-                                 Bangladesh
-                              </option>
-                              <option
-                                 value="Belarus">
-                                 Belarus
-                              </option>
-                              <option
-                                 value="Brazil">
-                                 Brazil
-                              </option>
-                              <option
-                                 value="Canada">
-                                 Canada
-                              </option>
-                              <option
-                                 value="China">
-                                 China
-                              </option>
-                              <option
-                                 value="France">
-                                 France
-                              </option>
-                              <option
-                                 value="Germany">
-                                 Germany
-                              </option>
-                              <option
-                                 value="India">
-                                 India
-                              </option>
-                              <option
-                                 value="Indonesia">
-                                 Indonesia
-                              </option>
-                              <option
-                                 value="Israel">
-                                 Israel
-                              </option>
-                              <option
-                                 value="Italy">
-                                 Italy
-                              </option>
-                              <option
-                                 value="Japan">
-                                 Japan
-                              </option>
-                              <option
-                                 value="Korea">
-                                 Korea,
-                                 Republic of
-                              </option>
-                              <option
-                                 value="Mexico">
-                                 Mexico
-                              </option>
-                              <option
-                                 value="Philippines">
-                                 Philippines
-                              </option>
-                              <option
-                                 value="Russia">
-                                 Russian
-                                 Federation
-                              </option>
-                              <option
-                                 value="South Africa">
-                                 South Africa
-                              </option>
-                              <option
-                                 value="Thailand">
-                                 Thailand
-                              </option>
-                              <option
-                                 value="Turkey">
-                                 Turkey
-                              </option>
-                              <option
-                                 value="Ukraine">
-                                 Ukraine
-                              </option>
-                              <option
-                                 value="United Arab Emirates">
-                                 United Arab
-                                 Emirates
-                              </option>
-                              <option
-                                 value="United Kingdom">
-                                 United
-                                 Kingdom
-                              </option>
-                              <option
-                                 value="United States">
-                                 United
-                                 States
-                              </option>
-                           </select>
-                           <label for="country">Country</label>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <select
-                              id="language"
-                              class="select2 form-select">
-                              <option
-                                 value="">
-                                 Select
-                                 Language
-                              </option>
-                              <option
-                                 value="en">
-                                 English
-                              </option>
-                              <option
-                                 value="fr">
-                                 French
-                              </option>
-                              <option
-                                 value="de">
-                                 German
-                              </option>
-                              <option
-                                 value="pt">
-                                 Portuguese
-                              </option>
-                           </select>
-                           <label
-                              for="language">Language</label>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <select
-                              id="timeZones"
-                              class="select2 form-select">
-                              <option
-                                 value="">
-                                 Select
-                                 Timezone
-                              </option>
-                              <option
-                                 value="-12">
-                                 (GMT-12:00)
-                                 International
-                                 Date Line
-                                 West
-                              </option>
-                              <option
-                                 value="-11">
-                                 (GMT-11:00)
-                                 Midway
-                                 Island,
-                                 Samoa
-                              </option>
-                              <option
-                                 value="-10">
-                                 (GMT-10:00)
-                                 Hawaii
-                              </option>
-                              <option
-                                 value="-9">
-                                 (GMT-09:00)
-                                 Alaska
-                              </option>
-                              <option
-                                 value="-8">
-                                 (GMT-08:00)
-                                 Pacific Time
-                                 (US &
-                                 Canada)
-                              </option>
-                              <option
-                                 value="-8">
-                                 (GMT-08:00)
-                                 Tijuana,
-                                 Baja
-                                 California
-                              </option>
-                              <option
-                                 value="-7">
-                                 (GMT-07:00)
-                                 Arizona
-                              </option>
-                              <option
-                                 value="-7">
-                                 (GMT-07:00)
-                                 Chihuahua,
-                                 La Paz,
-                                 Mazatlan
-                              </option>
-                              <option
-                                 value="-7">
-                                 (GMT-07:00)
-                                 Mountain
-                                 Time (US &
-                                 Canada)
-                              </option>
-                              <option
-                                 value="-6">
-                                 (GMT-06:00)
-                                 Central
-                                 America
-                              </option>
-                              <option
-                                 value="-6">
-                                 (GMT-06:00)
-                                 Central Time
-                                 (US &
-                                 Canada)
-                              </option>
-                              <option
-                                 value="-6">
-                                 (GMT-06:00)
-                                 Guadalajara,
-                                 Mexico City,
-                                 Monterrey
-                              </option>
-                              <option
-                                 value="-6">
-                                 (GMT-06:00)
-                                 Saskatchewan
-                              </option>
-                              <option
-                                 value="-5">
-                                 (GMT-05:00)
-                                 Bogota,
-                                 Lima, Quito,
-                                 Rio Branco
-                              </option>
-                              <option
-                                 value="-5">
-                                 (GMT-05:00)
-                                 Eastern Time
-                                 (US &
-                                 Canada)
-                              </option>
-                              <option
-                                 value="-5">
-                                 (GMT-05:00)
-                                 Indiana
-                                 (East)
-                              </option>
-                              <option
-                                 value="-4">
-                                 (GMT-04:00)
-                                 Atlantic
-                                 Time
-                                 (Canada)
-                              </option>
-                              <option
-                                 value="-4">
-                                 (GMT-04:00)
-                                 Caracas, La
-                                 Paz
-                              </option>
-                           </select>
-                           <label
-                              for="timeZones">Timezone</label>
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div
-                           class="form-floating form-floating-outline">
-                           <select
-                              id="currency"
-                              class="select2 form-select">
-                              <option
-                                 value="">
-                                 Select
-                                 Currency
-                              </option>
-                              <option
-                                 value="usd">
-                                 USD
-                              </option>
-                              <option
-                                 value="euro">
-                                 Euro
-                              </option>
-                              <option
-                                 value="pound">
-                                 Pound
-                              </option>
-                              <option
-                                 value="bitcoin">
-                                 Bitcoin
-                              </option>
-                           </select>
-                           <label
-                              for="currency">Currency</label>
-                        </div>
-                     </div> --}}
                   </div>
                   <div class="mt-4">
                      <button
@@ -508,53 +297,10 @@
                         Cancel
                      </button>
                   </div>
-               </form>
-            </div>
-            <!-- /Account -->
-         </div>
-         <div class="card">
-            <h5 class="card-header">
-               Delete Account
-            </h5>
-            <div class="card-body">
-               <div class="mb-3 col-12 mb-0">
-                  <div
-                     class="alert alert-warning">
-                     <h6
-                        class="alert-heading mb-1">
-                        Are you sure you want to
-                        delete your account?
-                     </h6>
-                     <p class="mb-0">
-                        Once you delete your
-                        account, there is no
-                        going back. Please be
-                        certain.
-                     </p>
-                  </div>
                </div>
-               <form
-                  id="formAccountDeactivation"
-                  onsubmit="return false">
-                  <div class="form-check mb-3">
-                     <input
-                        class="form-check-input"
-                        type="checkbox"
-                        name="accountActivation"
-                        id="accountActivation" />
-                     <label
-                        class="form-check-label"
-                        for="accountActivation">I confirm my account
-                        deactivation</label>
-                  </div>
-                  <button
-                     type="submit"
-                     class="btn btn-danger deactivate-account">
-                     Deactivate Account
-                  </button>
-               </form>
+               <!-- /Account -->
             </div>
-         </div>
+         </form>
       </div>
    </div>
 @endsection

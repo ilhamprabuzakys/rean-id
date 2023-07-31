@@ -59,7 +59,7 @@
                         <a href="{{ route('posts.index') }}" class="stretched-link">Postingan</a>
                         <small class="text-muted mb-0">Kelola blog</small>
                      </div>
-                     
+
                   </div>
                   <div class="row row-bordered overflow-visible g-0">
                      <div class="dropdown-shortcuts-item col">
@@ -94,7 +94,7 @@
                      </div>
                   </div>
                   <div class="row row-bordered overflow-visible g-0">
-                     
+
                      <div class="dropdown-shortcuts-item col">
                         <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                            <i class="mdi mdi-cog-outline fs-4"></i>
@@ -118,13 +118,15 @@
          <!-- Notification -->
          <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-2 me-xl-1">
             @php
-               $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();        
-               $banyakNotifikasi = $notifications->count();        
+               $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)
+                   ->orderBy('updated_at', 'desc')
+                   ->get();
+               $banyakNotifikasi = $notifications->count();
             @endphp
             <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
                data-bs-auto-close="outside" aria-expanded="false">
                <i class="mdi mdi-bell-outline mdi-24px"></i>
-               
+
                @if ($banyakNotifikasi > 0)
                   <span class="position-absolute top-0 start-50 translate-middle-y badge badge-dot bg-danger mt-2 border"></span>
                @endif
@@ -134,7 +136,7 @@
                   <div class="dropdown-header d-flex align-items-center py-3">
                      <h6 class="mb-0 me-auto">Notifikasi</h6>
                      @if ($banyakNotifikasi > 0)
-                     <span class="badge rounded-pill bg-label-primary">{{ $banyakNotifikasi }}</span>
+                        <span class="badge rounded-pill bg-label-primary">{{ $banyakNotifikasi }}</span>
                      @endif
                   </div>
                </li>
@@ -142,72 +144,71 @@
                <li class="dropdown-notifications-list scrollable-container">
                   <ul class="list-group list-group-flush">
                      @forelse ($notifications as $notification)
-                     @php
-                        $event = '';
-                        switch ($notification->event) {
-                           case 'created':
-                              $event = ' telah dibuat';
-                              break;
-                           case 'updated':
-                              $event = ' telah diperbarui';
-                              break;
-                           case 'deleted':
-                              $event = ' telah dihapus';
-                              break;
-                           default:
-                              $event = ' ?';
-                              break;
-                        }
-
-                        $namespace = 'App\Models\\';
-                        $subject_type = substr($notification->subject_type, strlen($namespace));
-
-                        if ($subject_type == 'Category') {
-                           $subject_type = 'Kategori';
-                        } elseif ($subject_type == 'Post') {
-                           $subject_type = 'Postingan';
-                        }
-
-                        $created_time = $notification->created_at;
-                        $now = now();
-                        $time_diff = $created_time->diff($now);
-                        $formatted_time = '';
-                        if ($time_diff->days > 0) {
-                           $formatted_time = $time_diff->days . ' hari yang lalu';
-                        } elseif ($time_diff->h > 0) {
-                           $formatted_time = $time_diff->h . ' jam yang lalu';
-                        } elseif ($time_diff->i > 0) {
-                           $formatted_time = $time_diff->i . ' menit yang lalu';
-                        } else {
-                           $formatted_time = 'Baru saja';
-                        }
-                        $time = $formatted_time;
-                     @endphp
-                     <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                        <div class="d-flex gap-2">
-                           <div class="flex-shrink-0">
-                              <div class="avatar me-1">
-                                 <span class="avatar-initial rounded-circle bg-label-success"><i class="mdi mdi-check-outline"></i></span>
+                        @php
+                           $event = '';
+                           switch ($notification->event) {
+                               case 'created':
+                                   $event = ' telah dibuat';
+                                   break;
+                               case 'updated':
+                                   $event = ' telah diperbarui';
+                                   break;
+                               case 'deleted':
+                                   $event = ' telah dihapus';
+                                   break;
+                               default:
+                                   $event = ' ?';
+                                   break;
+                           }
+                           
+                           $namespace = 'App\Models\\';
+                           $subject_type = substr($notification->subject_type, strlen($namespace));
+                           
+                           if ($subject_type == 'Category') {
+                               $subject_type = 'Kategori';
+                           } elseif ($subject_type == 'Post') {
+                               $subject_type = 'Postingan';
+                           }
+                           
+                           $created_time = $notification->created_at;
+                           $now = now();
+                           $time_diff = $created_time->diff($now);
+                           $formatted_time = '';
+                           if ($time_diff->days > 0) {
+                               $formatted_time = $time_diff->days . ' hari yang lalu';
+                           } elseif ($time_diff->h > 0) {
+                               $formatted_time = $time_diff->h . ' jam yang lalu';
+                           } elseif ($time_diff->i > 0) {
+                               $formatted_time = $time_diff->i . ' menit yang lalu';
+                           } else {
+                               $formatted_time = 'Baru saja';
+                           }
+                           $time = $formatted_time;
+                        @endphp
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                           <div class="d-flex gap-2">
+                              <div class="flex-shrink-0">
+                                 <div class="avatar me-1">
+                                    <span class="avatar-initial rounded-circle bg-label-success"><i class="mdi mdi-check-outline"></i></span>
+                                 </div>
+                              </div>
+                              <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
+                                 <h6 class="mb-1 text-truncate">Data {{ $subject_type }} {{ $event }}</h6>
+                                 <small class="text-truncate text-body">Tabel {{ $subject_type }} telah diperbarui, silahkan cek kembali dilaman nya masing-masing</small>
+                              </div>
+                              <div class="flex-shrink-0 dropdown-notifications-actions">
+                                 <small class="text-muted">{{ $time }}</small>
                               </div>
                            </div>
-                           <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
-                              <h6 class="mb-1 text-truncate">Data {{ $subject_type }} {{ $event }}</h6>
-                              <small class="text-truncate text-body">Tabel {{ $subject_type }} telah diperbarui, silahkan cek kembali dilaman nya masing-masing</small>
-                           </div>
-                           <div class="flex-shrink-0 dropdown-notifications-actions">
-                              <small class="text-muted">{{ $time }}</small>
-                           </div>
-                        </div>
-                     </li>
+                        </li>
                      @empty
-                     <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                        <div class="d-flex gap-2">
-                           <div class="text-start">
-                              <h5>Tidak ada pemberitahuan</h5>
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                           <div class="d-flex gap-2">
+                              <div class="text-start">
+                                 <h5>Tidak ada pemberitahuan</h5>
+                              </div>
                            </div>
-                        </div>
-                     </li>
-                        
+                        </li>
                      @endforelse
                   </ul>
                </li>
@@ -226,7 +227,11 @@
          <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                <div class="avatar avatar-online">
-                  <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                  @if (auth()->user()->profile_path == null)
+                     <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                  @else
+                     <img src="{{ asset('storage/' . auth()->user()->profile_path) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                  @endif
                </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -235,7 +240,11 @@
                      <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                            <div class="avatar avatar-online">
-                              <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                              @if (auth()->user()->profile_path == null)
+                                 <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                              @else
+                                 <img src="{{ asset('storage/' . auth()->user()->profile_path) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                              @endif
                            </div>
                         </div>
                         <div class="flex-grow-1">
@@ -268,6 +277,7 @@
                      <i class="mdi mdi-logout me-2"></i>
                      <span class="align-middle">Log Out</span>
                   </a>
+                  {{-- <livewire:logout /> --}}
                </li>
             </ul>
          </li>

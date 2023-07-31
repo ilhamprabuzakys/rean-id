@@ -50,7 +50,7 @@
       </ul>
       <div class="row">
          <div class="col-md-12 col-12 mb-md-0 mb-4">
-            <div class="card">
+            {{-- <div class="card">
                <h5 class="card-header pb-1">Connected Accounts</h5>
                <div class="card-body">
                   <p>Display content from your connected accounts on your site</p>
@@ -162,86 +162,141 @@
                   </div>
                   <!-- /Connections -->
                </div>
-            </div>
+            </div> --}}
          </div>
-         <div class="col-md-6 col-12">
-            <div class="card">
-               <h5 class="card-header pb-1">Social Accounts</h5>
-               <div class="card-body">
-                  <p>Display content from social accounts on your site</p>
-                  <!-- Social Accounts -->
-                  <div class="d-flex mb-3">
-                     <div class="flex-shrink-0">
-                        <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/facebook.png') }}" alt="facebook" class="me-3" height="30">
+         <div class="col-md-12 col-12">
+            <div class="card" id="card-social-media-user">
+               <form action="{{ route('settings.social-media.update', $user) }}" method="post">
+                  @csrf
+                  <h5 class="card-header pb-1">Koneksi Akun Sosial</h5>
+                  <div class="card-body">
+                     <p>Lengkapi data mu agar kamu semakin populer demi postingannya.</p>
+                     <!-- Social Accounts -->
+                     <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                           <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/facebook.png') }}" alt="facebook" class="me-3" height="30">
+                        </div>
+                        <div class="flex-grow-1 row">
+                           <div class="col-2">
+                              <h6 class="mb-0">Facebook</h6>
+                              @if ($user->facebook !== null)
+                                 <small class="text-success">Connected</small>
+                              @else
+                                 <small class="text-danger">Not Connected</small>
+                              @endif
+                           </div>
+                           <div class="col-10 text-end">
+                              <div class="input-group">
+                                 <span class="input-group-text" id="slug-input-addon">www.facebook.com/</span>
+                                 <input type="text"
+                                    class="form-control @error('facebook') is-invalid @enderror" name="facebook" id="facebook" value="{{ old('facebook', $user->facebook) }}">
+                              </div>
+                           </div>
+                        </div>
                      </div>
-                     <div class="flex-grow-1 row">
-                        <div class="col-7">
-                           <h6 class="mb-0">Facebook</h6>
-                           <small class="text-muted">Not Connected</small>
+                     <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                           <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/twitter.png') }}" alt="twitter" class="me-3" height="30">
                         </div>
-                        <div class="col-5 text-end">
-                           <button class="btn btn-text-secondary btn-icon rounded-pill"><i class="mdi mdi-link-variant mdi-24px"></i></button>
+                        <div class="flex-grow-1 row">
+                           <div class="col-2">
+                              <h6 class="mb-0">Twitter</h6>
+                              @if ($user->twitter !== null)
+                                 <small class="text-success">Connected</small>
+                              @else
+                                 <small class="text-danger">Not Connected</small>
+                              @endif
+                           </div>
+                           <div class="col-10 text-end">
+                              <div class="input-group">
+                                 <span class="input-group-text" id="slug-input-addon">www.twitter.com/</span>
+                                 <input type="text"
+                                    class="form-control @error('twitter') is-invalid @enderror" name="twitter" id="twitter" value="{{ old('twitter', $user->twitter) }}">
+                              </div>
+                           </div>
                         </div>
+                     </div>
+                     <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                           <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/instagram.png') }}" alt="instagram" class="me-3" height="30">
+                        </div>
+                        <div class="flex-grow-1 row">
+                           <div class="col-2">
+                              <h6 class="mb-0">Instagram</h6>
+                              @if ($user->instagram !== null)
+                                 <small class="text-success">Connected</small>
+                              @else
+                                 <small class="text-danger">Not Connected</small>
+                              @endif
+                           </div>
+                           <div class="col-10 text-end">
+                              <div class="input-group">
+                                 <span class="input-group-text" id="slug-input-addon">www.instagram.com/</span>
+                                 <input type="text"
+                                    class="form-control @error('instagram') is-invalid @enderror" name="instagram" id="instagram" value="{{ old('instagram', $user->instagram) }}">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                           <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/gmail.png') }}" alt="gmail" class="me-3" height="30">
+                        </div>
+                        <div class="flex-grow-1 row">
+                           <div class="col-2">
+                              <h6 class="mb-0">Gmail</h6>
+                              @if ($user->gmail !== null)
+                                 <small class="text-success">Connected</small>
+                              @else
+                                 <small class="text-danger">Not Connected</small>
+                              @endif
+                           </div>
+                           <div class="col-10 text-end">
+                              <div class="input-group">
+                                 <input type="text"
+                                    class="form-control @error('gmail') is-invalid @enderror" name="gmail" id="gmail" value="{{ old('gmail', $user->gmail) }}">
+                                 <span class="input-group-text" id="slug-input-addon">@gmail.com</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="d-flex">
+                        <div class="flex-shrink-0">
+                           <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/youtube.png') }}" alt="youtube" class="me-3" height="30">
+                        </div>
+                        <div class="flex-grow-1 row">
+                           <div class="col-2">
+                              <h6 class="mb-0">YouTube</h6>
+                              @if ($user->youtube !== null)
+                                 <small class="text-success">Connected</small>
+                              @else
+                                 <small class="text-danger">Not Connected</small>
+                              @endif
+                           </div>
+                           <div class="col-10 text-end">
+                              <div class="input-group">
+                                 <span class="input-group-text" id="slug-input-addon">www.youtube.com/@/</span>
+                                 <input type="text"
+                                    class="form-control @error('youtube') is-invalid @enderror" name="youtube" id="youtube" value="{{ old('youtube', $user->youtube) }}">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <!-- /Social Accounts -->
+                     <div class="my-4 float-end">
+                        <button
+                           type="submit"
+                           class="btn btn-primary me-2">
+                           Save changes
+                        </button>
+                        <button
+                           type="reset"
+                           class="btn btn-outline-secondary">
+                           Cancel
+                        </button>
                      </div>
                   </div>
-                  <div class="d-flex mb-3">
-                     <div class="flex-shrink-0">
-                        <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/twitter.png') }}" alt="twitter" class="me-3" height="30">
-                     </div>
-                     <div class="flex-grow-1 row">
-                        <div class="col-7">
-                           <h6 class="mb-0">Twitter</h6>
-                           <a href="https://twitter.com/pixinvents" target="_blank">@Pixinvent</a>
-                        </div>
-                        <div class="col-5 text-end">
-                           <button class="btn btn-text-danger btn-icon rounded-pill"><i class="mdi mdi-delete-outline mdi-24px"></i></button>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="d-flex mb-3">
-                     <div class="flex-shrink-0">
-                        <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/instagram.png') }}" alt="instagram" class="me-3" height="30">
-                     </div>
-                     <div class="flex-grow-1 row">
-                        <div class="col-7">
-                           <h6 class="mb-0">instagram</h6>
-                           <a href="https://www.instagram.com/pixinvents/" target="_blank">@Pixinvent</a>
-                        </div>
-                        <div class="col-5 text-end">
-                           <button class="btn btn-text-danger btn-icon rounded-pill"><i class="mdi mdi-delete-outline mdi-24px"></i></button>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="d-flex mb-3">
-                     <div class="flex-shrink-0">
-                        <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/dribbble.png') }}" alt="dribbble" class="me-3" height="30">
-                     </div>
-                     <div class="flex-grow-1 row">
-                        <div class="col-7">
-                           <h6 class="mb-0">Dribbble</h6>
-                           <small class="text-muted">Not Connected</small>
-                        </div>
-                        <div class="col-5 text-end">
-                           <button class="btn btn-text-secondary btn-icon rounded-pill"><i class="mdi mdi-link-variant mdi-24px"></i></button>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="d-flex">
-                     <div class="flex-shrink-0">
-                        <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/behance.png') }}" alt="behance" class="me-3" height="30">
-                     </div>
-                     <div class="flex-grow-1 row">
-                        <div class="col-7">
-                           <h6 class="mb-0">Behance</h6>
-                           <small class="text-muted">Not Connected</small>
-                        </div>
-                        <div class="col-5 text-end">
-                           <button class="btn btn-text-secondary btn-icon rounded-pill"><i class="mdi mdi-link-variant mdi-24px"></i></button>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- /Social Accounts -->
-               </div>
+               </form>
             </div>
          </div>
       </div>

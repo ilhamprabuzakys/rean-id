@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\URL;
 // });
 
 Route::middleware(['guest'])->group(function () {
-    $url = config('app.url');
-    URL::forceRootUrl($url);
+    URL::forceRootUrl(config('app.url'));
     // Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
     // Route::get('/register', [RegisterController::class, 'index'])->name('register');

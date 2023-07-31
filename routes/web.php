@@ -14,21 +14,24 @@ use App\Http\Controllers\Utils\TableController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+// Paksa URL route menggunakan konfigurasi di ENV
 URL::forceRootUrl(config('app.url'));
 
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
+    URL::forceRootUrl(config('app.url'));
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
 
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/settings/{user}/profile', 'index')->name('settings.profile');
+        Route::post('/settings/{user}/profile', 'update')->name('settings.profile.update');
         Route::get('/settings/{user}/social-media', 'social_media')->name('settings.social-media');
+        Route::post('/settings/{user}/social-media', 'social_media_update')->name('settings.social-media.update');
         Route::get('/settings/{user}/security', 'security')->name('settings.security');
         Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
-
 
         // Route::put('/profile', 'update')->name('profile.update');
         // Route::get('/profile/password/{user}/edit', 'password')->name('profile.password');
@@ -54,11 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/hero/detail', [HeroImageController::class, 'detail'])->name('hero.detail');
         Route::get('/hero/basic', [HeroImageController::class, 'basic'])->name('hero.basic');
     });
-
-    
 });
 
 Route::controller(HomeController::class)->group(function () {
+    URL::forceRootUrl(config('app.url'));
     Route::get('/', 'index')->name('index');
     Route::get('/all-post', 'all_post')->name('home.all_post');
     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
@@ -69,7 +71,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
 });
 
-Route::controller(TableController::class)->group(function() {
+Route::controller(TableController::class)->group(function () {
     Route::get('/table/posts', 'posts')->name('table.posts');
     Route::get('/table/categories', 'categories')->name('table.categories');
     Route::get('/table/tags', 'tags')->name('table.tags');

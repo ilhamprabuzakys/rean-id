@@ -32,7 +32,8 @@
     --bs-gray: rgba(76, 78, 100, 0.06);
     --bs-primary-rgb: 102, 108, 255;
     --bs-secondary-rgb: 109, 120, 141;
-    --bs-success-rgb: 114, 225, 40;
+    --bs-success-rgb: 15, 168, 61;
+    /* --bs-success-rgb: 114, 225, 40; */
     --bs-info-rgb: 38, 198, 249;
     --bs-warning-rgb: 253, 181, 40;
     --bs-danger-rgb: 255, 77, 73;
@@ -21501,6 +21502,13 @@ html:not([dir="rtl"]) .switches-stacked .switch {
     width: 100%;
     height: 100%;
 }
+
+.avatar img.img-profile-header {
+    min-width: 40px;
+    min-height: 40px;
+    object-fit: cover;
+}
+
 .avatar .avatar-initial {
     position: absolute;
     top: 0;
