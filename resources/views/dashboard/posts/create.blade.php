@@ -136,7 +136,7 @@
                      <div class="col-lg-12">
                         <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
                         <div class="input-group">
-                           <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}/posts/</span>
+                           <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}posts/</span>
                            <input type="text"
                               class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}">
                         </div>
