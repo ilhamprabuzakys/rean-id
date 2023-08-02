@@ -155,6 +155,7 @@ class PostController extends Controller
         ]);
 
         // dd($statuses);
+        confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
 
         return view('dashboard.posts.edit', [
             'title' => 'Edit Postingan ' . $post->title,
@@ -202,7 +203,7 @@ class PostController extends Controller
         $post->delete();
 
         // toast('Data postingan berhasil dihapus!!','success');
-        return back()->with('message', "Postingan dengan judul <b>$judulPostingan</b> berhasil dihapus!");
+        return redirect()->route('posts.index')->with('message', "Postingan dengan judul <b>$judulPostingan</b> berhasil dihapus!");
     }
 
     public function checkSlug(Request $request)

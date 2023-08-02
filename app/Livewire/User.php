@@ -14,8 +14,9 @@ class User extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $search = '';
+    public $rolefilter = '';
 
-    public $name, $email, $password, $user_id, $user, $dataposts;
+    public $name, $email, $password, $role, $user_id, $user, $dataposts;
  
     public function rules() 
     {
@@ -23,6 +24,7 @@ class User extends Component
             'name' => 'required',
             'email' => ['required', 'email', 'not_in:' . auth()->user()->email],
             'password' => 'required',
+            'role' => 'required',
         ];
     }
  
@@ -31,12 +33,14 @@ class User extends Component
         'email.email' => 'Alamat email harus yang valid.',
         'name.required' => 'Field nama harus terisi.',
         'password.required' => 'Field password harus terisi.',
+        'role.required' => 'Field role harus dipilih.',
     ];
  
     protected $validationAttributes = [
         'name' => 'name',
         'email' => 'email address',
         'password' => 'password',
+        'role' => 'role',
     ];
 
     public function updated($propertyName)
@@ -52,6 +56,7 @@ class User extends Component
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
+            'role' => $validatedData['role'],
             'password' => \bcrypt($validatedData['password']),
         ]);
         $name = $validatedData['name'];
@@ -70,10 +75,11 @@ class User extends Component
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
+            'role' => $validatedData['role'],
             'password' => \bcrypt($validatedData['password']),
         ]);
         toast('Data user berhasil diperbarui!','success');
-        session()->flash('success', "User  <b>$this->name</b> berhasil  <b>diperbarui</b>!");
+        session()->flash('success', "User {<b>$this->name</b>} berhasil diperbarui!");
         $this->resetInput();
         $this->dispatchBrowserEvent('close-modal');
     }
@@ -81,7 +87,7 @@ class User extends Component
     public function destroy()
     {
         ModelsUser::find($this->user_id)->delete();
-        session()->flash('success', "User <b>$this->name</b> berhasil  <b>dihapus</b>!");
+        session()->flash('success', "User {<b>$this->name</b>} berhasil  <b>dihapus</b>!");
         $this->dispatchBrowserEvent('close-modal');
     }
 
@@ -93,6 +99,7 @@ class User extends Component
             $this->name = $user->name;
             $this->email = $user->email;
             $this->password = $user->password;
+            $this->role = $user->role;
         } else {
             return back();
         }
@@ -120,6 +127,7 @@ class User extends Component
         $this->name = '';
         $this->email = '';
         $this->password = '';
+        $this->role = '';
     }
 
     public function closeModal()
@@ -127,17 +135,30 @@ class User extends Component
         $this->resetInput();
     }
 
+    public function render()
+    {
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+
+        return view('livewire.user.user', [
+            'users' => ModelsUser::query()->when($this->rolefilter, function($query) {
+                return $query->where('role', $this->rolefilter);
+            })
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->with(['posts', 'login_info', 'event_logs'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10),
+            // 'users' => ModelsUser::with(['posts', 'login_info', 'event_logs'])->where('name', 'like', '%'.$this->search.'%')->where('role', 'like', '%'.$this->rolefilter.'%')->orderBy('updated_at', 'desc')->paginate(10),
+            'roles' => $roles
+        ]);
+    }
+
     public function updatingSearch()
     {
         $this->resetPage();
-    }
-
-    public function render()
-    {
-        $users = ModelsUser::with(['posts', 'login_info', 'event_logs'])->where('name', 'like', '%'.$this->search.'%')->where('email', 'like', '%'.$this->search.'%')->where('role', 'like', '%'.$this->search.'%')->where('username', 'like', '%'.$this->search.'%')->orderBy('updated_at', 'desc')->paginate(5);
-        return view('livewire.user.user', [
-            'users' => $users
-        ]);
     }
 
 }

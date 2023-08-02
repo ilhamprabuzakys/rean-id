@@ -10,7 +10,7 @@ class MediaPostController extends Controller
     public function posts()
     {
         $medias = MediaPost::with(['post', 'user'])->orderBy('updated_at', 'desc')->get();
-        return view('dashboard-borex.media.post', [
+        return view('dashboard.media.post', [
             'title' => 'Media Post',
         ], compact('medias'));
     }

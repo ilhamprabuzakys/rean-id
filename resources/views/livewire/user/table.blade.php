@@ -18,12 +18,18 @@
          <tbody>
              @forelse ($users as $user)
                <tr>
-                  <th scope="row">{{ $loop->iteration }}</th>
+                  <th scope="row">{{ $loop->iteration + (10 * ($users->currentPage()-1)) }}</th>
                   <td>
                      <a href="{{ route('users.show', $user) }}" class="text-decoration-none text-secondary">{{ $user->name }}</a>
                   </td>
                   <td>{{ $user->email }}</td>
-                  <td>{{ $user->role }}</td>
+                  <td>
+                     @php
+                     $role = ucfirst($user->role);
+                     $role = $role != 'Superadmin' ? $role : 'Super Admin'
+                     @endphp
+                     {{ $role }}
+                  </td>
                   <td>
                      @php
                         $currentTime = now();
@@ -62,7 +68,7 @@
             @empty
             <tr>
                <td colspan="6">
-                  <h3>Data User masih kosong</h3>
+                  <h4 class="text-center my-3">Data User masih kosong</h4>
                </td>
             </tr>
             @endforelse

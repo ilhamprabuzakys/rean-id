@@ -1,6 +1,5 @@
 <div>
    @include('livewire.user.create')
-   @include('livewire.user.delete')
    <div class="col-12">
       <div class="card shadow-md">
          <div class="card-header">
@@ -16,6 +15,14 @@
                <div class="col-4 d-flex justify-content-start">
                   <input type="text" name="search" id="search" wire:model="search" class="form-control" placeholder="Ketik sesuatu..">
                </div>
+               <div class="col-4 d-flex justify-content-start">
+                  <select class="form-select" name="rolefilter" id="rolefilter" wire:model='rolefilter'>
+                     <option selected value="">Semua Role</option>
+                     @foreach ($roles as $role)
+                        <option value="{{ $role->key }}">{{ $role->label }}</option>
+                     @endforeach
+                  </select>
+               </div>
                <div class="col-4 d-flex justify-content-end">
                   <button class="btn btn-primary" id="buttonTambahUser" data-bs-target="#createUserModal" data-bs-toggle="modal">
                      <span><i class="mdi mdi-plus me-sm-1"></i>
@@ -28,5 +35,5 @@
          @include('livewire.user.table')
       </div>
    </div>
-    
+   @include('livewire.user.delete')    
 </div>

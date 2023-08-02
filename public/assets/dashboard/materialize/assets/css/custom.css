@@ -50,3 +50,8 @@
 #card-social-media-user .input-group-text {
    font-weight: 400;
 }
+
+img.post-image-size-modal {
+   max-height: 200px;
+   object-fit: cover;
+}

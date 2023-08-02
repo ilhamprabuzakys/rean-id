@@ -13,7 +13,7 @@
       <title>{{ $title }} | REAN.ID - Anti Narkoba Cegah Narkoba</title>
    @endif
 
-   <link rel="icon" href="{{ asset('assets/img/rean-berwarna-logo-saja2.png') }}">
+   <link rel="icon" href="{{ asset('assets/img/rean-logo-brand.png') }}">
    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
    @include('landing.world.partials.css')
    @stack('head')

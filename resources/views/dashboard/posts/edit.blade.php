@@ -28,11 +28,20 @@
 @endpush
 @section('content')
    <!-- start page title -->
-   <h4 class="fw-bold py-3 mb-4">
-      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-      <a class="text-muted fw-light" href="{{ route('posts.index') }}">Daftar Postingan /</a>
-      Edit Postingan
-   </h4>
+   <div class="row justify-content-between">
+      <div class="col-6">
+         <h4 class="fw-bold py-3 mb-4">
+            <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+            <a class="text-muted fw-light" href="{{ route('posts.index') }}">Daftar Postingan /</a>
+            Edit Postingan
+         </h4>
+      </div>
+      <div class="col-4 d-flex align-item-start justify-content-end">
+         <div class="py-3 mb-4">
+            <a class="btn btn-danger text-white px-2" href="{{ route('posts.destroy', $post) }}" data-confirm-delete="true">Hapus Postingan <i class="mdi mdi-delete-forever ms-2"></i></a>
+         </div>
+      </div>
+   </div>
    <!-- end page title -->
    <div class="row">
       <div class="col-12">
@@ -149,7 +158,7 @@
                            <div class="image-preview-container">
                               <img id="image-preview" src="{{ asset($post->file_path) }}" alt="Preview">
                               <button id="cancel-button" class="btn btn-danger">
-                                 <i class="ri-close-fill" style="font-size: 26px"></i>
+                                 <i class="mdi mdi-close" style="font-size: 26px"></i>
                               </button>
                            </div>
                         @endif

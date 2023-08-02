@@ -161,6 +161,138 @@
          </div>
       </div>
       <!--/ Change Password -->
+      
+      <!-- Change Email -->
+      <div class="card mb-4">
+         <h5 class="card-header">
+            Ganti Email
+         </h5>
+         <div class="card-body">
+            <form id="formAccountSettings" method="POST" action="{{ route('settings.security.change-password', $user) }}">
+               @csrf
+               @method('POST')
+               <div class="row">
+                  <div
+                     class="mb-3 col-md-6 form-password-toggle">
+                     <div
+                        class="input-group input-group-merge">
+                        <div
+                           class="form-floating form-floating-outline">
+                           <input
+                              class="form-control"
+                              type="password"
+                              name="currentPassword"
+                              id="currentPassword"
+                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                           <label
+                              for="currentPassword">Masukkan password saat ini</label>
+                        </div>
+                        <span
+                           class="input-group-text cursor-pointer"><i
+                              class="mdi mdi-eye-off-outline"></i></span>
+                     </div>
+                  </div>
+                  <div
+                     class="mb-3 col-md-6">
+                     <div
+                        class="input-group input-group-merge">
+                        <div
+                           class="form-floating form-floating-outline">
+                           <input
+                              class="form-control"
+                              type="email"
+                              id="currentEmail"
+                              name="currentEmail"
+                              value="{{ $user->email }}" readonly />
+                           <label
+                              for="currentEmail">Email saat ini</label>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div
+                     class="mb-4 col-md-6">
+                     <div
+                        class="input-group input-group-merge">
+                        <div
+                           class="form-floating form-floating-outline">
+                           <input
+                              class="form-control"
+                              type="email"
+                              name="newEmail"
+                              id="newEmail"
+                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                           <label
+                              for="newEmail">Alamat email yang baru</label>
+                        </div>
+                        <span
+                           class="input-group-text cursor-pointer"><i
+                              class="mdi mdi-eye-off-outline"></i></span>
+                     </div>
+                  </div>
+                  <div class="mb-4 col-md-3 form-password-toggle d-flex align-items-center">
+                     <button type="submit" class="btn btn-primary px-2 py-1 text-white">
+                        <i class="mdi mdi-send-check-outline me-2"></i>
+                        Verifikasi</button>
+                  </div>
+               </div>
+               <div class="row">
+                  <div
+                     class="mb-4 col-md-6">
+                     <div
+                        class="input-group input-group-merge">
+                        <div
+                           class="form-floating form-floating-outline">
+                           <input
+                              class="form-control"
+                              type="number"
+                              name="kodeOTP"
+                              id="kodeOTP"
+                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
+                           <label
+                              for="kodeOTP">Masukkan kode OTP</label>
+                        </div>
+                        <span
+                           class="input-group-text cursor-pointer"><i
+                              class="mdi mdi-eye-off-outline"></i></span>
+                     </div>
+                  </div>
+               </div>
+               
+               <h6 class="text-body">
+                  Tutorial Ganti Email:
+               </h6>
+               <ul class="ps-3 mb-0">
+                  <li class="mb-1">
+                     Verifikasi terlebih dahulu Password saat ini
+                  </li>
+                  <li class="mb-1">
+                     Masukkan alamat Email yang baru
+                  </li>
+                  <li class="mb-1">
+                     Klik tombol Verifikasi (Kode OTP akan dikirim ke alamat Email yang baru)
+                  </li>
+                  <li>
+                     Masukkan kode OTP
+                  </li>
+               </ul>
+               <div class="mt-4">
+                  <button
+                     type="submit"
+                     class="btn btn-primary me-2">
+                     Simpan perubahan
+                  </button>
+                  <button
+                     type="reset"
+                     class="btn btn-outline-secondary">
+                     Cancel
+                  </button>
+               </div>
+            </form>
+         </div>
+      </div>
+      <!--/ Change Email -->
 
       <!-- Two-steps verification -->
       {{--  <div class="card mb-4">

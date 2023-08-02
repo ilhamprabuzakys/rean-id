@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MediaPostController;
 use App\Http\Controllers\PostController;
@@ -32,10 +33,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/settings/{user}/social-media', 'social_media_update')->name('settings.social-media.update');
         Route::get('/settings/{user}/security', 'security')->name('settings.security');
         Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
-
-        // Route::put('/profile', 'update')->name('profile.update');
-        // Route::get('/profile/password/{user}/edit', 'password')->name('profile.password');
-        // Route::put('/profile/password/{user}', 'update_password')->name('profile.update-password');
     });
 
     Route::middleware(['except:role:member'])->group(function () {
@@ -69,6 +66,18 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/contact-us', 'contact')->name('home.contact');
     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
+});
+
+Route::controller(LandingController::class)->group(function () {
+    URL::forceRootUrl(config('app.url'));
+    Route::get('/new', 'index')->name('index');
+    Route::get('/new/all-post', 'all_post')->name('home.all_post');
+    Route::get('/new/kategori/{category}', 'category_view')->name('home.category_view');
+    Route::get('/new/daftar-kategori', 'category_list')->name('home.category_list');
+    Route::get('/new/cns-radio', 'cns_radio')->name('home.cns');
+    Route::get('/new/contact-us', 'contact')->name('home.contact');
+    Route::post('/contact-us', 'contact_send')->name('home.contact_send');
+    Route::get('/new/{category}/{post}', 'show_post')->name('home.show_post');
 });
 
 Route::controller(TableController::class)->group(function () {

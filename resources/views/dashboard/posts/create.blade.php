@@ -223,19 +223,19 @@
                      <div class="col">
                         <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
                            Kembali
-                           <i class="ri-arrow-go-back-fill ms-2"></i>
+                           <i class="mdi mdi-arrow-left ms-2"></i>
                         </a>
                      </div>
                      <div class="col">
                         <button class="btn btn-primary">
                            Simpan Data
-                           <i class="ri-save-3-line ms-2"></i>
+                           <i class="mdi mdi-content-save-check ms-2"></i>
                         </button>
                      </div>
                      <div class="col">
                         <button class="btn btn-primary">
                            Simpan Data Dan Isi Kembali
-                           <i class="ri-save-3-line ms-2"></i>
+                           <i class="mdi mdi-content-save-edit ms-2"></i>
                         </button>
                      </div>
                   </div>

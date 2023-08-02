@@ -51,7 +51,7 @@ class UserController extends Controller
             'email' => ['required', 'email', Rule::unique('users')],
             'username' => ['string'],
             'role' => ['required', 'string'],
-            'password' => ['required', 'confirmed'],
+            'password' => ['required'],
         ];
     
         if (!$request->has('username')) {
@@ -59,18 +59,19 @@ class UserController extends Controller
         }
     
         $validator = Validator::make($request->all(), $rules, [
-            'name.required' => 'Name field is required',
+            'name.required' => 'Field nama harus diisi',
         ]);
     
-        if (!$request->has('username')) {
+        if ($request->input('username') == '') {
             $email = $request->input('email');
             $username = Str::before($email, '@');
             $validator->after(function ($validator) use ($username) {
                 $validator->getData()['username'] = $username;
             });
         }
-    
+        
         $validatedData = $validator->validated();
+        $validatedData['username'] = $username;
         $user = User::create($validatedData);
         
         toast('Data user berhasil ditambahkan!','success');

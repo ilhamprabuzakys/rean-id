@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Social;
 use Illuminate\Http\Request;
 use App\Rules\MatchingPassword;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Cache;
@@ -39,7 +40,7 @@ class ProfileController extends Controller
         // dd($request->all());
         $rules = [
             'profile_path' => ['file', 'image', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
-            'username' => ['required'],
+            'username' => ['required', Rule::unique('users')->ignore($user->id)],
             'name' => ['required'],
             'notelp' => '',
             'address' => '',
@@ -50,12 +51,13 @@ class ProfileController extends Controller
         // ];
 
         $validator = Validator::make($request->all(), $rules, [
-            'profile_path.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).'
+            'profile_path.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).',
+            'username.unique' => 'Username ini tidak tersedia, silahkan ganti ke yang lain.'
         ]);
 
         if ($validator->fails()) {
-            dd($validator->errors());
-            // return redirect()->back()->withErrors($validator)->withInput();
+            // dd($validator->errors());
+            return redirect()->back()->withErrors($validator)->withInput();
         }
         $data = [];
         // dd($user->profile_path);
@@ -105,24 +107,7 @@ class ProfileController extends Controller
             }
         }
 
-        
-
-        // dd($validatedData);
-        // $data = $request->except(['_token', '_method', 'oldprofile_path']);
-
-        // if ($request->hasFile('profile_path')) {
-        //     if ($request->oldprofile_path) {
-        //         Storage::delete($request->oldprofile_path);
-        //     }
-        //     $imagePath = $request->file('profile_path')->store('user-profile');
-        //     $data['profile_path'] = $imagePath;
-        // } else {
-        //     $data['profile_path'] = $user->profile_path;
-        // }
         $newUser = $user->update($validatedData);
-        // dd($user);
-        // $oldTitle = $user->name;
-
         return redirect()->route('settings.profile', $user->id)->with('message', "Data Profile kamu <b>telah berhasil</b> diperbarui.");
     }
 

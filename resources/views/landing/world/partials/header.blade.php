@@ -9,7 +9,7 @@
          <div class="col-12">
             <nav class="navbar navbar-expand-lg">
 
-               <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('assets/img/rean-hitam-putiih.png') }}" alt="Logo" class="logo-brand"></a>
+               <a class="navbar-brand" href="{{ route('index') }}"><img src="{{ asset('assets/img/rean-text-logo-default.png') }}" alt="Logo" class="logo-brand"></a>
 
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#worldNav" aria-controls="worldNav" aria-expanded="false" aria-label="Toggle navigation"><span
                      class="navbar-toggler-icon"></span></button>

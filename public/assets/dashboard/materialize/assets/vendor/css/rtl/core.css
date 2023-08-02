@@ -21506,6 +21506,8 @@ html:not([dir="rtl"]) .switches-stacked .switch {
 .avatar img.img-profile-header {
     min-width: 40px;
     min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
     object-fit: cover;
 }
 

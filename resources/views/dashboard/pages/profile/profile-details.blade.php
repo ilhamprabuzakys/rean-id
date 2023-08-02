@@ -46,7 +46,7 @@
                      class="mdi mdi-link mdi-20px me-1"></i>Sosial Media</a>
             </li>
          </ul>
-         <div class="col-xl-6">
+         {{-- <div class="col-xl-6">
             <h6 class="text-muted">Filled Pills</h6>
             <div class="nav-align-top mb-4">
               <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
@@ -98,7 +98,7 @@
                 </div>
               </div>
             </div>
-          </div>
+         </div> --}}
          <form
             id=""
             method="POST"
@@ -175,6 +175,11 @@
                            Ukuran maksimal 800KB
                         </div>
                      </div>
+                     @error('profile_path')
+                        <div class="invalid-feedback">
+                           {{ $message }}
+                        </div>
+                     @enderror
                   </div>
                   <script>
                      function readImage(input) {
@@ -204,9 +209,6 @@
 
                         $(".account-image-reset").click(function() {
                            $('#upload').val('');
-                           // $('#image-preview').hide();
-                           // $('.image-preview-container').hide();
-                           // $(this).hide();
                         });
                   </script>
                </div>
@@ -216,7 +218,7 @@
                         <div
                            class="form-floating form-floating-outline">
                            <input
-                              class="form-control"
+                              class="form-control @error('name') is-invalid @enderror"
                               type="text"
                               id="name"
                               name="name"
@@ -225,12 +227,17 @@
                            <label
                               for="name">Nama Lengkap</label>
                         </div>
+                        @error('name')
+                           <div class="invalid-feedback">
+                              {{ $message }}
+                           </div>
+                        @enderror
                      </div>
                      <div class="col-md-6">
                         <div
                            class="form-floating form-floating-outline">
                            <input
-                              class="form-control"
+                              class="form-control @error('email') is-invalid @enderror"
                               type="email"
                               id="email"
                               name="email"
@@ -243,12 +250,17 @@
                         <div
                            class="form-floating form-floating-outline">
                            <input
-                              class="form-control"
+                              class="form-control @error('username') is-invalid @enderror"
                               type="username"
                               id="username"
                               name="username"
                               value="{{ $user->username }}" />
                            <label for="username">Username</label>
+                           @error('username')
+                              <div class="invalid-feedback">
+                                 {{ $message }}
+                              </div>
+                           @enderror
                         </div>
                      </div>
                      <div class="col-md-6">
@@ -260,7 +272,7 @@
                                  type="text"
                                  id="notelp"
                                  name="notelp"
-                                 class="form-control"
+                                 class="form-control @error('notelp') is-invalid @enderror"
                                  value="{{ $user->notelp }}"
                                  placeholder="0851 6278 3743" />
                               <label
@@ -270,19 +282,29 @@
                            <span
                               class="input-group-text">ID (+62)</span>
                         </div>
+                        @error('notelp')
+                           <div class="invalid-feedback">
+                              {{ $message }}
+                           </div>
+                        @enderror
                      </div>
                      <div class="col-md-6">
                         <div
                            class="form-floating form-floating-outline">
                            <input
                               type="text"
-                              class="form-control"
+                              class="form-control @error('address') is-invalid @enderror"
                               id="address"
                               name="address"
                               value="{{ $user->address }}"
                               placeholder="Address" />
                            <label for="address">Address</label>
                         </div>
+                        @error('address')
+                           <div class="invalid-feedback">
+                              {{ $message }}
+                           </div>
+                        @enderror
                      </div>
                   </div>
                   <div class="mt-4">
