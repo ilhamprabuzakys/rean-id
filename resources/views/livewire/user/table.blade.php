@@ -1,4 +1,3 @@
-<div class="card-datatable text-nowrap">
    <div class="table-responsive">
       <table class="dt-complex-header table table-bordered" id="users-table">
 
@@ -18,6 +17,19 @@
          <tbody>
              @forelse ($users as $user)
                <tr>
+                  @php
+                     $time = '';
+                     $currentTime = now();
+                     $updatedAt = $user->created_at;
+                     
+                     $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
+                     
+                     if ($diffInSeconds < 60) {
+                           $time = 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
+                     } else {
+                           $time = $updatedAt->format('l, d F Y - H:i:s');
+                     }
+                  @endphp
                   <th scope="row">{{ $loop->iteration + (10 * ($users->currentPage()-1)) }}</th>
                   <td>
                      <a href="{{ route('users.show', $user) }}" class="text-decoration-none text-secondary">{{ $user->name }}</a>
@@ -30,20 +42,7 @@
                      @endphp
                      {{ $role }}
                   </td>
-                  <td>
-                     @php
-                        $currentTime = now();
-                        $updatedAt = $user->created_at;
-                        
-                        $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
-                        
-                        if ($diffInSeconds < 60) {
-                            echo 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
-                        } else {
-                            echo $updatedAt->format('l, d F Y - H:i:s');
-                        }
-                     @endphp
-                  </td>
+                  <td>{{ $time }}</td>
                   <td class="text-center">
                      <div class="dropdown">
                         <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
@@ -78,4 +77,3 @@
          {{ $users->links() }}
       </div>
    </div>
-</div>

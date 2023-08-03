@@ -7,7 +7,6 @@
    </h4>
    <!-- end page title -->
    <div class="row">
-      {{-- @livewire('user') --}}
       <livewire:user />
    </div>
 @endsection
@@ -18,9 +17,5 @@
          $('#editUserModal').modal('hide');
          $('#deleteUserModal').modal('hide');
       })
-
-      // Livewire.on('userStore', () => {
-      //       $('#userModal').modal('hide');
-      // });
    </script>
 @endpush

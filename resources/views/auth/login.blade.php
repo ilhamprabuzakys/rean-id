@@ -11,18 +11,19 @@ data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark
 <form id="formAuthentication" class="mb-3"  action="{{ route('login.authenticate') }}" method="post">
    @csrf
    <div class="form-floating form-floating-outline mb-3">
-      <input type="text" class="form-control {{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} @error('login') is-invalid @enderror" id="input-username" name="login" value="{{ old('username') ?: old('email') }}" placeholder="Masukkan email atau username anda" autofocus>
+      {{-- {{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} @error('login') is-invalid @enderror --}}
+      <input type="text" class="form-control" id="input-username" name="login" value="{{ old('username') ?: old('email') }}" placeholder="Masukkan email atau username anda" autofocus>
       <label for="email">Email atau Username</label>
-      @if ($errors->has('username') || $errors->has('email'))
-            <div class="invalid-feedback">
-               {{ $errors->first('username') ?: $errors->first('email') }}
-            </div>
-         @endif
-         @error('login')
+      {{-- @if ($errors->has('username') || $errors->has('email'))
+         <div class="invalid-feedback">
+            {{ $errors->first('username') ?: $errors->first('email') }}
+         </div>
+      @endif
+      @error('login')
             <div class="invalid-feedback">
                {{ $errors->first('login') }}
             </div>
-         @enderror
+      @enderror --}}
    </div>
    <div class="mb-3">
       <div class="form-password-toggle">

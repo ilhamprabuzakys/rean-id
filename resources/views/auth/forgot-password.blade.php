@@ -34,7 +34,7 @@
          <label>Email</label>
          @error('email')
             <div class="invalid-feedback">
-               {{ $message }}
+               {{ $errors->first('email') }}
             </div>
          @enderror
       </div>

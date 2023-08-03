@@ -13,11 +13,45 @@ class User extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $search = '';
+    public $search;
     public $rolefilter = '';
+    public $paginate = 5;
 
     public $name, $email, $password, $role, $user_id, $user, $dataposts;
- 
+    
+    protected $updatesQueryString = ['search'];
+
+    public function mount()
+    {
+        $this->search = request()->query('search');
+    }
+
+    public function render()
+    {
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+        
+        $users = $this->search === null ? ModelsUser::query()->when($this->rolefilter, function($query) {
+            return $query->where('role', $this->rolefilter);
+        })
+        ->orderBy('updated_at', 'desc')
+        ->paginate($this->paginate) : ModelsUser::query()->when($this->rolefilter, function($query) {
+            return $query->where('role', $this->rolefilter);
+        })
+        ->where('name', 'like', '%' . $this->search . '%')
+        ->orderBy('updated_at', 'desc')
+        ->paginate($this->paginate);
+        
+        return view('livewire.user.user', [
+            'users' => $users,
+            // 'users' => ModelsUser::with(['posts', 'login_info', 'event_logs'])->where('name', 'like', '%'.$this->search.'%')->where('role', 'like', '%'.$this->rolefilter.'%')->orderBy('updated_at', 'desc')->paginate(10),
+            'roles' => $roles
+        ]);
+    }
+
     public function rules() 
     {
         return [
@@ -133,27 +167,6 @@ class User extends Component
     public function closeModal()
     {
         $this->resetInput();
-    }
-
-    public function render()
-    {
-        $roles = collect([
-            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
-            (object) ['key' => 'admin', 'label' => 'Admin'],
-            (object) ['key' => 'member', 'label' => 'Member'],
-        ]);
-
-        return view('livewire.user.user', [
-            'users' => ModelsUser::query()->when($this->rolefilter, function($query) {
-                return $query->where('role', $this->rolefilter);
-            })
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->with(['posts', 'login_info', 'event_logs'])
-            ->orderBy('updated_at', 'desc')
-            ->paginate(10),
-            // 'users' => ModelsUser::with(['posts', 'login_info', 'event_logs'])->where('name', 'like', '%'.$this->search.'%')->where('role', 'like', '%'.$this->rolefilter.'%')->orderBy('updated_at', 'desc')->paginate(10),
-            'roles' => $roles
-        ]);
     }
 
     public function updatingSearch()

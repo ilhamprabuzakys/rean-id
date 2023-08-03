@@ -46,7 +46,7 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('dashboard.auth.login', [
+        return view('auth.login', [
             'title' => 'Login'
         ]);
     }
@@ -79,15 +79,23 @@ class LoginController extends Controller
         // dd(Hash::check($request->input('password'), $user->password));
         if ($user != null) {
             if (!Hash::check($request->input('password'), $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['Kredensial yang anda masukkan salah atau tidak ditemukan.']
-                ]);
+                return back()->with(
+                    'fails',
+                    'Kredensial yang anda masukkan salah atau tidak ditemukan.',
+                )->withInput();
+                // throw ValidationException::withMessages([
+                //     'email' => ['Kredensial yang anda masukkan salah atau tidak ditemukan.']
+                // ]);
             }
 
             if ($user->email_verified_at == \null) {
-                throw ValidationException::withMessages([
-                    'email' => ['Akun anda belum teraktivasi.']
-                ]);
+                // throw ValidationException::withMessages([
+                //     'email' => ['Akun anda belum teraktivasi.']
+                // ]);
+                return back()->with(
+                    'fails',
+                    'Akun anda belum teraktivasi.',
+                )->withInput();
             }
         } else {
             return back()->with(

@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Utils\TableController;
+use App\Http\Controllers\WebsiteBuilderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -22,37 +23,48 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
     URL::forceRootUrl(config('app.url'));
-    Route::controller(DashboardController::class)->group(function () {
-        Route::get('/dashboard', 'index')->name('dashboard');
-    });
+    Route::prefix('dashboard')->group(function() {
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('/', 'index')->name('dashboard');
+        });
+    
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/settings/{user}/profile', 'index')->name('settings.profile');
+            Route::post('/settings/{user}/profile', 'update')->name('settings.profile.update');
+            Route::get('/settings/{user}/social-media', 'social_media')->name('settings.social-media');
+            Route::post('/settings/{user}/social-media', 'social_media_update')->name('settings.social-media.update');
+            Route::get('/settings/{user}/security', 'security')->name('settings.security');
+            Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
+        });
+    
+        Route::middleware(['except:role:member'])->group(function () {
+            Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
+            Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
+            Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
+            Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+            Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
+            Route::resource('/users', UserController::class);
+        });
+    
+        Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
+        Route::resource('/posts', PostController::class);
+    
+        Route::middleware(['role:superadmin,admin'])->group(function () {
+            Route::resource('/categories', CategoryController::class);
+            Route::resource('/tags', TagController::class);
+            Route::get('/hero/main', [HeroImageController::class, 'main'])->name('hero.name');
+            Route::get('/hero/detail', [HeroImageController::class, 'detail'])->name('hero.detail');
+            Route::get('/hero/basic', [HeroImageController::class, 'basic'])->name('hero.basic');
+        });
 
-    Route::controller(ProfileController::class)->group(function () {
-        Route::get('/settings/{user}/profile', 'index')->name('settings.profile');
-        Route::post('/settings/{user}/profile', 'update')->name('settings.profile.update');
-        Route::get('/settings/{user}/social-media', 'social_media')->name('settings.social-media');
-        Route::post('/settings/{user}/social-media', 'social_media_update')->name('settings.social-media.update');
-        Route::get('/settings/{user}/security', 'security')->name('settings.security');
-        Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
-    });
-
-    Route::middleware(['except:role:member'])->group(function () {
-        Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
-        Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
-        Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
-        Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
-        Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
-        Route::resource('/users', UserController::class);
-    });
-
-    Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
-    Route::resource('/posts', PostController::class);
-
-    Route::middleware(['role:superadmin,admin'])->group(function () {
-        Route::resource('/categories', CategoryController::class);
-        Route::resource('/tags', TagController::class);
-        Route::get('/hero/main', [HeroImageController::class, 'main'])->name('hero.name');
-        Route::get('/hero/detail', [HeroImageController::class, 'detail'])->name('hero.detail');
-        Route::get('/hero/basic', [HeroImageController::class, 'basic'])->name('hero.basic');
+        Route::middleware(['role:superadmin'])->group(function () {
+            /* Jika anda ingin mengubah personalisasi website bagian front-end Landing Page */
+            Route::controller(WebsiteBuilderController::class)->group(function() {
+                Route::prefix('website')->group(function() {
+                    Route::get('/components', 'components')->name('components');
+                });
+            });
+        });
     });
 });
 
@@ -70,18 +82,22 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(LandingController::class)->group(function () {
     URL::forceRootUrl(config('app.url'));
-    Route::get('/new', 'index')->name('index');
-    Route::get('/new/all-post', 'all_post')->name('home.all_post');
-    Route::get('/new/kategori/{category}', 'category_view')->name('home.category_view');
-    Route::get('/new/daftar-kategori', 'category_list')->name('home.category_list');
-    Route::get('/new/cns-radio', 'cns_radio')->name('home.cns');
-    Route::get('/new/contact-us', 'contact')->name('home.contact');
-    Route::post('/contact-us', 'contact_send')->name('home.contact_send');
-    Route::get('/new/{category}/{post}', 'show_post')->name('home.show_post');
+    Route::prefix('new')->group(function() {
+        Route::get('/', 'index')->name('new.index');
+        Route::get('/all-post', 'all_post')->name('new.all_post');
+        Route::get('/kategori/{category}', 'category_view')->name('new.category_view');
+        Route::get('/daftar-kategori', 'category_list')->name('new.category_list');
+        Route::get('/cns-radio', 'cns_radio')->name('new.cns');
+        Route::get('/contact-us', 'contact')->name('new.contact');
+        Route::post('/contact-us', 'contact_send')->name('new.contact_send');
+        Route::get('/{category}/{post}', 'show_post')->name('new.show_post');
+    });
 });
 
 Route::controller(TableController::class)->group(function () {
-    Route::get('/table/posts', 'posts')->name('table.posts');
-    Route::get('/table/categories', 'categories')->name('table.categories');
-    Route::get('/table/tags', 'tags')->name('table.tags');
+    Route::prefix('table')->group(function() {
+        Route::get('/posts', 'posts')->name('table.posts');
+        Route::get('/categories', 'categories')->name('table.categories');
+        Route::get('/tags', 'tags')->name('table.tags');
+    });
 });

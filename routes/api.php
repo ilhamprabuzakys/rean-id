@@ -17,8 +17,7 @@ use Illuminate\Support\Facades\URL;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-// $url = config('app.url');
-// URL::forceRootUrl($url);
+URL::forceRootUrl(config('app.url'));
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -27,8 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Fetch data
 Route::get('/posts', [PostController::class, 'index'])->name('api.posts.index');
 Route::controller(CategoryController::class)->group(function() {
-    // $url = config('app.url');
-    // URL::forceRootUrl($url);
     Route::get('/categories', 'index')->name('api.categories.index');
 });
 Route::get('/tags', [TagController::class, 'index'])->name('api.tags.index');

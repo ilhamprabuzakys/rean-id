@@ -10,7 +10,7 @@
 
     <!-- Google fonts -->
     <link rel="preconnect" href="{{ asset('assets/landing/disilab/fonts.gstatic.com/index.html') }}">
-    <link href="{{ asset('assets/landing/disilab/fonts.googleapis.com/css2ba15.css?family=Ubuntu:wght@300;400;500;700&amp;display=swap') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/disilab/fonts.googleapis.com/css2ba15.css?family=Karla:wght@300;400;500;700&amp;display=swap') }}" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" sizes="16x16" href="{{ asset('assets/img/rean-logo-brand.png') }}">
@@ -22,6 +22,27 @@
     <link rel="stylesheet" href="{{ asset('assets/landing/disilab/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/landing/disilab/css/style.css') }}">
     <!-- end inject -->
+    <style>
+        /* Ini mengubah seluruh scrollbar di dalam aplikasi Anda */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2); 
+            border-radius: 20px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
     @stack('styles')
 </head>
 <body>
