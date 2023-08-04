@@ -36,7 +36,11 @@
    <div class="col-12">
       <div class="card shadow-md">
          <div class="card-header">
-            <h5 class="card-title">Aktivitas Log</h5>
+            @if (auth()->user()->role == 'member')
+               <h5 class="card-title">Aktivitas Ku</h5>
+            @else
+               <h5 class="card-title">Aktivitas Log</h5>
+            @endif
             <h6 class="card-subtitle text-muted">Rekapan aktivitas yang terjadi pada aplikasi.</h6>
          </div>
          <div class="card-datatable">

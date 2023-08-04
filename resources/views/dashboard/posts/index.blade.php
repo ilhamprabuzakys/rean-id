@@ -95,9 +95,9 @@
                                  {!! Str::limit(strip_tags($post->title), 20, '...') !!}
                               </a>
                            </td>
-                           <td><a href="{{ route('users.show', $post->user) }}" class="text-decoration-none text-dark">
-                                 {{ $post->user->name }}
-                                 @if ($post->user->username == auth()->user()->username)
+                           <td><a href="#" class="text-decoration-none text-dark">
+                                 {{ optional($post->user)->name }}
+                                 @if (optional($post->user)->username == auth()->user()->username)
                                     <span class="text-primary">{{ __(' (Anda)') }}</span>
                                  @endif
                               </a></td>

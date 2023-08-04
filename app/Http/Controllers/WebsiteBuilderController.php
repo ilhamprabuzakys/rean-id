@@ -17,10 +17,11 @@ class WebsiteBuilderController extends Controller
     }
     
     /* Bagian image seperti image dari post detail hero */
-    public function images()
+    public function background_images()
     {
-        return view('dashboard.frontend.components', [
+        return view('dashboard.frontend.background-images', [
             'title' => 'Personalisasi Image'
         ]);
     }
+
 }

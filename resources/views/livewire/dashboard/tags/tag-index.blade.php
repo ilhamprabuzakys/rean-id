@@ -3,18 +3,31 @@
         <div class="col-12">
            <div class="card shadow-md">
               <div class="card-header">
-                @if (session()->has('success'))
+                @if (session('success'))
                     <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
                     <i class="mdi mdi-check-circle-outline me-3"></i>
-                    {!! session('success') !!}
+                    {{-- {!! session('success') !!} --}}
+                    {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                     </button>
                     </div>
                 @endif
-                {{-- <livewire:dashboard.tags.form :tags=$tags/> --}}
-                @include('livewire.dashboard.tags.form')
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
+                    <i class="mdi mdi-check-circle-outline me-3"></i>
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
+                    </div>
+                @endif
+
+                @if ($statusUpdate == true) 
+                    <livewire:dashboard.tags.tag-update />
+                @else
+                    <livewire:dashboard.tags.tag-create />
+                @endif
                  <div class="row justify-content-between">
-                    <div class="col-1 d-flex justify-content-start">
+                    <div class="col-lg-1 col-md-2 col-sm-2 d-flex justify-content-start">
                        <select class="form-select" name="paginate" id="paginate" wire:model='paginate'>
                           <option value="5">5</option>
                           <option value="10">10</option>

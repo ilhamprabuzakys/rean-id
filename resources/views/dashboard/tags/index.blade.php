@@ -6,7 +6,7 @@
       Daftar Label
    </h4>
    <!-- end page title -->
-   <livewire:dashboard.tags />
+   <livewire:dashboard.tags.tag-index />
 @endsection
 @push('scripts')
    <script>

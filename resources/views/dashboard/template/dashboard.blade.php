@@ -32,7 +32,7 @@
    <!-- Fonts -->
    <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/index.html') }}">
    <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.gstatic.com/index.html') }}" crossorigin>
-   <link href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Inter:wght@300;400;500;600;700&amp;display=swap') }}" rel="stylesheet">
+   <link href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Karla:wght@300;400;500;600;700&amp;display=swap') }}" rel="stylesheet">
 
    <!-- Icons -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/materialdesignicons.css') }}" />
@@ -70,11 +70,16 @@
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
    
+   {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.css') }}">
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.js') }}"></script>
+
    @stack('head')
    @stack('style')
    @stack('css')
-   {{-- @livewireStyles --}}
-   <livewire:styles />
+   @livewireStyles
+   {{-- <livewire:styles /> --}}
 </head>
 
 <body>
@@ -160,8 +165,24 @@
    
    <!-- Pace JS -->
    <script data-pace-options='{ "ajax": false }' src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
-   {{-- @livewireScripts --}}
-   <livewire:scripts />
+   @livewireScripts
+   {{-- <livewire:scripts /> --}}
+   <script>
+      window.addEventListener('alert', event => { 
+         toastr[event.detail.type](event.detail.message, 
+         event.detail.title ?? ''), toastr.options = {
+               "closeButton": true,
+               "progressBar": true,
+               "debug": true,
+               "newest": true,
+               "preventDuplicates": true,
+               // "showEasing": "swing",
+               // "hideEasing": "linear",
+               // "showMethod": "slideInRight",
+               // "hideMethod": "slideInLeft"
+            }
+      });
+   </script>
 </body>
 
 </html>

@@ -109,9 +109,30 @@ class PostController extends Controller
         }
         $post = Post::create($validatedData);
         if ($request->has('tags')) {
-            $post->tags()->sync($request->input('tags'));
-            $post->save();
+            // Ambil input tags dari user
+            $inputTags = $request->input('tags');
+        
+            // Inisialisasi array untuk menampung ID tags
+            $tagIds = [];
+        
+            foreach ($inputTags as $tagName) {
+                // Cek apakah tag sudah ada atau belum
+                $tag = Tag::firstWhere('name', $tagName);
+        
+                if (!$tag) {
+                    // Jika tag belum ada, buat tag baru
+                    $tag = Tag::create(['name' => $tagName]);
+                }
+        
+                // Tambahkan ID tag ke dalam array
+                $tagIds[] = $tag->id;
+            }
+        
+            // Lakukan proses sync dengan ID tags
+            $post->tags()->sync($tagIds);
         }
+        $post->save();
+        
         $postCategory = $post->category->name;
         $postId = $post->id;
         // Simpan link file ke MediaPost

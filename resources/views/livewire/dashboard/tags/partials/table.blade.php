@@ -48,7 +48,7 @@
                         <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $tag->id }})">
                            Lihat postingan terkait
                         </a>
-                        <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#editTagModal" wire:click="editTag({{ $tag->id }})">
+                        <a class="dropdown-item text-success text-decoration-none" wire:click="edit({{ $tag->id }})">
                            Edit
                         </a>
                         <a class="text-danger text-decoration-none dropdown-item" wire:click="findId({{ $tag->id }})" data-bs-toggle="modal" data-bs-target="#deleteTagModal">Hapus</a>
@@ -56,6 +56,7 @@
                   </div>
                </td> 
             </tr>
+            @include('livewire.dashboard.tags.partials.modal.postingan-terkait')
          @endforeach
       </tbody>
    </table>

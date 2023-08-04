@@ -116,10 +116,10 @@
                         @enderror" name="tags[]" id="tags-multi-select" multiple>
                            <optgroup label="Pilih label">
                               @foreach ($tags as $tag)
-                                 @if (in_array($tag->id, old('tags', [])))
-                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                                 @if (in_array($tag->name, old('tags', [])))
+                                    <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
                                  @else
-                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                                  @endif
                               @endforeach
                            </optgroup>
@@ -263,6 +263,7 @@
             // theme: 'bootstrap-5',
             placeholder: 'Pilih Tag',
             allowClear: true,
+            tags: true,
          });
          $('#category_id').select2({
             theme: 'bootstrap-5'

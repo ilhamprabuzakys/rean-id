@@ -115,9 +115,6 @@
       </li>
       <li class="menu-item {{ str_starts_with(request()->url(), route('tags.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            {{-- <i class="menu-icon tf-icons mdi mdi-label-multiple-outline"></i> --}}
-            {{-- <i class="menu-icon tf-icons mdi mdi-paperclip"></i> --}}
-            {{-- <i class="menu-icon tf-icons mdi mdi-pound"></i> --}}
             <i class="menu-icon tf-icons mdi mdi-tag-multiple-outline"></i>
             <div data-i18n="Tags">Tags</div>
          </a>
@@ -140,6 +137,8 @@
             <div data-i18n="Media">Media</div>
          </a>
       </li>
+      @endcannot
+      @can('superadmin')
       <li class="menu-item {{ str_starts_with(request()->url(), route('users.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons mdi mdi-account-group-outline"></i>
@@ -158,7 +157,7 @@
             </li>
          </ul>
       </li>
-      @endcannot
+      @endcan
       <!-- Data Master -->
       <li class="menu-header fw-light mt-1">
          <span class="menu-header-text">Sistem</span>
@@ -179,18 +178,18 @@
       @can('superadmin')
       <li class="menu-item {{ str_starts_with(request()->url(), route('users.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons mdi mdi-account-group-outline"></i>
-            <div data-i18n="Data Users">Data Users</div>
+            <i class="menu-icon tf-icons mdi mdi-home-edit-outline"></i>
+            <div data-i18n="Personalisasi Website">Personalisasi Website</div>
          </a>
          <ul class="menu-sub">
-            <li class="menu-item {{ str_starts_with(request()->url(), route('users.index')) ? 'active' : '' }}">
-               <a href="{{ route('users.index') }}" class="menu-link">
-                  <div data-i18n="Semua">Semua</div>
+            <li class="menu-item {{ str_starts_with(request()->url(), route('website.components')) ? 'active' : '' }}">
+               <a href="{{ route('website.components') }}" class="menu-link">
+                  <div data-i18n="Komponen">Komponen</div>
                </a>
             </li>
-            <li class="menu-item {{ str_starts_with(request()->url(), route('users.create')) ? 'active' : '' }}">
-               <a href="{{ route('users.create') }}" class="menu-link">
-                  <div data-i18n="Tambah Data">Tambah Data</div>
+            <li class="menu-item {{ str_starts_with(request()->url(), route('website.background-images')) ? 'active' : '' }}">
+               <a href="{{ route('website.background-images') }}" class="menu-link">
+                  <div data-i18n="Background Image">Background Image</div>
                </a>
             </li>
          </ul>

@@ -61,7 +61,8 @@ Route::middleware(['auth'])->group(function () {
             /* Jika anda ingin mengubah personalisasi website bagian front-end Landing Page */
             Route::controller(WebsiteBuilderController::class)->group(function() {
                 Route::prefix('website')->group(function() {
-                    Route::get('/components', 'components')->name('components');
+                    Route::get('/components', 'components')->name('website.components');
+                    Route::get('/background-images', 'background_images')->name('website.background-images');
                 });
             });
         });
