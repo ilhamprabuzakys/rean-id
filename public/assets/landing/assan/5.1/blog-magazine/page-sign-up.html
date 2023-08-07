@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Assan | Blog</title>
+        
+        <!--FavIcon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <!--Google Fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0">
+
+        <!--Aos Animations-->
+        <link href="assets/vendor/node_modules/css/aos.css" rel="stylesheet">
+
+        <!--Main Style-->
+        <link href="assets/css/theme.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="d-flex flex-column flex-root">
+            <!--Page-->
+            <div class="page-lg d-flex flex-row flex-column-fluid">
+
+                 <!--:Sidebar Menu:-->
+                <aside class="page-sidebar">
+                    <div class="offcanvas-lg offcanvas-start" id="offcanvas-sidebar">   
+                        <div class="offcanvas-header d-block p-0">
+                            <a class="sidebar-brand flex-shrink-0 d-flex justify-content-center height-6x w-100 align-items-center"
+                            href="index.html">
+                            <img src="assets/img/logo-a-white.svg" alt="" class="img-fluid">
+                        </a>
+                        </div>
+                        <!--:Sidenav:-->
+                        <div class="offcanvas-body flex-grow-1 p-0">
+                            <nav
+                            class="flex-grow-1 d-flex flex-column justify-content-center gap-1 gap-lg-2 align-items-center py-3">
+                            <a data-tippy-placement="right" data-tippy-content="Home" href="index.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link  ">
+                                <span class="material-symbols-sharp align-middle">
+                                    home
+                                    </span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="notifications.html" data-tippy-placement="right" data-tippy-content="Notifications"
+                                class="width-4x tippy-dropdown height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    notifications
+                                    </span>
+                            </a>
+                            </div>
+                            <a data-tippy-placement="right" data-tippy-content="Bookmarks" href="bookmarks.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    bookmarks
+                                    </span>
+                            </a>
+                            <a data-tippy-placement="right" data-tippy-content="Topics" href="topics.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    tag
+                                    </span>
+                            </a>
+                            <a data-tippy-placement="right" data-tippy-content="Write" href="write.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    edit_document
+                                    </span>
+                            </a>
+                        </nav>
+                        </div>
+                        <div class="mt-auto offcanvas-footer">
+            
+                        </div>
+                    </div>
+                </aside>
+
+
+                <!--:Page content:-->
+                <main class="page-content d-flex flex-column flex-row-fluid">
+                    
+                    <!--::Page content with sidebar::-->
+                    <div class="content d-flex flex-column-fluid position-relative">
+
+                        <!--:Content inner layout:-->
+                        <div class="d-flex flex-column flex-md-row h-100 w-100">
+                            <!--:Content inner Content:-->
+                            <div class="col-md-7 col-lg-8 layout-content d-flex justify-content-center flex-column h-100">
+                                <div class="position-relative px-3 px-xl-5 py-8 w-100 w-lg-50 w-md-75 mx-auto">
+                                  
+                                <div>
+                                    <h2 class="mb-1">
+                                        Hello!
+                                    </h2>
+                                    <p class="mb-4 text-muted">
+                                        To get started, Please signup with details...
+                                    </p>
+                                    <form class="needs-validation" novalidate>
+
+                                        <!--input-with-icon-->
+                                        <div class="mb-3">
+                                            <label class="small form-label" for="signUpName">Your full name</label>
+                                            <input type="text" required class="form-control" id="signUpName" autofocus>
+                                        </div>
+
+                                        <!--input-with-icon-->
+                                        <div class="mb-3">
+                                            <label class="small form-label" for="signUpMail">Your email address</label>
+                                            <input type="email" required class="form-control" id="signUpMail">
+                                        </div>
+                                        <!--input-with-icon-->
+                                        <div class="mb-3">
+                                            <label class="small form-label" for="signUpPassword">Enter password</label>
+                                            <input type="password" required class="form-control" id="signUpPassword">
+                                        </div>
+                                        <!--input-with-icon-->
+                                        <div class="mb-3">
+                                            <label class="small form-label" for="signUpConfirmPassword">Confirm
+                                                password</label>
+                                            <input type="password" required class="form-control" id="signUpConfirmPassword">
+                                        </div>
+                                        <!--Checkbox-->
+                                        <div class="mb-3 d-flex justify-content-between">
+                                            <div class="form-check">
+                                                <input class="form-check-input" required type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label small text-muted" for="flexCheckDefault">
+                                                    Agree to <a href="page-sign-up.html#!" class="fw-semibold">Terms & conditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary" type="submit">
+                                                Sign Up
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <!---->
+                                    <p class="pt-3 mb-4 small text-muted">
+                                        Already have an account? <a href="page-sign-in.html"
+                                            class="ms-2 fw-semibold link-underline">Sign in</a>
+                                    </p>
+                                    <!--Divider-->
+                                    <div class="d-flex align-items-center mb-4">
+                                        <span class="flex-grow-1 border-bottom pt-1"></span>
+                                        <span
+                                            class="d-inline-flex flex-center mx-2">or</span>
+                                        <span class="flex-grow-1 border-bottom pt-1"></span>
+                                    </div>
+                                    <div class="d-grid">
+                                        <a href="page-sign-up.html#!"
+                                            class="btn btn-outline-secondary">
+                                            <svg class="width-2x height-2x me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>
+                                            <span>sign up with facebook</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!--:Content inner Sidebar:-->
+                            <div class="col-md-5 col-lg-4 bg-body-tertiary content-inner-sidebar d-flex flex-column h-100 border-start position-relative">
+                               
+                               <div class="position-sticky top-0">
+                                <!--:CTA:-->
+                                <div class="position-relative py-5 px-3 px-xl-5">
+                                    <h6 class="mb-4">💎 Unlock endless posibilities</h6>
+                                    <a href="page-plans.html" class="btn btn-secondary">Upgrade to Pro</a>
+                                </div>
+                               </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--:Footer:-->
+                    <!-- Back to Top button -->
+                    <a data-tippy-placement="left" data-tippy-content="Scroll to Top" href="page-sign-up.html#"
+                        class="toTop btn text-body bg-primary-subtle border-0 p-0 width-4x height-4x shadow d-flex align-items-center justify-content-center">
+                        <span class="material-symbols-sharp align-middle">
+                            arrow_upward
+                        </span>
+                    </a>
+
+
+                    <!--Footer Start-->
+                    <footer id="footer" class="footer border-top position-relative">
+                        <div class="container pt-9 pb-5 position-relative z-index-1">
+                            <div class="row">
+                                <!--Footer col-->
+                                <div class="col-md-7 col-lg-3 mb-7">
+                                    <a href="page-sign-up.html#" class="d-block width-3x mb-5">
+                                        <img src="assets/img/logo-a.svg" class="img-fluid footer-logo-light" alt="">
+                                        <img src="assets/img/logo-a-white.svg" class="img-fluid footer-logo-dark" alt="">
+                                    </a>
+                                    <hr>
+                                    <small class="text-muted mb-2 d-block">
+                                        Enquiries
+                                    </small>
+                                    <ul class="list-unstyled mb-0">
+                                        <li>
+                                            <a href="page-sign-up.html#!mailto:yourmail.domain.com"><span class="__cf_email__" data-cfemail="a9c0c7cfc6e9cdc6c4c0c8c787cac6c4">[email&#160;protected]</span></a>
+                                        </li>
+                                    </ul>
+                                    <hr>
+                                    <small class="text-muted mb-3 d-block">
+                                        Join Us Today
+                                    </small>
+                                    <a href="page-sign-up.html#!" class="btn btn-secondary">Upgrade to Pro</a>
+                                </div>
+                                <!--Footer col-->
+                                <div class="col-md-4 col-lg-2 ms-md-auto mb-7 col-7">
+                                    <h6 class="mb-4">Links</h6>
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                About us
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Newsletter
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Contact
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Career <span class="badge bg-success rounded-pill ms-1">Hiring</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Privacy policy
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Terms & conditions
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--Footer col-->
+                                <div class="col-md-4 col-lg-2 ms-lg-auto mb-7 col-5">
+                                    <h6 class="mb-4">Topics</h6>
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Design
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Development
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Fashion
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Business
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Nature
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="page-sign-up.html#" class="nav-link">
+                                                Travel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--Footer col-->
+                                <div class="col-md-8 col-lg-4 mb-7">
+                                    <h6 class="mb-4">Popular Articles</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex card-hover mb-4 align-items-center">
+                                            <div class="me-3">
+                                                <a href="page-sign-up.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                                    <img src="assets/img/sm2.jpg" alt="" class="img-fluid img-zoom">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="page-sign-up.html#!" class="lh-sm d-block mb-2">Tips for creating a long-lasting
+                                                    partnership with your startup</a>
+                                                <span class="d-block small text-muted">02 Sep 2022</span>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex card-hover mb-4 align-items-center">
+                                            <div class="me-3">
+                                                <a href="page-sign-up.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                                    <img src="assets/img/sm1.jpg" alt="" class="img-fluid img-zoom">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="page-sign-up.html#!" class="lh-sm d-block mb-2">Functional programming in python for
+                                                    beginners</a>
+                                                <span class="d-block small text-muted">18 Sep 2022</span>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex card-hover align-items-center">
+                                            <div class="me-3">
+                                                <a href="page-sign-up.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                                    <img src="assets/img/sm3.jpg" alt="" class="img-fluid img-zoom">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a href="page-sign-up.html#!" class="lh-sm d-block mb-2">Modern and well coded bootstrap themes you should
+                                                    buy</a>
+                                                <span class="d-block small text-muted">19 Aug 2022</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr class="mb-5 mt-0">
+                            <div class="row">
+                                <div class="col-sm-7 mb-3 mb-sm-0">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="dropup d-table">
+                                            <a href="page-sign-up.html#" data-bs-toggle="dropdown" role="button" aria-expanded="false"
+                                                class="dropdown-toggle small">
+                                                United States (English)
+                                            </a>
+
+                                            <!--Dropdown lang menu-->
+                                            <div class="dropdown-menu mb-3 dropdown-menu-lg-start" style="margin: 0px;">
+                                                <a href="page-sign-up.html#!" class="d-flex align-items-center dropdown-item active">
+                                                    <img src="assets/img/country/us.svg" class="width-2x me-2" alt="">
+                                                    English (US)
+                                                </a>
+                                                <a href="page-sign-up.html#!" class="d-flex align-items-center dropdown-item">
+                                                    <img src="assets/img/country/es.svg" class="width-2x me-2" alt="">
+                                                    Spanish
+                                                </a>
+                                                <a href="page-sign-up.html#!" class="d-flex align-items-center dropdown-item">
+                                                    <img src="assets/img/country/gb.svg" class="width-2x me-2" alt="">
+                                                    English (UK)
+                                                </a>
+                                                <a href="page-sign-up.html#!" class="d-flex align-items-center dropdown-item">
+                                                    <img src="assets/img/country/fr.svg" class="width-2x me-2" alt="">
+                                                    French
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-5 small text-sm-end">
+                                    <span class="d-block lh-sm text-muted">© Copyright
+                                        <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                                            document.write(new Date().getFullYear())
+
+                                        </script>. Assan
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--container-->
+                    </footer>
+
+                </main>
+
+            </div>
+        </div>
+        <!--script-->
+        <script src="assets/js/theme.bundle.min.js"></script>
+    </body>
+
+</html>

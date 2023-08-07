@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Assan | Blog</title>
+        <!--FavIcon-->
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+        <!--Google Fonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@100..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0">
+
+        <!--Aos Animations-->
+        <link href="assets/vendor/node_modules/css/aos.css" rel="stylesheet">
+
+        <!--Main Style-->
+        <link href="assets/css/theme.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="d-flex flex-column flex-root">
+            <!--Page-->
+            <div class="page-lg d-flex flex-row flex-column-fluid">
+
+                 <!--:Sidebar Menu:-->
+                <aside class="page-sidebar">
+                    <div class="offcanvas-lg offcanvas-start" id="offcanvas-sidebar">   
+                        <div class="offcanvas-header d-block p-0">
+                            <a class="sidebar-brand flex-shrink-0 d-flex justify-content-center height-6x w-100 align-items-center"
+                            href="index.html">
+                            <img src="assets/img/logo-a-white.svg" alt="" class="img-fluid">
+                        </a>
+                        </div>
+                        <!--:Sidenav:-->
+                        <div class="offcanvas-body flex-grow-1 p-0">
+                            <nav
+                            class="flex-grow-1 d-flex flex-column justify-content-center gap-1 gap-lg-2 align-items-center py-3">
+                            <a data-tippy-placement="right" data-tippy-content="Home" href="index.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link  ">
+                                <span class="material-symbols-sharp align-middle">
+                                    home
+                                    </span>
+                            </a>
+                            <div class="dropdown">
+                                <a href="notifications.html" data-tippy-placement="right" data-tippy-content="Notifications"
+                                class="width-4x tippy-dropdown height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    notifications
+                                    </span>
+                            </a>
+                            </div>
+                            <a data-tippy-placement="right" data-tippy-content="Bookmarks" href="bookmarks.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    bookmarks
+                                    </span>
+                            </a>
+                            <a data-tippy-placement="right" data-tippy-content="Topics" href="topics.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    tag
+                                    </span>
+                            </a>
+                            <a data-tippy-placement="right" data-tippy-content="Write" href="write.html"
+                                class="width-4x height-4x d-flex align-items-center justify-content-center rounded-3 sidenav-link ">
+                                <span class="material-symbols-sharp align-middle">
+                                    edit_document
+                                    </span>
+                            </a>
+                        </nav>
+                        </div>
+                        <div class="mt-auto offcanvas-footer">
+            
+                        </div>
+                    </div>
+                </aside>
+
+
+                <!--:Page content:-->
+                <main class="page-content d-flex flex-column flex-row-fluid">
+                      <!--:page-header:-->
+                      <header class="navbar-main z-index-fixed border-bottom navbar navbar-expand-md px-3 px-lg-7 py-0 py-lg-2">
+                        <div class="container-fluid px-0 d-flex flex-wrap justify-content-between">
+        
+                            <a class="navbar-brand d-lg-none flex-shrink-0 d-flex justify-content-center width-3x h-auto align-items-center"
+                            href="index.html">
+                            <img src="assets/img/logo-a.svg" alt="" class="img-fluid logo-light">
+                            <img src="assets/img/logo-a-white.svg" alt="" class="img-fluid logo-dark">
+                        </a>
+                            <div class="d-flex flex-grow-1 justify-content-end align-items-center order-md-last">
+            
+                                 <!--sidebar toggler button-->
+                                 <button
+                                 class="btn btn-sm btn-primary d-lg-none shadow-none order-last ms-2"
+                                 type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas-sidebar"
+                                 aria-controls="offcanvas-sidebar">
+                                 <span class="material-symbols-sharp align-middle">
+                                    menu
+                                    </span>
+                             </button>
+                                <div class="nav-item d-flex height-5x align-items-center d-md-none me-2 me-lg-0">
+                                    <a href="post-details.html#searchCollapse" data-bs-target="#searchCollapse" data-bs-toggle="collapse"
+                                        class="btn btn-link nav-link py-2 px-2 d-flex align-items-center search-link lh-1">
+                                        <span class="material-symbols-sharp align-middle">
+                                            search
+                                            </span>
+                                    </a>
+                                </div>
+                                <div class="d-flex dropdown height-5x nav-item align-items-center">
+                                    <a href="post-details.html#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                    class="btn btn-link nav-link py-1 px-1 px-md-2 dropdown-toggle d-flex align-items-center">
+                                    <img src="assets/img/avatar/1.jpg" class="width-3x h-auto rounded-2"
+                                        alt="">
+                                    <small class="d-none d-md-block ms-2">Emily doe</small>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-md-end ms-n6 ms-md-0 position-absolute">
+                                    <a href="post-details.html#!" class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-3">
+                                            manage_accounts
+                                            </span>  Profile
+                                    </a>
+                                    <a href="bookmarks.html" class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-3">
+                                            bookmarks
+                                            </span> Bookmarks
+                                    </a>
+                                    <a href="write.html" class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-3">
+                                            edit_document
+                                            </span>  Write
+                                    </a>
+                                    <a href="page-sign-in.html" class="dropdown-item d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-3">
+                                            logout
+                                            </span>  Sign Out
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="d-flex height-5x ms-2 dropdown nav-item align-items-center">
+                                    <a href="post-details.html#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                            class="btn btn-link nav-link py-2 px-2 dropdown-toggle d-flex align-items-center">
+                                            <span class="material-symbols-sharp align-middle">
+                                                category
+                                                </span>
+                                        </a>
+                                        <div class="dropdown-menu me-n6 me-lg-0 dropdown-menu-end position-absolute">
+                                            <div class="dropdown-header">Pages</div>
+                                            <a href="page-sign-in.html" class="dropdown-item d-flex align-items-center">
+                                                Sign In
+                                            </a>
+                                            <a href="page-sign-up.html" class="dropdown-item d-flex align-items-center">
+                                                Sign Up
+                                            </a>
+                                            <a href="page-plans.html" class="dropdown-item d-flex align-items-center">
+                                                Plans
+                                            </a>
+                                            <a href="page-writers.html" class="dropdown-item d-flex align-items-center">
+                                                Writers
+                                            </a>
+                                            <a href="page-writer.html" class="dropdown-item d-flex align-items-center">
+                                                Writer
+                                            </a>
+                                            <a href="post-details.html" class="dropdown-item d-flex align-items-center">
+                                                Post details
+                                            </a>
+                                        </div>
+                                </div>
+                                  <!--:Dark Mode:-->
+                            <div class="nav-item height-5x d-flex align-items-center dropdown ms-2">
+                                <button class="btn btn-link nav-link py-2 px-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+                                  <span class="theme-icon-active d-flex align-items-center">
+                                    <span class="material-symbols-sharp align-middle"></span>
+                                  </span>
+                                </button>
+                                 <!--:Dark Mode Options:-->
+                              <ul class="dropdown-menu me-n3 me-md-0 dropdown-menu-end" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 9rem;">
+                                <li class="mb-1">
+                                  <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="light">
+                                      <span class="theme-icon d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-2">
+                                          lightbulb
+                                          </span>
+                                        </span>
+                                    Light
+                                  </button>
+                                </li>
+                                <li class="mb-1">
+                                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark">
+                                      <span class="theme-icon d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-2">
+                                          dark_mode
+                                          </span>
+                                        </span>
+                                    Dark
+                                  </button>
+                                </li>
+                                <li>
+                                  <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto">
+                                      <span class="theme-icon d-flex align-items-center">
+                                        <span class="material-symbols-sharp align-middle me-2">
+                                          invert_colors
+                                          </span>
+                                        </span>
+                                    Auto
+                                  </button>
+                                </li>
+                              </ul>
+                              </div>
+                            </div>
+
+                            <!--Search collapse (visible on desktop laptop)-->
+                            <div class="collapse collapse-search navbar-collapse" id="searchCollapse">
+                                <form>
+                                    <div class="dropdown mb-3 mb-md-0">
+                                        <span
+                                            class="position-absolute start-0 top-50 translate-middle-y ms-3 opacity-75">
+                                            <span class="material-symbols-sharp align-middle">search</span>
+                                        </span>
+                                        <input type="text" data-bs-toggle="dropdown" placeholder="Search news..."
+                                            class="form-control ps-6">
+                                        <!--:Search dropdown:-->
+                                        <div class="dropdown-menu rounded-top-0 w-100 dropdown-menu-start">
+                                            <div class="dropdown-header border-bottom">
+                                                <span class="material-symbols-sharp align-middle">
+                                                    local_fire_department
+                                                    </span> Top Stories
+                                               </div>
+    
+                                               <!--:Search dropdown news list:-->
+                                               <div class="list-group list-group-flush">
+                                                <!--:Item:-->
+                                                <a href="post-details.html#!" class="list-group-action list-group-item p-3">
+                                                        <div class="d-flex flex-column">
+                                                            <h6 class="fw-normal mb-2">5 Technologies That Could Be the Next Big Thing</h6>
+                                                            <small class="text-muted flex-shrink-0">Technology</small>
+                                                        </div>
+                                                    </a>
+                                                <!--:Item:-->
+                                                 <a href="post-details.html#!" class="list-group-action list-group-item p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <h6 class="fw-normal mb-2">Is TikTok a Security Risk for Businesses?</h6>
+                                                        <small class="text-muted flex-shrink-0">Business</small>
+                                                    </div>
+                                                    </a>
+                                                <!--:Item:-->
+                                                 <a href="post-details.html#!" class="list-group-action list-group-item p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <h6 class="fw-normal mb-2">Crypto Market Outlook: Looking Back to Forge New Milestones</h6>
+                                                        <small class="text-muted flex-shrink-0">Crypto</small>
+                                                    </div>
+                                                    </a>
+                                                </div>
+    
+                                               <div class="dropdown-header pt-4 mb-2 border-top">
+                                                <span class="material-symbols-sharp align-middle">
+                                                    tag
+                                                    </span> Popular Topics
+                                                </div>
+     
+                                                <!--:Search dropdown categories list:-->
+                                                <div class="d-flex flex-wrap gap-2 pt-0 p-3">
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Sports</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Health</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Technology</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Fashion</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">NFT</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Business</a>
+                                                 <a href="post-details.html#!" class="btn btn-sm text-body bg-body-tertiary">Politics</a>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!--::Page content with sidebar::-->
+                    <div class="content d-flex flex-column-fluid position-relative">
+
+                        <!--:Content inner layout:-->
+                        <div class="d-flex flex-column flex-md-row h-100 w-100">
+                            <!--:Content inner Content:-->
+                            <div class="col-md-7 col-lg-8 layout-content d-flex flex-column h-100">
+                                <div class="position-relative px-3 px-lg-5 px-xl-7 py-5 py-lg-8 mx-auto w-100">
+                                    <!--:Post title:-->
+                                    <div class="d-md-flex mb-6 align-items-md-end justify-content-between">
+                                        <h2 class="display-6 mb-4 mb-md-0">
+                                            How to Auto-Generate Interactive Coding Videos for Software Developers
+                                        </h2>
+                                        <!--:Category:-->
+                                        <a href="post-details.html#!" class="btn btn-outline-success btn-sm flex-shrink-0">
+                                            <span class="material-symbols-sharp align-middle fs-6 me-1">tag</span>
+                                            Software</a>
+                                    </div>
+                                    <!--:Post details header:-->
+                                    <div class="row mb-6 align-items-center">
+                                        <div class="col-md-6 mb-4 mb-md-0">
+                                            <div class="d-flex align-items-center">
+                                                <a href="post-details.html#!">
+                                                    <img src="assets/img/avatar/4.jpg"
+                                                        class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                        alt="">
+                                                </a>
+                                                <div class="flex-grow-1">
+                                                    <a href="post-details.html#!" class="mb-1 d-block h6">Nikita Nketiah</a>
+                                                    <ul class="list-unstyled list-divided mb-0 text-muted">
+                                                        <li>21 Dec</li>
+                                                        <li>4 min read</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <!--:Share Post:-->
+                                            <div class="d-flex flex-wrap align-items-center justify-content-end gap-3">
+                                                <a data-tippy-placement="top" data-tippy-content="Share on Facebook"
+                                                    href="post-details.html#!" class="d-block">
+                                                    <svg width="16" height="16" fill="currentColor"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                        <path
+                                                            d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
+                                                    </svg>
+                                                </a>
+                                                <a data-tippy-placement="top" data-tippy-content="Share on Twitter"
+                                                    href="post-details.html#!" class="d-block">
+                                                    <svg width="16" height="16" fill="currentColor"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                        <path
+                                                            d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                                                    </svg>
+                                                </a>
+                                                <a data-tippy-placement="top" data-tippy-content="Share on Linkedin"
+                                                    href="post-details.html#!" class="d-block">
+                                                    <svg width="16" height="16" fill="currentColor"
+                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                        <path
+                                                            d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
+                                                    </svg>
+                                                </a>
+                                                <a data-tippy-placement="top" data-tippy-content="Copy Link" href="post-details.html#!"
+                                                    class="d-block">
+                                                    <span class="material-symbols-sharp align-middle">
+                                                        link
+                                                    </span>
+                                                </a>
+                                                <a data-tippy-placement="top" data-tippy-content="Add to Bookmarks"
+                                                    href="post-details.html#!" class="d-block ms-3">
+                                                    <span class="material-symbols-sharp align-middle">
+                                                        bookmark_add
+                                                    </span>
+                                                </a>
+                                                <!--:More options dropdown:-->
+                                                <div class="dropdown">
+                                                    <a href="post-details.html#" class="text-muted" data-bs-toggle="dropdown"
+                                                        data-bs-display="static">
+                                                        <span class="material-symbols-sharp align-middle">
+                                                            more_vert
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end mt-2">
+                                                        <a href="post-details.html#!" class="dropdown-item">
+                                                            <span
+                                                                class="material-symbols-sharp fs-6 align-middle me-1 align-middle">
+                                                                hide_source
+                                                            </span>
+                                                            Show less like this</a>
+                                                        <a href="post-details.html#!" class="dropdown-item">
+                                                            Mute author</a>
+                                                        <a href="post-details.html#!" class="dropdown-item">
+                                                            <span
+                                                                class="material-symbols-sharp fs-6 align-middle me-1 align-middle">
+                                                                bug_report
+                                                            </span>
+                                                            Report</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <p class="lead mb-4">
+                                            Nunc sed id semper risus. Sem nulla pharetra diam sit. Etiam tempor orci eu
+                                            lobortis elementum nibh tellus. Sed velit dignissim sodales ut eu sem. Felis
+                                            eget nunc lobortis mattis aliquam faucibus purus in massa. Donec pretium
+                                            vulputate sapien nec sagittis. Porttitor leo a diam sollicitudin tempor id
+                                            eu. Augue lacus viverra vitae congue eu. At in tellus integer feugiat
+                                            scelerisque varius. Pharetra massa massa ultricies mi quis hendrerit dolor
+                                            magna eget. Aliquet enim tortor at auctor. Tellus pellentesque eu tincidunt
+                                            tortor. Sed enim ut sem viverra aliquet eget. Lacus suspendisse faucibus
+                                            interdum posuere. Donec massa sapien faucibus et molestie. Ullamcorper eget
+                                            nulla facilisi etiam dignissim diam quis enim.
+                                        </p>
+                                        <p class="mb-4">
+                                            Sit amet facilisis magna etiam tempor orci eu lobortis. Massa eget egestas
+                                            purus viverra accumsan in nisl. Elit pellentesque habitant morbi tristique
+                                            senectus et netus. Auctor augue mauris augue neque gravida. Sed viverra
+                                            ipsum nunc aliquet. Risus sed vulputate odio ut enim blandit volutpat
+                                            maecenas volutpat. Pellentesque pulvinar pellentesque habitant morbi
+                                            tristique. Magna fermentum iaculis eu non diam phasellus vestibulum lorem
+                                            sed. Turpis nunc eget lorem dolor sed. Sit amet commodo nulla facilisi
+                                            nullam vehicula. Pellentesque habitant morbi tristique senectus et netus et.
+                                            Odio tempor orci dapibus ultrices in. Tempus quam pellentesque nec nam
+                                            aliquam sem. In vitae turpis massa sed elementum tempus egestas sed.
+                                            Pellentesque habitant morbi tristique senectus et netus et.
+                                        </p>
+
+                                        <figure class="my-6 my-lg-9">
+                                            <div class="row mb-4">
+                                                <div class="col-6">
+                                                    <img src="assets/img/large3.jpg" class="rounded-4 shadow img-fluid"
+                                                        alt="">
+                                                </div>
+                                                <div class="col-6">
+                                                    <img src="assets/img/large4.jpg" class="rounded-4 shadow img-fluid"
+                                                        alt="">
+                                                </div>
+                                            </div>
+                                            <small class="text-center d-block">
+                                                Photos by <a class="text-decoration-underline text-muted"
+                                                    href="https://www.behance.net/?" target="_blank">Behance</a>
+                                            </small>
+                                        </figure>
+
+                                        <h4 class="mb-3">Sem nulla pharetra diam sit</h4>
+                                        <p class="mb-4">
+                                            Nunc sed id semper risus. Sem nulla pharetra diam sit. Etiam tempor orci eu
+                                            lobortis elementum nibh tellus. Sed velit dignissim sodales ut eu sem. Felis
+                                            eget nunc lobortis mattis aliquam faucibus purus in massa. Donec pretium
+                                            vulputate sapien nec sagittis. Porttitor leo a diam sollicitudin tempor id
+                                            eu. Augue lacus viverra vitae congue eu. At in tellus integer feugiat
+                                            scelerisque varius. Pharetra massa massa ultricies mi quis hendrerit dolor
+                                            magna eget. Aliquet enim tortor at auctor. Tellus pellentesque eu tincidunt
+                                            tortor. Sed enim ut sem viverra aliquet eget. Lacus suspendisse faucibus
+                                            interdum posuere. Donec massa sapien faucibus et molestie. Ullamcorper eget
+                                            nulla facilisi etiam dignissim diam quis enim.
+                                        </p>
+                                        <p class="mb-4 lead">
+                                            Lobortis feugiat vivamus at augue eget arcu dictum. Duis at consectetur
+                                            lorem donec massa sapien faucibus et. Nec nam aliquam sem et tortor
+                                            consequat id porta nibh. Erat pellentesque adipiscing commodo elit at
+                                            imperdiet dui accumsan sit. Et molestie ac feugiat sed lectus vestibulum.
+                                        </p>
+                                        <p class="mb-7">
+                                            Scelerisque fermentum dui faucibus in ornare. Cras ornare arcu dui vivamus.
+                                            Odio euismod lacinia at quis risus sed vulputate odio. Vitae auctor eu augue
+                                            ut lectus arcu. Sed odio morbi quis commodo odio. Sed felis eget velit
+                                            aliquet sagittis id consectetur purus ut.
+                                        </p>
+
+                                        <!--:Likes and comments:-->
+                                        <ul class="list-unstyled mb-4 list-divided">
+                                            <li class="d-flex align-items-center">
+                                                <button class="text-body p-0 bg-transparent border-0" type="button">
+                                                    <span class="material-symbols-sharp me-2 align-middle">
+                                                        favorite
+                                                    </span>
+                                                </button>
+                                                <span>
+                                                    328
+                                                </span>
+
+                                            </li>
+                                            <li class="d-flex align-items-center">
+                                                <a data-bs-toggle="collapse" href="post-details.html#article-comments">
+                                                    <span
+                                                        class="material-symbols-sharp align-middle me-2">comment</span>
+                                                    42 Comments
+                                                </a>
+
+                                            </li>
+                                        </ul>
+
+
+                                        <!--:Comments list:-->
+                                        <div class="collapse show" id="article-comments">
+                                            <ul class="list-group list-group-flush list-transparent">
+                                                <!--:Comment:-->
+                                                <li class="list-group-item px-0 py-4">
+                                                    <div class="d-flex align-items-stretch">
+                                                        <a href="post-details.html#!">
+                                                            <img src="assets/img/avatar/1.jpg"
+                                                                class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                                alt="">
+                                                        </a>
+                                                        <div class="flex-grow-1">
+                                                            <div
+                                                                class="d-flex mb-2 align-items-center justify-content-between">
+                                                                <div class="overflow-hidden pe-3">
+                                                                    <a href="post-details.html#!"
+                                                                        class="mb-0 d-block small fw-bold text-truncate">Monika
+                                                                        Smith</a>
+                                                                    <ul
+                                                                        class="list-unstyled list-divided mb-0 text-muted">
+                                                                        <li>21 Dec</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!--:Report icon:-->
+                                                                <button type="button" class="btn text-body p-0"
+                                                                    data-tippy-placement="left"
+                                                                    data-tippy-content="Report this comment">
+                                                                    <span
+                                                                        class="material-symbols-sharp fs-6 align-middle">flag</span>
+                                                                </button>
+                                                            </div>
+                                                            <p class="mb-0">
+                                                                Etiam tempor orci eu lobortis elementum nibh tellus. Sed
+                                                                velit dignissim sodales ut eu sem.
+                                                            </p>
+                                                            <!--:Actions:-->
+                                                            <div
+                                                                class="d-flex pt-3 align-items-center justify-content-between">
+                                                                <div
+                                                                    class="flex-grow-1 small text-start d-flex align-items-center">
+                                                                    <button
+                                                                        class="p-0 me-2 bg-transparent text-body border-0"
+                                                                        type="button">
+                                                                        <span
+                                                                            class="material-symbols-sharp fs-6 align-middle">
+                                                                            favorite
+                                                                        </span>
+                                                                    </button>
+                                                                    <small>
+                                                                        328
+                                                                    </small>
+                                                                    <button
+                                                                        class="ms-3 border-0 text-muted bg-transparent replies-collapse"
+                                                                        data-bs-toggle="collapse"
+                                                                        data-bs-target="#c_reply_1">
+
+                                                                        <span>2 replies</span>
+                                                                        <span
+                                                                            class="material-symbols-sharp fs-6 align-middle">
+                                                                            keyboard_arrow_down
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="flex-grow-1 text-end">
+                                                                    <a href="post-details.html#!" class="small">Reply</a>
+                                                                </div>
+                                                            </div>
+                                                            <!--:Replies:-->
+                                                            <div class="collapse" id="c_reply_1">
+                                                                <ul class="list-group bg-body-tertiary mt-3">
+                                                                    <!--:Comment:-->
+                                                                    <li class="list-group-item p-3 bg-transparent">
+                                                                        <div class="d-flex align-items-stretch mb-3">
+                                                                            <a href="post-details.html#!">
+                                                                                <img src="assets/img/avatar/1.jpg"
+                                                                                    class="width-3x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                                                    alt="">
+                                                                            </a>
+                                                                            <div class="flex-grow-1">
+                                                                                <div
+                                                                                    class="d-flex mb-2 align-items-center justify-content-between">
+                                                                                    <div class="overflow-hidden pe-3">
+                                                                                        <a href="post-details.html#!"
+                                                                                            class="mb-0 d-block small fw-bold text-truncate">Monika
+                                                                                            Smith</a>
+                                                                                        <ul
+                                                                                            class="list-unstyled list-divided mb-0 text-muted">
+                                                                                            <li>21 Dec</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                    <!--:Report icon:-->
+                                                                                    <button type="button"
+                                                                                        class="btn p-0"
+                                                                                        data-tippy-placement="left"
+                                                                                        data-tippy-content="Report this comment">
+                                                                                        <span
+                                                                                            class="material-symbols-sharp fs-6 align-middle">flag</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="mb-0">
+                                                                                    Etiam tempor orci eu lobortis
+                                                                                    elementum nibh tellus. Sed
+                                                                                    velit dignissim sodales ut eu sem.
+                                                                                </p>
+                                                                                <!--:Actions:-->
+                                                                                <div
+                                                                                    class="d-flex pt-2 small align-items-center justify-content-between">
+                                                                                    <div class="flex-grow-1 text-start">
+                                                                                        <button
+                                                                                            class="p-0 text-muted bg-transparent border-0"
+                                                                                            type="button">
+                                                                                            <span
+                                                                                                class="material-symbols-sharp me-1 fs-6 align-middle">
+                                                                                                favorite
+                                                                                            </span>
+                                                                                        </button>
+                                                                                        <small>
+                                                                                            124
+                                                                                        </small>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 text-end">
+                                                                                        <a href="post-details.html#!"
+                                                                                            class="small">Reply</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </li>
+                                                                    <!--:Comment:-->
+                                                                    <li class="list-group-item p-3 bg-transparent">
+                                                                        <div class="d-flex align-items-stretch mb-3">
+                                                                            <a href="post-details.html#!">
+                                                                                <img src="assets/img/avatar/3.jpg"
+                                                                                    class="width-3x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                                                    alt="">
+                                                                            </a>
+                                                                            <div class="flex-grow-1">
+                                                                                <div
+                                                                                    class="d-flex mb-2 align-items-center justify-content-between">
+                                                                                    <div class="overflow-hidden pe-3">
+                                                                                        <a href="post-details.html#!"
+                                                                                            class="mb-0 d-block small fw-bold text-truncate">Adam</a>
+                                                                                        <ul
+                                                                                            class="list-unstyled list-divided mb-0 text-muted">
+                                                                                            <li>19 Dec</li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                    <!--:Report icon:-->
+                                                                                    <button type="button"
+                                                                                        class="btn p-0"
+                                                                                        data-tippy-placement="left"
+                                                                                        data-tippy-content="Report this comment">
+                                                                                        <span
+                                                                                            class="material-symbols-sharp fs-6 align-middle">flag</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <p class="mb-0">
+                                                                                    Porttitor leo a diam sollicitudin
+                                                                                    tempor id eu. Augue lacus viverra
+                                                                                    vitae congue eu. At in tellus
+                                                                                    integer feugiat scelerisque varius.
+                                                                                    Pharetra massa massa ultricies mi
+                                                                                    quis hendrerit dolor magna eget.
+                                                                                </p>
+                                                                                <!--:Actions:-->
+                                                                                <div
+                                                                                    class="d-flex pt-2 small align-items-center justify-content-between">
+                                                                                    <div class="flex-grow-1 text-start">
+                                                                                        <button
+                                                                                            class="p-0 text-muted bg-transparent border-0"
+                                                                                            type="button">
+                                                                                            <span
+                                                                                                class="material-symbols-sharp me-1 fs-6 align-middle">
+                                                                                                favorite
+                                                                                            </span>
+                                                                                        </button>
+                                                                                        <small>
+                                                                                            124
+                                                                                        </small>
+                                                                                    </div>
+                                                                                    <div class="flex-grow-1 text-end">
+                                                                                        <a href="post-details.html#!"
+                                                                                            class="small">Reply</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <!--:Comment:-->
+                                                <li class="list-group-item px-0 py-4">
+                                                    <div class="d-flex align-items-stretch">
+                                                        <a href="post-details.html#!">
+                                                            <img src="assets/img/avatar/5.jpg"
+                                                                class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                                alt="">
+                                                        </a>
+                                                        <div class="flex-grow-1">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between mb-3">
+                                                                <div class="overflow-hidden pe-3">
+                                                                    <a href="post-details.html#!"
+                                                                        class="mb-0 d-block small fw-bold text-truncate">Antony
+                                                                        Santo</a>
+                                                                    <ul
+                                                                        class="list-unstyled list-divided mb-0 text-muted">
+                                                                        <li>19 Dec</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!--:Report icon:-->
+                                                                <button type="button" class="btn text-body p-0"
+                                                                    data-tippy-placement="left"
+                                                                    data-tippy-content="Report this comment">
+                                                                    <span
+                                                                        class="material-symbols-sharp fs-6 align-middle">flag</span>
+                                                                </button>
+                                                            </div>
+                                                            <p class="mb-0">
+                                                                Scelerisque fermentum dui faucibus in ornare. Cras
+                                                                ornare arcu dui vivamus. Odio euismod lacinia at quis
+                                                                risus sed vulputate odio. Vitae auctor eu augue ut
+                                                                lectus arcu.
+                                                            </p>
+                                                            <!--:Actions:-->
+                                                            <div
+                                                                class="d-flex pt-3 align-items-center justify-content-between">
+                                                                <div
+                                                                    class="flex-grow-1 small text-start d-flex align-items-center">
+                                                                    <button
+                                                                        class="p-0 me-2 bg-transparent text-body border-0"
+                                                                        type="button">
+                                                                        <span
+                                                                            class="material-symbols-sharp fs-6 align-middle">
+                                                                            favorite
+                                                                        </span>
+                                                                    </button>
+                                                                    <small>
+                                                                        39
+                                                                    </small>
+                                                                </div>
+                                                                <div class="flex-grow-1 text-end">
+                                                                    <a href="post-details.html#!" class="small">Reply</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <!--:Comment:-->
+                                                <li class="list-group-item px-0 py-4">
+                                                    <div class="d-flex align-items-stretch mb-3">
+                                                        <a href="post-details.html#!">
+                                                            <img src="assets/img/avatar/7.jpg"
+                                                                class="width-4x rounded-pill shadow-sm me-3 flex-shrink-0"
+                                                                alt="">
+                                                        </a>
+                                                        <div class="flex-grow-1">
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between mb-3">
+                                                                <div class="overflow-hidden pe-3">
+                                                                    <a href="post-details.html#!"
+                                                                        class="mb-0 d-block small fw-bold text-truncate">Kim
+                                                                        Son</a>
+                                                                    <ul
+                                                                        class="list-unstyled list-divided mb-0 text-muted">
+                                                                        <li>24 Dec</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!--:Report icon:-->
+                                                                <button type="button" class="btn text-body p-0"
+                                                                    data-tippy-placement="left"
+                                                                    data-tippy-content="Report this comment">
+                                                                    <span
+                                                                        class="material-symbols-sharp fs-6 align-middle">flag</span>
+                                                                </button>
+                                                            </div>
+                                                            <p class="mb-0">
+                                                                Scelerisque fermentum dui faucibus in ornare. Cras
+                                                                ornare arcu dui vivamus. Odio euismod lacinia at quis
+                                                                risus sed vulputate odio. Vitae auctor eu augue ut
+                                                                lectus arcu.
+                                                            </p>
+                                                            <!--:Actions:-->
+                                                            <div
+                                                                class="d-flex pt-3 align-items-center justify-content-between">
+                                                                <div
+                                                                    class="flex-grow-1 small text-start d-flex align-items-center">
+                                                                    <button
+                                                                        class="p-0 me-2 bg-transparent text-body border-0"
+                                                                        type="button">
+                                                                        <span
+                                                                            class="material-symbols-sharp fs-6 align-middle">
+                                                                            favorite
+                                                                        </span>
+                                                                    </button>
+                                                                    <small>
+                                                                        79
+                                                                    </small>
+                                                                </div>
+                                                                <div class="flex-grow-1 text-end">
+                                                                    <a href="post-details.html#!" class="small">Reply</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                
+                                <div class="border-top px-3 px-lg-5 px-xl-7 py-5 py-lg-8">
+                                        
+                                    <!--:Add comment form:-->
+                                    <h4 class="mb-2">Add Comment</h4>
+                                    <p class="text-muted mb-4">You must be <a class="text-decoration-underline text-body" href="page-sign-in.html">Sign In</a> to add a comment</p>
+                                    <form action="post-details.html#">
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <textarea rows="5" class="form-control"></textarea>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!--:Content inner Sidebar:-->
+                            <div
+                                class="col-md-5 col-lg-4 bg-body-tertiary content-inner-sidebar d-flex flex-column h-100 border-start position-relative">
+                                <div class=" position-sticky top-0">
+                                   <!--:Popular Articles:-->
+                                <div class="position-relative py-5 px-3">
+                                    <h6 class="mb-4">More from <a href="post-details.html#!" class="d-inline-block">
+                                        <span class="material-symbols-sharp align-middle">tag</span> Software
+                                    </a>
+                                    </h6>
+                                    <!--:Post Article Card:-->
+                                    <article class="d-flex flex-row align-items-center mb-4">
+                                        <a href="post-details.html" class="position-relative d-block size-7x flex-shrink-0">
+                                            <img src="assets/img/sm1.jpg" class="img-fluid rounded-3" alt="post image" />
+                                        </a>
+                                        <div class="card-body flex-grow-1 p-0 ms-3">
+                                            <div class="d-flex align-items-center mb-2 lh-1">
+                                                <small class="text-muted">by</small>
+                                                <a href="post-details.html#!"
+                                                    class="d-flex align-items-center flex-shrink-0 position-relative z-index-2">
+                                                    <span class="flex-grow-1 small ms-1">
+                                                        @lorris
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <a href="post-details.html" class="mb-2 d-block lh-sm h6">
+                                                Lorem ipsum dolor sit amet, consectetur
+                                            </a>
+                                            <ul class="list-divided list-unstyled lh-sm mb-0">
+                                                <li><a href="post-details.html#!" class="link-hover-underline">Photography</a></li>
+                                                <li class="text-muted">2h</li>
+                                            </ul>
+                                        </div>
+                                    </article>
+
+                                    <!--:Post Article Card:-->
+                                    <article class="d-flex flex-row align-items-center mb-4">
+                                        <a href="post-details.html" class="position-relative d-block size-7x flex-shrink-0">
+                                            <img src="assets/img/sm2.jpg" class="img-fluid rounded-3" alt="post image" />
+                                        </a>
+                                        <div class="card-body flex-grow-1 p-0 ms-3">
+                                            <div class="d-flex align-items-center mb-2 lh-1">
+                                                <small class="text-muted">by</small>
+                                                <a href="post-details.html#!"
+                                                    class="d-flex align-items-center flex-shrink-0 position-relative z-index-2">
+                                                    <span class="flex-grow-1 small ms-1">
+                                                        @monika
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <a href="post-details.html" class="mb-2 d-block lh-sm h6">
+                                                Lorem ipsum dolor sit amet, consectetur
+                                            </a>
+                                            <ul class="list-divided list-unstyled lh-sm mb-0">
+                                                <li><a href="post-details.html#!" class="link-hover-underline">Travel</a></li>
+                                                <li class="text-muted">21 Nov</li>
+                                            </ul>
+                                        </div>
+                                    </article>
+
+                                    <!--:Post Article Card:-->
+                                    <article class="d-flex flex-row align-items-center">
+                                        <a href="post-details.html" class="position-relative d-block size-7x flex-shrink-0">
+                                            <img src="assets/img/sm3.jpg" class="img-fluid rounded-3" alt="post image" />
+                                        </a>
+                                        <div class="card-body flex-grow-1 p-0 ms-3">
+                                            <div class="d-flex align-items-center mb-2 lh-1">
+                                                <small class="text-muted">by</small>
+                                                <a href="post-details.html#!"
+                                                    class="d-flex align-items-center flex-shrink-0 position-relative z-index-2">
+                                                    <span class="flex-grow-1 small ms-1">
+                                                        @lorris
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <a href="post-details.html" class="mb-2 d-block lh-sm h6">
+                                                Lorem ipsum dolor sit amet, consectetur
+                                            </a>
+                                            <ul class="list-divided list-unstyled lh-sm mb-0">
+                                                <li><a href="post-details.html#!" class="link-hover-underline">Sports</a></li>
+                                                <li class="text-muted">2h</li>
+                                            </ul>
+                                        </div>
+                                    </article>
+                                </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+  <!--:Footer:-->
+  <!-- Back to Top button -->
+  <a data-tippy-placement="left" data-tippy-content="Scroll to Top" href="post-details.html#"
+      class="toTop btn text-body bg-primary-subtle border-0 p-0 width-4x height-4x shadow d-flex align-items-center justify-content-center">
+      <span class="material-symbols-sharp align-middle">
+          arrow_upward
+      </span>
+  </a>
+
+
+  <!--Footer Start-->
+  <footer id="footer" class="footer border-top position-relative">
+      <div class="container pt-9 pb-5 position-relative z-index-1">
+          <div class="row">
+              <!--Footer col-->
+              <div class="col-md-7 col-lg-3 mb-7">
+                  <a href="post-details.html#" class="d-block width-3x mb-5">
+                      <img src="assets/img/logo-a.svg" class="img-fluid footer-logo-light" alt="">
+                      <img src="assets/img/logo-a-white.svg" class="img-fluid footer-logo-dark" alt="">
+                  </a>
+                  <hr>
+                  <small class="text-muted mb-2 d-block">
+                      Enquiries
+                  </small>
+                  <ul class="list-unstyled mb-0">
+                      <li>
+                          <a href="post-details.html#!mailto:yourmail.domain.com"><span class="__cf_email__" data-cfemail="432a2d252c03272c2e2a222d6d202c2e">[email&#160;protected]</span></a>
+                      </li>
+                  </ul>
+                  <hr>
+                  <small class="text-muted mb-3 d-block">
+                      Join Us Today
+                  </small>
+                  <a href="post-details.html#!" class="btn btn-secondary">Upgrade to Pro</a>
+              </div>
+              <!--Footer col-->
+              <div class="col-md-4 col-lg-2 ms-md-auto mb-7 col-7">
+                  <h6 class="mb-4">Links</h6>
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              About us
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Newsletter
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Contact
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Career <span class="badge bg-success rounded-pill ms-1">Hiring</span>
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Privacy policy
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Terms & conditions
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+              <!--Footer col-->
+              <div class="col-md-4 col-lg-2 ms-lg-auto mb-7 col-5">
+                  <h6 class="mb-4">Topics</h6>
+                  <ul class="nav flex-column">
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Design
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Development
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Fashion
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Business
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Nature
+                          </a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="post-details.html#" class="nav-link">
+                              Travel
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+              <!--Footer col-->
+              <div class="col-md-8 col-lg-4 mb-7">
+                  <h6 class="mb-4">Popular Articles</h6>
+                  <ul class="list-unstyled">
+                      <li class="d-flex card-hover mb-4 align-items-center">
+                          <div class="me-3">
+                              <a href="post-details.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                  <img src="assets/img/sm2.jpg" alt="" class="img-fluid img-zoom">
+                              </a>
+                          </div>
+                          <div>
+                              <a href="post-details.html#!" class="lh-sm d-block mb-2">Tips for creating a long-lasting
+                                  partnership with your startup</a>
+                              <span class="d-block small text-muted">02 Sep 2022</span>
+                          </div>
+                      </li>
+                      <li class="d-flex card-hover mb-4 align-items-center">
+                          <div class="me-3">
+                              <a href="post-details.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                  <img src="assets/img/sm1.jpg" alt="" class="img-fluid img-zoom">
+                              </a>
+                          </div>
+                          <div>
+                              <a href="post-details.html#!" class="lh-sm d-block mb-2">Functional programming in python for
+                                  beginners</a>
+                              <span class="d-block small text-muted">18 Sep 2022</span>
+                          </div>
+                      </li>
+                      <li class="d-flex card-hover align-items-center">
+                          <div class="me-3">
+                              <a href="post-details.html#!" class="d-block width-6x rounded-3 overflow-hidden">
+                                  <img src="assets/img/sm3.jpg" alt="" class="img-fluid img-zoom">
+                              </a>
+                          </div>
+                          <div>
+                              <a href="post-details.html#!" class="lh-sm d-block mb-2">Modern and well coded bootstrap themes you should
+                                  buy</a>
+                              <span class="d-block small text-muted">19 Aug 2022</span>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+          <hr class="mb-5 mt-0">
+          <div class="row">
+              <div class="col-sm-7 mb-3 mb-sm-0">
+                  <ul class="list-unstyled mb-0">
+                      <li class="dropup d-table">
+                          <a href="post-details.html#" data-bs-toggle="dropdown" role="button" aria-expanded="false"
+                              class="dropdown-toggle small">
+                              United States (English)
+                          </a>
+
+                          <!--Dropdown lang menu-->
+                          <div class="dropdown-menu mb-3 dropdown-menu-lg-start" style="margin: 0px;">
+                              <a href="post-details.html#!" class="d-flex align-items-center dropdown-item active">
+                                  <img src="assets/img/country/us.svg" class="width-2x me-2" alt="">
+                                  English (US)
+                              </a>
+                              <a href="post-details.html#!" class="d-flex align-items-center dropdown-item">
+                                  <img src="assets/img/country/es.svg" class="width-2x me-2" alt="">
+                                  Spanish
+                              </a>
+                              <a href="post-details.html#!" class="d-flex align-items-center dropdown-item">
+                                  <img src="assets/img/country/gb.svg" class="width-2x me-2" alt="">
+                                  English (UK)
+                              </a>
+                              <a href="post-details.html#!" class="d-flex align-items-center dropdown-item">
+                                  <img src="assets/img/country/fr.svg" class="width-2x me-2" alt="">
+                                  French
+                              </a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <div class="col-sm-5 small text-sm-end">
+                  <span class="d-block lh-sm text-muted">© Copyright
+                      <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                          document.write(new Date().getFullYear())
+
+                      </script>. Assan
+                  </span>
+              </div>
+          </div>
+      </div>
+      <!--container-->
+  </footer>
+
+                </main>
+
+            </div>
+        </div>
+        <!--script-->
+        <script src="assets/js/theme.bundle.min.js"></script>
+
+    </body>
+
+</html>

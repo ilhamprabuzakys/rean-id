@@ -22,7 +22,6 @@ URL::forceRootUrl(config('app.url'));
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth'])->group(function () {
-    URL::forceRootUrl(config('app.url'));
     Route::prefix('dashboard')->group(function() {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'index')->name('dashboard');
@@ -70,7 +69,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::controller(HomeController::class)->group(function () {
-    URL::forceRootUrl(config('app.url'));
     Route::get('/', 'index')->name('index');
     Route::get('/all-post', 'all_post')->name('home.all_post');
     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
@@ -82,7 +80,6 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::controller(LandingController::class)->group(function () {
-    URL::forceRootUrl(config('app.url'));
     Route::prefix('new')->group(function() {
         Route::get('/', 'index')->name('new.index');
         Route::get('/all-post', 'all_post')->name('new.all_post');

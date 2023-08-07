@@ -6,13 +6,15 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+URL::forceRootUrl(config('app.url'));
+
 // Route::controller(HomeController::class)->group(function() {
 //     Route::get('/', 'index')->name('index');
 //     Route::get('/{post}', 'show_post')->name('home.show_post');
 // });
 
 Route::middleware(['guest'])->group(function () {
-    URL::forceRootUrl(config('app.url'));
+    // URL::forceRootUrl(config('app.url'));
     // Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
     // Route::get('/register', [RegisterController::class, 'index'])->name('register');
@@ -34,7 +36,5 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    $url = config('app.url');
-    URL::forceRootUrl($url);
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

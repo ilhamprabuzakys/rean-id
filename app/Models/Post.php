@@ -7,11 +7,12 @@ use App\Events\PostActionEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, SoftDeletes, Sluggable;
     protected $guarded = ['id'];
     protected $table = 'posts';
 
@@ -29,10 +30,18 @@ class Post extends Model
         ];
     }
 
+    /**
+     * Get the index name for the model.
+    */
+    /* public function searchableAs()
+    {
+        return 'post_index';
+    }  */
+
     public static function clearCache()
     {
-        Cache::forget('posts');
-        Cache::forget('postsCount');
+        cache()->forget('posts');
+        cache()->forget('postsCount');
     }
 
     public static function boot()
@@ -59,6 +68,35 @@ class Post extends Model
     // {
     //     return $this->orderBy('views', 'desc')->take($limit)->get();
     // }
+
+    public function scopeWithCategory($query, $categoryName = null)
+    {
+        if ($categoryName) {
+            $data = $query->whereHas('category', function ($query) use ($categoryName) {
+                $query->where('name', $categoryName);
+            });
+            return $data;
+        } else {
+            // Get all categories
+            return Category::oldest('name');
+        }
+    }
+
+    public function scopeGlobalSearch($query, $search)  
+    {
+        $search = strtolower($search);
+        
+        return $query
+        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)", 
+        ["%{$search}%", "%{$search}%"]) 
+        ->orWhereHas('category', function($q) use ($search){
+           $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]); 
+         })
+        ->orWhereHas('user', function($q) use ($search){
+           $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
+         });
+    }
+
 
     public static function mostViewed($posts, $limit = 5, $category = null)
     {

@@ -18,10 +18,6 @@ class ProfileController extends Controller
 {
     public function index(User $user)
     {
-        // $user = Cache::remember('user', now()->addDays(1), function () use ($user) {
-        //     return $user;
-        // });
-
         $jenis_kelamin = Cache::remember('jenis_kelamin', now()->addDays(1), function () {
             $data = [
                 (object) ['name' => 'Laki-laki', 'singkatan' => 'l'],
@@ -39,7 +35,7 @@ class ProfileController extends Controller
     {
         // dd($request->all());
         $rules = [
-            'profile_path' => ['file', 'image', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
+            'avatar' => ['file', 'image', 'mimes:jpg,jpeg,png,svg', 'max:2048'],
             'username' => ['required', Rule::unique('users')->ignore($user->id)],
             'name' => ['required'],
             'notelp' => '',
@@ -47,11 +43,11 @@ class ProfileController extends Controller
         ];
 
         // $customMessage = [
-        //     'profile_path.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).',
+        //     'avatar.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).',
         // ];
 
         $validator = Validator::make($request->all(), $rules, [
-            'profile_path.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).',
+            'avatar.mimes' => 'File yang kamu upload harus berformat image (PNG, JPG, JPEG).',
             'username.unique' => 'Username ini tidak tersedia, silahkan ganti ke yang lain.'
         ]);
 
@@ -60,48 +56,48 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $data = [];
-        // dd($user->profile_path);
-        // Jika User sudah memiliki profile_path
-        if ($user->profile_path !== null)
+        // dd($user->avatar);
+        // Jika User sudah memiliki avatar
+        if ($user->avatar !== null)
         {
-            // Jika terdapat request file profile_path dan request tsb berbeda dengan profile_path saat ini
-            if ($request->file('profile_path') && ($request->file('profile_path') != $user->profile_path)) {
+            // Jika terdapat request file avatar dan request tsb berbeda dengan avatar saat ini
+            if ($request->file('avatar') && ($request->file('avatar') != $user->avatar)) {
                 // dd('beda anjir');
 
-                $file = $request->file('profile_path');
+                $file = $request->file('avatar');
                 $extension = $file->getClientOriginalExtension();
                 $originalName = $file->getClientOriginalName();
                 $timestamp = Carbon::now()->format('H:i:s_l_Y');
     
                 $newFileName = $timestamp . '_' . $originalName;
-                $data['profile_path'] = $file->storeAs('profile-picture', $newFileName);
-                Storage::delete($user->profile_path);
-            } elseif ($request->has('old_profile_path') == $user->profile_path) {
+                $data['avatar'] = $file->storeAs('profile-picture', $newFileName);
+                Storage::delete($user->avatar);
+            } elseif ($request->has('old_avatar') == $user->avatar) {
                 // dd('sama anjir');
-                $data['profile_path'] = $user->profile_path;
+                $data['avatar'] = $user->avatar;
             }
             try {
                 $validatedData = $validator->validated();
-                $validatedData['profile_path'] = $data['profile_path'];
+                $validatedData['avatar'] = $data['avatar'];
                 // dd($validatedData);
             } catch (\Throwable $th) {
                 dd($th);
             }
         } else {
-            if ($request->file('profile_path')) {
-                $file = $request->file('profile_path');
+            if ($request->file('avatar')) {
+                $file = $request->file('avatar');
                 $extension = $file->getClientOriginalExtension();
                 $originalName = $file->getClientOriginalName();
                 $timestamp = Carbon::now()->format('H:i:s_l_Y');
     
                 $newFileName = $timestamp . '_' . $originalName;
-                $data['profile_path'] = $file->storeAs('profile-picture', $newFileName);
+                $data['avatar'] = $file->storeAs('profile-picture', $newFileName);
             } else {
-                $data['profile_path'] = null;
+                $data['avatar'] = null;
             }
             try {
                 $validatedData = $validator->validated();
-                $validatedData['profile_path'] = $data['profile_path'];
+                $validatedData['avatar'] = $data['avatar'];
             } catch (\Throwable $th) {
                 dd($th);
             }

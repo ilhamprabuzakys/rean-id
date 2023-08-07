@@ -72,6 +72,24 @@
     width: 100%;
     z-index: 1051;
 }
+#select2-filter-category-results::-webkit-scrollbar {
+    width: 8px;
+}
+
+#select2-filter-category-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#select2-filter-category-results::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2); 
+    border-radius: 20px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+#select2-filter-category-results::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
 .select2-results {
     display: block;
 }

@@ -5,7 +5,7 @@
 
 <head>
    <meta charset="utf-8" />
-   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+   {{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  --}}
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
    <title>{{ $title . ' - ' . config('app.name') }}</title>
@@ -13,10 +13,6 @@
 
    <meta name="description" content="Materialize – is the most developer friendly &amp; highly customizable Admin Dashboard Template." />
    <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
-   <!-- Canonical SEO -->
-   <link rel="canonical"
-      href="https://themeforest.net/item/materialize-material-design-admin-template/11446068?irgwc=1&amp;clickid=&amp;iradid=275988&amp;irpid=1244113&amp;iradtype=ONLINE_TRACKING_LINK&amp;irmptype=mediapartner&amp;mp_value1=&amp;utm_campaign=af_impact_radius_1244113&amp;utm_medium=affiliate&amp;utm_source=impact_radius">
-
 
    <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
    {{-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -47,6 +43,7 @@
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css">
    @stack('vendor-css')
 
    <!-- Page CSS -->
@@ -155,6 +152,8 @@
    <!-- endbuild -->
 
    <!-- Vendors JS -->
+   {{-- SweetAlert 2 --}}
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
    @stack('vendor-js')
 
    <!-- Main JS -->
@@ -182,6 +181,37 @@
                // "hideMethod": "slideInLeft"
             }
       });
+      Livewire.on('swalBasic', data => {
+         console.log(data.message);
+         Swal.fire({
+            title: data.title,
+            text: data.text,
+            icon: data.icon,
+            confirmButtonText: 'Okay',
+            timer: 2500,
+         })
+      })
+      
+      Livewire.on('swalDelete', data => {
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Menghapus data akan membuang item ke keranjang sampah!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, saya yakin.'
+            }).then((result) => {
+               if (result.isConfirmed) {
+               Livewire.emit('deleteConfirmed'); // emit event
+               Swal.fire(
+                  'Berhasil Dihapus!', 
+                  'Data yang kamu pilih berhasil dihapus.',
+                  'success'
+               )
+            }
+         })
+      })
    </script>
 </body>
 

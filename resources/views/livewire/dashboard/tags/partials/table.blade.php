@@ -29,7 +29,7 @@
                         $time = $updatedAt->format('l, d F Y - H:i:s');
                   }
                @endphp
-               <th scope="row">{{ $loop->iteration + (10 * ($tags->currentPage()-1)) }}</th>
+               <th scope="row">{{ $loop->iteration + ($paginate * ($tags->currentPage()-1)) }}</th>
                <td>
                   <a href="{{ route('tags.show', $tag) }}" class="text-decoration-none text-secondary">{{ $tag->name }}</a>
                </td>

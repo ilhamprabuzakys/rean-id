@@ -12,4 +12,15 @@ function generateOTP()
     return $otp;
 }
 
+function echoTime($var_time)
+{
+    $time = '';
+    $currentTime = now();
+    $updatedAt = $var_time;
+    
+    $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
+    $time = $updatedAt->format('l, d F Y - H:i:s');
+    echo $time;
+}
+
 ?>

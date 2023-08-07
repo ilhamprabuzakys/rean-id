@@ -59,8 +59,17 @@ class UserController extends Controller
         }
     
         $validator = Validator::make($request->all(), $rules, [
-            'name.required' => 'Field nama harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email harus berformat valid, contoh: user@gmail.com',
+            'email.unique' => 'Email ini telah dipakai oleh user lain.',
+            'role.required' => 'Role harus diisi',
+            'password.required' => 'Password nama harus diisi',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         if ($request->input('username') == '') {
             $email = $request->input('email');
@@ -74,7 +83,6 @@ class UserController extends Controller
         $validatedData['username'] = $username;
         $user = User::create($validatedData);
         
-        toast('Data user berhasil ditambahkan!','success');
         return redirect()->route('users.index')->with('message', "User <b>{$user->name}</b> berhasil ditambahkan!");
     }
 

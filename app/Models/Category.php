@@ -34,6 +34,12 @@ class Category extends Model
         ];
     }
 
+    public function scopeSearch($query, $search)
+    {
+        $search = strtolower($search);
+        return $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
+    }
+    
     public static function boot()
     {
         parent::boot();

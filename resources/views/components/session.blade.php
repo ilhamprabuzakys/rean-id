@@ -18,7 +18,13 @@
          <div class="d-flex align-items-center">
             <i class="mdi mdi-alert-circle-outline me-3"></i>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <span>{!! session('errors') !!}</span>
+            <ul class="mb-0 ps-0">
+               @forelse ($errors->all() as $error)
+                  <li class="d-flex">{{ $error }}</li>
+               @empty
+                  
+               @endforelse
+            </ul>
          </div>
       </div>
    @elseif(session('success'))

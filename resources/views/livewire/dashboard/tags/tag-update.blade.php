@@ -13,7 +13,11 @@
        <div class="col-3 d-flex align-self-end">
          <button class="btn btn-primary" type="submit">
             <span><i class="fas fa-save fa-md me-1"></i>
-               <span class="d-none d-sm-inline-block">Terapkan</span></span>
+               <span class="d-none d-sm-inline-block">Perbarui</span></span>
+         </button>
+         <button class="btn btn-secondary" type="button" wire:click='cancelUpdate()'>
+            <span><i class="fas fa-x fa-md me-1"></i>
+               <span class="d-none d-sm-inline-block">Batallkan</span></span>
          </button>
       </div>
        {{-- <div class="col-6">

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('post_name')->nullable();
             $table->string('slug')->unique();
             $table->text('body')->nullable();
             $table->text('file_path')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->foreignId('category_id')->nullable();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->foreignId('user_id');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

@@ -7,7 +7,7 @@
    </h4>
    <!-- end page title -->
    <div class="row">
-      <livewire:user />
+      <livewire:dashboard.users.user-index />
    </div>
 @endsection
 @push('scripts')

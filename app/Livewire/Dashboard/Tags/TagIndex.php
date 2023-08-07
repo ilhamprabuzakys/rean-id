@@ -25,7 +25,7 @@ class TagIndex extends Component
     public $popularityFilter = 0;
     public $paginate = 5;
     
-    public $name, $tag_id, $data_posts;
+    public $name, $slug, $tag_id, $data_posts;
     public $statusUpdate = false;
 
     protected $updatesQueryString = ['search'];

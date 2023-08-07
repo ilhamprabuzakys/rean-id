@@ -1,0 +1,41 @@
+<?php
+
+namespace [namespace];
+
+use Livewire\Component;
+
+class [class] extends Component
+{
+    protected $listeners = [
+        "swalS",
+        "swalE",
+    ];
+
+    public function mount()
+    {
+
+    }
+
+    public function render()
+    {
+        return view('[view]');
+    }
+
+    public function swalS($title, $text)
+    {
+        $this->emit('swalBasic', [
+            'icon' => 'success',
+            'title' => $title,
+            'text' => $text,
+        ]);
+    }
+    
+    public function swalE($title, $text)
+    {
+        $this->emit('swalBasic', [
+            'icon' => 'error',
+            'title' => $title,
+            'text' => $text,
+        ]);
+    }
+}

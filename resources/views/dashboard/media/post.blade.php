@@ -7,6 +7,7 @@
 </h4>
 <!-- end page title -->
    <div class="row align-items-center">
+      @dd($medias)
       @forelse ($medias as $media)
          <div class="col-3">
             @if (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
@@ -15,7 +16,7 @@
                   <div class="row justify-content-between">
                      <div class="col-4">
                         <h5>
-                           {{ $media->post->title }}
+                           {{ optional($media->post)->title }}
                         </h5>
                      </div>
                      <div class="col-4 d-flex justify-content-end align-items-start">

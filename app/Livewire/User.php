@@ -13,6 +13,13 @@ class User extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+
+    protected $listeners = [
+        "alertSuccess",
+        "alertError",
+        "alertInfo",
+    ];
+
     public $search;
     public $rolefilter = '';
     public $paginate = 5;
@@ -79,7 +86,9 @@ class User extends Component
 
     public function updated($propertyName)
     {
-        $this->validateOnly($propertyName);
+        if ($propertyName == 'email') {
+            $this->validateOnly($propertyName);
+        }
     }
 
     public function store()
@@ -94,9 +103,8 @@ class User extends Component
             'password' => \bcrypt($validatedData['password']),
         ]);
         $name = $validatedData['name'];
-        toast('Data user berhasil ditambahkan!','success');
-        session()->flash('success', "User  <b>$name</b>  berhasil  <b>ditambahkan</b> !");
         $this->resetInput();
+        $this->emit('alertSuccess', 'Berhasil memperbarui tautan media sosial');
         $this->dispatchBrowserEvent('close-modal');
         // $this->emit('userStore');
     }
@@ -112,16 +120,15 @@ class User extends Component
             'role' => $validatedData['role'],
             'password' => \bcrypt($validatedData['password']),
         ]);
-        toast('Data user berhasil diperbarui!','success');
-        session()->flash('success', "User {<b>$this->name</b>} berhasil diperbarui!");
         $this->resetInput();
+        $this->emit('alertSuccess', 'Berhasil memperbarui tautan media sosial');
         $this->dispatchBrowserEvent('close-modal');
     }
     
     public function destroy()
     {
         ModelsUser::find($this->user_id)->delete();
-        session()->flash('success', "User {<b>$this->name</b>} berhasil  <b>dihapus</b>!");
+        $this->emit('alertSuccess', 'Berhasil memperbarui tautan media sosial');
         $this->dispatchBrowserEvent('close-modal');
     }
 
@@ -172,6 +179,21 @@ class User extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function alertSuccess($message, $title = 'Berhasil')
+    {
+        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
+    }
+  
+    public function alertError($message, $title = 'Error')
+    {
+        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
+    }
+  
+    public function alertInfo($message, $title = 'Informasi')
+    {
+        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 
 }

@@ -14,13 +14,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Cache::remember('categories', now()->addDays(7), function () {
-            return Category::with('posts')->orderBy('updated_at', 'desc')->get();
-        });
-        confirmDelete('Apakah anda yakin untuk menghapus kategori ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
         return view('dashboard.categories.index', [
             'title' => 'Daftar Kategori',
-        ], compact('categories'));
+        ]);
     }
 
     public function create()

@@ -65,7 +65,7 @@
 
    <ul class="menu-inner py-1">
       <!-- Dashboards -->
-      <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('dashboard')) ? 'active' : '' }}">
+      <li class="menu-item mt-2 {{ request()->url() == route('dashboard') ? 'active' : '' }}">
          <a href="{{ route('dashboard') }}" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-monitor"></i>
             <div data-i18n="Dashboard">Dashboard</div>

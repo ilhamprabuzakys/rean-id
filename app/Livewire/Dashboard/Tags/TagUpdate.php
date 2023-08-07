@@ -49,4 +49,9 @@ class TagUpdate extends Component
         $this->name = null;
         $this->tagId = null;
     }
+
+    public function cancelUpdate()
+    {
+        $this->statusUpdate = false;
+    }
 }

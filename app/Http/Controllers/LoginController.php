@@ -30,6 +30,12 @@ class LoginController extends Controller
         $this->username = $this->findUsername();
     }
 
+    public function getPublicIP()
+    {
+        $response = Http::get('http://ipecho.net/plain');
+        return $response->body();
+    }
+
     public function findUsername()
     {
         $login = request()->input('login');
@@ -53,9 +59,8 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        // $ip = $request->getClientIp();
-        $response = Http::get('http://ipecho.net/plain');
-        $ip = $response->body();
+        $ip = $request->getClientIp();
+        // $ip = $this->getPublicIP();
         // $ip = '110.136.109.16';
         $location = Location::get($ip);
         // dd($ip, $location);

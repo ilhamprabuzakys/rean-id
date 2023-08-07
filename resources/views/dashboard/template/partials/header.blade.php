@@ -227,10 +227,10 @@
          <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                <div class="avatar avatar-online">
-                  @if (auth()->user()->profile_path == null)
-                     <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                  @if (auth()->user()->avatar == null)
+                     <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                   @else
-                     <img src="{{ asset('storage/' . auth()->user()->profile_path) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                     <img src="{{ asset(auth()->user()->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                   @endif
                </div>
             </a>
@@ -240,10 +240,10 @@
                      <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                            <div class="avatar avatar-online">
-                              @if (auth()->user()->profile_path == null)
-                                 <img src="{{ asset('assets/dashboard/materialize/assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                              @if (auth()->user()->avatar == null)
+                                 <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                               @else
-                                 <img src="{{ asset('storage/' . auth()->user()->profile_path) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                                 <img src="{{ asset(auth()->user()->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                               @endif
                            </div>
                         </div>

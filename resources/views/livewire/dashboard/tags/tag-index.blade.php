@@ -7,7 +7,7 @@
                     <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
                     <i class="mdi mdi-check-circle-outline me-3"></i>
                     {{-- {!! session('success') !!} --}}
-                    {{ session('success') }}
+                    <strong>{{ session('success') }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                     </button>
                     </div>
@@ -22,10 +22,15 @@
                 @endif
 
                 @if ($statusUpdate == true) 
-                    <livewire:dashboard.tags.tag-update />
+                <h3 class="my-2">Perbarui Label</h3>
+                <hr class="mt-3 mb-4">
+                <livewire:dashboard.tags.tag-update />
                 @else
-                    <livewire:dashboard.tags.tag-create />
+                <h3 class="my-2">Tambah Label</h3>
+                <hr class="mt-3 mb-4">
+                <livewire:dashboard.tags.tag-create />
                 @endif
+                <hr class="mt-3 mb-4">
                  <div class="row justify-content-between">
                     <div class="col-lg-1 col-md-2 col-sm-2 d-flex justify-content-start">
                        <select class="form-select" name="paginate" id="paginate" wire:model='paginate'>
