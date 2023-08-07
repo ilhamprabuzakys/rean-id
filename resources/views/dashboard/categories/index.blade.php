@@ -16,5 +16,11 @@
          $('#editCategoryModal').modal('hide');
          $('#deleteCategoryModal').modal('hide');
       })
+      
+      window.addEventListener('close-offcanvas', event => {
+         $('#createCategory').offcanvas('hide');
+         $('#editCategory').offcanvas('hide');
+         $('#deleteCategory').offcanvas('hide');
+      })
    </script>
 @endpush

@@ -95,7 +95,7 @@
          </ul>
       </li>
       @cannot('member')
-      <li class="menu-item {{ str_starts_with(request()->url(), route('categories.index')) ? 'active open' : '' }}">
+      {{-- <li class="menu-item {{ str_starts_with(request()->url(), route('categories.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons mdi mdi-layers-outline"></i>
             <div data-i18n="Kategori">Kategori</div>
@@ -112,8 +112,14 @@
                </a>
             </li>
          </ul>
+      </li> --}}
+      <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('categories.index')) ? 'active' : '' }}">
+         <a href="{{ route('categories.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-layers-outline"></i>
+            <div data-i18n="Kategori">Kategori</div>
+         </a>
       </li>
-      <li class="menu-item {{ str_starts_with(request()->url(), route('tags.index')) ? 'active open' : '' }}">
+      {{-- <li class="menu-item {{ str_starts_with(request()->url(), route('tags.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons mdi mdi-tag-multiple-outline"></i>
             <div data-i18n="Tags">Tags</div>
@@ -130,6 +136,12 @@
                </a>
             </li>
          </ul>
+      </li> --}}
+      <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('tags.index')) ? 'active' : '' }}">
+         <a href="{{ route('tags.index') }}" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-tag-multiple-outline"></i>
+            <div data-i18n="Tags">Tags</div>
+         </a>
       </li>
       <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('media.posts')) ? 'active' : '' }}">
          <a href="{{ route('media.posts') }}" class="menu-link">

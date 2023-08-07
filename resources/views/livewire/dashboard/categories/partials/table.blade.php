@@ -16,20 +16,6 @@
          <tbody>
              @forelse ($categories as $category)
                <tr>
-                  {{-- @php
-                     $time = '';
-                     $currentTime = now();
-                     $updatedAt = $user->created_at;
-                     
-                     $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
-                     $time = $updatedAt->format('l, d F Y - H:i:s');
-                     
-                     // if ($diffInSeconds < 60) {
-                     //       $time = 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
-                     // } else {
-                     //    $time = $updatedAt->format('l, d F Y - H:i:s');
-                     // }
-                  @endphp --}}
                   <th scope="row">{{ $loop->iteration + ($paginate * ($categories->currentPage()-1)) }}</th>
                   <td>
                      {{ $category->name }}
@@ -48,7 +34,7 @@
                            <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $category->id }})">
                               Lihat postingan terkait
                            </a>
-                           <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#editCategoryModal" wire:click.prefetch="editCategory({{ $category->id }})">
+                           <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="offcanvas" data-bs-target="#editCategory" wire:click.prefetch="editCategory({{ $category->id }})">
                               Edit
                            </a>
                            <a class="text-danger text-decoration-none dropdown-item" wire:click="findCategory({{ $category->id }})" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">Hapus</a>

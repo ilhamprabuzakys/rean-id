@@ -76,7 +76,8 @@ class CategoryIndex extends Component
             'slug' => Str::slug($this->name),
         ]);
         $this->resetInput();
-        $this->dispatchBrowserEvent('close-modal');
+        // $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('close-offcanvas');
         // $this->emit('alertSuccess', 'Berhasil menambahkan Kategori baru', 'Pembuatan Kategori');
         $this->emit('swalS', 'Pembuatan Kategori', 'Berhasil menambah data Kategori');
         // $this->emit('KategoriStore');
@@ -138,6 +139,11 @@ class CategoryIndex extends Component
     }
 
     public function closeModal()
+    {
+        $this->resetInput();
+    }
+    
+    public function closeCanvas()
     {
         $this->resetInput();
     }
