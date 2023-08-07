@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,7 +29,7 @@ class PostFactory extends Factory
             'body' => $body,
             'date' => date('Y-m-d'),
             'category_id' => \random_int(1, 6),
-            'user_id' => \random_int(1, 20),
+            'user_id' => \random_int(1, User::count()),
             'status' => fake()->randomElement(['approved', 'rejected']),
         ];
     }

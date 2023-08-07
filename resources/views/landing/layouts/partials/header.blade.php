@@ -1,176 +1,206 @@
-<header class="header-area bg-dark">
-   <div class="container">
-       <div class="row align-items-center">
-           <div class="col-lg-2">
-               <div class="logo-box">
-                   <a href="index.html" class="logo"><img src="{{ asset('assets/landing/disilab/images/logo-white.png') }}" alt="logo"></a>
-                   <div class="user-action">
-                       <div class="search-menu-toggle icon-element icon-element-xs shadow-sm mr-1" data-toggle="tooltip" data-placement="top" title="Search">
-                           <i class="la la-search"></i>
-                       </div>
-                       <div class="off-canvas-menu-toggle icon-element icon-element-xs shadow-sm" data-toggle="tooltip" data-placement="top" title="Main menu">
-                           <i class="la la-bars"></i>
-                       </div>
-                   </div>
+<header class="z-fixed pt-lg-4 header-absolute-top header-transparent">
+   <nav class="navbar navbar-expand-lg navbar-light @yield('header-class')">
+      <div class="container position-relative">
+         <!--Logo Brand-->
+         <a class="navbar-brand" href="{{ route('index') }}">
+            @yield('navbar', View::make('landing.layouts.partials.items.navbar-brand'))
+         </a>
+
+         <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
+            <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse"
+               data-bs-target="#mainNavbarTheme" aria-controls="mainNavbarTheme" aria-expanded="false"
+               aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon">
+                  <i></i>
+               </span>
+            </button>
+            <!--Navbar Button-->
+            {{-- <div class="nav-item me-3 me-lg-0 ms-lg-4 ms-xl-5">
+               @auth
+                  <a href="{{ route('login') }}" class="btn btn-success btn-sm rounded-pill">Masuk</a>
+               @else
+                  <a href="{{ route('logout') }}" class="btn btn-success btn-sm rounded-pill">Keluar</a>
+               @endauth
+            </div> --}}
+            @php
+              $rand = rand(1,5);
+            @endphp
+            @auth
+               <div class="nav-item me-3 me-lg-0 dropdown">
+                  <!--:User:-->
+                  <a href="header-logged-in.html#" class="btn btn-primary dropdown-toggle rounded-pill py-0 ps-0 pe-2"
+                     data-bs-auto-close="outside" data-bs-toggle="dropdown">
+                     @if (auth()->user()->avatar !== NULL) 
+                     <img src="{{ asset(auth()->user()->avatar) }}" alt="avatar" class="avatar sm rounded-circle me-1">
+                     @else
+                     <img src="{{ asset('assets/img/avatar/avatar-'. $rand .'.png') }}" alt="avatar" class="avatar sm rounded-circle me-1">
+                     @endif
+                     <small>{{ auth()->user()->name }}</small>
+                  </a>
+                  <!--:User dropdown:-->
+                  <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
+                     <a href="header-logged-in.html#!" class="dropdown-header border-bottom p-4">
+                        <div class="d-flex align-items-center">
+                           <div>
+                            @if (auth()->user()->avatar !== NULL) 
+                              <img src="{{ asset(auth()->user()->avatar) }}" alt="avatar" class="avatar xl rounded-pill me-3">
+                            @else
+                              <img src="{{ asset('assets/img/avatar/avatar-'. $rand .'.png') }}" alt="avatar" class="avatar xl rounded-pill me-3">
+                            @endif
+                           </div>
+                           <div>
+                              <h5 class="mb-0 text-body">{{ auth()->user()->name }}</h5>
+                              <span
+                                 class="d-block mb-2 text-lowercase"><span class="__cf_email__" data-cfemail="3d575c4c48545358555c4f7d5952505c5453135e5250">{{ auth()->user()->email }}</span></span>
+                                 <a href="{{ route('dashboard') }}">
+                                 <div class="small d-inline-block link-underline fw-semibold">Lihat dashboard</div>
+                                  </a>
+                           </div>
+                        </div>
+                     </a>
+                     <a href="{{ route('logout') }}" class="dropdown-item rounded-top-0 p-3">
+                        <span class="d-block text-end">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                              fill="currentColor" class="bx bx-box-arrow-right me-2" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd"
+                                 d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                              <path fill-rule="evenodd"
+                                 d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                           </svg>
+                           Keluar
+                        </span>
+                     </a>
+                  </div>
                </div>
-           </div><!-- end col-lg-2 -->
-           <div class="col-lg-10">
-               <div class="menu-wrapper">
-                   <nav class="menu-bar mr-auto menu-bar-white">
-                       <ul>
-                           <li>
-                               <a href="#">Home <i class="la la-angle-down fs-11"></i></a>
-                               <ul class="dropdown-menu-item">
-                                   <li><a href="index.html">Home - landing</a></li>
-                                   <li><a href="home-2.html">Home - main</a></li>
-                                   <li><a href="home-3.html">Home - layout 2 <span class="badge bg-warning text-white">New</span></a></li>
-                               </ul>
-                           </li>
-                           <li class="is-mega-menu">
-                               <a href="#">pages <i class="la la-angle-down fs-11"></i></a>
-                               <div class="dropdown-menu-item mega-menu">
-                                   <ul class="row">
-                                       <li class="col-lg-3">
-                                           <a href="user-profile.html">user profile</a>
-                                           <a href="notifications.html">Notifications</a>
-                                           <a href="referrals.html">Referrals</a>
-                                           <a href="setting.html">settings</a>
-                                           <a href="ask-question.html">ask question</a>
-                                           <a href="question-details.html">question details</a>
-                                           <a href="about.html">about</a>
-                                           <a href="revisions.html">revisions</a>
-                                           <a href="category.html">category</a>
-                                           <a href="companies.html">companies</a>
-                                           <a href="company-details.html">company details</a>
-                                       </li>
-                                       <li class="col-lg-3">
-                                           <a href="careers.html">careers</a>
-                                           <a href="career-details.html">career details</a>
-                                           <a href="contact.html">contact</a>
-                                           <a href="faq.html">FAQs</a>
-                                           <a href="pricing-table.html">pricing tables</a>
-                                           <a href="error.html">page 404</a>
-                                           <a href="terms-and-conditions.html">Terms & conditions</a>
-                                           <a href="privacy-policy.html">privacy policy</a>
-                                           <a href="cart.html">cart</a>
-                                           <a href="talent.html">talent</a>
-                                           <a href="advertising.html">advertising</a>
-                                       </li>
-                                       <li class="col-lg-3">
-                                           <a href="free-demo.html">free demo</a>
-                                           <a href="checkout.html">checkout</a>
-                                           <a href="wishlist.html">wishlist</a>
-                                           <a href="login.html">login</a>
-                                           <a href="login-2.html">login 2</a>
-                                           <a href="signup.html">sign up</a>
-                                           <a href="signup-2.html">sign up 2</a>
-                                           <a href="recover-password.html">recover password</a>
-                                           <a href="questions-layout-2.html">questions layout 2 <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="questions-full-width.html">questions full-width <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="questions-left-sidebar.html">questions left sidebar <span class="badge bg-warning text-white">New</span></a>
-                                       </li>
-                                       <li class="col-lg-3">
-                                           <a href="questions-right-sidebar.html">questions right sidebar <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="user-list.html">user list <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="category-list.html">category list <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="tags-list.html">tags list <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="add-post.html">add post <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="badges-list.html">Badges list <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="job-list.html">job list <span class="badge bg-warning text-white">New</span></a>
-                                           <a href="error-2.html">page 404 2 <span class="badge bg-warning text-white">New</span></a>
-                                       </li>
-                                   </ul>
-                               </div>
-                           </li>
-                           <li>
-                               <a href="#">blog <i class="la la-angle-down fs-11"></i></a>
-                               <ul class="dropdown-menu-item">
-                                   <li><a href="blog-grid-no-sidebar.html">grid no sidebar</a></li>
-                                   <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                                   <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                   <li><a href="blog-single.html">blog detail</a></li>
-                               </ul>
-                           </li>
-                       </ul><!-- end ul -->
-                   </nav><!-- end main-menu -->
-                   <form method="post" class="mr-4">
-                       <div class="form-group mb-0">
-                           <input class="form-control form--control form--control-bg-gray text-white" type="text" name="search" placeholder="Type your search words...">
-                           <button class="form-btn text-white-50" type="button"><i class="la la-search"></i></button>
-                       </div>
-                   </form>
-                   <div class="nav-right-button">
-                       <a href="#" class="btn theme-btn theme-btn-outline theme-btn-outline-white mr-2" data-toggle="modal" data-target="#loginModal"><i class="la la-sign-in mr-1"></i> Login</a>
-                       <a href="#" class="btn theme-btn theme-btn-white" data-toggle="modal" data-target="#signUpModal"><i class="la la-user mr-1"></i> Sign up</a>
-                   </div><!-- end nav-right-button -->
-               </div><!-- end menu-wrapper -->
-           </div><!-- end col-lg-10 -->
-       </div><!-- end row -->
-   </div><!-- end container -->
-   <div class="off-canvas-menu custom-scrollbar-styled">
-       <div class="off-canvas-menu-close icon-element icon-element-sm shadow-sm" data-toggle="tooltip" data-placement="left" title="Close menu">
-           <i class="la la-times"></i>
-       </div><!-- end off-canvas-menu-close -->
-       <ul class="generic-list-item off-canvas-menu-list pt-90px">
-           <li>
-               <a href="#">Home</a>
-               <ul class="sub-menu">
-                   <li><a href="index.html">Home - landing</a></li>
-                   <li><a href="home-2.html">Home - main</a></li>
-               </ul>
-           </li>
-           <li>
-               <a href="#">Pages</a>
-               <ul class="sub-menu">
-                   <li><a href="user-profile.html">user profile</a></li>
-                   <li><a href="notifications.html">Notifications</a></li>
-                   <li><a href="referrals.html">Referrals</a></li>
-                   <li><a href="setting.html">settings</a></li>
-                   <li><a href="ask-question.html">ask question</a></li>
-                   <li><a href="question-details.html">question details</a></li>
-                   <li><a href="about.html">about</a></li>
-                   <li><a href="revisions.html">revisions</a></li>
-                   <li><a href="category.html">category</a></li>
-                   <li><a href="companies.html">companies</a></li>
-                   <li><a href="company-details.html">company details</a></li>
-                   <li><a href="careers.html">careers</a></li>
-                   <li><a href="career-details.html">career details</a></li>
-                   <li><a href="contact.html">contact</a></li>
-                   <li><a href="faq.html">FAQs</a></li>
-                   <li><a href="pricing-table.html">pricing tables</a></li>
-                   <li><a href="error.html">page 404</a></li>
-                   <li><a href="terms-and-conditions.html">Terms & conditions</a></li>
-                   <li><a href="privacy-policy.html">privacy policy</a></li>
-               </ul>
-           </li>
-           <li>
-               <a href="#">blog</a>
-               <ul class="sub-menu">
-                   <li><a href="blog-grid-no-sidebar.html">grid no sidebar</a></li>
-                   <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                   <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                   <li><a href="blog-single.html">blog detail</a></li>
-               </ul>
-           </li>
-       </ul>
-       <div class="off-canvas-btn-box px-4 pt-5 text-center">
-           <a href="#" class="btn theme-btn theme-btn-sm theme-btn-outline" data-toggle="modal" data-target="#loginModal"><i class="la la-sign-in mr-1"></i> Login</a>
-           <span class="fs-15 fw-medium d-inline-block mx-2">Or</span>
-           <a href="#" class="btn theme-btn theme-btn-sm" data-toggle="modal" data-target="#signUpModal"><i class="la la-plus mr-1"></i> Sign up</a>
-       </div>
-   </div><!-- end off-canvas-menu -->
-   <div class="mobile-search-form">
-       <div class="d-flex align-items-center">
-           <form method="post" class="flex-grow-1 mr-3">
-               <div class="form-group mb-0">
-                   <input class="form-control form--control pl-40px" type="text" name="search" placeholder="Type your search words...">
-                   <span class="la la-search input-icon"></span>
+            @else
+               <div class="nav-item me-3 me-lg-0 ms-lg-4 ms-xl-5 dropdown">
+                  <a href="header-login.html#" class="btn btn-outline-primary px-4 btm-sm rounded-pill py-1" data-bs-auto-close="outside" data-bs-toggle="dropdown">
+                     Sign In
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-4">
+                     <!--:Sign In Form:-->
+                     <form class="needs-validation" novalidate="">
+                        <div>
+                           <h3 class="mb-1">
+                              Welcome back!
+                           </h3>
+                           <p class="mb-4 text-body-secondary">
+                              Please Sign In with details...
+                           </p>
+                        </div>
+                        <div class="input-icon-group mb-3">
+                           <span class="input-icon">
+                              <i class="bx bx-envelope"></i>
+                           </span>
+                           <input type="email" required="" class="form-control" autofocus="" placeholder="Username">
+                        </div>
+                        <div class="input-icon-group mb-3">
+                           <span class="input-icon">
+                              <i class="bx bx-key"></i>
+                           </span>
+                           <input type="password" required="" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="mb-3 d-flex justify-content-between">
+                           <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                              <label class="form-check-label" for="flexCheckDefault">
+                                 Remember me
+                              </label>
+                           </div>
+                           <div>
+                              <label class="text-end d-block small mb-0"><a href="page-account-forget-password.html" class="link-decoration">Forget Password?</a></label>
+                           </div>
+                        </div>
+
+                        <div class="d-grid">
+                           <button class="btn btn-primary btn-hover-arrow" type="submit">
+                              <span>Sign in</span>
+                           </button>
+                        </div>
+                        <p class="pt-4 mb-0 text-body-secondary">
+                           Don’t have an account yet? <a href="page-account-signup.html" class="ms-2 pb-0 fw-semibold link-underline">Sign Up</a>
+                        </p>
+                     </form>
+                  </div>
                </div>
-           </form>
-           <div class="search-bar-close icon-element icon-element-sm shadow-sm">
-               <i class="la la-times"></i>
-           </div><!-- end off-canvas-menu-close -->
-       </div>
-   </div><!-- end mobile-search-form -->
-   <div class="body-overlay"></div>
+            @endauth
+         </div>
+
+         <!--Navbar Collapse-->
+         <div class="collapse navbar-collapse" id="mainNavbarTheme">
+
+            <!--begin:Navbar items-->
+            <ul class="navbar-nav ms-auto">
+
+               <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.category_list') }}" class="nav-link">Kategori</a>
+               </li>
+               <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.all_post') }}" class="nav-link">Artikel</a>
+               </li>
+               <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.all_post') }}" class="nav-link">Events</a>
+               </li>
+               <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.cns') }}" class="nav-link">CNS Radio</a>
+               </li>
+               <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.contact') }}" class="nav-link">Contact Us</a>
+               </li>
+
+               <!--begin:demos-->
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle " href="index-landing-business.html#" role="button"
+                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demos
+                  </a>
+                  <div class="dropdown-menu p-lg-3 dropdown-menu-end dropdown-menu-xs">
+                     <a class="dropdown-item" target="_blank" href="demo-shop.html">
+                        E-commerce
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="demo-one-page.html">
+                        One Page
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="demo-real-estate.html">
+                        Real estate
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="demo-jobs.html">
+                        Jobs
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="demo-event-landing.html">
+                        Event Landing
+                     </a>
+
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" target="_blank" href="demo-rtl.html">
+                        RTL Starter
+                     </a>
+                     <div class="dropdown-divider"></div>
+                     <a class="dropdown-item" target="_blank" href="../admin-dashboard/index.html">
+                        Admin Dashboard
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="../nft-marketplace/index.html">
+                        NFT Marketplace
+                     </a>
+                     <a class="dropdown-item" target="_blank" href="../blog-magazine/index.html">
+                        Blog Magazine <span class="badge bg-success">New</span>
+                     </a>
+                     <!--footer-->
+                     <div class="p-3">
+                        <div class="row">
+                           <div class="col-12 d-flex align-items-center justify-content-center">
+
+                              <span class="flex-grow-1 small text-body-secondary">Many more demos
+                                 coming soon...</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </li>
+               <!--end:Pages-->
+            </ul>
+            <!--end:Navbar items-->
+
+         </div>
+      </div>
+   </nav>
 </header>

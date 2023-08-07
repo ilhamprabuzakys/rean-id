@@ -27,7 +27,7 @@ class LandingController extends Controller
         $posts = Post::with(['category', 'user'])->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
         // $mostViewedArticle = Post::mostViewed($posts, 5, 'artikel');
         $categories = Category::orderBy('updated_at', 'desc')->get();
-        return view('landing.layouts.template', [
+        return view('landing.home.static.index', [
             'title' => '',
         ], compact('posts', 'categories'));
     }
@@ -35,7 +35,7 @@ class LandingController extends Controller
     public function show_post($category, Post $post)
     {
         $post->increment('views');
-        return view('landing.world.detail', [
+        return view('landing.home.posts.detail', [
             'title' => $post->title,
             'heropost' => $post,
         ], compact('post'));
@@ -43,38 +43,40 @@ class LandingController extends Controller
     
     public function all_post()
     {
-        $posts = Post::with(['category', 'user', 'tags'])->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
-        return view('landing.world.posts', [
-            'title' => 'Semua Postingan',
-        ], compact('posts'));
+        $posts = Post::with(['category', 'user', 'tags'])->where('status', 'approved')->latest('updated_at')->get();
+        $categories = Category::oldest('name')->get();
+        $firstPost = $posts->first();
+        return view('landing.home.posts.index', [
+            'title' => 'Daftar Postingan',
+        ], compact('posts', 'categories', 'firstPost'));
     }
 
     public function category_list()
     {
-        $categories = Category::orderBy('updated_at', 'desc')->get();
-        return view('landing.world.category-list', [
-            'title' => 'Semua Kategori',
+        $categories = Category::oldest('name')->get();
+        return view('landing.home.categories.index', [
+            'title' => 'Daftar Kategori',
         ], compact('categories'));
     }
     
     public function category_view(Category $category)
     {
-        $posts = Post::with(['category', 'user', 'tags'])->where('category_id', $category->id)->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
-        return view('landing.world.category', [
+        $posts = $category->posts->sortByDesc('updated_at');
+        return view('landing.home.categories.single-category', [
             'title' => 'Daftar ' . $category->name,
-        ], compact('posts', 'category'));
+        ], compact('category', 'posts'));
     }
 
     public function cns_radio()
     {
-        return view('landing.world.cns-radio', [
+        return view('landing.home.static.cns-radio', [
             'title' => 'CNS Radio',
         ]);
     }
 
     public function contact()
     {
-        return view('landing.world.contact', [
+        return view('landing.home.static.contact-us', [
             'title' => 'Contact Us',
         ]);
     }

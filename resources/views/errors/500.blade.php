@@ -1,4 +1,4 @@
-@extends('dashboard-borex.layouts.error')
+@extends('dashboard.template.error')
 @section('title')
    500 Internal Server Error
 @endsection

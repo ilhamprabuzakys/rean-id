@@ -68,7 +68,18 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::controller(HomeController::class)->group(function () {
+// Route::controller(HomeController::class)->group(function () {
+//     Route::get('/', 'index')->name('index');
+//     Route::get('/all-post', 'all_post')->name('home.all_post');
+//     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
+//     Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
+//     Route::get('/cns-radio', 'cns_radio')->name('home.cns');
+//     Route::get('/contact-us', 'contact')->name('home.contact');
+//     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
+//     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
+// });
+
+Route::controller(LandingController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/all-post', 'all_post')->name('home.all_post');
     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
@@ -77,19 +88,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/contact-us', 'contact')->name('home.contact');
     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
-});
-
-Route::controller(LandingController::class)->group(function () {
-    Route::prefix('new')->group(function() {
-        Route::get('/', 'index')->name('new.index');
-        Route::get('/all-post', 'all_post')->name('new.all_post');
-        Route::get('/kategori/{category}', 'category_view')->name('new.category_view');
-        Route::get('/daftar-kategori', 'category_list')->name('new.category_list');
-        Route::get('/cns-radio', 'cns_radio')->name('new.cns');
-        Route::get('/contact-us', 'contact')->name('new.contact');
-        Route::post('/contact-us', 'contact_send')->name('new.contact_send');
-        Route::get('/{category}/{post}', 'show_post')->name('new.show_post');
-    });
+    // Route::prefix('home')->group(function() {
+    // });
 });
 
 Route::controller(TableController::class)->group(function () {
