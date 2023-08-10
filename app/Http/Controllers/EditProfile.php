@@ -52,7 +52,7 @@ class EditProfile extends Controller{
             if ($user->avatar != null) {
                 $this->deleteImage($user);
             }
-            Storage::putFileAs("public/avatar",$file,$name_file_upload);
+            Storage::putFileAs("avatar",$file,$name_file_upload);
 
             $user->update([
                 "name" => $data["name"],

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard\Ebooks;
 
+use App\Models\Ebook;
 use Livewire\Component;
 
 class EbookCreate extends Component
@@ -11,14 +12,33 @@ class EbookCreate extends Component
         "swalE",
     ];
 
-    public function mount()
-    {
+    public $title, $description, $pages, $author, $published_at, $user_id, $body;
 
+    public function mount($user)
+    {
+        $this->user_id = $user;
     }
 
     public function render()
     {
-        return view('livewire.dashboard.ebooks.ebook-create');
+        return view('livewire.dashboard.ebooks.ebook-create');    
+    }
+
+    public function store()
+    {
+        Ebook::create($this->all());
+        $this->resetInput();
+        $this->emit('swalS', 'Pembuatan Ebook', 'Berhasil menambah data Ebook');
+    }
+
+    public function resetInput()
+    {
+        $this->title = null;
+        $this->description = null;
+        $this->pages = null;
+        $this->author = null;
+        $this->published_at = null;
+        $this->body = null;
     }
 
     public function swalS($title, $text)

@@ -17,7 +17,7 @@
    <tbody>
       @forelse ($events as $event)
          <tr>
-            <th scope="row">{{ $loop->iteration }}</th>
+            <th scope="row">{{ $loop->iteration + ($paginate * ($events->currentPage()-1)) }}</th>
             <td>
                {{ $event->title }}
             </td>

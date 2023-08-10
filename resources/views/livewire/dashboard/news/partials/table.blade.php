@@ -5,8 +5,8 @@
        <tr>
           <th>#</th>
           <th>Judul</th>
-          <th>Author</th>
-          <th>Pages</th>
+          <th>About</th>
+          <th>Dibuat Oleh</th>
           <th>Tanggal Publish</th>
           <th class="text-center">
              <i class="fas fa-pencil-square"></i>
@@ -14,20 +14,20 @@
        </tr>
     </thead>
     <tbody>
-       @forelse ($ebooks as $ebook)
+       @forelse ($news as $berita)
           <tr>
-             <th scope="row">{{ $loop->iteration + ($paginate * ($ebooks->currentPage()-1)) }}</th>
+             <th scope="row">{{ $loop->iteration + ($paginate * ($news->currentPage()-1)) }}</th>
              <td>
-                {{ $ebook->title }}
+                {{ $berita->title }}
              </td>
              <td>
-                {{ $ebook->author }}
+                {{ $berita->about }}
              </td>
              <td>
-                {{ $ebook->pages }}
+                {{ $berita->user->name }}
              </td>
              <td>
-                {{ $ebook->published_at }}
+                {{ $berita->created_at }}
              </td>
              <td class="text-center">
                 <div class="dropdown">
@@ -36,8 +36,8 @@
                    </a>
  
                    <div class="dropdown-menu dropdown-menu-end">
-                      <a class="dropdown-item text-success text-decoration-none" href="#" wire:click.prefetch="editEbook({{ $ebook->id }})">Edit</a>
-                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})"">Hapus</a>
+                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('news.edit', $berita) }}">Edit</a>
+                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $berita->id }})">Hapus</a>
                       {{-- <a class="text-danger text-decoration-none dropdown-item" wire:click="findEbook({{ $ebook->id }})" data-bs-toggle="modal" data-bs-target="#deleteEbookModal">Hapus</a> --}}
                    </div>
                 </div>
@@ -46,13 +46,13 @@
        @empty
           <tr>
              <td colspan="6">
-                <h5 class="text-center my-3">Tidak ada ebook yang tersedia.</h5>
+                <h5 class="text-center my-3">Tidak ada berita yang tersedia.</h5>
              </td>
           </tr>
        @endforelse
     </tbody>
  </table>
  <div class="float-end mt-3 me-3">
-    {{ $ebooks->links() }}
+    {{ $news->links() }}
  </div>
  

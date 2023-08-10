@@ -52,36 +52,12 @@ class EventIndex extends Component
 
             return $query->whereDate('created_at', '>=', $startDate)
                          ->whereDate('created_at', '<=', $endDate);
-        });
-        $events = $query->paginate(5);
+        })->get();
+        $events = $query;
         // dd($events);
         return view('livewire.dashboard.events.event-index', [
             'events' => $events,
         ]);
-    }
-
-    public function updatedFilterDate(){
-        $this->resetPage();
-    }
-
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function editEvent(int $event_id) 
-    {
-        $event = Event::findOrFail($event_id);
-        if ($event) {
-            $this->event_id = $event->id;
-        } else {
-            return back();
-        }
-    }
-
-    public function findEvent(int $event_id)
-    {
-        $this->event_id = $event_id;
     }
 
     public function swalS($title, $text)

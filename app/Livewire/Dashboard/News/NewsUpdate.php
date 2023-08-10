@@ -1,11 +1,11 @@
 <?php
 
-namespace [namespace];
+namespace App\Livewire\Dashboard\News;
 
 use Livewire\WithPagination;
 use Livewire\Component;
 
-class [class] extends Component
+class NewsUpdate extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -37,14 +37,14 @@ class [class] extends Component
 
     public function render()
     {
-        return view('[view]');
+        return view('livewire.dashboard.news.news-update');
     }
 
 
 
     public function deleteConfirmation($id)
     {
-        $this->model_id = $id;
+        $this->ebook_id = $id;
         $this->emit('swalD', 'Model');
     }
 

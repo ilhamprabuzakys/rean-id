@@ -1,11 +1,12 @@
 <?php
 
-namespace [namespace];
+namespace App\Livewire\Dashboard\News;
 
+use App\Models\News;
 use Livewire\WithPagination;
 use Livewire\Component;
 
-class [class] extends Component
+class NewsIndex extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -15,12 +16,13 @@ class [class] extends Component
         "swalD",
         "swalE",
         'statusUpdated' => 'handleStatusUpdate',
-        'deleteConfirmed' => 'destroy'
+        'deleteConfirmed' => 'destroy',
+        'dataAdded' => 'checkRefresh'
     ];
 
     public $paginate = 5;
     public $search, $filter_date;
-    public $user_id, $model_id;
+    public $model_id;
     public $statusUpdate = false;
 
     protected $updatesQueryString = ['search', 'filter_date'];
@@ -29,32 +31,46 @@ class [class] extends Component
         'filter_date' => ['except' => ''],
     ];
 
-    public function mount($user)
+    public function mount()
     {
-        $this->paginate = 5;
-        $this->user_id = $user;
     }
 
     public function render()
     {
-        return view('[view]');
+        $query = News::with('user')->latest('updated_at')->when($this->search, function ($query) {
+            return $query->globalSearch($this->search);
+        })->when($this->filter_date, function ($query) {
+            $dateRange = explode(' to ', $this->filter_date);
+            $startDate = $dateRange[0];
+            $endDate = $dateRange[1] ?? $dateRange[0];
+
+            return $query->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
+        })->paginate($this->paginate);
+        $news = $query;
+        return view('livewire.dashboard.news.news-index', [
+            'news' => $news,
+        ]);
     }
 
+    public function checkRefresh()
+    {
+        dd('This is called!');
+    }
 
 
     public function deleteConfirmation($id)
     {
         $this->model_id = $id;
-        $this->emit('swalD', 'Model');
+        $this->emit('swalD', 'Berita');
     }
 
     public function destroy()
     {
-        $model = Model::findOrFail($this->model_id);
+        $model = News::findOrFail($this->model_id);
         $name = $model->title;
         $model->delete();
-        $this->emit('swalS', 'Penghapusan Model', 'Data Model ' . $name . ' berhasil dihapus');
-
+        $this->emit('swalS', 'Penghapusan Berita', 'Data News ' . $name . ' berhasil dihapus');
     }
 
     public function handleStatusUpdate($statusUpdate)
@@ -66,7 +82,7 @@ class [class] extends Component
     {
         $this->resetPage();
     }
-    
+
     public function updatedFilterDate()
     {
         $this->resetPage();
@@ -78,7 +94,7 @@ class [class] extends Component
             'title' => $title,
         ]);
     }
-    
+
     public function swalS($title, $text)
     {
         $this->emit('swalBasic', [
@@ -87,7 +103,7 @@ class [class] extends Component
             'text' => $text,
         ]);
     }
-    
+
     public function swalE($title, $text)
     {
         $this->emit('swalBasic', [

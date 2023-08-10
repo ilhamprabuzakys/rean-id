@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ebook extends Model
+class News extends Model
 {
+    use HasFactory;
     protected $guarded = ['id'];
 
     public function scopeGlobalSearch($query, $search)  
     {
         $search = strtolower($search);
-        
         return $query
-        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)", 
+        ->whereRaw("
+        (LOWER(title) LIKE ? OR LOWER(about) LIKE ?)", 
         ["%{$search}%", "%{$search}%"]) 
         ->orWhereHas('user', function($q) use ($search){
            $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
@@ -23,6 +24,6 @@ class Ebook extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

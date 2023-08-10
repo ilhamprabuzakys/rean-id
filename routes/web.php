@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MediaPostController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
             Route::resource('/events', EventController::class)->except(['show']);
             Route::resource('/ebooks', EbookController::class)->except(['show']);
+            Route::resource('/news', NewsController::class)->except(['show']);
             Route::get('/coordinates/json', [Coordinates::class, 'json'])->name('events.map');
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
             Route::resource('/users', UserController::class);

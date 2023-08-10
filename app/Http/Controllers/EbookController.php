@@ -10,7 +10,7 @@ class EbookController extends Controller
     public function index()
     {
         return view('dashboard.ebooks.index', [
-            'title' => 'Daftar Kategori',
+            'title' => 'Daftar Ebook',
         ]);
     }
 

@@ -102,6 +102,16 @@ class LoginController extends Controller
                     'Akun anda belum teraktivasi.',
                 )->withInput();
             }
+            
+            if ($user->status == 0) {
+                // throw ValidationException::withMessages([
+                //     'email' => ['Akun anda belum teraktivasi.']
+                // ]);
+                return back()->with(
+                    'fails',
+                    'Akun telah dinonaktifkan karena melanggar ketentuan komunitas kami. Hubungi admin jika ini merupakan suatu kesalahan.',
+                )->withInput();
+            }
         } else {
             return back()->with(
                 'fails',

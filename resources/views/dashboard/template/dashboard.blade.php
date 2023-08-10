@@ -183,6 +183,7 @@
                // "hideMethod": "slideInLeft"
             }
       });
+
       Livewire.on('swalBasic', data => {
          console.log(data.message);
          Swal.fire({
@@ -192,12 +193,34 @@
             confirmButtonText: 'Okay',
             timer: 2500,
          })
-      })
-      
-      Livewire.on('swalDelete', data => {
+      });
+
+      Livewire.on('swalDelete', data => { 
          Swal.fire({
             title: 'Apakah kamu yakin?',
-            text: "Menghapus data akan membuang item ke keranjang sampah!",
+            text: "Data " + data.title + " yang dihapus akan dipindahkan ke keranjang sampah!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, saya yakin.',
+            cancelButtonText: 'Batalkan.'
+            }).then((result) => {
+               if (result.isConfirmed) {
+               Livewire.emit('deleteConfirmed'); // emit event
+               // Swal.fire(
+               //    'Data Berhasil Dihapus!', 
+               //    'Data yang kamu pilih berhasil dihapus.',
+               //    'success'
+               // )
+            }
+         });
+      });
+      
+      /* Livewire.on('swalDelete2', data => {
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Data yang dihapus akan dipindahkan ke keranjang sampah!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -207,13 +230,13 @@
                if (result.isConfirmed) {
                Livewire.emit('deleteConfirmed'); // emit event
                Swal.fire(
-                  'Berhasil Dihapus!', 
+                  'Data Berhasil Dihapus!', 
                   'Data yang kamu pilih berhasil dihapus.',
                   'success'
                )
             }
          })
-      })
+      }) */
    </script>
 </body>
 

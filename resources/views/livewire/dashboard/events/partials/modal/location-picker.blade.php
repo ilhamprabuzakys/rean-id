@@ -8,7 +8,7 @@
                </div>
                <div class="col-3">
                   <input type="text"
-                     class="form-control" id="locationInput" wire:model="location">
+                     class="form-control" id="locationInput">
                </div>
                <div class="col-3">
                   <input type="text"
@@ -56,7 +56,7 @@
                console.log(data);
                console.log(data.address);
                let city = data.address.city || data.address.town || data.address.village || data.address.hamlet;
-               let province = data.address.state;
+               let province = data.address.state || "Tidak diketahui";
                let road = data.address.road || "Tidak diketahui";
                let kecamatan = data.address.suburb || data.address.neighbourhood || "Tidak diketahui";
                let kelurahan = data.address.village || data.address.hamlet || "Tidak diketahui";

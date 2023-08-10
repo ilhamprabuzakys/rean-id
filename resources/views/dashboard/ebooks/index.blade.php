@@ -8,21 +8,25 @@
    </h4>
    <!-- end page title -->
 
-   <livewire:dashboard.ebooks.ebook-index :user="auth()->user()"/>
+   <livewire:dashboard.ebooks.ebook-index :user="auth()->user()" />
 @endsection
 @push('scripts')
-  {{--  <script src="{{ asset('assets/dashboard/materialize/assets/bs-date-range/bootstrap-daterangepicker.js') }}"></script> --}}
-   {{-- <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script> --}}
+   <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
+   {{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script> --}}
    <script>
-
+      /* ClassicEditor
+         .create(document.querySelector('#description'))
+         .catch(error => {
+            console.error(error);
+         }); */
+   </script>
+   <script>
       $("#published_at").flatpickr();
       $("#filter_date").flatpickr({
          mode: "range",
       });
-      
+
       window.addEbookListener('close-modal', event => {
-         $('#createEbookModal').modal('hide');
-         $('#editEbookModal').modal('hide');
          $('#deleteEbookModal').modal('hide');
       })
 

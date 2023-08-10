@@ -157,6 +157,24 @@
             </li>
          </ul>
       </li>
+      <li class="menu-item {{ str_starts_with(request()->url(), route('news.index')) ? 'active open' : '' }}">
+         <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons mdi mdi-newspaper-check"></i>
+            <div data-i18n="Berita">Berita</div>
+         </a>
+         <ul class="menu-sub">
+            <li class="menu-item {{ str_starts_with(request()->url(), route('news.index')) ? 'active' : '' }}">
+               <a href="{{ route('news.index') }}" class="menu-link">
+                  <div data-i18n="Semua">Semua</div>
+               </a>
+            </li>
+            <li class="menu-item {{ str_starts_with(request()->url(), route('news.create')) ? 'active' : '' }}">
+               <a href="{{ route('news.create') }}" class="menu-link">
+                  <div data-i18n="Tambah Data">Tambah Data</div>
+               </a>
+            </li>
+         </ul>
+      </li>
       @endcannot
       @can('superadmin')
       <li class="menu-item {{ str_starts_with(request()->url(), route('users.index')) ? 'active open' : '' }}">

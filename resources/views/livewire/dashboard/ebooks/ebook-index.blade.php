@@ -1,7 +1,5 @@
 <div>
-   <div class="col-12 mb-3">
-      <livewire:dashboard.ebooks.ebook-create :user="auth()->user()" />
-   </div>
+   @include('livewire.dashboard.ebooks.partials.modal.delete')    
    <div class="col-12">
       <div class="card shadow-md">
          <div class="card-header">
@@ -51,9 +49,15 @@
          </div>
          <div class="card-datatable">
             @include('livewire.dashboard.ebooks.partials.table')
-            {{-- <livewire:dashboard.ebooks.ebook-table :ebooks='$ebooks'/> --}}
          </div>
       </div>
    </div>
-   {{-- @include('livewire.dashboard.ebooks.partials.modal.delete')     --}}
+
+   <div class="col-12 mt-3">
+      @if ($statusUpdate == true)
+      <livewire:dashboard.ebooks.ebook-update :statusUpdate="$statusUpdate" :user="$user->id" />
+      @else
+      <livewire:dashboard.ebooks.ebook-create :user="$user->id" />
+      @endif
+   </div>
 </div>
