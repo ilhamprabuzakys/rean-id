@@ -19,24 +19,12 @@
    </thead>
    <tbody>
       @foreach ($posts as $key => $post)
-           @php
-               $currentTime = now();
-               $updatedAt = $post->updated_at;
-               $time = '';
-               $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
-               
-               if ($diffInSeconds < 60) {
-                   $time = 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
-               } else {
-                   $time = $updatedAt->format('l, d F Y - H:i:s');
-               }
-           @endphp
          <tr>
             <th scope="row">{{ $loop->iteration + ($paginate * ($posts->currentPage()-1)) }}</th>
             <td>
-                {{-- {!! Str::limit(strip_tags($post->title), 20, '...') !!} --}}
+                {!! Str::limit(strip_tags($post->title), 20, '...') !!}
                 {{-- <span class="d-none">{{ $post->title }}</span> --}}
-                {{ $post->title }}
+                {{-- {{ $post->title }} --}}
             </td>
             <td><a href="#" class="text-decoration-none text-dark">
                   {{ optional($post->user)->name }}
@@ -93,7 +81,7 @@
                   </div>
                </td>
             @endcannot
-            <td>{{ $time }}</td>
+            <td>{{ echoTime($post->updated_at) }}</td>
             <td class="text-center">
                <div class="dropdown">
                   <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">

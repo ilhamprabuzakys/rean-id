@@ -51,7 +51,7 @@
                   @method('PUT')
                   @csrf
                   <div class="row mb-3">
-                     <div class="col-lg-9">
+                     <div class="col-lg-12">
                         <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
                         <input type="text"
                            class="form-control @error('title')
@@ -59,16 +59,6 @@
                            @enderror" name="title" id="title"
                            value="{{ old('title', $post->title) }}">
                         @error('title')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                     <div class="col-lg-3">
-                        <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
-                        <input type="text"
-                           class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug', $post->slug) }}">
-                        @error('slug')
                            <div class="invalid-feedback">
                               {{ $message }}
                            </div>
@@ -104,9 +94,9 @@
                            <optgroup label="Pilih label">
                               @foreach ($tags as $tag)
                                  @if (in_array($tag->id, $post->tags->pluck('id')->toArray()))
-                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                                    <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
                                  @else
-                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                    <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                                  @endif
                               @endforeach
                            </optgroup>
@@ -117,6 +107,22 @@
                         <input type="text"
                            class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}" readonly>
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                     </div>
+                  </div>
+
+                  <div class="row mb-3">
+                     <div class="col-lg-12">
+                        <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
+                        <div class="input-group">
+                           <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}posts/</span>
+                           <input type="text"
+                              class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug', $post->slug) }}">
+                        </div>
+                        @error('slug')
+                           <div class="invalid-feedback">
+                              {{ $message }}
+                           </div>
+                        @enderror
                      </div>
                   </div>
                  
@@ -156,7 +162,7 @@
                      <div class="col-lg-12 mt-3">
                         @if ($post->file_path && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
                            <div class="image-preview-container">
-                              <img id="image-preview" src="{{ asset($post->file_path) }}" alt="Preview">
+                              <img id="image-preview" src="{{ asset('storage/' . $post->file_path) }}" alt="Preview">
                               <button id="cancel-button" class="btn btn-danger">
                                  <i class="mdi mdi-close" style="font-size: 26px"></i>
                               </button>
@@ -249,7 +255,7 @@
       const slug = document.querySelector('#slug');
 
       title.addEventListener('change', function() {
-         fetch('/posts/checkSlug?title=' + title.value)
+         fetch('/dashboard/posts/checkSlug?title=' + title.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
       });
@@ -260,12 +266,45 @@
             // theme: 'bootstrap-5',
             placeholder: 'Pilih Tag',
             allowClear: true,
+            tags: true,
          });
          $('#category_id').select2({
             theme: 'bootstrap-5'
          });
          $('#status').select2({
             theme: 'bootstrap-5'
+         });
+         $('#tags-multi-select').select2({
+            // theme: 'bootstrap-5',
+            placeholder: 'Pilih Tag',
+            allowClear: true,
+            tags: true,
+         });
+         $('#category_id').select2({
+            theme: 'bootstrap-5'
+         });
+         // $('#category_id').on('change', function() {
+         //    var url = "{{ config('app.url') }}/" + this.value + "/";
+         //    $('#slug-input-addon').text(url);
+         // });
+
+         $('#category_id').change(function() {
+            var selectedText = $('option:selected', this).text();
+            var selectedSlug = $('option:selected', this).data('slug');
+            console.log("selectedText : " + selectedText);
+            var url = "{{ config('app.url') }}" + selectedSlug + "/";
+            $('#slug-input-addon').text(url);
+            var fileExtension;
+            if (selectedText == 'Ebook') {
+               $('#label-file').text('Ebook File (PDF)')
+               fileExtension = ['pdf'];
+            } else if (selectedText == 'Video' || selectedText == 'Musik' || selectedText == 'Audio') {
+               $('#label-file').text('Media Pilihan')
+               fileExtension = ['mp4', 'mp3']; // tambahkan format file media yang diperbolehkan di sini
+            } else {
+               $('#label-file').text('Image Pilihan')
+               fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+            }
          });
       });
 

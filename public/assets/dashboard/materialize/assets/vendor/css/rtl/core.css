@@ -12636,9 +12636,9 @@ html:not([dir="rtl"]) .card .card-separator {
 .accordion-item {
     transition: 0.3s all cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: margin-top, margin-bottom, border-radius, border;
-    box-shadow: 0px 2px 1px -1px rgba(76, 78, 100, 0.2),
+    /* box-shadow: 0px 2px 1px -1px rgba(76, 78, 100, 0.2),
         0px 1px 1px 0px rgba(76, 78, 100, 0.14),
-        0px 1px 3px 0px rgba(76, 78, 100, 0.12);
+        0px 1px 3px 0px rgba(76, 78, 100, 0.12); */
     border: 0;
 }
 .accordion-item:not(.active):not(:first-child) .accordion-header {

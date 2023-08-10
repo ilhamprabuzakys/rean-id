@@ -19,6 +19,11 @@ function echoTime($var_time)
     $updatedAt = $var_time;
     
     $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
+    // if ($diffInSeconds < 60) {
+    //     $time = 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
+    // } else {
+    //     $time = $updatedAt->format('l, d F Y - H:i:s');
+    // }
     $time = $updatedAt->format('l, d F Y - H:i:s');
     echo $time;
 }

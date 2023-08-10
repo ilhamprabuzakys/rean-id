@@ -167,7 +167,7 @@
                            </button>
                         </div>
                      </div>
-                     <script>
+                     {{-- <script>
                         function readImage(input) {
                            if (input.files && input.files[0]) {
                               var reader = new FileReader();
@@ -200,7 +200,7 @@
                            $('.image-preview-container').hide();
                            $(this).hide();
                         });
-                     </script>
+                     </script> --}}
                   </div>
                   <div class="row mb-3">
                      <div class="col-lg-12">
@@ -252,7 +252,7 @@
       const slug = document.querySelector('#slug');
 
       title.addEventListener('change', function() {
-         fetch('/posts/checkSlug?title=' + title.value)
+         fetch('/dashboard/posts/checkSlug?title=' + title.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
       });
@@ -277,7 +277,7 @@
             var selectedText = $('option:selected', this).text();
             var selectedSlug = $('option:selected', this).data('slug');
             console.log("selectedText : " + selectedText);
-            var url = "{{ config('app.url') }}/" + selectedSlug + "/";
+            var url = "{{ config('app.url') }}" + selectedSlug + "/";
             $('#slug-input-addon').text(url);
             var fileExtension;
             if (selectedText == 'Ebook') {

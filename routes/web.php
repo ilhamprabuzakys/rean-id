@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EbookController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingController;
@@ -41,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
             Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
             Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+            Route::resource('/events', EventController::class)->except(['show']);
+            Route::resource('/ebooks', EbookController::class)->except(['show']);
+            Route::get('/coordinates/json', [Coordinates::class, 'json'])->name('events.map');
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
             Route::resource('/users', UserController::class);
         });
@@ -82,6 +87,7 @@ Route::middleware(['auth'])->group(function () {
 Route::controller(LandingController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/all-post', 'all_post')->name('home.all_post');
+    Route::get('/semua-postingan', 'semua_postingan')->name('home.semua_postingan');
     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
     Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
     Route::get('/cns-radio', 'cns_radio')->name('home.cns');

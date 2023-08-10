@@ -139,13 +139,16 @@
                   <a href="{{ route('home.all_post') }}" class="nav-link">Artikel</a>
                </li>
                <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.semua_postingan') }}" class="nav-link {{ str_starts_with(request()->url(), route('home.semua_postingan')) ? 'active open' : '' }}">Data</a>
+               </li>
+               <li class="nav-item me-lg-2">
                   <a href="{{ route('home.all_post') }}" class="nav-link">Events</a>
                </li>
                <li class="nav-item me-lg-2">
-                  <a href="{{ route('home.cns') }}" class="nav-link">CNS Radio</a>
+                  <a href="{{ route('home.cns') }}" class="nav-link {{ request()->url() == route('home.cns') ? 'active' : '' }}">CNS Radio</a>
                </li>
                <li class="nav-item me-lg-2">
-                  <a href="{{ route('home.contact') }}" class="nav-link">Contact Us</a>
+                  <a href="{{ route('home.contact') }}" class="nav-link {{ request()->url() == route('home.contact') ? 'active' : '' }}">Contact Us</a>
                </li>
 
                <!--begin:demos-->

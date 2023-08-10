@@ -1,8 +1,5 @@
 @extends('landing.layouts.template')
 @section('navbar')
-   <img src="{{ asset('assets/img/rean-logo-brand.png') }}" alt="" class="img-fluid me-3" style="
-    width: 70px;
-">
    <img src="{{ asset('assets/img/rean-text-logo-dark.png') }}" alt="" class="img-fluid">
 @endsection
 @section('content')
@@ -21,10 +18,10 @@
                         {{ $post->title }}
                      </h2>
                      <div class="d-flex pt-2 mb-0 small align-items-center">
-                        @if (auth()->user()->avatar == null)
+                        @if ($post->user->avatar == null)
                            <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="" class="width-3x height-3x rounded-circle me-2">
                         @else
-                           <img src="{{ asset(auth()->user()->avatar) }}" alt="" class="width-3x height-3x rounded-circle me-2">
+                           <img src="{{ asset($post->user->avatar) }}" alt="" class="width-3x height-3x rounded-circle me-2">
                         @endif
                         <span class="text-body-secondary d-inline-block">By <a href="blog-article-basic.html#!"
                               class="text-dark">{{ $post->user->name }}</a></span>
@@ -43,7 +40,7 @@
         height="120" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M800 240H0L800 0V240Z" fill="#532fff" />
     </svg> --}}
-      <svg class="position-absolute start-0 bottom-0" style="color: var(--bs-body-bg);"
+      {{-- <svg class="position-absolute start-0 bottom-0" style="color: var(--bs-body-bg);"
          fill="#532fff" width="100%" height="80" preserveAspectRatio="none"
          viewBox="0 0 1440 150">
          <path
@@ -55,7 +52,7 @@
          <path
             d="M0,106.034486 C156.666667,132.662839 291.666667,129.406134 405,96.2643713 C575,46.5517277 637,36.0308187 861,62.6436817 C1085,89.2565447 1215,51.1586623 1286,27.2988541 C1333.33333,11.3923153 1384.66667,2.2926973 1440,1.13686838e-13 L1440,150 L0,150 L0,106.034486 Z"
             fill-opacity="0.3"></path>
-      </svg>
+      </svg> --}}
       {{-- <svg class="position-absolute start-0 bottom-0" style="color: var(--bs-body-bg); rotate: 180deg"
          fill="#532fff" width="100%" height="80" preserveAspectRatio="none"
          viewBox="0 0 1440 150">
@@ -73,8 +70,9 @@
    </section>
    <!--/.Article header-end-->
 
-   <section class="position-relative border-bottom">
+   <section class="position-relative border-bottom post-detail">
       <div class="container pb-9 pb-lg-11">
+        <div class="post-detail-img-container">
          @if ($post->file_path !== null && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
             <img src="{{ asset('storage/' . $post->file_path) }}" alt=""
                class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
@@ -82,6 +80,7 @@
             <img src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}" alt=""
                class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
          @endif
+        </div>
 
          <div class="row">
             <div class="col-xl-9 mx-auto">
@@ -219,6 +218,38 @@
                 </form> --}}
             </div>
          </div>
+      </div>
+   </section>
+
+   <section class="position-relative border-bottom comment-section">
+      <div class="container pb-9 pb-lg-11">
+         <div class="row mt-3">
+            <div class="col-lg-12">
+               <div id="disqus_thread"></div>
+
+               <script>
+                  /**
+                   *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                   *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                  /*
+                  var disqus_config = function () {
+                  this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                  this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                  };
+                  */
+                  (function() { // DON'T EDIT BELOW THIS LINE
+                     var d = document,
+                        s = d.createElement('script');
+                     s.src = 'https://rean-id.disqus.com/embed.js';
+                     s.setAttribute('data-timestamp', +new Date());
+                     (d.head || d.body).appendChild(s);
+                  })();
+               </script>
+               <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              
+            </div>
+         
+         </div>         
       </div>
    </section>
 

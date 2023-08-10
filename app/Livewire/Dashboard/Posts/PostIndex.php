@@ -54,7 +54,7 @@ class PostIndex extends Component
         })->paginate($this->paginate) 
         : Post::with(['tags', 'user', 'category'])->latest('updated_at')
         ->globalSearch($this->search)
-        ->when($this->filter_category,   function($query) {
+        ->when($this->filter_category, function($query) {
             return $query->where('category_id', $this->filter_category);
         })->when($this->filter_status,   function($query) {
             return $query->where('status', $this->filter_status);

@@ -19,13 +19,14 @@ class TagIndex extends Component
         "alertSuccess",
         "alertError",
         "alertInfo",
+        'statusUpdated' => 'handleStatusUpdate'
     ];
 
     public $search;
     public $popularityFilter = 0;
     public $paginate = 5;
     
-    public $name, $slug, $tag_id, $data_posts;
+    public $name, $tag_id, $data_posts;
     public $statusUpdate = false;
 
     protected $updatesQueryString = ['search'];
@@ -57,9 +58,9 @@ class TagIndex extends Component
         $this->emit("edit",$tag);
     }
 
-    public function delete()
+    public function destroy()
     {
-        $tag = Tag::findOrFail($this->tag_id)->delete();
+        $tag = Tag::findOrFail($this->tag_id);
         $name = $tag->name;
         $tag->delete();
         \session()->flash('success', "Tag " .$name. " berhasil dihapus");
@@ -78,6 +79,11 @@ class TagIndex extends Component
     public function errorUpdate(){
         \session()->flash("error","Gagal mengubah tag");
         $this->statusUpdate = false;
+    }
+
+    public function handleStatusUpdate($statusUpdate)
+    {
+        $this->statusUpdate = $statusUpdate;
     }
 
     public function postinganTerkait(int $tag_id)
@@ -101,7 +107,6 @@ class TagIndex extends Component
     public function resetInput()
     {
         $this->name = '';
-        $this->slug = '';
     }
 
     public function closeModal()

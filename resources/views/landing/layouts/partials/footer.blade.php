@@ -60,20 +60,14 @@
                        </nav>
                    </div>
                    <div class="col-md-4 mb-5 mb-md-0">
-                       <h5 class="mb-4 text-white">Resources</h5>
+                       <h5 class="mb-4 text-white">Data</h5>
                        <nav class="nav flex-column">
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Bootstrap</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Wrapbootstrap</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Babel</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Browserify</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Greensock</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Javascript</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Gulp</a>
-                           <a href="index-landing-business.html#" class="nav-link p-0">Sass</a>
+                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Artikel</a>
+                           <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Pengumuman</a>
                        </nav>
                    </div>
                    <div class="col-md-4">
-                       <h5 class="mb-4 text-white">Company</h5>
+                       <h5 class="mb-4 text-white">Informasi</h5>
                        <nav class="nav flex-column">
                            <a href="index-landing-business.html#" class="nav-link p-0 mb-3">About us</a>
                            <a href="index-landing-business.html#" class="nav-link p-0 mb-3">Career</a>

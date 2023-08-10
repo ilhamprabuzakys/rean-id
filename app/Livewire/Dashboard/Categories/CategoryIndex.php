@@ -57,6 +57,7 @@ class CategoryIndex extends Component
     protected $messages = [
         'name.required' => 'Nama harus terisi.',
         'name.min' => 'Nama minimal harus 4 karakter.',
+        'name.unique' => 'Kategori dengan nama ini sudah ada.',
     ];
  
     protected $validationAttributes = [
@@ -86,7 +87,7 @@ class CategoryIndex extends Component
     public function update()
     {
         $this->validate();
-        $category = Category::create([
+        Category::find($this->category_id)->update([
             'name' => $this->name,
             'slug' => Str::slug($this->name),
         ]);

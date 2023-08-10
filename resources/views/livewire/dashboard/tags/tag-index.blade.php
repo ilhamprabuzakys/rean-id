@@ -3,6 +3,12 @@
         <div class="col-12">
            <div class="card shadow-md">
               <div class="card-header">
+                @if ($statusUpdate == true) 
+                <h3 class="my-2">Perbarui Label</h3>
+                @else
+                <h3 class="my-2">Tambah Label</h3>
+                @endif
+                <hr class="mt-3 mb-4">
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
                     <i class="mdi mdi-check-circle-outline me-3"></i>
@@ -20,16 +26,13 @@
                     </button>
                     </div>
                 @endif
-
                 @if ($statusUpdate == true) 
-                <h3 class="my-2">Perbarui Label</h3>
-                <hr class="mt-3 mb-4">
-                <livewire:dashboard.tags.tag-update />
+                <livewire:dashboard.tags.tag-update :statusUpdate="$statusUpdate"/>
                 @else
-                <h3 class="my-2">Tambah Label</h3>
                 <hr class="mt-3 mb-4">
                 <livewire:dashboard.tags.tag-create />
                 @endif
+
                 <hr class="mt-3 mb-4">
                  <div class="row justify-content-between">
                     <div class="col-lg-1 col-md-2 col-sm-2 d-flex justify-content-start">

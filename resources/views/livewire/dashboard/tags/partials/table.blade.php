@@ -31,7 +31,7 @@
                @endphp
                <th scope="row">{{ $loop->iteration + ($paginate * ($tags->currentPage()-1)) }}</th>
                <td>
-                  <a href="{{ route('tags.show', $tag) }}" class="text-decoration-none text-secondary">{{ $tag->name }}</a>
+                  {{ $tag->name }}
                </td>
                <td>{{ $tag->posts->count() }}</td>
                <td>{{ $time }}</td>

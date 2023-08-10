@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Cache;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -73,8 +74,13 @@ class PostController extends Controller
         ];
 
         $customMessage = [
-            'category_id.required' => 'Category field is required',
-            'file_path.mimes' => 'The file must be a valid audio or video format (MP3, MP4, MKV).',
+            'title.required' => 'Judul harus diisi',
+            'title.unique' => 'Postingan dengan judul ini sudah ada',
+            'slug.required' => 'Slug harus diisi',
+            'slug.unique' => 'Postingan dengan slug ini sudah ada',
+            'body.required' => 'Body harus diisi',
+            'category_id.required' => 'Kategori wajib dipilih',
+            'file_path.mimes' => 'File harus berada dalam format (MP3, MP4, MKV).',
         ];
 
         $validator = Validator::make($request->all(), $rules, $customMessage);
@@ -90,8 +96,6 @@ class PostController extends Controller
         // Validasi File Upload
         $media = '';
         if ($request->file('file_path')) {
-            // $validatedData['file_path'] = $request->file('file_path')->store('posts-file');
-
             $file = $request->file('file_path');
             $extension = $file->getClientOriginalExtension();
             $originalName = $file->getClientOriginalName();
@@ -141,11 +145,6 @@ class PostController extends Controller
         $mediaPost->file_path = $file_path; // Ganti dengan path file yang sesuai
         $mediaPost->user_id = $authId; // Ganti dengan path file yang sesuai
         $mediaPost->save();
-        // Alert::success('Data Postingan berhasil ditambahkan!', 'Tabel berhasil diperbarui.');
-        // Insert Media
-        // dd($file_path, auth()->user()->id, $post->id);
-
-
 
         toast('Data Postingan berhasil ditambahkan!', 'success');
 
@@ -190,32 +189,81 @@ class PostController extends Controller
             'title' => ['required', Rule::unique('posts')->ignore($post->id)],
             'slug' => ['required', Rule::unique('posts')->ignore($post->id)],
             'body' => ['required'],
+            'file_path' => ['file', 'mimes:mp4,mkv,mp3,jpg,jpeg,png,svg', 'max:102400'],
             'category_id' => ['required'],
             'user_id' => ['required'],
         ];
 
-        $validator = Validator::make($request->all(), $rules, [
+        $customMessage = [
             'category_id.required' => 'Category field is required',
-        ]);
+            'file_path.mimes' => 'The file must be a valid audio or video format (MP3, MP4, MKV).',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $customMessage);
 
         if ($validator->fails()) {
-            dd($validator->errors());
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $validatedData = $validator->validated();
-        $validatedData['status'] = $request->input('status');
-        $post->update($validatedData);
-        if ($request->has('tags')) {
-            $post->tags()->sync($request->input('tags'));
-            $post->save();
+        $authId = auth()->user()->id;
+        $file_path = '';
+        
+        if ($request->hasFile('file_path')) {
+            // Hapus file lama jika ada
+            if ($post->file_path) {
+                Storage::delete($post->file_path);
+            }
+
+            // Upload file baru
+            $file = $request->file('file_path');
+            $originalName = $file->getClientOriginalName();
+            $timestamp = Carbon::now()->format('H:i:s_l_Y');
+
+            $newFileName = $timestamp . '_' . $originalName;
+            $validatedData['file_path'] = $file->storeAs('posts-file', $newFileName);
         }
 
+        $validatedData['date'] = date('Y-m-d');
+        $validatedData['title'] = Str::of($request->input('title'))->title();
+        
+        if (auth()->user()->role != 'member') {
+            $validatedData['status'] = 'approved';
+        }
 
-        // Alert::success('Data Postingan berhasil diperbarui!', 'Tabel berhasil diperbarui.');
-        toast('Data postingan berhasil diperbarui!', 'success');
+        $post->update($validatedData);
 
-        return redirect()->route('posts.index')->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diperbarui!</b>");
+        if ($request->has('tags')) {
+            $inputTags = $request->input('tags');
+            $tagIds = [];
+        
+            foreach ($inputTags as $tagName) {
+                $tag = Tag::firstWhere('name', $tagName);
+        
+                if (!$tag) {
+                    $tag = Tag::create(['name' => $tagName]);
+                }
+        
+                $tagIds[] = $tag->id;
+            }
+        
+            $post->tags()->sync($tagIds);
+        }
+
+        $mediaPost = MediaPost::where('post_id', $post->id)->first();
+
+        if (!$mediaPost) {
+            $mediaPost = new MediaPost();
+            $mediaPost->post_id = $post->id;
+        }
+
+        $mediaPost->file_path = $validatedData['file_path'] ?? $post->file_path;
+        $mediaPost->user_id = $authId;
+        $mediaPost->save();
+
+        toast('Data Postingan berhasil diupdate!', 'success');
+
+        return redirect()->route('posts.index')->with('message', "Data Postingan <b>{$post->title}</b> telah berhasil <b>diupdate!</b>");
     }
 
     public function destroy(Post $post)

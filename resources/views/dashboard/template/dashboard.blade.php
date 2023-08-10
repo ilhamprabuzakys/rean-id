@@ -74,6 +74,7 @@
 
    @stack('head')
    @stack('style')
+   @stack('styles')
    @stack('css')
    @livewireStyles
    {{-- <livewire:styles /> --}}
@@ -163,7 +164,8 @@
    @stack('page-js')
    
    <!-- Pace JS -->
-   <script data-pace-options='{ "ajax": false }' src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
+   <script data-pace-options='{ "restartOnPushState": false, "restartOnRequestAfter": false }' src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
+
    @livewireScripts
    {{-- <livewire:scripts /> --}}
    <script>

@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "algolia/algoliasearch-client-php": "^1.27",
+        "asantibanez/livewire-charts": "^2.5",
         "cviebrock/eloquent-sluggable": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",

@@ -5,14 +5,21 @@ namespace App\Livewire\Dashboard\Tags;
 use App\Models\Tag;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class TagUpdate extends Component
 {
     protected $listeners = [
-        "edit"
+        "edit",
     ];
 
     public $name, $tagId;
+    public $statusUpdate;
+
+    public function mount($statusUpdate)
+    {
+        $this->statusUpdate = $statusUpdate;
+    }
     public function render()
     {
         return view('livewire.dashboard.tags.tag-update');
@@ -25,6 +32,9 @@ class TagUpdate extends Component
 
     public function update(){
         $tag = Tag::find($this->tagId);
+        $this->validate([
+            "name" => ["required", "min:3", Rule::unique('tags')->ignore($this->tagId)]
+        ]);
 
         if ($tag) {
             $oldname = $tag->name;
@@ -50,8 +60,14 @@ class TagUpdate extends Component
         $this->tagId = null;
     }
 
+    public function handleStatusUpdate($statusUpdate)
+    {
+        $this->statusUpdate = $statusUpdate;
+    }
+
     public function cancelUpdate()
     {
-        $this->statusUpdate = false;
+        $this->emit('statusUpdated', false);
     }
+    
 }

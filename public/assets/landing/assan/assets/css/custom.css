@@ -1,0 +1,27 @@
+article .tag-post-item {
+   font-size: 13px;
+   padding: 5px 10px;
+}
+
+article .img-post-item {
+   max-height: 200px;
+   min-height: 200px;
+   min-width: 375px;
+   max-width: 375px;
+   object-fit: cover;
+}
+
+section.post-detail .post-detail-img-container {
+   max-width: 1156px
+}
+
+section.post-detail .post-detail-img-container img {
+   width: -webkit-fill-available;
+   height: 500px;
+   object-fit: cover;
+}
+
+.swiper .cns-swiper img {
+   width: -webkit-fill-available;
+   height: 600px;
+}

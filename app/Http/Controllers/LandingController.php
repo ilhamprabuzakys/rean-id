@@ -51,6 +51,13 @@ class LandingController extends Controller
         ], compact('posts', 'categories', 'firstPost'));
     }
 
+    public function semua_postingan()
+    {
+        return view('landing.home.posts.posts-all', [
+            'title' => 'Daftar Postingan',
+        ]);
+    }
+
     public function category_list()
     {
         $categories = Category::oldest('name')->get();

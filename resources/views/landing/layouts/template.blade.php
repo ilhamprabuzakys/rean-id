@@ -28,25 +28,45 @@
         <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/swiper-bundle.min.css') }}">
         <!--G-lightbox-->
         <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/glightbox.min.css') }}">
+        <!--AOS-->
+        <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/aos.css') }}">
         <!-- Main CSS -->
         <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/css/theme.min.css') }}">
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/css/custom.css') }}">
 
         <title>{{ config('app.name') }}</title>
         <style>
-            ::-webkit-scrollbar {
+            /* ::-webkit-scrollbar {
                 width: 5px;
             }
 
             ::-webkit-scrollbar-track {
                 display: none;
-                /* background-color: transparent; */
+                background-color: transparent;
             }
 
             ::-webkit-scrollbar-thumb {
                 background-color: #b3cbf8;
+            } */
+
+            body {
+                overflow: overlay;
             }
+            ::-webkit-scrollbar {
+                width: 5px;
+                background: transparent; 
+            }
+
+
+            ::-webkit-scrollbar-thumb {
+                border-radius: 25px;
+                background-color: #b3cbf8;
+            }
+
         </style>
         @stack('styles')
+        @livewireStyles
     </head>
 
     <body>
@@ -95,9 +115,37 @@
         
         <!--begin:Splitting -->
         <script src="{{ asset('assets/landing/assan/assets/vendor/node_modules/js/splitting.min.js') }}"></script>
-
         
+        <!--begin:AOS -->
+        <script src="{{ asset('assets/landing/assan/assets/vendor/node_modules/js/aos.js') }}"></script>
+        
+        
+        @livewireScripts
         @stack('scripts')
+        {{-- <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                AOS.init();
+            });
+            // Panggil AOS.init() kembali saat komponen Livewire dirender ulang
+            Livewire.on('initAOS', function() {
+                AOS.refresh();
+                AOS.init();
+            });
+            Livewire.on('refreshAOS', function() {
+                AOS.refresh();
+            });
+        </script> --}}
+        <script>
+            // Cara mengatasi bug AOS di livewire itu pake INIT aja dan kaitkan ke render di komponen
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     AOS.init();
+            // });
+            Livewire.on('refreshAOS', function() {
+                console.log('AOS Refreshed');
+                AOS.init();
+                // AOS.refresh();
+            });
+        </script>
     </body>
 
 </html>

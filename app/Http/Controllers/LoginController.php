@@ -59,8 +59,8 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        $ip = $request->getClientIp();
-        // $ip = $this->getPublicIP();
+        // $ip = $request->getClientIp();
+        $ip = $this->getPublicIP();
         // $ip = '110.136.109.16';
         $location = Location::get($ip);
         // dd($ip, $location);

@@ -1,5 +1,5 @@
 <!--  Large modal example -->
-<div wire:ignore.self class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog">
+<div wire:ignore.self class="modal fade" id="deleteTagModal" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-header">

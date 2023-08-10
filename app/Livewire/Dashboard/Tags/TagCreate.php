@@ -5,10 +5,11 @@ namespace App\Livewire\Dashboard\Tags;
 use App\Models\Tag;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class TagCreate extends Component
 {
-    public $name, $slug;
+    public $name;
 
     public function render()
     {
@@ -18,7 +19,11 @@ class TagCreate extends Component
     public function store()
     {
         $this->validate([
-            "name" => "required|min:3"
+            "name" => ["required", "min:3", Rule::unique('tags')]
+        ], [
+            'name.required' => 'Nama harus diisi',
+            'name.min' => 'Nama minimal itu harus 3 karakter',
+            'name.unique' => 'Label dengan nama ini sudah ada'
         ]);
         $tag = Tag::create([
             "name" => $this->name,
