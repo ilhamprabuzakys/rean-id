@@ -3,6 +3,8 @@
 namespace App\Livewire\Dashboard\News;
 
 use App\Models\News;
+use DOMDocument;
+use Illuminate\Support\Facades\File;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -67,9 +69,23 @@ class NewsIndex extends Component
 
     public function destroy()
     {
-        $model = News::findOrFail($this->model_id);
-        $name = $model->title;
-        $model->delete();
+        $news = News::findOrFail($this->model_id);
+
+        // Hapus image yang diupload sama Summernote.
+        $dom = new DOMDocument();
+        $dom->loadHTML($news->body, 9);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+            $path = \public_path();
+            $path .= $img->getAttribute('src');
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+
+        $name = $news->title;
+        $news->delete();
         $this->emit('swalS', 'Penghapusan Berita', 'Data News ' . $name . ' berhasil dihapus');
     }
 

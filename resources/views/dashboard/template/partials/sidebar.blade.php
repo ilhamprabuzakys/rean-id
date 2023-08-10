@@ -127,12 +127,12 @@
             <div data-i18n="Events">Events</div>
          </a>
          <ul class="menu-sub">
-            <li class="menu-item {{ str_starts_with(request()->url(), route('events.index')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('events.index') ? 'active' : '' }}">
                <a href="{{ route('events.index') }}" class="menu-link">
                   <div data-i18n="Semua">Semua</div>
                </a>
             </li>
-            <li class="menu-item {{ str_starts_with(request()->url(), route('events.create')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('events.create') ? 'active' : '' }}">
                <a href="{{ route('events.create') }}" class="menu-link">
                   <div data-i18n="Tambah Data">Tambah Data</div>
                </a>
@@ -145,12 +145,12 @@
             <div data-i18n="Ebooks">Ebooks</div>
          </a>
          <ul class="menu-sub">
-            <li class="menu-item {{ str_starts_with(request()->url(), route('ebooks.index')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('ebooks.index') ? 'active' : '' }}">
                <a href="{{ route('ebooks.index') }}" class="menu-link">
                   <div data-i18n="Semua">Semua</div>
                </a>
             </li>
-            <li class="menu-item {{ str_starts_with(request()->url(), route('ebooks.create')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('ebooks.create') ? 'active' : '' }}">
                <a href="{{ route('ebooks.create') }}" class="menu-link">
                   <div data-i18n="Tambah Data">Tambah Data</div>
                </a>
@@ -163,12 +163,12 @@
             <div data-i18n="Berita">Berita</div>
          </a>
          <ul class="menu-sub">
-            <li class="menu-item {{ str_starts_with(request()->url(), route('news.index')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('news.index') ? 'active' : '' }}">
                <a href="{{ route('news.index') }}" class="menu-link">
                   <div data-i18n="Semua">Semua</div>
                </a>
             </li>
-            <li class="menu-item {{ str_starts_with(request()->url(), route('news.create')) ? 'active' : '' }}">
+            <li class="menu-item {{ request()->url() == route('news.create') ? 'active' : '' }}">
                <a href="{{ route('news.create') }}" class="menu-link">
                   <div data-i18n="Tambah Data">Tambah Data</div>
                </a>

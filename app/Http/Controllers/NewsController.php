@@ -21,19 +21,21 @@ class NewsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
-    public function show(News $news)
-    {
-        //
-    }
+    // public function show(News $news)
+    // {
+    //     //
+    // }
 
     public function edit(News $news)
     {
-        //
+        return view('dashboard.news.edit', [
+            'title' => 'Perbarui Berita',
+        ], compact('news'));
     }
 
     public function update(Request $request, News $news)

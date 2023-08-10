@@ -3,6 +3,8 @@
 namespace App\Livewire\Dashboard\News;
 
 use App\Models\News;
+use DOMDocument;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 use Livewire\Component;
@@ -65,6 +67,26 @@ class NewsCreate extends Component
     {
         $this->validate();
 
+        if ($this->file_path) {
+            // Jika ada avatar baru yang diunggah...
+            $path = $this->file_path->store('news');  
+            $this->file_path = "storage/" . $path;
+        } 
+
+        $content = $this->body;
+        $dom = new DOMDocument();
+        $dom->loadHTML($content, 9);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+            $image_name = "/storage/summernotes/" . time() . $key . '.png';
+            \file_put_contents(\public_path() . $image_name, $data);
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
+        }
+        $content = $dom->saveHTML();
+        $this->body = $content;
         News::create($this->all());
         
         $this->emit('swalS', 'Penambahan Data', 'Data berhasil ditambahkan');
@@ -97,3 +119,4 @@ class NewsCreate extends Component
         ]);
     }
 }
+ 

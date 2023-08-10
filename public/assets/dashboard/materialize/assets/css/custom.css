@@ -60,3 +60,12 @@ img.post-image-size-modal {
    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
  }
  
+
+ /* summernote */
+ .note-modal, .note-modal .open {
+   z-index: 99999 !important;
+ }
+
+ .note-modal-footer {
+   height: 60px !important;
+}

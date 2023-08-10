@@ -55,7 +55,10 @@
    <script>
       $(document).ready(function() {
          $('#body').summernote({
-            height: 200,
+            placeholder: 'Isi body dari Konten Berita',
+            height: 300,
+            tabsize: 2,
+            lang: 'id-ID',
             callbacks: {
                onChange: function(contents, $editable) {
                   @this.set('body', contents);
