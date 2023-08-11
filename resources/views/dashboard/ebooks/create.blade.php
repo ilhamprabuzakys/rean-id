@@ -4,9 +4,9 @@
 @section('content')
    <h4 class="fw-bold py-3 mb-4">
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-      Daftar Ebook
-      
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Daftar Ebook /</a>
+      Buat Ebook
    </h4>
-   <livewire:dashboard.ebooks.ebook-index  :user="auth()->user()"/>
+   <livewire:dashboard.ebooks.ebook-create  :user="auth()->user()->id"/>
 @endsection
 

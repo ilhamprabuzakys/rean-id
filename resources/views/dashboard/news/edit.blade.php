@@ -5,7 +5,8 @@
       <a class="text-muted fw-light" href="{{ route('news.index') }}">Berita /</a>
       Perbarui Berita
    </h4>
-   @livewire('dashboard.news.news-update', ['news' => $news, 'user' => auth()->user()->id])
+   {{-- @livewire('dashboard.news.news-update', ['news' => $news, 'user' => auth()->user()->id]) --}}
+   <livewire:dashboard.news.news-update :$news :user="auth()->user()->id" />
 @endsection
 @push('scripts')
    <script>

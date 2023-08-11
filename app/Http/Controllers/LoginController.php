@@ -103,7 +103,7 @@ class LoginController extends Controller
                 )->withInput();
             }
             
-            if ($user->status == 0) {
+            if ($user->active == 0) {
                 // throw ValidationException::withMessages([
                 //     'email' => ['Akun anda belum teraktivasi.']
                 // ]);

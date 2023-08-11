@@ -4,21 +4,13 @@ namespace App\Livewire\Dashboard\News;
 
 use App\Models\News;
 use DOMDocument;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Livewire\WithPagination;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class NewsCreate extends Component
 {
-    use WithPagination, WithFileUploads;
-    protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = [
-        "swalS",
-        "swalE",
-    ];
+    use WithFileUploads;
 
     public $user_id;
     public $title, $about, $file_path, $body;
@@ -65,6 +57,7 @@ class NewsCreate extends Component
 
     public function store($action = null)
     {
+        // dd($this->all());
         $this->validate();
 
         if ($this->file_path) {
@@ -87,36 +80,19 @@ class NewsCreate extends Component
         }
         $content = $dom->saveHTML();
         $this->body = $content;
-        News::create($this->all());
-        
-        $this->emit('swalS', 'Penambahan Data', 'Data berhasil ditambahkan');
-        $this->emitTo('NewsIndex', 'dataAdded');
+        $news = News::create($this->all());
+        $this->dispatch('swal:modal', [
+            'icon' => 'success',
+            'title' => 'Penambahan Data',
+            'text' => 'Data berhasil ditambahkan',
+        ]);
 
         if ($action == 'save-and-continue') {
-            $this->emitTo('NewsIndex', 'dataAdded');
             return; // Tidak melakukan redirect, hanya menampilkan pesan
         }
 
-        sleep(2);
+        // sleep(2);
         return redirect()->route('news.index');
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-    
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }
  

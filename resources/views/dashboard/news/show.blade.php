@@ -5,5 +5,7 @@
       <a class="text-muted fw-light" href="{{ route('news.index') }}">Berita /</a>
       Detail Berita
    </h4>
-   @livewire('dashboard.news.news-show', ['news' => $news])
+   {{-- @livewire('dashboard.news.news-show', ['news' => $news]) --}}
+   <livewire:dashboard.news.news-show :$news />
+
 @endsection

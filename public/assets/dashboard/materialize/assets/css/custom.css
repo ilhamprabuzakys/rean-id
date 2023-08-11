@@ -69,3 +69,7 @@ img.post-image-size-modal {
  .note-modal-footer {
    height: 60px !important;
 }
+
+.swal2-container {
+   z-index: 99999 !important;
+}

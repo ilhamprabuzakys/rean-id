@@ -7,7 +7,7 @@
                   <label for="title">Judul Berita</label>
                </div>
                <div class="col-10">
-                  <input type="text" id="title" wire:model.defer='title' class="form-control @error('title') is-invalid @enderror" />
+                  <input type="text" id="title" wire:model='title' class="form-control @error('title') is-invalid @enderror" />
                </div>
             </div>
          </div>
@@ -17,7 +17,7 @@
                   <label for="about">Topik</label>
                </div>
                <div class="col-10">
-                  <input type="text" id="about" wire:model.defer='about' class="form-control @error('about') is-invalid @enderror" />
+                  <input type="text" id="about" wire:model='about' class="form-control @error('about') is-invalid @enderror" />
                </div>
             </div>
          </div>
@@ -27,7 +27,7 @@
                   <label for="file_path">Cover</label>
                </div>
                <div class="col-10">
-                  <input type="file" id="file_path" wire:model.defer='file_path' class="form-control @error('file_path') is-invalid @enderror">
+                  <input type="file" id="file_path" wire:model='file_path' class="form-control @error('file_path') is-invalid @enderror">
                </div>
             </div>
          </div>
@@ -38,7 +38,7 @@
                </div>
                <div class="col-12 mt-3">
                   <div wire:ignore>
-                     <textarea name="body" wire:model.defer='body' class="form-control @error('body') is-invalid @enderror" id="body" rows="4" placeholder="Isi berita"></textarea>
+                     <textarea name="body" wire:model='body' class="form-control @error('body') is-invalid @enderror" id="body" rows="4" placeholder="Isi berita"></textarea>
                   </div>
                </div>
             </div>
@@ -62,6 +62,7 @@
             callbacks: {
                onChange: function(contents, $editable) {
                   @this.set('body', contents);
+                  // Livewire.find(Livewire.first()).set('body', contents)
                }
             }
          });

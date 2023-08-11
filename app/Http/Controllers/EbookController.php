@@ -16,12 +16,16 @@ class EbookController extends Controller
 
     public function create()
     {
-        //
+        return view('dashboard.ebooks.create', [
+            'title' => 'Buat Ebook',
+        ]);
     }
 
     public function edit(Ebook $ebook)
     {
-        //
+        return view('dashboard.ebooks.edit', [
+            'title' => 'Edit Ebook',
+        ], compact('ebook'));
     }
 
     public function update(Request $request, Ebook $ebook)

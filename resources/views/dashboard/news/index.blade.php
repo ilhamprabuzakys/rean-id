@@ -5,5 +5,5 @@
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
       Daftar Berita
    </h4>
-   @livewire('dashboard.news.news-index', ['lazy' => true])
+   <livewire:dashboard.news.news-index />
 @endsection

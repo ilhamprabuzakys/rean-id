@@ -55,7 +55,7 @@
    <!-- Pace CSS -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
-   
+
 
 
    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -66,7 +66,7 @@
 
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-   
+
    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.css') }}">
@@ -76,8 +76,8 @@
    @stack('style')
    @stack('styles')
    @stack('css')
-   @livewireStyles
-   {{-- <livewire:styles /> --}}
+   {{-- @livewireStyles --}}
+   <livewire:styles />
 </head>
 
 <body>
@@ -86,7 +86,7 @@
       <div class="layout-container">
 
          <!-- Menu -->
-            @include('dashboard.template.partials.sidebar')
+         @include('dashboard.template.partials.sidebar')
          <!-- / Menu -->
 
          <!-- Layout container -->
@@ -128,7 +128,7 @@
    {{-- <div class="buy-now">
       <a href="https://1.envato.market/materialize_admin" target="_blank" class="btn btn-danger btn-buy-now">Buy Now</a>
    </div> --}}
-   
+
    @include('sweetalert::alert')
    @include('dashboard.template.partials.modal.logout')
    @include('dashboard.template.partials.modal.notifikasi')
@@ -162,52 +162,69 @@
 
    <!-- Page JS -->
    @stack('page-js')
-   
+
    <!-- Pace JS -->
    <script data-pace-options='{ "restartOnPushState": false, "restartOnRequestAfter": false }' src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
 
-   @livewireScripts
-   {{-- <livewire:scripts /> --}}
+   {{-- @livewireScripts --}}
+   <livewire:scripts />
    <script>
-      window.addEventListener('alert', event => { 
-         toastr[event.detail.type](event.detail.message, 
-         event.detail.title ?? ''), toastr.options = {
-               "closeButton": true,
-               "progressBar": true,
-               "debug": true,
-               "newest": true,
-               "preventDuplicates": true,
-               // "showEasing": "swing",
-               // "hideEasing": "linear",
-               // "showMethod": "slideInRight",
-               // "hideMethod": "slideInLeft"
-            }
-      });
 
-      Livewire.on('swalBasic', data => {
-         console.log(data.message);
+      Livewire.on('swal:modal', data => {
          Swal.fire({
-            title: data.title,
-            text: data.text,
-            icon: data.icon,
-            confirmButtonText: 'Okay',
-            timer: 2500,
+            title: data[0].title,
+            text: data[0].text,
+            icon: data[0].icon,
+            confirmButtonText: 'Ok',
+            timer: data[0].duration ?? 2500,
          })
       });
 
-      Livewire.on('swalDelete', data => { 
+      Livewire.on('swal:confirmation', data => {
          Swal.fire({
             title: 'Apakah kamu yakin?',
-            text: "Data " + data.title + " yang dihapus akan dipindahkan ke keranjang sampah!",
+            text: "Data " + data[0].title + " yang dihapus akan dipindahkan ke keranjang sampah!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, saya yakin.',
             cancelButtonText: 'Batalkan.'
-            }).then((result) => {
-               if (result.isConfirmed) {
-               Livewire.emit('deleteConfirmed'); // emit event
+         }).then((result) => {
+            if (result.isConfirmed) {
+               Livewire.dispatch('deleteConfirmed'); // emit event
+               Swal.fire(
+                  'Data Berhasil Dihapus!',
+                  'Data yang kamu pilih berhasil dihapus.',
+                  'success'
+               )
+            }
+         });
+      });
+
+      Livewire.on('swalBasic', data => {
+         Swal.fire({
+            title: data[0].title,
+            text: data[0].text,
+            icon: data[0].icon,
+            confirmButtonText: 'Okay',
+            timer: 2500,
+         })
+      });
+      
+      Livewire.on('swalDelete', data => {
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Data " + data[0].title + " yang dihapus akan dipindahkan ke keranjang sampah!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, saya yakin.',
+            cancelButtonText: 'Batalkan.'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               Livewire.dispatch('deleteConfirmed'); // emit event
                // Swal.fire(
                //    'Data Berhasil Dihapus!', 
                //    'Data yang kamu pilih berhasil dihapus.',
@@ -217,26 +234,20 @@
          });
       });
       
-      /* Livewire.on('swalDelete2', data => {
-         Swal.fire({
-            title: 'Apakah kamu yakin?',
-            text: "Data yang dihapus akan dipindahkan ke keranjang sampah!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, saya yakin.'
-            }).then((result) => {
-               if (result.isConfirmed) {
-               Livewire.emit('deleteConfirmed'); // emit event
-               Swal.fire(
-                  'Data Berhasil Dihapus!', 
-                  'Data yang kamu pilih berhasil dihapus.',
-                  'success'
-               )
-            }
-         })
-      }) */
+      window.addEventListener('alert', event => {
+         toastr[event.detail.type](event.detail.message,
+            event.detail.title ?? ''), toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "debug": true,
+            "newest": true,
+            "preventDuplicates": true,
+            // "showEasing": "swing",
+            // "hideEasing": "linear",
+            // "showMethod": "slideInRight",
+            // "hideMethod": "slideInLeft"
+         }
+      });
    </script>
 </body>
 

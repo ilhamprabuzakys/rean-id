@@ -224,7 +224,8 @@
          <!--/ Notification -->
 
          <!-- User -->
-         @livewire('dashboard.partials.header-user-dropdown')
+         {{-- @livewire('dashboard.partials.header-user-dropdown') --}}
+         <livewire:dashboard.partials.header-user-dropdown />
          {{-- @livewire('dashboard.partials.header-user-dropdown', ['user' => auth()->user()]) --}}
          <!--/ User -->
 

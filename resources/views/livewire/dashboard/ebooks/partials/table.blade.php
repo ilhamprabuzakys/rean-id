@@ -1,5 +1,5 @@
 {{-- @dd($ebooks) --}}
-<table class="dt-complex-header table table-bordered">
+<table class="dt-complex-header table table-bordered" wire:poll.visible.2000ms>
 
     <thead class="table-light">
        <tr>
@@ -36,7 +36,7 @@
                    </a>
  
                    <div class="dropdown-menu dropdown-menu-end">
-                      <a class="dropdown-item text-success text-decoration-none" href="#" wire:click.prefetch="editEbook({{ $ebook->id }})">Edit</a>
+                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('ebooks.edit', $ebook) }}">Edit</a>
                       <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})"">Hapus</a>
                       {{-- <a class="text-danger text-decoration-none dropdown-item" wire:click="findEbook({{ $ebook->id }})" data-bs-toggle="modal" data-bs-target="#deleteEbookModal">Hapus</a> --}}
                    </div>

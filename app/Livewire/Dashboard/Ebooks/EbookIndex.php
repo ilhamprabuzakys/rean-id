@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard\Ebooks;
 
 use App\Models\Ebook;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
 class EbookIndex extends Component
@@ -11,13 +12,6 @@ class EbookIndex extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = [
-        "swalS",
-        "swalD",
-        "swalE",
-        'statusUpdated' => 'handleStatusUpdate',
-        'deleteConfirmed' => 'destroy'
-    ];
     public $search, $filter_date;
     public $paginate;
     public $user;
@@ -36,6 +30,7 @@ class EbookIndex extends Component
         $this->user = $user;
     }
 
+    #[On('data-changed')]
     public function render()
     {
         $query = Ebook::latest('updated_at')->when($this->search, function ($query) {
@@ -55,35 +50,24 @@ class EbookIndex extends Component
         ]);
     }
 
-    public function editEbook($id)
-    {
-        $ebook = Ebook::findOrFail($id);
-        $this->statusUpdate = true;
-        $this->emit('edit', $ebook);
-    }
-
-    public function findEbook($id)
-    {
-        $this->ebook_id = $id;
-    }
-    
     public function deleteConfirmation($id)
     {
         $this->ebook_id = $id;
-        $this->emit('swalD', 'Ebook');
+        $this->dispatch('swal:confirmation', [
+            'title' => 'Ebook',
+        ]);
         // $this->dispatchBrowserEvent('swal-delete');
-
     }
 
+    #[On('deleteConfirmed')]
     public function destroy()
     {
         $ebook = Ebook::findOrFail($this->ebook_id);
         $name = $ebook->title;
         $ebook->delete();
-        $this->emit('swalS', 'Penghapusan Ebook', 'Data Ebook ' . $name . ' berhasil dihapus');
-
     }
 
+    #[On('statusUpdated')]
     public function handleStatusUpdate($statusUpdate)
     {
         $this->statusUpdate = $statusUpdate;
@@ -97,30 +81,5 @@ class EbookIndex extends Component
     public function updatedFilterDate()
     {
         $this->resetPage();
-    }
-
-    public function swalD($title)
-    {
-        $this->emit('swalDelete', [
-            'title' => $title,
-        ]);
-    }
-    
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-    
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

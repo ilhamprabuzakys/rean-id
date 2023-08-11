@@ -2,20 +2,15 @@
 
 namespace App\Livewire\Dashboard\News;
 
-use App\Models\News;
 use DOMDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Livewire\WithPagination;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class NewsUpdate extends Component
 {
-    protected $listeners = [
-        "swalS",
-        "swalE",
-    ];
+    use WithFileUploads;
 
     public $user_id;
     public $title, $about, $file_path, $body;
@@ -68,13 +63,23 @@ class NewsUpdate extends Component
     public function update()
     {
         $validatedData = $this->processFilePath();
-
         $this->deleteRemovedImages();
         $validatedData['body'] = $this->processSummernoteImages();
-
         $validatedData['user_id'] = $this->user_id;
-        $this->news->update($validatedData);
-        $this->emit('swalS', 'Update Data', 'Data berhasil diperbarui');
+        try {
+            $this->news->update($validatedData);
+        } catch (\Throwable $th) {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Error',
+                'text' => 'Terjadi kesalahan saat menyimpan data',
+            ]);    
+        }
+        $this->dispatch('swal:modal', [
+            'icon' => 'success',
+            'title' => 'Update Data',
+            'text' => 'Data berhasil diperbarui',
+        ]);
     }
 
     private function processFilePath()
@@ -149,25 +154,5 @@ class NewsUpdate extends Component
         }
 
         return $dom->saveHTML();
-    }
-
-
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

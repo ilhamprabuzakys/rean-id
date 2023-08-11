@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('pages');
+            $table->text('cover_path')->nullable();
             $table->text('file_path')->nullable();
             $table->string('author');
+            $table->text('body');
             $table->date('published_at');
             $table->foreignId('user_id');
             $table->timestamps();

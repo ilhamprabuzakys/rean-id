@@ -18,7 +18,7 @@ class HeaderUserDropdown extends Component
 
     public function loadUser()
     {
-        $this->emitSelf('refresh-me');
+        $this->dispatch('refresh-me');
         // dd('helo');
         // $this->user = auth()->user()->fresh();  // Muat ulang data pengguna dari database
         $this->user = \App\Models\User::find(auth()->id());

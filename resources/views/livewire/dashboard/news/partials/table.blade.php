@@ -1,5 +1,4 @@
-{{-- @dd($ebooks) --}}
-<table wire:poll.visible.2s  class="dt-complex-header table table-bordered">
+<table class="dt-complex-header table table-bordered" wire:poll.visible.2000ms>
 
     <thead class="table-light">
        <tr>

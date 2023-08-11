@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard\News;
 use App\Models\News;
 use DOMDocument;
 use Illuminate\Support\Facades\File;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Component;
 
@@ -12,15 +13,6 @@ class NewsIndex extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = [
-        "swalS",
-        "swalD",
-        "swalE",
-        'statusUpdated' => 'handleStatusUpdate',
-        'deleteConfirmed' => 'destroy',
-        'dataAdded' => 'checkRefresh'
-    ];
 
     public $paginate = 5;
     public $search, $filter_date;
@@ -32,15 +24,6 @@ class NewsIndex extends Component
         'search' => ['except' => ''],
         'filter_date' => ['except' => ''],
     ];
-
-    public function mount()
-    {
-    }
-
-    public function placeholder()
-    {
-        return view('livewire.dashboard.news.news-index-placeholder');
-    }
 
     public function render()
     {
@@ -56,24 +39,23 @@ class NewsIndex extends Component
         })->paginate($this->paginate);
         $news = $query;
 
-        sleep(2);
         return view('livewire.dashboard.news.news-index', [
             'news' => $news,
         ]);
     }
 
-    public function checkRefresh()
-    {
-        dd('This is called!');
-    }
-
-
     public function deleteConfirmation($id)
     {
+        // dd($id);
         $this->model_id = $id;
-        $this->emit('swalD', 'Berita');
+        $this->dispatch('swal:confirmation', [
+            'title' => 'Hapus Berita',
+        ]);
+
+        
     }
 
+    #[On('deleteConfirmed')]
     public function destroy()
     {
         $news = News::findOrFail($this->model_id);
@@ -93,7 +75,6 @@ class NewsIndex extends Component
 
         $name = $news->title;
         $news->delete();
-        $this->emit('swalS', 'Penghapusan Berita', 'Data News ' . $name . ' berhasil dihapus');
     }
 
     public function handleStatusUpdate($statusUpdate)
@@ -109,30 +90,5 @@ class NewsIndex extends Component
     public function updatedFilterDate()
     {
         $this->resetPage();
-    }
-
-    public function swalD($title)
-    {
-        $this->emit('swalDelete', [
-            'title' => $title,
-        ]);
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

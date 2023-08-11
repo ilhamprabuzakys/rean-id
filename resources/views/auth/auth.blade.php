@@ -54,6 +54,8 @@
    <!-- Vendor -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
 
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css">
+
    <!-- Page CSS -->
    <!-- Page -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/pages/page-auth.css') }}">
@@ -63,18 +65,13 @@
     <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
 
-   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-   <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
-   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/template-customizer.js') }}"></script>
-   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-   <script src="{{ asset('assets/dashboard/materialize/assets/js/config.js') }}"></script>
-
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
    
    @stack('head')
    @stack('style')
    @stack('css')
+   <livewire:styles />
 </head>
 
 <body>
@@ -159,6 +156,7 @@
    </div>
 
    <!-- / Content -->
+   @include('sweetalert::alert')
 
    <!-- Core JS -->
    <!-- build:js assets/vendor/js/core.js -->
@@ -176,6 +174,8 @@
    <!-- endbuild -->
 
    <!-- Vendors JS -->
+   {{-- SweetAlert 2 --}}
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/cleavejs/cleave.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
@@ -193,6 +193,28 @@
    
    <!-- Pace JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
+   <livewire:scripts />
+   <script>
+      // window.addEventListener('swal:modal', event => {
+      //    Swal.fire({
+      //       title: event.detail.title,
+      //       text: event.detail.text,
+      //       icon: event.detail.icon,
+      //       confirmButtonText: 'Okay',
+      //       timer: 2500,
+      //    })
+      // });
+      Livewire.on('swal:modal', data => {
+         log(data[0].duration);
+         Swal.fire({
+            title: data[0].title,
+            text: data[0].text,
+            icon: data[0].icon,
+            // confirmButtonText: 'Okay',
+            timer: data[0].duration ?? 2500,
+         })
+      });
+   </script>
 </body>
 
 </html>
