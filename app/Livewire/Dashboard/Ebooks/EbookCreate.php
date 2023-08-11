@@ -70,15 +70,15 @@ class EbookCreate extends Component
 
         if ($this->file_path) {
             // Jika ada file cover baru yang diunggah...
-            $path = $this->file_path->store('ebooks');  
+            $path = $this->file_path->store('ebooks');
             $this->file_path = "storage/" . $path;
-        } 
-        
+        }
+
         if ($this->cover_path) {
             // Jika ada file cover baru yang diunggah...
-            $path = $this->cover_path->store('cover');  
+            $path = $this->cover_path->store('cover');
             $this->cover_path = "storage/ebooks/" . $path;
-        } 
+        }
 
         $content = $this->body;
         $dom = new DOMDocument();

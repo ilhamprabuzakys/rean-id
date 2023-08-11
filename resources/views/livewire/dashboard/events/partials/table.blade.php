@@ -1,4 +1,4 @@
-<table class="dt-complex-header table table-bordered">
+<table class="dt-complex-header table table-bordered" wire:poll.visible.2000ms>
 
    <thead class="table-light">
       <tr>
@@ -40,12 +40,10 @@
                   </a>
 
                   <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="offcanvas" data-bs-target="#editEvent"
-                        wire:click.prefetch="editEvent({{ $event->id }})">
+                     <a class="dropdown-item text-success text-decoration-none" href="{{ route('events.edit', $event) }}">
                         Edit
                      </a>
-                     <a class="text-danger text-decoration-none dropdown-item" wire:click="findEvent({{ $event->id }})" data-bs-toggle="modal" data-bs-target="#deleteEventModal">Hapus</a>
-                     {{-- <a class="text-danger text-decoration-none dropdown-item" href="{{ route('users.destroy', $user) }}" data-confirm-delete="true">Hapus</a> --}}
+                     <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $event->id }})"">Hapus</a>
                   </div>
                </div>
             </td>

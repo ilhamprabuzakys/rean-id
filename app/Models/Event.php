@@ -10,14 +10,14 @@ class Event extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function scopeGlobalSearch($query, $search)  
+    public function scopeGlobalSearch($query, $search)
     {
         $search = strtolower($search);
-        
+
         return $query
         ->whereRaw("
-        (LOWER(title) LIKE ? OR LOWER(location) LIKE ?)", 
-        ["%{$search}%", "%{$search}%"]) 
+        (LOWER(title) LIKE ? OR LOWER(location) LIKE ?)",
+        ["%{$search}%", "%{$search}%"])
         ->orWhereHas('user', function($q) use ($search){
            $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
          });
@@ -25,6 +25,6 @@ class Event extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

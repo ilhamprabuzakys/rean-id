@@ -9,13 +9,13 @@ class Ebook extends Model
 {
     protected $guarded = ['id'];
 
-    public function scopeGlobalSearch($query, $search)  
+    public function scopeGlobalSearch($query, $search)
     {
         $search = strtolower($search);
-        
+
         return $query
-        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)", 
-        ["%{$search}%", "%{$search}%"]) 
+        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)",
+        ["%{$search}%", "%{$search}%"])
         ->orWhereHas('user', function($q) use ($search){
            $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
          });
@@ -23,6 +23,6 @@ class Ebook extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }

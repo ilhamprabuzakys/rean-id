@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard\Events;
 
 use App\Models\Event;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,19 +12,11 @@ class EventIndex extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = [
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-        "swalS",
-        "swalE",
-    ];
-
     public $search, $filter_date;
     public $paginate = 5;
 
     public $event_id;
-    
+
     protected $updatesQueryString = ['search', 'filter_date'];
     protected $queryString = [
         'search' => ['except' => ''],
@@ -33,14 +26,11 @@ class EventIndex extends Component
     public function mount()
     {
         $this->search = request()->query('search');
-        // $this->filter_date = request()->query('filter_date');
+        $this->filter_date = request()->query('filter_date');
     }
 
     public function render()
     {
-        /* $events = $this->search === null ? Event::with(['user'])->latest('updated_at')->paginate($this->paginate) : 
-        Event::with(['user'])->latest('updated_at')->search($this->search)->paginate($this->paginate); */
-        
         $query = Event::latest('updated_at')
         ->when($this->search, function ($query) {
             return $query->globalSearch($this->search);
@@ -52,9 +42,8 @@ class EventIndex extends Component
 
             return $query->whereDate('created_at', '>=', $startDate)
                          ->whereDate('created_at', '<=', $endDate);
-        })->get();
-        $events = $query;
-        // dd($events);
+        });
+        $events = $query->paginate($this->paginate);
         return view('livewire.dashboard.events.event-index', [
             'events' => $events,
         ]);
@@ -68,7 +57,7 @@ class EventIndex extends Component
             'text' => $text,
         ]);
     }
-    
+
     public function swalE($title, $text)
     {
         $this->emit('swalBasic', [

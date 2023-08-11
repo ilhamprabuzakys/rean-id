@@ -4,11 +4,11 @@
          <div class="modal-header">
             <div class="row justify-content-start">
                <div class="col-3">
-                  <label for="coordinates" class="form-label fs-5">Lokasi Koordinat <sup class="text-danger">*</sup></label>
+                  <label for="coordinates" class="form-label fs-5">Lokasi Acara <sup class="text-danger">*</sup></label>
                </div>
                <div class="col-3">
                   <input type="text"
-                     class="form-control" id="locationInput">
+                     class="form-control" wire:model='location' id="locationInput">
                </div>
                <div class="col-3">
                   <input type="text"
@@ -165,8 +165,8 @@
       reverseGeocode(latitude, longitude, function(road, kelurahan, kecamatan, city, province, fullAddress) {
          document.getElementById('city').value = city;
          document.getElementById('province').value = province;
-         // document.getElementById('locationInput').value = fullAddress;
-         // document.getElementById('location').value = fullAddress;
+         document.getElementById('locationInput').value = fullAddress;
+         document.getElementById('location').value = fullAddress;
 
          // Tampilkan popup di peta dengan alamat yang ditemukan
          let popup = L.popup()
@@ -188,17 +188,11 @@
          theMarker = L.marker([latitude, longitude]).addTo(map);
 
          // Kirim event ke Livewire dengan latitude dan longitude
-         Livewire.emit('coordinatesUpdated', {
-            latitude,
-            longitude
-         });
-
-          // Kirim alamat ke komponen Livewire Anda
-         Livewire.emit('updateLocation', {
-            fullAddress,
-            province,
-            city
-         });
+         @this.set('latitude', latitude);
+        //  @this.set('location', `${fullAddress}`);
+         @this.set('province', province);
+         @this.set('city', city);
+         @this.set('longitude', longitude);
       });
    });
 

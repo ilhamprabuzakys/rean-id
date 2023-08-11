@@ -1,98 +1,108 @@
-<div class="card">
-   <div class="card-header">
-      <h2>
-         <i class="fas fa-plus-circle me-2"></i> Buat Event
-      </h2>
+<div>
+   @include('livewire.dashboard.events.partials.modal.location-picker')
+   <div class="card mb-4">
+      <div class="card-body">
+         <form wire:submit.prevent='store'>
+            <div class="row">
+               <div class="col-12 mb-3">
+                  <label class="mb-2" for="title">Judul Acara <sup class="text-danger">*</sup></label>
+                  <input type="text" wire:model='title' id="title" class="form-control">
+               </div>
+               <div class="col-12 mb-3">
+                  <label class="mb-2" for="location">Lokasi Acara <sup class="text-danger">*</sup></label>
+                  <div class="input-group">
+                     <textarea class="form-control" wire:model='location' id="location" aria-label="With textarea" placeholder="Jl. Moh Toha No. 77" style="height: 60px;"></textarea>
+                     <button class="btn btn-outline-primary waves-effect" type="button" data-bs-target="#locationPickerModal" data-bs-toggle="modal"><i
+                           class="fas fa-map-location-dot me-2"></i>Pilih</button>
+                  </div>
+               </div>
+               <div class="col-6 mb-3">
+                  <label for="merge_date" class="mb-2">Tanggal Acara <sup class="text-danger">*</sup></label>
+                  <div class="input-group">
+                     <input type="text" class="form-control" wire:model='merge_date' id="merge_date">
+                     <span class="input-group-text"><i class="fas fa-calendar-alt text-primary"></i></span>
+                  </div>
+               </div>
+               <div class="col-3 mb-3">
+                  <label for="kota" class="mb-2">Kota <sup class="text-danger">*</sup></label>
+                  <input type="text" class="form-control" wire:model='city' id="city">
+               </div>
+               <div class="col-3 mb-3">
+                  <label for="provinsi" class="mb-2">Provinsi <sup class="text-danger">*</sup></label>
+                  <input type="text" class="form-control" wire:model='province' id="province">
+               </div>
+               <div class="col-6 mb-3">
+                  <label for="organizer" class="mb-2">Penyelengara <sup class="text-danger">*</sup></label>
+                  <div class="input-group">
+                     <input type="text" class="form-control" wire:model='organizer' id="organizer">
+                     <span class="input-group-text"><i class="fas fa-person text-primary"></i></span>
+                  </div>
+               </div>
+               <div class="col-6 mb-3">
+                  <label for="contact_email" class="mb-2">Kontak Email <sup class="text-danger">*</sup></label>
+                  <div class="input-group">
+                     <input type="text" class="form-control" placeholder="kontak@gmail.com" wire:model='contact_email' id="contact_email">
+                     <span class="input-group-text"><i class="fas fa-mail-bulk text-primary"></i></span>
+                  </div>
+               </div>
+               <div class="col-12 mb-3">
+                  <label for="file_path" class="mb-2">Poster Event <sup class="text-danger">*</sup></label>
+                  <div class="input-group">
+                     <input type="file" class="form-control" wire:model='file_path' id="file_path">
+                     <span class="input-group-text"><i class="fas fa-photo-film text-primary"></i></span>
+                  </div>
+               </div>
+               <div class="col-12 mb-5">
+                  <label for="description" class="mb-2">Deskripsi Acara <sup class="text-danger">*</sup></label>
+                  <div wire:ignore>
+                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="4" wire:model='description'></textarea>
+                  </div>
+                  @error('description')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+               <div class="col-6 mb-3">
+                  <div class="form-check form-switch mb-2">
+                     <input class="form-check-input" type="checkbox" wire:model='status' id="status" checked="1">
+                     <label class="form-check-label" for="status">Aktif</label>
+                  </div>
+               </div>
+               <div class="col-6 mb-3 d-flex justify-content-end">
+                  <button class="btn btn-primary" type="button" wire:click='store()'><i class="fas fa-save me-2"></i>Simpan</button>
+               </div>
+            </div>
+         </form>
+      </div>
    </div>
-   {{-- Create or Update Form --}}
-   <div class="card-body">
-      <form wire:submit.prevent='store'>
-         <div class="row g-3">
-            <div class="col-md-6">
-               <div class="row">
-                  <label class="col-sm-3 col-form-label text-sm-end" for="title">Judul Acara</label>
-                  <div class="col-sm-9">
-                     <input type="text" id="title" class="form-control" placeholder="Kampanye Anti Narkoba" wire:model='title' />
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <label class="col-sm-3 col-form-label text-sm-end" for="organizer">Penyelenggara</label>
-                  <div class="col-sm-9">
-                     <input type="text" id="organizer" class="form-control" wire:model='organizer' />
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <label class="col-sm-3 col-form-label text-sm-end" for="description">Deskripsi</label>
-                  <div class="col-sm-9">
-                     <textarea name="description" class="form-control" id="description" rows="4" placeholder="Deskripsi dari keseluruhan event yang akan diadakan" wire:model='description'></textarea>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="mb-3">
-                  <div class="row">
-                     <label class="col-sm-3 col-form-label text-sm-end" for="contact_email">Email</label>
-                     <div class="col-sm-9">
-                        <input type="text" id="contact_email" class="form-control" wire:model='contact_email' placeholder="penyelenggara@gmail.com" />
-                     </div>
-                  </div>
-               </div>
-               <div class="mb-3">
-                  <div class="row">
-                     <label class="col-sm-3 col-form-label text-sm-end" for="province">Provinsi</label>
-                     <div class="col-sm-9">
-                        <input type="text" id="province" class="form-control" placeholder="Jawa Barat" wire:model='province' />
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <label class="col-sm-3 col-form-label text-sm-end" for="merge_date">Tanggal</label>
-                  <div class="col-sm-9">
-                     <input type="text" id="merge_date" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Tanggal acara" wire:model='merge_date'>
-                  </div>
-                  {{-- <div class="col-sm-4">
-                        <input type="datetime" name="" id="">
-                     </div>
-                     <div class="col-sm-4">
-                        <input type="datetime" name="" id="">
-                     </div> --}}
-               </div>
-            </div>
-            <div class="col-md-6">
-               <div class="row">
-                  <label class="col-sm-3 col-form-label text-sm-end" for="city">Kota</label>
-                  <div class="col-sm-9">
-                     <input type="text" id="city" wire:model='city' class="form-control" placeholder="Kota Bandung" />
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-7">
-               <div class="row" style="margin-right: 4rem;">
-                  <label class="col-sm-3 col-form-label text-end" for="location">Lokasi</label>
-                  <div class="col-sm-6">
-                     {{-- <input type="text" id="location" class="form-control" placeholder="Kota Bandung" wire:model='location'> --}}
-                     <textarea name="description" class="form-control" id="location" rows="4" placeholder="Lokasi diadakannya Event" wire:model='location'></textarea>
-                  </div>
-                  <div class="col-sm-3">
-                     <button id="locationPickerBtn" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#locationPickerModal"><i
-                           class="fas fa-location-pin me-2"></i>Pilih</button>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-5">
-               <div class="row">
-                  <div class="col-sm-12 text-end">
-                     <button class="btn btn-primary px-2" type="submit"><i class="fas fa-save me-2"></i>Simpan Event</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </form>
-   </div>
+
+
+   @push('scripts')
+      <script>
+         $("#merge_date").flatpickr({
+            mode: "range",
+            enableTime: true,
+            minDate: "today",
+            minTime: "06:00",
+            maxTime: "22:00",
+         });
+
+         $('#description').summernote({
+            height: 200,
+            tabsize: 2,
+            lang: 'id-ID',
+            callbacks: {
+               onChange: function(contents, $editable) {
+                  @this.set('description', contents);
+               }
+            }
+         });
+
+         window.addEventListener('close-modal', event => {
+            $('#locationPicker').modal('hide');
+         })
+      </script>
+   @endpush
+
 </div>

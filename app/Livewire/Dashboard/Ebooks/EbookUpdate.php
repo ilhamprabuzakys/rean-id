@@ -88,7 +88,7 @@ class EbookUpdate extends Component
                 'icon' => 'error',
                 'title' => 'Error',
                 'text' => 'Terjadi kesalahan saat menyimpan data',
-            ]);    
+            ]);
         }
     }
 
@@ -101,7 +101,7 @@ class EbookUpdate extends Component
                 if ($this->file_path != $this->ebook->file_path) {
                     $path = $this->file_path->store('file_path');
                     $validatedData['file_path'] = "storage/" . $path;
-        
+
                     if ($this->ebook->file_path) {
                         $oldFilePath = str_replace('storage/', '', $this->ebook->file_path);
                         Storage::delete($oldFilePath);
@@ -131,7 +131,7 @@ class EbookUpdate extends Component
         //     $validatedData['file_path'] = $this->ebook->file_path;
         //     // unset($validatedData['file_path']);
         // }
-        
+
         // if ($this->cover_path) {
         //     $path = $this->cover_path->store('cover_path');
         //     $validatedData['cover_path'] = "storage/" . $path;
@@ -149,7 +149,7 @@ class EbookUpdate extends Component
                 if ($this->cover_path != $this->ebook->cover_path) {
                     $path = $this->cover_path->store('cover_path');
                     $validatedData['cover_path'] = "storage/" . $path;
-        
+
                     if ($this->ebook->cover_path) {
                         $oldFilePath = str_replace('storage/', '', $this->ebook->cover_path);
                         Storage::delete($oldFilePath);
@@ -235,5 +235,5 @@ class EbookUpdate extends Component
         $this->body = null;
     }
 
-    
+
 }

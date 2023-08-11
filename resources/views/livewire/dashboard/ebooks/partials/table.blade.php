@@ -34,11 +34,10 @@
                    <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                       <i class="align-middle" data-feather="more-horizontal"></i>
                    </a>
- 
+
                    <div class="dropdown-menu dropdown-menu-end">
                       <a class="dropdown-item text-success text-decoration-none" href="{{ route('ebooks.edit', $ebook) }}">Edit</a>
                       <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})"">Hapus</a>
-                      {{-- <a class="text-danger text-decoration-none dropdown-item" wire:click="findEbook({{ $ebook->id }})" data-bs-toggle="modal" data-bs-target="#deleteEbookModal">Hapus</a> --}}
                    </div>
                 </div>
              </td>
@@ -55,4 +54,3 @@
  <div class="float-end mt-3 me-3">
     {{ $ebooks->links() }}
  </div>
- 

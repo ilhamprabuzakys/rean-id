@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
@@ -13,7 +12,7 @@ class EventController extends Controller
         $results = DB::table('events')->select('title', 'latitude', 'longitude')->get();
         return \json_encode($results);
     }
-    
+
     public function index()
     {
         return view('dashboard.events.index', ['title' => 'Daftar Event']);
@@ -21,31 +20,16 @@ class EventController extends Controller
 
     public function create()
     {
-        return view('dashboard.events.index', ['title' => 'Daftar Event']);
-    }
-
-    public function store(Request $request)
-    {
-        //
+        return view('dashboard.events.create', ['title' => 'Buat Event']);
     }
 
     public function show(Event $event)
     {
-        return view('dashboard.events.show', ['title' => 'Daftar Event']);
+        return view('dashboard.events.show', ['title' => 'Detail Event'], compact('event'));
     }
 
     public function edit(Event $event)
     {
-        return view('dashboard.events.edit', ['title' => 'Daftar Event']);
-    }
-
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
-
-    public function destroy(Event $event)
-    {
-        //
+        return view('dashboard.events.edit', ['title' => 'Edit Event'], compact('event'));
     }
 }
