@@ -12,9 +12,6 @@ use Livewire\WithFileUploads;
 
 class NewsUpdate extends Component
 {
-    use WithPagination, WithFileUploads;
-    protected $paginationTheme = 'bootstrap';
-
     protected $listeners = [
         "swalS",
         "swalE",
@@ -70,21 +67,44 @@ class NewsUpdate extends Component
 
     public function update()
     {
+        $validatedData = $this->processFilePath();
+
+        $this->deleteRemovedImages();
+        $validatedData['body'] = $this->processSummernoteImages();
+
+        $validatedData['user_id'] = $this->user_id;
+        $this->news->update($validatedData);
+        $this->emit('swalS', 'Update Data', 'Data berhasil diperbarui');
+    }
+
+    private function processFilePath()
+    {
         $validatedData = $this->validate();
 
         if ($this->file_path) {
-            // Jika ada file_path baru yang diunggah...
-            $path = $this->file_path->store('file_path');  
+            $path = $this->file_path->store('file_path');
             $validatedData['file_path'] = "storage/" . $path;
-            
-            // Jika user memiliki file_path lama, hapus dari storage
+
             if ($this->news->file_path) {
-                $oldFilePath = str_replace('storage/', '', $this->news->file_path); 
+                $oldFilePath = str_replace('storage/', '', $this->news->file_path);
                 Storage::delete($oldFilePath);
             }
         } else {
-            // Jika tidak ada file_path baru yang diunggah, hapus `file_path` dari `$validatedData`
             unset($validatedData['file_path']);
+        }
+
+        return $validatedData;
+    }
+
+    private function deleteRemovedImages()
+    {
+        $currentDom = new DOMDocument();
+        $currentDom->loadHTML($this->news->body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $currentImages = $currentDom->getElementsByTagName('img');
+        $currentImageSources = [];
+
+        foreach ($currentImages as $img) {
+            $currentImageSources[] = $img->getAttribute('src');
         }
 
         $content = $this->body;
@@ -92,26 +112,46 @@ class NewsUpdate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-           if (strpos($img->getAttribute('src'), 'data:image/') === 0) {
-
-                $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-                $image_name = "/storage/summernotes/" . time() . $key . '.png';
-                \file_put_contents(\public_path() . $image_name, $data);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', $image_name);
-           }
+        $updatedImageSources = [];
+        foreach ($images as $img) {
+            $updatedImageSources[] = $img->getAttribute('src');
         }
-        $content = $dom->saveHTML();
-        $this->body = $content;
 
-        $validatedData['user_id'] = $this->user_id;
-        $this->news->update($validatedData);
-        $this->emit('swalS', 'Update Data', 'Data berhasil diperbarui');
-        // sleep(5);
-        
-        // return redirect()->route('news.index');
+        $imagesToDelete = array_diff($currentImageSources, $updatedImageSources);
+
+        foreach ($imagesToDelete as $src) {
+            $pathToDelete = str_replace('/storage/', '', $src);
+            Storage::disk('public')->delete($pathToDelete);
+        }
     }
+
+    private function processSummernoteImages()
+    {
+        $content = $this->body;
+        $dom = new DOMDocument();
+        $dom->loadHTML($content, 9);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $image_name = "summernotes/" . time() . $key . '.png';
+                $path = Storage::disk('public')->put($image_name, $data);
+
+                if (!$path) {
+                    throw new \Exception("Failed to save image to storage");
+                }
+
+                $img->removeAttribute('src');
+                $img->setAttribute('src', "/storage/" . $image_name);
+            }
+        }
+
+        return $dom->saveHTML();
+    }
+
+
 
     public function swalS($title, $text)
     {
@@ -121,7 +161,7 @@ class NewsUpdate extends Component
             'text' => $text,
         ]);
     }
-    
+
     public function swalE($title, $text)
     {
         $this->emit('swalBasic', [
@@ -131,4 +171,3 @@ class NewsUpdate extends Component
         ]);
     }
 }
- 

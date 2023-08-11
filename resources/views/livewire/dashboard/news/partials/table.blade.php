@@ -1,5 +1,5 @@
 {{-- @dd($ebooks) --}}
-<table class="dt-complex-header table table-bordered">
+<table wire:poll.visible.2s  class="dt-complex-header table table-bordered">
 
     <thead class="table-light">
        <tr>
@@ -18,7 +18,7 @@
           <tr>
              <th scope="row">{{ $loop->iteration + ($paginate * ($news->currentPage()-1)) }}</th>
              <td>
-                {{ $berita->title }}
+                <a href="{{ route('news.show', $berita) }}">{{ $berita->title }}</a>
              </td>
              <td>
                 {{ $berita->about }}

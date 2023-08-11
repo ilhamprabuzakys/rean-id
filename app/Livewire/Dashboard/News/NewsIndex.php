@@ -37,6 +37,11 @@ class NewsIndex extends Component
     {
     }
 
+    public function placeholder()
+    {
+        return view('livewire.dashboard.news.news-index-placeholder');
+    }
+
     public function render()
     {
         $query = News::with('user')->latest('updated_at')->when($this->search, function ($query) {
@@ -50,6 +55,8 @@ class NewsIndex extends Component
                 ->whereDate('created_at', '<=', $endDate);
         })->paginate($this->paginate);
         $news = $query;
+
+        sleep(2);
         return view('livewire.dashboard.news.news-index', [
             'news' => $news,
         ]);

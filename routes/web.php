@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
             Route::resource('/events', EventController::class)->except(['show']);
             Route::resource('/ebooks', EbookController::class)->except(['show']);
-            Route::resource('/news', NewsController::class)->except(['show']);
+            Route::resource('/news', NewsController::class);
             Route::get('/coordinates/json', [Coordinates::class, 'json'])->name('events.map');
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
             Route::resource('/users', UserController::class);

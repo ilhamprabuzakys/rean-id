@@ -49,12 +49,5 @@
        </div>
     </div>
  
-    {{-- <div class="col-12 mt-3">
-       @if ($statusUpdate == true)
-       <livewire:dashboard.news.news-update :user="$user->id" />
-       @else
-       <livewire:dashboard.news.news-create :user="$user->id" />
-       @endif
-    </div> --}}
  </div>
  

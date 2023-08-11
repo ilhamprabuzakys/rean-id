@@ -68,7 +68,7 @@ class NewsCreate extends Component
         $this->validate();
 
         if ($this->file_path) {
-            // Jika ada avatar baru yang diunggah...
+            // Jika ada file cover baru yang diunggah...
             $path = $this->file_path->store('news');  
             $this->file_path = "storage/" . $path;
         } 

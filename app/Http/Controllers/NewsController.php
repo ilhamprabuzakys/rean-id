@@ -26,10 +26,12 @@ class NewsController extends Controller
     //     //
     // }
 
-    // public function show(News $news)
-    // {
-    //     //
-    // }
+    public function show(News $news)
+    {
+        return view('dashboard.news.show', [
+            'title' => 'Detail Berita',
+        ], compact('news'));
+    }
 
     public function edit(News $news)
     {
