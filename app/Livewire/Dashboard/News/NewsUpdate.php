@@ -2,11 +2,15 @@
 
 namespace App\Livewire\Dashboard\News;
 
+use App\Models\FileNews;
 use DOMDocument;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class NewsUpdate extends Component
 {
@@ -14,7 +18,9 @@ class NewsUpdate extends Component
 
     public $user_id;
     public $title, $about, $file_path, $body;
+    public $existingFile;
     public $news;
+    public $filePathOrName = '';
 
     public function mount($news, $user)
     {
@@ -23,6 +29,22 @@ class NewsUpdate extends Component
         $this->about = $news->about;
         $this->body = $news->body;
         $this->user_id = $user;
+        if ($news->file && $news->file->file_path !== null) {
+            $this->existingFile = [
+                [
+                    'source' => asset($news->file->file_path),
+                    'options' => [
+                        'type' => 'limbo',
+                        'file' => [
+                            'name' => basename($news->file->file_path),
+                            'size' => filesize(public_path($news->file->file_path)),
+                            'type' => mime_content_type(public_path($news->file->file_path))
+                        ],
+                        // Jika Anda memiliki id atau metadata lain yang Anda ingin asosiasikan dengan file ini, Anda bisa menambahkannya di sini
+                    ],
+                ]
+            ];
+        }
     }
 
     public function rules()
@@ -30,7 +52,6 @@ class NewsUpdate extends Component
         return [
             'title' => ['required', 'min:4', 'max:50', Rule::unique('news')->ignore($this->news->id)],
             'about' => ['required', 'min:4', 'max:20'],
-            'file_path' => ['max:2048'],
             'body' => ['required', 'min:4'],
         ];
     }
@@ -43,7 +64,6 @@ class NewsUpdate extends Component
         'about.required' => 'Topik itu harus diisi',
         'about.min' => 'Topik terlalu pendek',
         'about.max' => 'Topik terlalu panjang, maksimal hanya 20 karakter',
-        'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 2MB',
         'body.required' => 'Body itu harus diisi',
         'body.min' => 'Konten body terlalu pendek',
     ];
@@ -60,20 +80,22 @@ class NewsUpdate extends Component
         return view('livewire.dashboard.news.news-update');
     }
 
-    public function update()
+    /* public function update()
     {
+        
         $validatedData = $this->processFilePath();
         $this->deleteRemovedImages();
-        $validatedData['body'] = $this->processSummernoteImages();
+        $validatedData['body'] = $this->processDescriptionImages();
         $validatedData['user_id'] = $this->user_id;
         try {
+            $this->validate($this->rules(), $this->message);
             $this->news->update($validatedData);
         } catch (\Throwable $th) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Error',
                 'text' => 'Terjadi kesalahan saat menyimpan data',
-            ]);    
+            ]);
         }
         $this->dispatch('swal:modal', [
             'icon' => 'success',
@@ -81,26 +103,66 @@ class NewsUpdate extends Component
             'text' => 'Data berhasil diperbarui',
         ]);
     }
-
-    private function processFilePath()
+ */
+    public function update()
     {
-        $validatedData = $this->validate();
+        // dd($this->all());
+        try {
+            $this->validate($this->rules(), $this->messages);
+            $this->storeFiles();
+            $this->deleteRemovedImages();
+            $this->processDescriptionImages();
 
-        if ($this->file_path) {
-            $path = $this->file_path->store('file_path');
-            $validatedData['file_path'] = "storage/" . $path;
+            $this->news->update($this->all());
 
-            if ($this->news->file_path) {
-                $oldFilePath = str_replace('storage/', '', $this->news->file_path);
-                Storage::delete($oldFilePath);
-            }
-        } else {
-            unset($validatedData['file_path']);
+            $this->dispatch('swal:modal', [
+                'icon' => 'success',
+                'title' => 'Update Berhasil',
+                'text' => 'Berhasil memperbarui data Berita',
+            ]);
+        } catch (ValidationException $e) {
+            dd($e->validator->errors());
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda',
+            ]);
+
+            // Mengirim error bag ke komponen Livewire
+            $this->setErrorBag($e->validator->getMessageBag());
         }
-
-        return $validatedData;
     }
 
+    public function removeFile($filePathOrName)
+    {
+        $this->filePathOrName = $filePathOrName;
+        $this->dispatch('swal:filepond', [
+            'title' => 'File',
+        ]);
+    }
+
+    private function storeFiles()
+    {
+        if ($this->file_path) {
+            $objName = Str::slug($this->news->title); // Menggunakan slug agar aman untuk nama file
+        
+            $timestamp = now()->format('H:i_d-m-Y');
+            $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file
+
+            // Membuat format nama file
+            $filename = "{$this->news->id}_{$objName}_{$timestamp}.{$extension}";
+
+            // Menyimpan file dengan nama yang telah diformat
+            $path = $this->file_path->storeAs('news/cover', $filename);
+
+            $storedPath = "storage/" . $path;
+
+            FileNews::create([
+                'file_path' => $storedPath,
+                'news_id' => $this->news->id
+            ]);
+        }
+    }
     private function deleteRemovedImages()
     {
         $currentDom = new DOMDocument();
@@ -130,7 +192,7 @@ class NewsUpdate extends Component
         }
     }
 
-    private function processSummernoteImages()
+    private function processDescriptionImages()
     {
         $content = $this->body;
         $dom = new DOMDocument();
@@ -138,21 +200,25 @@ class NewsUpdate extends Component
         $images = $dom->getElementsByTagName('img');
 
         foreach ($images as $key => $img) {
-            $src = $img->getAttribute('src');
-            if (strpos($src, 'data:image/') === 0) {
-                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
-                $image_name = "summernotes/" . time() . $key . '.png';
-                $path = Storage::disk('public')->put($image_name, $data);
-
-                if (!$path) {
-                    throw new \Exception("Failed to save image to storage");
-                }
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', "/storage/" . $image_name);
-            }
+            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
+            $image_name = "/storage/news/detail/" . time() . $key . '.png';
+            \file_put_contents(\public_path() . $image_name, $data);
+            $img->removeAttribute('src');
+            $img->setAttribute('src', $image_name);
         }
 
-        return $dom->saveHTML();
+        $this->body = $dom->saveHTML();
+    }
+
+    #[On('filepondDeleteConfirmed')]
+    public function seriouslyRemoveFile()
+    {
+        $targetFile = FileNews::where('file_path', 'like', '%' . $this->filePathOrName . '%')->first();
+        if ($targetFile) {
+            // dd($targetFile);
+            // Ini adalah file yang sudah ada, jadi kita hapus dari database dan penyimpanan
+            Storage::delete(str_replace('storage/', '', $targetFile->file_path));
+            $targetFile->delete();
+        }
     }
 }

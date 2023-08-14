@@ -1,5 +1,5 @@
 
-<form wire:submit.prevent='store'>
+<form wire:submit='store'>
    <div class="row justify-content-between mb-4">
       <div class="col-9">
          <label for="name" class="form-label">Nama <sup class="text-danger">*</sup></label>

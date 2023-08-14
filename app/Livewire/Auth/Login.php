@@ -16,6 +16,7 @@ use Stevebauman\Location\Facades\Location;
 class Login extends Component
 {
     public $login, $password, $remember;
+    public $passwordToggle = 1;
 
     public function authenticate()
     {
@@ -74,7 +75,7 @@ class Login extends Component
         $user->createToken('user login')->plainTextToken;
 
         if (Auth::attempt([$login_type => $this->login, 'password' => $this->password], $this->remember)) {
-            
+
             auth()->user()->update([
                 'last_login_at' => Carbon::parse(Carbon::now())->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss'),
                 'last_login_ip' => request()->ip()
@@ -128,30 +129,12 @@ class Login extends Component
         return view('livewire.auth.login');
     }
 
-    public function swalD($title)
+    public function changePasswordToggle()
     {
-        $this->emit('swalDelete', [
-            'title' => $title,
-        ]);
-    }
-
-    #[On('swalBasic')] 
-    public function swalS($title, $text)
-    {
-        // dd($title, $text);
-        $this->dispatch('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
+        if ($this->passwordToggle == 1) {
+            $this->passwordToggle = 0;
+        } elseif ($this->passwordToggle == 0) {
+            $this->passwordToggle = 1;
+        }
     }
 }

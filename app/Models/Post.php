@@ -139,4 +139,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class)->using(PostTag::class)->withTimestamps();
     }
+
+    public function file()
+    {
+        return $this->hasOne(FilePost::class);
+    }
 }

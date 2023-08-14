@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 
 class CategoryIndex extends Component
 {
@@ -27,7 +28,7 @@ class CategoryIndex extends Component
     public $paginate = 5;
 
     public $name, $category_id, $category, $dataposts;
-    
+
     protected $updatesQueryString = ['search'];
     protected $queryString = ['search' => ['except' => '']];
 
@@ -39,27 +40,27 @@ class CategoryIndex extends Component
 
     public function render()
     {
-        $categories = $this->search === null ? Category::with(['posts'])->latest('updated_at')->paginate($this->paginate) : 
-        Category::with(['posts'])->latest('updated_at')->search($this->search)->paginate($this->paginate);
-        
+        $categories = $this->search === null ? Category::with(['posts'])->latest('updated_at')->paginate($this->paginate) :
+            Category::with(['posts'])->latest('updated_at')->search($this->search)->paginate($this->paginate);
+
         return view('livewire.dashboard.categories.category-index', [
             'categories' => $categories,
         ]);
     }
 
-    public function rules() 
+    public function rules()
     {
         return [
             'name' => ['required', 'min:4', Rule::unique('categories')->ignore($this->category_id)],
         ];
     }
- 
+
     protected $messages = [
         'name.required' => 'Nama harus terisi.',
         'name.min' => 'Nama minimal harus 4 karakter.',
         'name.unique' => 'Kategori dengan nama ini sudah ada.',
     ];
- 
+
     protected $validationAttributes = [
         'name' => 'Name',
     ];
@@ -77,10 +78,14 @@ class CategoryIndex extends Component
             'slug' => Str::slug($this->name),
         ]);
         $this->resetInput();
-        // $this->dispatchBrowserEvent('close-modal');
-        $this->dispatchBrowserEvent('close-offcanvas');
+        // $this->dispatch('close-modal');
+        $this->dispatch('close-offcanvas');
         // $this->emit('alertSuccess', 'Berhasil menambahkan Kategori baru', 'Pembuatan Kategori');
-        $this->emit('swalS', 'Pembuatan Kategori', 'Berhasil menambah data Kategori');
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil ditambahkan',
+            'type' => 'success',
+        ]);
         // $this->emit('KategoriStore');
     }
 
@@ -93,20 +98,35 @@ class CategoryIndex extends Component
         ]);
         $this->resetInput();
         // $this->emit('alertSuccess', 'Berhasil memperbarui data Kategori', 'Update Kategori');
-        $this->dispatchBrowserEvent('close-modal');
-        $this->emit('swalS', 'Update Kategori', 'Berhasil memperbarui data Kategori');
+        $this->dispatch('close-modal');
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil diperbarui',
+            'type' => 'success',
+        ]);
     }
-    
+
+    public function deleteConfirmation($id)
+    {
+        $this->category_id = $id;
+        $this->dispatch('swal:confirmation', [
+            'title' => 'Kategori',
+        ]);
+    }
+
+    #[On('deleteConfirmed')]
     public function destroy()
     {
-        Category::findOrFail($this->category_id)->delete();
-        $this->dispatchBrowserEvent('close-modal');
-        // $this->emit('alertSuccess', 'Berhasil menghapus data Kategori', 'Penghapusan Kategori');
-        $this->emit('swalS', 'Penghapusan Kategori', 'Berhasil menghapus data Kategori');
-
+        $category = Category::findOrFail($this->category_id);
+        $category->delete();
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil dihapus',
+            'type' => 'success',
+        ]);
     }
 
-    public function editCategory(int $category_id) 
+    public function editCategory(int $category_id)
     {
         $category = Category::findOrFail($category_id);
         if ($category) {
@@ -128,7 +148,7 @@ class CategoryIndex extends Component
             return back();
         }
     }
-    
+
     public function findCategory(int $category_id)
     {
         $this->category_id = $category_id;
@@ -143,7 +163,7 @@ class CategoryIndex extends Component
     {
         $this->resetInput();
     }
-    
+
     public function closeCanvas()
     {
         $this->resetInput();
@@ -163,7 +183,7 @@ class CategoryIndex extends Component
 
         ]);
     }
-    
+
     public function swalE($title, $text)
     {
         $this->emit('swalBasic', [
@@ -172,7 +192,7 @@ class CategoryIndex extends Component
             'text' => $text,
         ]);
     }
-    
+
     public function swalD($title, $text)
     {
         $this->emit('swalDelete');
@@ -180,16 +200,16 @@ class CategoryIndex extends Component
 
     public function alertSuccess($message, $title = 'Berhasil')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
     }
-  
+
     public function alertError($message, $title = 'Error')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
     }
-  
+
     public function alertInfo($message, $title = 'Informasi')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 }

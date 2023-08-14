@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('location');
             $table->text('latitude');
             $table->text('longitude');
-            $table->text('province');
-            $table->text('city');
+            $table->string('province');
+            $table->string('city');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             // Masuknya ke relasi USER

@@ -67,9 +67,28 @@ img.post-image-size-modal {
  }
 
  .note-modal-footer {
-   height: 60px !important;
+   height: 80px !important;
+}
+
+.note-modal-footer i input {
+   color: rgb(255, 255, 255);
+   background: rgb(10 79 217);
+   border-radius: 20px;
 }
 
 .swal2-container {
    z-index: 99999 !important;
+}
+
+table tbody tr.event-tr {
+   background-color: #0064ff !important;
+   color: #fff !important;
+}
+
+table tbody tr.event-tr th {
+   color: #fff !important;
+}
+
+table tbody tr.event-tr td div.dropdown a.text-muted {
+   color: #fff !important;
 }

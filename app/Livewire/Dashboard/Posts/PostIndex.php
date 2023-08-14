@@ -13,15 +13,6 @@ class PostIndex extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = [
-        "storePost",
-        "storeUpdate",
-        "errorUpdate",
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-    ];
-
     public $search;
     public $popularityFilter = 0;
     public $paginate = 10;
@@ -67,8 +58,6 @@ class PostIndex extends Component
             (object) ['key' => 'approved', 'label' => 'Approved'],
             (object) ['key' => 'rejected', 'label' => 'Rejected'],
         ]);
-
-        confirmDelete('Apakah anda yakin untuk menghapus postingan ini?', 'Postingan yang dihapus akan masuk ke tempat sampah.');
         return view('livewire.dashboard.posts.post-index', compact('posts', 'categories', 'tags', 'statuses'));
     }
 
@@ -103,27 +92,27 @@ class PostIndex extends Component
     {
         $post = Post::findOrFail($id);
         $post->update(['status' => 'pending']);
-        $this->emit('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
     }
     
     public function reject($id)
     {
         $post = Post::findOrFail($id);
         $post->update(['status' => 'rejected']);
-        $this->emit('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
     }
     
     public function approve($id)
     {
         $post = Post::findOrFail($id);
         $post->update(['status' => 'approved']);
-        $this->emit('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
     }
 
     public function delete()
     {   
         Post::findOrFail($this->post_item['id'])->delete();
-        $this->emit('alertSuccess', 'Data berhasil dihapus');
+        $this->dispatch('alertSuccess', 'Data berhasil dihapus');
         $this->dispatchBrowserEvent('close-modal');
     }
 

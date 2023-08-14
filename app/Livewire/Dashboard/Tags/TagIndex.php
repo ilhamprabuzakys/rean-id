@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard\Tags;
 use App\Models\Tag;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
 class TagIndex extends Component
@@ -46,41 +47,39 @@ class TagIndex extends Component
 
     public function render()
     {
-        $tags = $this->search === null 
-        ? Tag::with('posts')->latest('updated_at')->paginate($this->paginate) 
-        : Tag::with('posts')->latest('updated_at')->where('name', 'like', '%' . $this->search . '%')->paginate($this->paginate);
+        $tags = Tag::with('posts')->latest('updated_at')->paginate(5);
         return view('livewire.dashboard.tags.tag-index', compact('tags'));
     }
 
     public function edit($id){
         $tag = Tag::findOrFail($id);
         $this->statusUpdate = true;
-        $this->emit("edit",$tag);
+        $this->dispatch("edit", $tag)->to(TagUpdate::class);
     }
 
     public function destroy()
     {
         $tag = Tag::findOrFail($this->tag_id);
-        $name = $tag->name;
         $tag->delete();
-        \session()->flash('success', "Tag " .$name. " berhasil dihapus");
-        $this->dispatchBrowserEvent('close-modal');
+
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil dihapus',
+            'type' => 'success',
+        ]);
+
+        $this->dispatch('close-modal');
     }
 
-    public function storeTag($message){
-        \session()->flash("success", $message);
-    }
-
-    public function storeUpdate($message){
-        \session()->flash("success", $message);
+    public function storeUpdate(){
         $this->statusUpdate = false;
     }
 
     public function errorUpdate(){
-        \session()->flash("error","Gagal mengubah tag");
         $this->statusUpdate = false;
     }
 
+    #[On('statusUpdated')]
     public function handleStatusUpdate($statusUpdate)
     {
         $this->statusUpdate = $statusUpdate;
@@ -119,18 +118,4 @@ class TagIndex extends Component
         $this->resetPage();
     }
 
-    public function alertSuccess($message)
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => 'Berhasil', 'message' => $message]);
-    }
-  
-    public function alertError($message)
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => 'Error', 'message' => $message]);
-    }
-  
-    public function alertInfo($message)
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => 'Informasi', 'message' => $message]);
-    }
 }

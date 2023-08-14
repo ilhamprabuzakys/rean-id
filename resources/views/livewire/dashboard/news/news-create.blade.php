@@ -8,6 +8,11 @@
                </div>
                <div class="col-10">
                   <input type="text" id="title" wire:model='title' class="form-control @error('title') is-invalid @enderror" />
+                  @error('title')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
                </div>
             </div>
          </div>
@@ -18,6 +23,11 @@
                </div>
                <div class="col-10">
                   <input type="text" id="about" wire:model='about' class="form-control @error('about') is-invalid @enderror" />
+                  @error('about')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
                </div>
             </div>
          </div>
@@ -27,25 +37,38 @@
                   <label for="file_path">Cover</label>
                </div>
                <div class="col-10">
-                  <input type="file" id="file_path" wire:model='file_path' class="form-control @error('file_path') is-invalid @enderror">
+                  <div wire:ignore>
+                     <div id="file_path" class="filepond @error('file_path') is-invalid @enderror"></div>
+                  </div>
+                  @error('file_path')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
                </div>
             </div>
          </div>
          <div class="col-md-12">
             <div class="row">
                <div class="col-4">
-                  <label for="file_path">Body</label>
+                  <label for="body">Body</label>
                </div>
                <div class="col-12 mt-3">
                   <div wire:ignore>
                      <textarea name="body" wire:model='body' class="form-control @error('body') is-invalid @enderror" id="body" rows="4" placeholder="Isi berita"></textarea>
+                     @error('body')
+                        <div class="invalid-feedback">
+                           {{ $message }}
+                        </div>
+                     @enderror
                   </div>
                </div>
             </div>
          </div>
          <div class="float-end my-3">
-            <button class="btn btn-primary px-2" type="button" wire:click="store()"><i class="fas fa-save me-2"></i>Simpan Berita</button>
-            <button class="btn btn-primary px-2" type="button" wire:click="store('save-and-continue')"><i class="fas fa-pen-to-square me-2"></i>Simpan Dan Tambah Kembali</button>
+            <button class="btn btn-primary px-2" type="button" wire:click="store()" wire:loading.attr="disabled"><i class="fas fa-save me-2"></i>Simpan Berita</button>
+            <button class="btn btn-primary px-2" type="button" wire:click="store('save-and-continue')" wire:loading.attr="disabled"><i class="fas fa-pen-to-square me-2"></i>Simpan Dan Tambah
+               Kembali</button>
          </div>
       </div>
    </div>
@@ -55,16 +78,45 @@
    <script>
       $(document).ready(function() {
          $('#body').summernote({
-            placeholder: 'Isi body dari Konten Berita',
             height: 300,
             tabsize: 2,
             lang: 'id-ID',
             callbacks: {
                onChange: function(contents, $editable) {
                   @this.set('body', contents);
-                  // Livewire.find(Livewire.first()).set('body', contents)
                }
+            },
+            toolbar: [
+               ['style', ['style']],
+               ['font', ['bold', 'underline', 'clear']],
+               ['fontname', ['fontname']],
+               ['color', ['color']],
+               ['para', ['ul', 'ol', 'paragraph']],
+               ['table', ['table']],
+               ['insert', ['link', 'picture', 'video']],
+               ['view', ['codeview', 'help']],
+            ]
+         });
+
+         FilePond.registerPlugin(FilePondPluginImagePreview);
+         const inputElement = document.querySelector('#file_path');
+         const pond = FilePond.create(inputElement);
+
+         pond.setOptions({
+            server: {
+               process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                  @this.upload('file_path', file, load, error, progress);
+
+               },
+               revert: (filename, load) => {
+                  @this.removeUpload('file_path', filename, load);
+               },
             }
+         });
+
+         Livewire.on('stored', () => {
+            pond.removeFiles();
+            @this.set('body', '');
          });
       });
    </script>

@@ -37,7 +37,7 @@
 
                    <div class="dropdown-menu dropdown-menu-end">
                       <a class="dropdown-item text-success text-decoration-none" href="{{ route('ebooks.edit', $ebook) }}">Edit</a>
-                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})"">Hapus</a>
+                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})">Hapus</a>
                    </div>
                 </div>
              </td>

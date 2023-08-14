@@ -18,15 +18,6 @@
                </div>
             @endif
 
-            <div class="row justify-content-end mb-3">
-               <div class="col-4 d-flex justify-content-end">
-                  <a class="btn btn-primary" href="{{ route('news.create') }}">
-                     <span><i class="mdi mdi-plus me-sm-1"></i>
-                        <span class="d-none d-sm-inline-block">Buat Berita</span></span>
-                  </a>
-               </div>
-            </div>
-
             <div class="row justify-content-between">
                <div class="col-1 d-flex justify-content-start">
                   <select class="form-select" name="paginate" id="paginate" wire:model='paginate'>
@@ -42,7 +33,7 @@
                   <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model='filter_date'>
                </div>
                <div class="col-3 d-flex justify-content-end">
-                  <a class="btn btn-primary" href="{{ route('ebooks.create') }}">
+                  <a class="btn btn-primary" href="{{ route('news.create') }}">
                      <span><i class="mdi mdi-plus me-sm-1"></i>
                         <span class="d-none d-sm-inline-block">Tambah Data</span></span>
                   </a>

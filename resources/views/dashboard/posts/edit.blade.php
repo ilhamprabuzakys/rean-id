@@ -1,31 +1,7 @@
 @extends('dashboard.template.dashboard')
-@push('script')
-   <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
-   <script>
-      ClassicEditor
-         .create(document.querySelector('#body-editor'))
-         .catch(error => {
-            console.error(error);
-         });
-   </script>
-   @include('dashboard.plugin.select2')
-   {{-- <script>
-      let multitagsSelect = document.querySelector("#tags-multi-select");
-      new Choices(multitagsSelect, {
-         removeItems: true,
-         removeItemButton: true,
-         loadingText: 'Memuat...',
-         noResultsText: 'Hasil tidak ditemukan',
-         noChoicesText: 'Tidak ada label tersisa',
-         itemSelectText: 'Klik untuk memilih',
-      });
-   </script> --}}
-@endpush
-@push('head')
-   <!-- Trix Editor -->
-   {{-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
-   <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script> --}}
-@endpush
+@include('dashboard.components.select2')
+@include('dashboard.components.summernote')
+@include('dashboard.components.filepond')
 @section('content')
    <!-- start page title -->
    <div class="row justify-content-between">

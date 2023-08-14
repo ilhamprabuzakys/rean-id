@@ -73,7 +73,6 @@ class NewsIndex extends Component
             }
         }
 
-        $name = $news->title;
         $news->delete();
     }
 

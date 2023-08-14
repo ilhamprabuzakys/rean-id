@@ -56,14 +56,12 @@ class EbookIndex extends Component
         $this->dispatch('swal:confirmation', [
             'title' => 'Ebook',
         ]);
-        // $this->dispatchBrowserEvent('swal-delete');
     }
 
     #[On('deleteConfirmed')]
     public function destroy()
     {
         $ebook = Ebook::findOrFail($this->ebook_id);
-        $name = $ebook->title;
         $ebook->delete();
     }
 

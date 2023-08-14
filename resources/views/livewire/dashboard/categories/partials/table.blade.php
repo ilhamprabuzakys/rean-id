@@ -37,7 +37,7 @@
                            <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="offcanvas" data-bs-target="#editCategory" wire:click.prefetch="editCategory({{ $category->id }})">
                               Edit
                            </a>
-                           <a class="text-danger text-decoration-none dropdown-item" wire:click="findCategory({{ $category->id }})" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal">Hapus</a>
+                           <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $category->id }})">Hapus</a>
                            {{-- <a class="text-danger text-decoration-none dropdown-item" href="{{ route('users.destroy', $user) }}" data-confirm-delete="true">Hapus</a> --}}
                         </div>
                      </div>

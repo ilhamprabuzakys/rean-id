@@ -67,7 +67,7 @@
 
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-   
+
    @stack('head')
    @stack('style')
    @stack('css')
@@ -137,7 +137,7 @@
                <!-- /Logo -->
 
                <div class="card-body mt-2">
-                  
+
                   @yield('header')
 
                   @include('auth.session')
@@ -145,11 +145,11 @@
                   @yield('content')
                </div>
 
-               
+
             </div>
             <!-- /Login -->
             @yield('bg-img')
-            {{-- <img alt="mask" src="{{ asset('assets/dashboard/materialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}" class="authentication-image d-none d-lg-block"
+            {{-- <img alt="mask" src="{{ asset('assets/dashboard/mater               ialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}" class="authentication-image d-none d-lg-block"
                data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark-img="illustrations/auth-basic-login-mask-dark.html" /> --}}
          </div>
       </div>
@@ -190,12 +190,12 @@
    <!-- Page JS -->
    @stack('page-js')
    <script src="{{ asset('assets/dashboard/materialize/assets/js/pages-auth.js') }}"></script>
-   
+
    <!-- Pace JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
    <livewire:scripts />
    <script>
-      // window.addEventListener('swal:modal', event => {
+      // window.a   ddEventListener('swal:modal', event => {
       //    Swal.fire({
       //       title: event.detail.title,
       //       text: event.detail.text,
@@ -205,7 +205,6 @@
       //    })
       // });
       Livewire.on('swal:modal', data => {
-         log(data[0].duration);
          Swal.fire({
             title: data[0].title,
             text: data[0].text,

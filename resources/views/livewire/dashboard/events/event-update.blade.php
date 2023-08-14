@@ -1,121 +1,186 @@
-<div class="accordion">
-    <div class="card accordion-item">
-       <h2 class="accordion-header" id="headingCreateEventForm">
-          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#editEventForm" aria-expanded="false" aria-controls="editEventForm"> <i class="fas fa-plus-circle me-2"></i> Perbarui Event </button>
-       </h2>
-       <div id="editEventForm" class="accordion-collapse collapse" aria-labelledby="headingCreateEventForm" data-bs-parent="#collapsibleSection">
-          <div class="accordion-body">
-             <div class="row g-3">
-                <div class="col-md-6">
-                   <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="title">Judul Acara</label>
-                      <div class="col-sm-9">
-                         <input type="text" id="title" class="form-control" placeholder="Kampanye Anti Narkoba" />
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="organizer">Penyelenggara</label>
-                      <div class="col-sm-9">
-                         <input type="text" id="organizer" class="form-control" placeholder />
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="description">Deskripsi</label>
-                      <div class="col-sm-9">
-                         <textarea name="description" class="form-control" id="description" rows="4" placeholder="Deskripsi dari keseluruhan event yang akan diadakan"></textarea>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="mb-3">
-                      <div class="row">
-                         <label class="col-sm-3 col-form-label text-sm-end" for="contact_email">Email</label>
-                         <div class="col-sm-9">
-                            <input type="text" id="contact_email" class="form-control" placeholder="penyelenggara@gmail.com" />
-                         </div>
-                      </div>
-                   </div>
-                   <div class="mb-3">
-                      <div class="row">
-                         <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-landmark">Provinsi</label>
-                         <div class="col-sm-9">
-                            <input type="text" id="collapsible-landmark" class="form-control" placeholder="Jawa Barat" />
-                         </div>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="merge_date">Tanggal</label>
-                      <div class="col-sm-9">
-                         <input type="text" id="merge_date" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Tanggal acara">
-                      </div>
-                      {{-- <div class="col-sm-4">
-                         <input type="datetime" name="" id="">
-                      </div>
-                      <div class="col-sm-4">
-                         <input type="datetime" name="" id="">
-                      </div> --}}
-                   </div>
-                </div>
-                <div class="col-md-6">
-                   <div class="row">
-                      <label class="col-sm-3 col-form-label text-sm-end" for="collapsible-landmark">Kota</label>
-                      <div class="col-sm-9">
-                         <input type="text" id="collapsible-landmark" class="form-control" placeholder="Kota Bandung" />
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-7">
-                   <div class="row" style="margin-right: 4rem;">
-                      <label class="col-sm-3 col-form-label text-end" for="collapsible-landmark">Lokasi</label>
-                      <div class="col-sm-6">
-                         <input type="text" id="collapsible-landmark" class="form-control" placeholder="Kota Bandung">
-                      </div>
-                      <div class="col-sm-3">
-                         <button id="locationPickerBtn" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#locationPickerModal"><i class="fas fa-location-pin me-2"></i>Pilih</button>
-                      </div>
-                   </div>
-                </div>
-                <div class="col-md-5">
-                   <div class="row">
-                      <div class="col-sm-12 text-end">
-                         <button class="btn btn-primary px-2" type="submit"><i class="fas fa-save me-2"></i>Simpan Event</button>
-                      </div>
-                   </div>
-                </div>
-             </div>
-             {{-- <div class="row mt-5">
-                <div class="col-sm-3">
-                   <label class="form-label" for="location">Lokasi</label>
-                </div>
-                <div class="col-sm-4">
-                   <input type="text" id="location" class="form-control" placeholder="Moh. Toha no 77." />
-                </div>
-                <div class="col-sm-4">
-                   
-                </div>
-             </div> --}}
-             {{-- <div class="col-md-6">
-               <div class="row">
-                 <label class="col-sm-3 col-form-label text-sm-end">Address Type</label>
-                 <div class="col-sm-9">
-                   <div class="form-check mb-2">
-                     <input name="collapsible-addressType" class="form-check-input" type="radio" value="" id="collapsible-addressType-home" checked="" />
-                     <label class="form-check-label" for="collapsible-addressType-home"> Home (All day delivery) </label>
-                   </div>
-                   <div class="form-check">
-                     <input name="collapsible-addressType" class="form-check-input" type="radio" value="" id="collapsible-addressType-office" />
-                     <label class="form-check-label" for="collapsible-addressType-office"> Office (Delivery between 10 AM - 5 PM) </label>
-                   </div>
-                 </div>
+<div>
+   @include('livewire.dashboard.events.partials.modal.location-picker-edit')
+   <div class="card mb-4">
+      <div class="card-body">
+         <div class="row">
+            {{-- @dd($existingFiles) --}}
+            <div class="col-12 mb-3">
+               <label class="mb-2" for="title">Judul Acara <sup class="text-danger">*</sup></label>
+               <input type="text" wire:model='title' id="title" class="form-control @error('title') is-invalid @enderror">
+               @error('title')
+                  <div class="invalid-feedback">
+                     {{ $message }}
+                  </div>
+               @enderror
+            </div>
+            <div class="col-12 mb-3">
+               <label class="mb-2" for="location">Lokasi Acara <sup class="text-danger">*</sup></label>
+               <div class="input-group">
+                  <textarea class="form-control @error('location') is-invalid @enderror" wire:model='location' id="location" aria-label="With textarea" placeholder="Jl. Moh Toha No. 77" style="height: 60px;"></textarea>
+                  <button class="btn btn-outline-primary waves-effect" type="button" data-bs-target="#locationPickerModal" data-bs-toggle="modal"><i
+                        class="fas fa-map-location-dot me-2"></i>Pilih</button>
+                  @error('location')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
                </div>
-             </div> --}}
-          </div>
-       </div>
-    </div>
- </div>
+            </div>
+            <div class="col-6 mb-3">
+               <label for="merge_date" class="mb-2">Tanggal Acara <sup class="text-danger">*</sup></label>
+               <div class="input-group">
+                  <input type="text" class="form-control @error('merge_date') is-invalid @enderror" wire:model='merge_date' id="merge_date">
+                  <span class="input-group-text"><i class="fas fa-calendar-alt text-primary"></i></span>
+                  @error('merge_date')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+            </div>
+            <div class="col-3 mb-3">
+               <label for="kota" class="mb-2">Kota <sup class="text-danger">*</sup></label>
+               <input type="text" class="form-control @error('city') is-invalid @enderror" wire:model='city' id="city">
+               @error('city')
+                  <div class="invalid-feedback">
+                     {{ $message }}
+                  </div>
+               @enderror
+            </div>
+            <div class="col-3 mb-3">
+               <label for="provinsi" class="mb-2">Provinsi <sup class="text-danger">*</sup></label>
+               <input type="text" class="form-control @error('province') is-invalid @enderror" wire:model='province' id="province">
+               @error('province')
+                  <div class="invalid-feedback">
+                     {{ $message }}
+                  </div>
+               @enderror
+            </div>
+            <div class="col-6 mb-3">
+               <label for="organizer" class="mb-2">Penyelengara <sup class="text-danger">*</sup></label>
+               <div class="input-group">
+                  <input type="text" class="form-control @error('organizer') is-invalid @enderror" wire:model='organizer' id="organizer">
+                  <span class="input-group-text"><i class="fas fa-person text-primary"></i></span>
+                  @error('organizer')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+            </div>
+            <div class="col-6 mb-3">
+               <label for="contact_email" class="mb-2">Kontak Email <sup class="text-danger">*</sup></label>
+               <div class="input-group">
+                  <input type="text" class="form-control @error('contact_email') is-invalid @enderror" placeholder="kontak@gmail.com" wire:model='contact_email' id="contact_email">
+                  <span class="input-group-text"><i class="fas fa-mail-bulk text-primary"></i></span>
+                  @error('contact_email')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+            </div>
+            <div class="col-12 mb-3">
+               <label for="file_path" class="mb-2">Poster Event <sup class="text-danger">*</sup></label>
+               <div wire:ignore>
+                  <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
+               </div>
+               @error('files')
+                  <div class="invalid-feedback">
+                     {{ $message }}
+                  </div>
+               @enderror
+            </div>
+            <div class="col-12 mb-5">
+               <label for="description" class="mb-2">Deskripsi Acara <sup class="text-danger">*</sup></label>
+               <div wire:ignore>
+                  <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="descriptionEdit" rows="4" wire:model='description'></textarea>
+                  @error('description')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+            </div>
+            <div class="col-6 mb-3">
+               <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" wire:model='status' id="status" checked="1">
+                  <label class="form-check-label" for="status">Aktif</label>
+               </div>
+            </div>
+            <div class="col-6 mb-3 d-flex justify-content-end">
+               <button class="btn btn-primary" type="button" wire:click='update()'><i class="fas fa-save me-2"></i>Simpan</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   @push('scripts')
+      <script>
+         $(document).ready(function() {
+
+            $("#merge_date").flatpickr({
+               mode: "range",
+               enableTime: true,
+               minDate: "today",
+               minTime: "06:00",
+               maxTime: "22:00",
+            });
+
+            $('#descriptionEdit').summernote({
+               height: 200,
+               tabsize: 2,
+               lang: 'id-ID',
+               callbacks: {
+                  onChange: function(contents, $editable) {
+                     @this.set('description', contents);
+                  }
+               },
+               toolbar: [
+                  ['style', ['style']],
+                  ['font', ['bold', 'underline', 'clear']],
+                  ['fontname', ['fontname']],
+                  ['color', ['color']],
+                  ['para', ['ul', 'ol', 'paragraph']],
+                  ['table', ['table']],
+                  ['insert', ['link', 'picture', 'video']],
+                  ['view', ['codeview', 'help']],
+               ]
+            });
+
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            const inputElement = document.querySelector('#files');
+            const pond = FilePond.create(inputElement, {
+               files: @json($existingFiles),
+            });
+
+            pond.setOptions({
+               allowMultiple: 'true',
+               server: {
+                  process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                     @this.upload('files', file, load, error, progress);
+
+                  },
+                  // revert: (filename, load) => {
+                  //    @this.removeUpload('files', filename, load);
+                  // },
+                  revert: (filename, load) => {
+                     if (filename.includes('storage/events/cover/')) {
+                        const fileId = filename.split('/').pop();
+                        @this.removeFile(fileId, load);
+                     } else {
+                        @this.removeUpload('files', filename, load);
+                     }
+                  }
+
+               }
+            });
+
+            Livewire.on('close-modal', event => {
+               $('#locationPickerModal').modal('hide');
+            })
+         });
+      </script>
+   @endpush
+
+</div>

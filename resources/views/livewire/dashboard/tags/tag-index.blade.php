@@ -8,7 +8,6 @@
                 @else
                 <h3 class="my-2">Tambah Label</h3>
                 @endif
-                <hr class="mt-3 mb-4">
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible d-flex align-items-center" role="alert">
                     <i class="mdi mdi-check-circle-outline me-3"></i>
@@ -20,10 +19,10 @@
                 @endif
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissible d-flex align-items-center" role="alert">
-                    <i class="mdi mdi-check-circle-outline me-3"></i>
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                    </button>
+                     <i class="mdi mdi-check-circle-outline me-3"></i>
+                     {{ session('error') }}
+                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                     </button>
                     </div>
                 @endif
                 @if ($statusUpdate == true) 

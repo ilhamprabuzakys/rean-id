@@ -6,13 +6,10 @@ use App\Models\Tag;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 
 class TagUpdate extends Component
 {
-    protected $listeners = [
-        "edit",
-    ];
-
     public $name, $tagId;
     public $statusUpdate;
 
@@ -25,7 +22,9 @@ class TagUpdate extends Component
         return view('livewire.dashboard.tags.tag-update');
     }
 
-    public function edit($tag){
+    #[On('edit')]
+    public function setData($tag){
+        dd($tag);
         $this->name = $tag["name"];
         $this->tagId = $tag["id"];
     }
@@ -44,12 +43,12 @@ class TagUpdate extends Component
             ]);
 
             $name = $this->name;
-            $this->emit("storeUpdate", "Berhasil mengubah tag $oldname menjadi $name");
-            $this->emit('alertSuccess', 'Data berhasil diupdate');
+            $this->dispatch("storeUpdate", "Berhasil mengubah tag $oldname menjadi $name");
+            $this->dispatch('alertSuccess', 'Data berhasil diupdate');
             $this->resetInput();
         } else{
-            $this->emit("errorUpdate");
-            $this->emit('alertError', 'Data gagal diupdate');
+            $this->dispatch("errorUpdate");
+            $this->dispatch('alertError', 'Data gagal diupdate');
             $this->resetInput();
         }
     }
@@ -67,7 +66,7 @@ class TagUpdate extends Component
 
     public function cancelUpdate()
     {
-        $this->emit('statusUpdated', false);
+        $this->dispatch('statusUpdated', false);
     }
     
 }

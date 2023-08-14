@@ -5,7 +5,6 @@
          <tr>
             <th>#</th>
             <th>Nama</th>
-            <th>Jumlah Postingan</th>
             <th>Dibuat</th>
             <th>Detail</th>
             <th class="text-center">
@@ -16,25 +15,11 @@
       <tbody>
          @foreach ($tags as $tag)
             <tr>
-               @php
-                  $time = '';
-                  $currentTime = now();
-                  $updatedAt = $tag->created_at;
-                  
-                  $diffInSeconds = $currentTime->diffInSeconds($updatedAt);
-                  
-                  if ($diffInSeconds < 60) {
-                        $time = 'Baru saja - ' . $diffInSeconds + 4 . ' detik yang lalu';
-                  } else {
-                        $time = $updatedAt->format('l, d F Y - H:i:s');
-                  }
-               @endphp
                <th scope="row">{{ $loop->iteration + ($paginate * ($tags->currentPage()-1)) }}</th>
                <td>
                   {{ $tag->name }}
                </td>
                <td>{{ $tag->posts->count() }}</td>
-               <td>{{ $time }}</td>
                <td>
                   <a href="#" class="text-decoration-none text-uppercase" data-bs-toggle="modal" data-bs-target="#postinganTag{{ $tag->id }}">Lihat semua postingan</a>
                </td>

@@ -27,7 +27,8 @@
                        class="mdi mdi-link mdi-20px me-1"></i>Sosial Media</a>
               </li>
            </ul>
-           <livewire:dashboard.profile.profile-basic :user="$user" />
+           <livewire:dashboard.profile.profile-basic />
+           
         </div>
      </div>
 </div>

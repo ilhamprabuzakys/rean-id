@@ -2,17 +2,22 @@
 
 namespace App\Livewire\Dashboard\Ebooks;
 
-use App\Models\Ebook;
 use DOMDocument;
-use Illuminate\Validation\Rule;
+use App\Models\Ebook;
+use App\Models\FileEbook;
+use App\Models\FileEbookPDF;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class EbookCreate extends Component
 {
     use WithFileUploads;
-    public $title, $description, $pages, $author, $published_at, $user_id, $body, $cover_path, $file_path;
+    public $title, $description, $pages, $author, $published_at, $user_id, $body, $file_path;
+    public $files = [];
 
     public function mount($user)
     {
@@ -27,8 +32,8 @@ class EbookCreate extends Component
             'pages' => ['required'],
             'author' => ['required'],
             'published_at' => ['required'],
-            'cover_path' => ['max:6000'],
-            'file_path' => ['max:20000', 'file', 'mimes:pdf'],
+            'files.*' => ['max:20000'],
+            'file_path' => ['max:40000', 'file', 'mimes:pdf'],
             'body' => ['required', 'min:4'],
         ];
     }
@@ -42,9 +47,10 @@ class EbookCreate extends Component
         'description.min' => 'Deskripsi terlalu pendek',
         'description.max' => 'Deskripsi terlalu panjang, maksimal hanya 20 karakter',
         'pages.required' => 'Pages itu harus diisi',
+        'published_at.required' => 'Tanggal dipublish itu harus diisi',
         'author.required' => 'Author itu harus diisi',
-        'cover_path.max' => 'Ukuran file terlalu besar, maksimal hanya 6MB',
-        'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
+        'file.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
+        'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 40MB',
         'file_path.mimes' => 'Format file harus PDF',
         'file_path.file' => 'Harap mengupload tipe file',
         'body.required' => 'Body itu harus diisi',
@@ -65,21 +71,38 @@ class EbookCreate extends Component
 
     public function store()
     {
-        $this->validate();
         // dd($this->all());
+        try {
+            $this->validate($this->rules(), $this->messages);
+            $this->processDescriptionImages();
 
-        if ($this->file_path) {
-            // Jika ada file cover baru yang diunggah...
-            $path = $this->file_path->store('ebooks');
-            $this->file_path = "storage/" . $path;
+            // Simpan data ke variabel
+            $ebook = Ebook::create($this->all());
+            // Simpan files
+            $this->storePDF($ebook, $ebook->id);
+            $this->storeFiles($ebook);  // Mengirim id ebook ke fungsi storeFiles
+
+            $this->resetInput();
+            $this->dispatch('stored');
+            $this->dispatch('swal:modal', [
+                'icon' => 'success',
+                'title' => 'Berhasil dibuat',
+                'text' => 'Berhasil menambahkan data Ebook',
+            ]);
+        } catch (ValidationException $e) {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda \n' . $e->validator->errors(),
+            ]);
+
+            // Mengirim error bag ke komponen Livewire
+            $this->setErrorBag($e->validator->getMessageBag());
         }
+    }
 
-        if ($this->cover_path) {
-            // Jika ada file cover baru yang diunggah...
-            $path = $this->cover_path->store('cover');
-            $this->cover_path = "storage/ebooks/" . $path;
-        }
-
+    private function processDescriptionImages()
+    {
         $content = $this->body;
         $dom = new DOMDocument();
         $dom->loadHTML($content, 9);
@@ -92,18 +115,56 @@ class EbookCreate extends Component
             $img->removeAttribute('src');
             $img->setAttribute('src', $image_name);
         }
-        $content = $dom->saveHTML();
-        $this->body = $content;
-        // dd($this->all());
-        Ebook::create($this->all());
-        $this->dispatch('data-changed');
 
-        // $this->resetInput();
-        $this->dispatch('swal:modal', [
-            'icon' => 'success',
-            'title' => 'Penambahan Data',
-            'text' => 'Data berhasil ditambahkan',
-        ]);
+        $this->body = $dom->saveHTML();
+    }
+
+    private function storeFiles($ebook)
+    {
+        if ($this->files) {
+            $objName = Str::slug($ebook->title); // Menggunakan slug agar aman untuk nama file
+
+            foreach ($this->files as $index => $file) {
+                $timestamp = now()->format('H:i_d-m-Y');
+                $extension = $file->getClientOriginalExtension(); // Mendapatkan ekstensi file
+
+                // Membuat format nama file
+                $filename = "{$ebook->id}_{$objName}_file-" . ($index + 1) . "_{$timestamp}.{$extension}";
+
+                // Menyimpan file dengan nama yang telah diformat
+                $path = $file->storeAs('ebooks/cover', $filename);
+
+                $storedPath = "storage/" . $path;
+                FileEbook::create([
+                    'file_path' => $storedPath,
+                    'ebook_id' => $ebook->id
+                ]);
+            }
+        }
+    }
+
+    public function storePDF($ebook)
+    {
+        if (is_array($this->file_path)) {
+            dd('file_path adalah array', $this->file_path);
+        }
+        if (is_array($ebook->title)) {
+            dd('title adalah array', $ebook->title);
+        }
+        
+        if ($this->file_path) {
+            $timestamp = now()->format('H:i_d-m-Y');
+            // $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file
+            // Membuat format nama file
+            $objName = Str::slug($ebook->title); // Menggunakan slug agar aman untuk nama file
+            $filename = "{$ebook->id}_{$objName}_{$timestamp}.pdf";
+            $path = $this->file_path->storeAs('ebooks/pdf', $filename);
+            $storedPath = "storage/" . $path;
+            FileEbookPDF::create([
+                'file_path' => $storedPath,
+                'ebook_id' => $ebook->id
+            ]);
+        }
     }
 
     public function resetInput()
@@ -115,6 +176,6 @@ class EbookCreate extends Component
         $this->published_at = null;
         $this->body = null;
         $this->file_path = null;
-        $this->cover_path = null;
+        $this->files = null;
     }
 }

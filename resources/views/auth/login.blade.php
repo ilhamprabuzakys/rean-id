@@ -9,6 +9,7 @@ data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark
 @endsection
 @section('content')
 <livewire:auth.login />
+
 <p class="text-center">
    <span>Baru disini?</span>
    <a href="{{ route('register') }}">

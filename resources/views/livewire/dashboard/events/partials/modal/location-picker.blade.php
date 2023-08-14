@@ -53,8 +53,6 @@
          .then(response => response.json())
          .then(data => {
             if (data && data.address) {
-               console.log(data);
-               console.log(data.address);
                let city = data.address.city || data.address.town || data.address.village || data.address.hamlet;
                let province = data.address.state || "Tidak diketahui";
                let road = data.address.road || "Tidak diketahui";
@@ -81,7 +79,6 @@
          .then(response => response.json())
          .then(data => {
             if (data && data.results && data.results.length > 0) {
-               console.log(data);
                const address = data.results[0].formatted;
                callback(address);
             } else {
@@ -104,10 +101,12 @@
    };
 
    const street = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', tileLayerOptions);
-
+   // Default coordinate set to BNN Jakarta location
+   var initialLatitude = '-7.426577096087';
+   var initialLongitude = '109.25116226077';
    var map = L.map('map', {
       layers: street
-   }).setView([-6.967606, 107.6587713], 20);
+   }).setView([initialLatitude, initialLongitude], 20);
    var geocoder = L.Control.geocoder({
       defaultMarkGeocode: false
    }).addTo(map);
@@ -189,7 +188,7 @@
 
          // Kirim event ke Livewire dengan latitude dan longitude
          @this.set('latitude', latitude);
-        //  @this.set('location', `${fullAddress}`);
+         @this.set('location', fullAddress);
          @this.set('province', province);
          @this.set('city', city);
          @this.set('longitude', longitude);

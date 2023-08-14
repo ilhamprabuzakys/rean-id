@@ -18,8 +18,8 @@
        <div class="form-password-toggle">
           <div class="input-group input-group-merge">
              <div class="form-floating form-floating-outline">
-                <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" autocomplete="on" name="password" wire:model='password'
-                value="{{ old('password') }}" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                <input type="{{ $passwordToggle == 1 ? 'password' : 'text' }}" id="password" class="form-control @error('password') is-invalid @enderror" name="password" wire:model='password'
+                value="{{ old('password') }}" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"   
                    aria-describedby="password" />
                 <label for="password">Password</label>
                 @error('password')
@@ -28,7 +28,7 @@
                    </div>
                 @enderror
              </div>
-             <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
+             <a class="input-group-text cursor-pointer" wire:click.prevent='changePasswordToggle'><i class="{{ $passwordToggle == 1 ? 'mdi mdi-eye-off-outline' : 'mdi mdi-eye-outline' }}"></i></a>
           </div>
        </div>
     </div>

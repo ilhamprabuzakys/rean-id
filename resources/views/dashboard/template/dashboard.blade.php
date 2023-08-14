@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed " dir="ltr" data-theme="theme-semi-dark" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
+<html lang="en" class="light-style layout-menu-fixed " dir="ltr" data-theme="theme-semi-dark" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
    data-template="vertical-menu-template">
 
 <head>
@@ -67,8 +67,7 @@
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-   {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+   {{-- Toastr --}}
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.css') }}">
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.js') }}"></script>
 
@@ -76,7 +75,7 @@
    @stack('style')
    @stack('styles')
    @stack('css')
-   {{-- @livewireStyles --}}
+   
    <livewire:styles />
 </head>
 
@@ -132,8 +131,8 @@
    @include('sweetalert::alert')
    @include('dashboard.template.partials.modal.logout')
    @include('dashboard.template.partials.modal.notifikasi')
-
-   @stack('scripts')
+   
+   <livewire:scripts />
    @stack('script')
    @stack('modal')
 
@@ -167,9 +166,7 @@
    <script data-pace-options='{ "restartOnPushState": false, "restartOnRequestAfter": false }' src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
 
    {{-- @livewireScripts --}}
-   <livewire:scripts />
    <script>
-
       Livewire.on('swal:modal', data => {
          Swal.fire({
             title: data[0].title,
@@ -201,21 +198,11 @@
             }
          });
       });
-
-      Livewire.on('swalBasic', data => {
-         Swal.fire({
-            title: data[0].title,
-            text: data[0].text,
-            icon: data[0].icon,
-            confirmButtonText: 'Okay',
-            timer: 2500,
-         })
-      });
       
-      Livewire.on('swalDelete', data => {
+      Livewire.on('swal:filepond', data => {
          Swal.fire({
             title: 'Apakah kamu yakin?',
-            text: "Data " + data[0].title + " yang dihapus akan dipindahkan ke keranjang sampah!",
+            text: "Data " + data[0].title + " yang dihapus akan benar2 dihapus kamu tidak dapat mengembalikan file tersebut!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -224,31 +211,27 @@
             cancelButtonText: 'Batalkan.'
          }).then((result) => {
             if (result.isConfirmed) {
-               Livewire.dispatch('deleteConfirmed'); // emit event
-               // Swal.fire(
-               //    'Data Berhasil Dihapus!', 
-               //    'Data yang kamu pilih berhasil dihapus.',
-               //    'success'
-               // )
+               Livewire.dispatch('filepondDeleteConfirmed'); // emit event
+               Swal.fire(
+                  'File Berhasil Dihapus!',
+                  'Data yang kamu pilih berhasil dihapus.',
+                  'success'
+               )
             }
          });
       });
-      
-      window.addEventListener('alert', event => {
-         toastr[event.detail.type](event.detail.message,
-            event.detail.title ?? ''), toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "debug": true,
-            "newest": true,
-            "preventDuplicates": true,
-            // "showEasing": "swing",
-            // "hideEasing": "linear",
-            // "showMethod": "slideInRight",
-            // "hideMethod": "slideInLeft"
+
+      Livewire.on('alert', data => {
+         toastr[data[0].type](data[0].message, data[0].title ?? ''), toastr.options = {
+             "closeButton": true,
+             "progressBar": true,
+             "debug": true,
+             "newest": true,
+             "preventDuplicates": true,
          }
-      });
+     });
    </script>
+   @stack('scripts')
 </body>
 
 </html>

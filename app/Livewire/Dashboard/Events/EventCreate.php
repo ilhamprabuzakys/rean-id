@@ -2,27 +2,32 @@
 
 namespace App\Livewire\Dashboard\Events;
 
-use App\Models\Event;
 use DOMDocument;
-use Livewire\Attributes\On;
+use App\Models\Event;
 use Livewire\Component;
+use App\Models\FileEvent;
+use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class EventCreate extends Component
 {
     use WithFileUploads;
 
-    public $title, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location, $file_path, $status, $user_id;
+    public $title, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location, $status, $user_id;
+    public $files = [];
 
     public function mount($user)
     {
         $this->user_id = $user;
     }
 
-    public function rules()
+    private function rules()
     {
         return [
-            'title' => ['required', 'min:4'],
+            'title' => ['required', 'min:4', Rule::unique('events')],
             'description' => ['required', 'min:4'],
             'province' => ['required'],
             'city' => ['required'],
@@ -30,7 +35,7 @@ class EventCreate extends Component
             'contact_email' => ['required'],
             'organizer' => ['required'],
             'location' => ['required'],
-            'file_path' => ['max:20000', 'mimes:jpg,jpeg,png,webp'],
+            'files.*' => ['max:20000', 'mimes:jpg,jpeg,png,webp'],
         ];
     }
 
@@ -45,10 +50,9 @@ class EventCreate extends Component
         'contact_email.required' => 'Kontak Email harus diisi',
         'organizer.required' => 'Penyelenggara harus diisi',
         'location.required' => 'Lokasi harus diisi',
-        'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
-        'file_path.mimes' => 'Format file harus gambar',
+        'files.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
+        'files.*.mimes' => 'Format file harus gambar',
     ];
-
 
     public function render()
     {
@@ -57,18 +61,72 @@ class EventCreate extends Component
 
     public function store()
     {
-        $dateRange = explode(' to ', $this->merge_date);
-        $startDate = $dateRange[0];
-        $endDate = $dateRange[1] ?? $dateRange[0];
-        $this->start_date = $startDate;
-        $this->end_date = $endDate;
+        // dd($this->all());
+        try {
+            $this->validate($this->rules(), $this->message);
 
-        if ($this->file_path) {
-            // Jika ada file cover baru yang diunggah...
-            $path = $this->file_path->store('events');
-            $this->file_path = "storage/" . $path;
+            $this->parseDateRange();
+            $this->processDescriptionImages();
+
+            // Simpan event ke variabel
+            $event = Event::create($this->all());
+
+            // Simpan files
+            $this->storeFiles($event->id);  // Mengirim id event ke fungsi storeFiles
+            $this->resetInput();
+            $this->dispatch('stored');
+            $this->dispatch('swal:modal', [
+                'icon' => 'success',
+                'title' => 'Berhasil dibuat',
+                'text' => 'Berhasil menambahkan data Event',
+            ]);
+        } catch (ValidationException $e) {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda',
+            ]);
+
+            // Mengirim error bag ke komponen Livewire
+            $this->setErrorBag($e->validator->getMessageBag());
         }
+    }
 
+    private function storeFiles($eventId)
+    {
+        if ($this->files) {
+            $event = Event::find($eventId);
+            $eventName = Str::slug($event->title); // Menggunakan slug agar aman untuk nama file
+
+            foreach ($this->files as $index => $file) {
+                $timestamp = now()->format('H:i_d-m-Y');
+                $extension = $file->getClientOriginalExtension(); // Mendapatkan ekstensi file
+
+                // Membuat format nama file
+                $filename = "{$eventId}_{$eventName}_file-" . ($index + 1) . "_{$timestamp}.{$extension}";
+
+                // Menyimpan file dengan nama yang telah diformat
+                $path = $file->storeAs('events/cover', $filename);
+
+                $storedPath = "storage/" . $path;
+
+                FileEvent::create([
+                    'file_path' => $storedPath,
+                    'event_id' => $eventId
+                ]);
+            }
+        }
+    }
+
+    private function parseDateRange()
+    {
+        $dateRange = explode(' to ', $this->merge_date);
+        $this->start_date = $dateRange[0];
+        $this->end_date = $dateRange[1] ?? $dateRange[0];
+    }
+
+    private function processDescriptionImages()
+    {
         $content = $this->description;
         $dom = new DOMDocument();
         $dom->loadHTML($content, 9);
@@ -81,22 +139,13 @@ class EventCreate extends Component
             $img->removeAttribute('src');
             $img->setAttribute('src', $image_name);
         }
-        $content = $dom->saveHTML();
-        $this->description = $content;
 
-        // dd($this->all());
-        $this->validate();
-
-        Event::create($this->all());
-        $this->dispatch('swal:modal', [
-            'icon' => 'success',
-            'title' => 'Berhasil dibuat',
-            'text' => 'Berhasil menambahkan data Event',
-        ]);
+        $this->description = $dom->saveHTML();
     }
 
     #[On('updateLocation')]
-    public function setLocation($data) {
+    public function setLocation($data)
+    {
         $this->city = $data['city'];
         $this->province = $data['province'];
         $this->location = $data['fullAddress'];
@@ -112,18 +161,23 @@ class EventCreate extends Component
 
     public function resetInput()
     {
-        $this->title = '';
+        $this->title = null;
         $this->description = '';
-        $this->province = '';
-        $this->city = '';
-        $this->start_date = '';
-        $this->end_date = '';
-        $this->merge_date = '';
-        $this->organizer = '';
-        $this->contact_email = '';
-        $this->user_id = null;
-        $this->latitude = '';
-        $this->longitude = '';
-        $this->location = '';
+        $this->province = null;
+        $this->city = null;
+        $this->start_date = null;
+        $this->end_date = null;
+        $this->merge_date = null;
+        $this->organizer = null;
+        $this->contact_email = null;
+        $this->latitude = null;
+        $this->longitude = null;
+        $this->location = null;
+        $this->files = null;
+    }
+
+    public function closeModal()
+    {
+        $this->dispatch('close-modal');
     }
 }

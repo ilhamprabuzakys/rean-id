@@ -6,6 +6,7 @@ use App\Models\Ebook;
 use DOMDocument;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
@@ -15,7 +16,10 @@ class EbookUpdate extends Component
     use WithFileUploads;
 
     public $ebook;
-    public $title, $description, $pages, $author, $published_at, $body, $user_id, $cover_path, $file_path;
+    public $title, $description, $pages, $author, $published_at, $body, $user_id, $file_path;
+    public $files = [];
+    public $existingFiles = [];
+    public $filePathOrName = '';
 
     public function mount($user, $ebook)
     {
@@ -28,8 +32,24 @@ class EbookUpdate extends Component
         $this->published_at = $ebook->published_at;
         $this->body = $ebook->body;
         $this->user_id = $ebook->user_id;
-        $this->cover_path = $ebook->cover_path;
         $this->file_path = $ebook->file_path;
+                // Ambil semua file terkait dengan data ini
+        $this->existingFiles = $ebook->files->map(function ($file) {
+            return [
+                'source' => asset($file->file_path),
+                'options' => [
+                    'type' => 'limbo',
+                    'file' => [
+                        'name' => basename($file->file_path),
+                        'size' => filesize(public_path($file->file_path)),
+                        'type' => mime_content_type(public_path($file->file_path))
+                    ],
+                    'metadata' => [
+                        'id' => $file->id,
+                    ],
+                ],
+            ];
+        })->toArray();
     }
 
     public function rules()
@@ -40,9 +60,9 @@ class EbookUpdate extends Component
             'pages' => ['required'],
             'author' => ['required'],
             'published_at' => ['required'],
-            'cover_path' => ['max:6000'],
             'file_path' => ['max:20000'],
             'body' => ['required', 'min:4'],
+            'files.*' => ['max:20000', 'mimes:jpg,jpeg,png,webp'],
         ];
     }
 
@@ -59,6 +79,8 @@ class EbookUpdate extends Component
         'cover_path.max' => 'Ukuran file terlalu besar, maksimal hanya 6MB',
         'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
         'file_path.mimes' => 'Format file harus PDF',
+        'files.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
+        'files.*.mimes' => 'Format file harus gambar',
         'body.required' => 'Body itu harus diisi',
         'body.min' => 'Konten body terlalu pendek',
     ];
@@ -70,25 +92,29 @@ class EbookUpdate extends Component
 
     public function update()
     {
-        // dd($this->all());
-        $validatedData = $this->processFilePath();
-        $this->deleteRemovedImages();
-        $validatedData['body'] = $this->processSummernoteImages();
-        $validatedData['user_id'] = $this->user_id;
         try {
-            $this->ebook->update($validatedData);
-            $this->dispatch('data-changed');
+            $this->validate($this->rules(), $this->messages);
+
+            $this->parseDateRange();
+            $this->storeFiles();
+            $this->processDescriptionImages();
+
+            $this->event->update($this->all());
+
             $this->dispatch('swal:modal', [
-            'icon' => 'success',
-            'title' => 'Update Data',
-            'text' => 'Data berhasil diperbarui',
-        ]);
-        } catch (\Throwable $th) {
+                'icon' => 'success',
+                'title' => 'Update Berhasil',
+                'text' => 'Berhasil memperbarui data Event',
+            ]);
+        } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
-                'title' => 'Error',
-                'text' => 'Terjadi kesalahan saat menyimpan data',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda',
             ]);
+
+            // Mengirim error bag ke komponen Livewire
+            $this->setErrorBag($e->validator->getMessageBag());
         }
     }
 
@@ -119,32 +145,7 @@ class EbookUpdate extends Component
             unset($validatedData['file_path']);
         }
 
-        // if ($this->file_path != $this->ebook->file_path) {
-        //     $path = $this->file_path->store('file_path');
-        //     $validatedData['file_path'] = "storage/" . $path;
-
-        //     if ($this->ebook->file_path) {
-        //         $oldFilePath = str_replace('storage/', '', $this->ebook->file_path);
-        //         Storage::delete($oldFilePath);
-        //     }
-        // } else {
-        //     $validatedData['file_path'] = $this->ebook->file_path;
-        //     // unset($validatedData['file_path']);
-        // }
-
-        // if ($this->cover_path) {
-        //     $path = $this->cover_path->store('cover_path');
-        //     $validatedData['cover_path'] = "storage/" . $path;
-
-        //     if ($this->ebook->cover_path) {
-        //         $oldFilePath = str_replace('storage/', '', $this->ebook->cover_path);
-        //         Storage::delete($oldFilePath);
-        //     }
-        // } else {
-        //     unset($validatedData['cover_path']);
-        // }
-
-        if ($this->ebook->cover_path) {
+         if ($this->ebook->cover_path) {
             if ($this->cover_path)  {
                 if ($this->cover_path != $this->ebook->cover_path) {
                     $path = $this->cover_path->store('cover_path');
