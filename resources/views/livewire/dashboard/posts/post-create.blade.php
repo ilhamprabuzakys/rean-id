@@ -3,189 +3,132 @@
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data" id="createPost">
-                  @csrf
-                  <div class="row mb-3">
-                     <div class="col-lg-12">
-                        <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
-                        <input type="text"
-                           class="form-control @error('title')
-                                is-invalid
-                             @enderror" name="title" id="title"
-                           value="{{ old('title') }}">
-                        @error('title')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
+               <div class="row mb-3">
+                  <div class="col-lg-12">
+                     <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
+                     <input type="text"
+                        class="form-control @error('title')
+                            is-invalid
+                            @enderror" id="title" wire:model='title'>
+                     @error('title')
+                        <div class="invalid-feedback">
+                           {{ $message }}
+                        </div>
+                     @enderror
                   </div>
-                  <div class="row mb-3">
-                     <div class="col-lg-5">
-                        <label for="category_id" class="form-label">Kategori <sup class="text-danger">*</sup></label>
-                        <select class="form-select form-select-md @error('category_id')
-                             is-invalid
-                          @enderror" name="category_id"
-                           id="category_id">
-                           <option selected disabled>Pilih Kategori</option>
-                           @foreach ($categories as $category)
-                              @if (old('category_id') == $category->id)
-                                 <option value="{{ $category->id }}" data-slug="{{ $category->slug }}" selected>{{ $category->name }}</option>
+               </div>
+               <div class="row mb-3">
+                  <div class="col-lg-5">
+                     <label for="category_id" class="form-label">Kategori <sup class="text-danger">*</sup></label>
+                     <select class="form-select form-select-md @error('category_id')
+                                is-invalid
+                            @enderror" wire:model="category_id"
+                        id="category_id">
+                        <option selected disabled>Pilih Kategori</option>
+                        @foreach ($categories as $category)
+                           @if (old('category_id') == $category->id)
+                              <option value="{{ $category->id }}" data-slug="{{ $category->slug }}" selected>{{ $category->name }}</option>
+                           @else
+                              <option value="{{ $category->id }}" data-slug="{{ $category->slug }}">{{ $category->name }}</option>
+                           @endif
+                        @endforeach
+                     </select>
+                     @error('category_id')
+                        <div class="invalid-feedback">
+                           {{ $message }}
+                        </div>
+                     @enderror
+                  </div>
+                  <div class="col-lg-5">
+                     <label for="tags-multi-select" class="form-label">Tags</label>
+                     <select class="form-select form-select-md @error('tags')
+                            is-invalid
+                        @enderror" name="tags[]" id="tags-multi-select"
+                        multiple>
+                        <optgroup label="Pilih label">
+                           @foreach ($tags as $tag)
+                              @if (in_array($tag->name, old('tags', [])))
+                                 <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
                               @else
-                                 <option value="{{ $category->id }}" data-slug="{{ $category->slug }}">{{ $category->name }}</option>
+                                 <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                               @endif
                            @endforeach
-                        </select>
-                        @error('category_id')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
-                     <div class="col-lg-5">
-                        <label for="tags-multi-select" class="form-label">Tags</label>
-                        <select class="form-select form-select-md @error('tags')
-                             is-invalid
-                          @enderror" name="tags[]" id="tags-multi-select"
-                           multiple>
-                           <optgroup label="Pilih label">
-                              @foreach ($tags as $tag)
-                                 @if (in_array($tag->name, old('tags', [])))
-                                    <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
-                                 @else
-                                    <option value="{{ $tag->name }}">{{ $tag->name }}</option>
-                                 @endif
-                              @endforeach
-                           </optgroup>
-                        </select>
-                     </div>
-                     <div class="col-lg-2">
-                        <label for="user_id" class="form-label">Author</label>
+                        </optgroup>
+                     </select>
+                  </div>
+                  <div class="col-lg-2">
+                     <label for="user_id" class="form-label">Author</label>
+                     <input type="text"
+                        class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}" readonly>
+                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                  </div>
+               </div>
+               <div class="row mb-3">
+                  <div class="col-lg-12">
+                     <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
+                     <div class="input-group">
+                        <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}posts/</span>
                         <input type="text"
-                           class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}" readonly>
-                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                           class="form-control @error('slug') is-invalid @enderror" wire:model="slug" id="slug">
                      </div>
-                  </div>
-                  <div class="row mb-3">
-                     <div class="col-lg-12">
-                        <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
-                        <div class="input-group">
-                           <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}posts/</span>
-                           <input type="text"
-                              class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug" value="{{ old('slug') }}">
+                     @error('slug')
+                        <div class="invalid-feedback">
+                           {{ $message }}
                         </div>
-                        @error('slug')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
+                     @enderror
                   </div>
-                  <div class="row mb-3">
-                     <div class="col-lg-12">
-                        <label for="body" class="form-label" id="label-file">File</label>
-                        <input type="file" name="file_path" id="file_path" class="form-control @error('file_path')
-                             is-invalid
-                          @enderror">
-                        @error('file_path')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
+               </div>
+               <div class="row mb-3">
+                  <div class="col-12">
+                     <label for="files" class="mb-2">Cover Image <sup class="text-danger">*</sup></label>
+                     <div wire:ignore>
+                        <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
                      </div>
-                     <div class="col-lg-12 mt-3">
-                        <div class="image-preview-container" style="display: none;">
-                           <img id="image-preview" src="#" alt="Preview" style="display: none;">
-                           <button id="cancel-button" class="btn btn-danger" style="display: none;">
-                              <i class="mdi mdi-close" style="font-size: 26px"></i>
-                           </button>
+                     @error('files')
+                        <div class="invalid-feedback">
+                           {{ $message }}
                         </div>
-                     </div>
-                     {{-- <script>
-                          function readImage(input) {
-                             if (input.files && input.files[0]) {
-                                var reader = new FileReader();
-  
-                                reader.onload = function(e) {
-                                   $('#image-preview').attr('src', e.target.result).show();
-                                   $('.image-preview-container').show();
-                                   $('#cancel-button').show();
-  
-                                };
-  
-                                reader.readAsDataURL(input.files[0]);
-                             }
-                          }
-  
-                          $("#file_path").change(function() {
-                             var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
-  
-                             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
-                                readImage(this);
-                             } else {
-                                $('#image-preview').hide();
-                                $('#cancel-button').hide();
-                             }
-                          });
-  
-                          $("#cancel-button").click(function() {
-                             $('#file_path').val('');
-                             $('#image-preview').hide();
-                             $('.image-preview-container').hide();
-                             $(this).hide();
-                          });
-                       </script> --}}
+                     @enderror
                   </div>
-                  <div class="row mb-3">
-                     <div class="col-lg-12">
-                        <label for="body" class="form-label">Body <sup class="text-danger">*</sup></label>
-                        {{-- <div id="body"></div> --}}
-                        <textarea name="body" id="body-editor" rows="3" class="@error('body')
-                          is-invalid
-                       @enderror">{!! old('body') !!}</textarea>
-                        {{-- <trix-editor input="body" class="@error('body')
-                          is-invalid
-                       @enderror">{!! old('body') !!}</trix-editor> --}}
-                        @error('body')
-                           <div class="invalid-feedback">
-                              {{ $message }}
-                           </div>
-                        @enderror
-                     </div>
+               </div>
+               <div class="col-12 mb-5">
+                  <label for="body" class="mb-2">Body <sup class="text-danger">*</sup></label>
+                  <div wire:ignore>
+                     <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4" wire:model='body'></textarea>
+                     @error('body')
+                        <div class="invalid-feedback">
+                           {{ $message }}
+                        </div>
+                     @enderror
                   </div>
-                  <div class="row form-button mx-1">
-                     <div class="col">
-                        <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
-                           Kembali
-                           <i class="mdi mdi-arrow-left ms-2"></i>
-                        </a>
-                     </div>
-                     <div class="col">
-                        <button class="btn btn-primary">
-                           Simpan Data
-                           <i class="mdi mdi-content-save-check ms-2"></i>
-                        </button>
-                     </div>
-                     <div class="col">
-                        <button class="btn btn-primary">
-                           Simpan Data Dan Isi Kembali
-                           <i class="mdi mdi-content-save-edit ms-2"></i>
-                        </button>
-                     </div>
+               </div>
+               <div class="row form-button mx-1">
+                  <div class="col">
+                     <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
+                        Kembali
+                        <i class="mdi mdi-arrow-left ms-2"></i>
+                     </a>
                   </div>
-                  {{-- <div class="row justify-content-end mx-1 mt-2">
-                          
-                    </div> --}}
-               </form>
+                  <div class="col">
+                     <button class="btn btn-primary" type="button" wire:click='store()'>
+                        Simpan Data
+                        <i class="mdi mdi-content-save-check ms-2"></i>
+                     </button>
+                  </div>
+                  <div class="col">
+                     <button class="btn btn-primary" type="button" wire:click='store("no-return")'>
+                        Simpan Data Dan Isi Kembali
+                        <i class="mdi mdi-content-save-edit ms-2"></i>
+                     </button>
+                  </div>
+               </div>
             </div>
          </div>
       </div>
    </div>
    <script>
-      const title = document.querySelector('#title');
-      const slug = document.querySelector('#slug');
-
-      slug.value = '{{ $title }}';
+      var title = '{{ $title }}';
+      document.getElementById('slug').value = title;
 
 
       $(document).ready(function() {
@@ -202,6 +145,49 @@
          //    var url = "{{ config('app.url') }}/" + this.value + "/";
          //    $('#slug-input-addon').text(url);
          // });
+
+         $('#body').summernote({
+            height: 200,
+            tabsize: 2,
+            lang: 'id-ID',
+            callbacks: {
+               onChange: function(contents, $editable) {
+                  @this.set('body', contents);
+               }
+            },
+            toolbar: [
+               ['style', ['style']],
+               ['font', ['bold', 'underline', 'clear']],
+               ['fontname', ['fontname']],
+               ['color', ['color']],
+               ['para', ['ul', 'ol', 'paragraph']],
+               ['table', ['table']],
+               ['insert', ['link', 'picture', 'video']],
+               ['view', ['codeview', 'help']],
+            ]
+         });
+
+         FilePond.registerPlugin(FilePondPluginImagePreview);
+         const inputElement = document.querySelector('#files');
+         const pond = FilePond.create(inputElement);
+
+         pond.setOptions({
+            allowMultiple: 'true',
+            server: {
+               process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                  @this.upload('files', file, load, error, progress);
+
+               },
+               revert: (filename, load) => {
+                  @this.removeUpload('files', filename, load);
+               },
+            }
+         });
+
+         Livewire.on('stored', () => {
+            pond.removeFiles();
+            @this.set('description', '');
+         });
 
          $('#category_id').change(function() {
             var selectedText = $('option:selected', this).text();
@@ -220,50 +206,6 @@
                $('#label-file').text('Image Pilihan')
                fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
             }
-
-            function readImage(input) {
-               if (input.files && input.files[0]) {
-                  var reader = new FileReader();
-                  reader.onload = function(e) {
-                     $('#image-preview').attr('src', e.target.result).show();
-                     $('.image-preview-container').show();
-                     $('#cancel-button').show();
-
-                  };
-                  reader.readAsDataURL(input.files[0]);
-               }
-            }
-
-            $("#file_path").change(function() {
-               if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-                  alert('Format file tidak diperbolehkan!');
-                  $(this).val(''); // mengosongkan input file
-                  $('#image-preview').hide();
-                  $('#cancel-button').hide();
-               } else {
-                  // panggil fungsi readImage atau yang lainnya di sini
-                  readImage(this);
-               }
-            });
-
-
-            // $("#file_path").change(function() {
-            //    var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
-
-            //    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
-            //       readImage(this);
-            //    } else {
-            //       $('#image-preview').hide();
-            //       $('#cancel-button').hide();
-            //    }
-            // });
-
-            $("#cancel-button").click(function() {
-               $('#file_path').val('');
-               $('#image-preview').hide();
-               $('.image-preview-container').hide();
-               $(this).hide();
-            });
          });
 
       });
