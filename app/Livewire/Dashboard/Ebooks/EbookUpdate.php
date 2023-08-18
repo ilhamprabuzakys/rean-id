@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Dashboard\Ebooks;
 
-use App\Models\Ebook;
 use DOMDocument;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
+use App\Models\Ebook;
+use App\Models\FileEbook;
+use App\Models\FileEbookPDF;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class EbookUpdate extends Component
 {
@@ -19,6 +22,8 @@ class EbookUpdate extends Component
     public $title, $description, $pages, $author, $published_at, $body, $user_id, $file_path;
     public $files = [];
     public $existingFiles = [];
+    public $existingPDF;
+    public $existingPDF_ID;
     public $filePathOrName = '';
 
     public function mount($user, $ebook)
@@ -33,7 +38,7 @@ class EbookUpdate extends Component
         $this->body = $ebook->body;
         $this->user_id = $ebook->user_id;
         $this->file_path = $ebook->file_path;
-                // Ambil semua file terkait dengan data ini
+        // Ambil semua file terkait dengan data ini
         $this->existingFiles = $ebook->files->map(function ($file) {
             return [
                 'source' => asset($file->file_path),
@@ -50,6 +55,39 @@ class EbookUpdate extends Component
                 ],
             ];
         })->toArray();
+        if ($ebook->pdf) {
+            $file = $ebook->pdf; // Mengambil file yang terkait dengan Ebook
+            $extension = pathinfo($file->file_path, PATHINFO_EXTENSION);
+            $allowedExtensions = ['pdf'];  // Anda bisa menambahkan ekstensi lain jika diperlukan
+        
+            if (in_array($extension, $allowedExtensions)) {
+                $filePath = public_path($file->file_path);
+        
+                // Tambahkan pengecekan ini untuk memastikan file memang ada
+                if (!file_exists($filePath)) {
+                    $this->existingPDF = null;
+                    FileEbookPDF::find($file->id)->delete();
+                    return; // atau Anda bisa memberikan feedback tertentu ke pengguna
+                }
+        
+                $fileSizeBytes = filesize($filePath);
+                if ($fileSizeBytes < 1024 * 1024) { // Jika kurang dari 1MB
+                    $fileSize = round($fileSizeBytes / 1024, 2) . "KB";
+                } else {
+                    $fileSize = round($fileSizeBytes / (1024 * 1024), 2) . "MB";
+                }
+        
+                $this->existingPDF = (object) [
+                    'source_path' => asset($file->file_path),
+                    'extension' => $extension,
+                    'file_name' => basename($file->file_path),
+                    'file_size' => $fileSize,
+                    'mime_type' => mime_content_type($filePath),
+                    'id' => $file->id
+                ];
+            }
+        }
+        
     }
 
     public function rules()
@@ -60,9 +98,8 @@ class EbookUpdate extends Component
             'pages' => ['required'],
             'author' => ['required'],
             'published_at' => ['required'],
-            'file_path' => ['max:20000'],
             'body' => ['required', 'min:4'],
-            'files.*' => ['max:20000', 'mimes:jpg,jpeg,png,webp'],
+            'files.*' => ['required', 'max:20000', 'mimes:jpg,jpeg,png,webp'],
         ];
     }
 
@@ -77,8 +114,6 @@ class EbookUpdate extends Component
         'pages.required' => 'Pages itu harus diisi',
         'author.required' => 'Author itu harus diisi',
         'cover_path.max' => 'Ukuran file terlalu besar, maksimal hanya 6MB',
-        'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
-        'file_path.mimes' => 'Format file harus PDF',
         'files.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
         'files.*.mimes' => 'Format file harus gambar',
         'body.required' => 'Body itu harus diisi',
@@ -93,24 +128,30 @@ class EbookUpdate extends Component
     public function update()
     {
         try {
+            $rules = $this->rules();
+            if ($this->file_path !== null) {
+                $rules['file_path'] = 'max:20000|mimes:pdf';
+                $this->messages['file_path.mimes'] = 'File harus berformat PDF';
+                $this->messages['file_path.max'] = 'Ukuran PDF tidak boleh lebih besar dari 20MB';
+            }
             $this->validate($this->rules(), $this->messages);
-
-            $this->parseDateRange();
-            $this->storeFiles();
+            $this->deleteRemovedImages();
             $this->processDescriptionImages();
-
-            $this->event->update($this->all());
+            $this->storePDF();
+            $this->storeFiles();
+            $this->ebook->update($this->all());
 
             $this->dispatch('swal:modal', [
                 'icon' => 'success',
                 'title' => 'Update Berhasil',
-                'text' => 'Berhasil memperbarui data Event',
+                'text' => 'Berhasil memperbarui data Ebook',
             ]);
+            return redirect()->route('ebooks.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($e),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -118,57 +159,71 @@ class EbookUpdate extends Component
         }
     }
 
-    private function processFilePath()
+    private function storeFiles()
     {
-        $validatedData = $this->validate();
+        if ($this->files) {
+            $objName = Str::slug($this->title); // Menggunakan slug agar aman untuk nama file
 
-        if ($this->ebook->file_path) {
-            if ($this->file_path)  {
-                if ($this->file_path != $this->ebook->file_path) {
-                    $path = $this->file_path->store('file_path');
-                    $validatedData['file_path'] = "storage/" . $path;
+            foreach ($this->files as $index => $file) {
+                $timestamp = now()->format('H:i_d-m-Y');
+                $extension = $file->getClientOriginalExtension(); // Mendapatkan ekstensi file
 
-                    if ($this->ebook->file_path) {
-                        $oldFilePath = str_replace('storage/', '', $this->ebook->file_path);
-                        Storage::delete($oldFilePath);
-                    }
-                } else {
-                    $validatedData['file_path'] = $this->ebook->file_path;
-                }
-            } else {
-                $validatedData['file_path'] = $this->ebook->file_path;
+                // Membuat format nama file
+                $filename = "{$this->ebook->id}_{$objName}_file-" . ($index + 1) . "_{$timestamp}.{$extension}";
+
+                // Menyimpan file dengan nama yang telah diformat
+                $path = $file->storeAs('ebooks/cover', $filename);
+
+                $storedPath = "storage/" . $path;
+                FileEbook::create([
+                    'file_path' => $storedPath,
+                    'ebook_id' => $this->ebook->id
+                ]);
             }
-        } elseif($this->file_path) {
-            $path = $this->file_path->store('file_path');
-            $validatedData['file_path'] = "storage/" . $path;
-        } else {
-            unset($validatedData['file_path']);
         }
+    }
 
-         if ($this->ebook->cover_path) {
-            if ($this->cover_path)  {
-                if ($this->cover_path != $this->ebook->cover_path) {
-                    $path = $this->cover_path->store('cover_path');
-                    $validatedData['cover_path'] = "storage/" . $path;
-
-                    if ($this->ebook->cover_path) {
-                        $oldFilePath = str_replace('storage/', '', $this->ebook->cover_path);
-                        Storage::delete($oldFilePath);
-                    }
-                } else {
-                    $validatedData['cover_path'] = $this->ebook->cover_path;
-                }
-            } else {
-                $validatedData['cover_path'] = $this->ebook->cover_path;
+    public function storePDF()
+    {
+        if ($this->file_path) {
+            if ($this->ebook->pdf) {
+                $oldFilePath = str_replace('storage/', '', $this->ebook->pdf->file_path);
+                Storage::delete($oldFilePath);
             }
-        } elseif($this->cover_path) {
-            $path = $this->cover_path->store('cover_path');
-            $validatedData['cover_path'] = "storage/" . $path;
-        } else {
-            unset($validatedData['cover_path']);
+            $timestamp = now()->format('H:i_d-m-Y');
+            // $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file
+            // Membuat format nama file
+            $objName = Str::slug($this->title); // Menggunakan slug agar aman untuk nama file
+            $filename = "{$this->ebook->id}_{$objName}_{$timestamp}.pdf";
+            $path = $this->file_path->storeAs('ebooks/pdf', $filename);
+            $storedPath = "storage/" . $path;
+            FileEbookPDF::create([
+                'file_path' => $storedPath,
+                'ebook_id' => $this->ebook->id
+            ]);
         }
+    }
 
-        return $validatedData;
+    public function removePDFFile($id)
+    {
+        $this->existingPDF_ID = $id;
+        $this->dispatch('swal:ebookpdf', [
+            'title' => 'File',
+        ]);
+    }
+
+    #[On('pdfDeleteConfirmed')]
+    public function seriouslyPDFRemoveFile()
+    {
+        // Coba temukan file berdasarkan path di database
+        $file = FileEbookPDF::find($this->existingPDF_ID);
+
+        if ($file) {
+            // Ini adalah file yang sudah ada, jadi kita hapus dari database dan penyimpanan
+            Storage::delete(str_replace('storage/', '', $file->file_path));
+            $file->delete();
+            $this->existingPDF = null; // Setelah penghapusan berhasil, set properti ini ke null
+        }
     }
 
     private function deleteRemovedImages()
@@ -200,30 +255,34 @@ class EbookUpdate extends Component
         }
     }
 
-    private function processSummernoteImages()
+    private function processDescriptionImages()
     {
         $content = $this->body;
         $dom = new DOMDocument();
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-            $src = $img->getAttribute('src');
-            if (strpos($src, 'data:image/') === 0) {
-                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
-                $image_name = "summernotes/" . time() . $key . '.png';
-                $path = Storage::disk('public')->put($image_name, $data);
+        $directoryPath = public_path('storage/ebooks/detail/');
 
-                if (!$path) {
-                    throw new \Exception("Failed to save image to storage");
-                }
-
-                $img->removeAttribute('src');
-                $img->setAttribute('src', "/storage/" . $image_name);
-            }
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
         }
 
-        return $dom->saveHTML();
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $title = Str::slug($this->title);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $key++;
+                $image_name = "/storage/ebooks/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
+        }
+        $this->body = $dom->saveHTML();
     }
 
     public function resetInput()
@@ -236,5 +295,54 @@ class EbookUpdate extends Component
         $this->body = null;
     }
 
+    /* private function processFilePath()
+    {
+        if ($this->ebook->file_path) {
+            if ($this->file_path) {
+                if ($this->file_path != $this->ebook->file_path) {
+                    $path = $this->file_path->store('file_path');
+                    $this->file_path = "storage/" . $path;
 
+                    if ($this->ebook->file_path) {
+                        $oldFilePath = str_replace('storage/', '', $this->ebook->file_path);
+                        Storage::delete($oldFilePath);
+                    }
+                } else {
+                    $validatedData['file_path'] = $this->ebook->file_path;
+                }
+            } else {
+                $validatedData['file_path'] = $this->ebook->file_path;
+            }
+        } elseif ($this->file_path) {
+            $path = $this->file_path->store('file_path');
+            $validatedData['file_path'] = "storage/" . $path;
+        } else {
+            unset($validatedData['file_path']);
+        }
+
+        if ($this->ebook->cover_path) {
+            if ($this->cover_path) {
+                if ($this->cover_path != $this->ebook->cover_path) {
+                    $path = $this->cover_path->store('cover_path');
+                    $validatedData['cover_path'] = "storage/" . $path;
+
+                    if ($this->ebook->cover_path) {
+                        $oldFilePath = str_replace('storage/', '', $this->ebook->cover_path);
+                        Storage::delete($oldFilePath);
+                    }
+                } else {
+                    $validatedData['cover_path'] = $this->ebook->cover_path;
+                }
+            } else {
+                $validatedData['cover_path'] = $this->ebook->cover_path;
+            }
+        } elseif ($this->cover_path) {
+            $path = $this->cover_path->store('cover_path');
+            $validatedData['cover_path'] = "storage/" . $path;
+        } else {
+            unset($validatedData['cover_path']);
+        }
+
+        return $validatedData;
+    } */
 }

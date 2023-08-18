@@ -1,3 +1,21 @@
+/* ROOT */
+
+#toast-container { 
+ pointer-events: none;
+ > div { pointer-events: auto;  }
+}
+::-webkit-scrollbar {
+   width: 5px
+}
+
+::-webkit-scrollbar-track {
+   background-color: #fff
+}
+
+::-webkit-scrollbar-thumb {
+   background-color: #5154ff
+}
+
 /* Add Post Form */
 .row.form-button .badge {
    padding-left: 120px;
@@ -91,4 +109,20 @@ table tbody tr.event-tr th {
 
 table tbody tr.event-tr td div.dropdown a.text-muted {
    color: #fff !important;
+}
+
+table tbody tr td div.dropdown .dropdown-toggle::after {
+   display: none;
+}
+
+.nav .nav-item {
+   cursor: pointer !important;
+}
+
+/* Pills Breadcumb */
+.container-xxl h4.fw-bold.py-3.mb-4 {
+   padding: 20px 18px !important;
+   background-color: #fff;
+   border-radius: 0.375rem;
+   box-shadow: 0 0 0.375rem 0.25rem rgba(165,163,174,.15) !important;
 }

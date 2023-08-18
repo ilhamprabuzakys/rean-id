@@ -4,7 +4,7 @@
            Ganti Password
         </h5>
         <div class="card-body">
-           <form wire:submit.prevent='update({{ $user_id }})'>
+           <form wire:submit.prevent='update()'>
               <div class="row">
                  <div
                     class="mb-3 col-md-6 form-password-toggle">
@@ -19,7 +19,7 @@
                              type="password"
                              name="current_password"
                              wire:model='current_password'
-                             id="current_password"
+                             id="password.current_password"
                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
                           <label
                              for="current_password">Password Saat Ini</label>

@@ -6,14 +6,13 @@
                <div class="row mb-3">
                   <div class="col-lg-12">
                      <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
-                     <input type="text"
-                        class="form-control @error('title')
+                     <input type="text" class="form-control @error('title')
                             is-invalid
                             @enderror" id="title" wire:model='title'>
                      @error('title')
-                        <div class="invalid-feedback">
-                           {{ $message }}
-                        </div>
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
                      @enderror
                   </div>
                </div>
@@ -22,61 +21,60 @@
                      <label for="category_id" class="form-label">Kategori <sup class="text-danger">*</sup></label>
                      <select class="form-select form-select-md @error('category_id')
                                 is-invalid
-                            @enderror" wire:model="category_id"
-                        id="category_id">
-                        <option selected disabled>Pilih Kategori</option>
+                            @enderror" wire:model.live="category_id" id="category_id">
+                        <option selected value="">Pilih Kategori</option>
                         @foreach ($categories as $category)
-                           @if (old('category_id') == $category->id)
-                              <option value="{{ $category->id }}" data-slug="{{ $category->slug }}" selected>{{ $category->name }}</option>
-                           @else
-                              <option value="{{ $category->id }}" data-slug="{{ $category->slug }}">{{ $category->name }}</option>
-                           @endif
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                      </select>
                      @error('category_id')
-                        <div class="invalid-feedback">
-                           {{ $message }}
-                        </div>
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
                      @enderror
                   </div>
-                  <div class="col-lg-5">
+                  <div class="col-lg-5" wire:ignore>
                      <label for="tags-multi-select" class="form-label">Tags</label>
                      <select class="form-select form-select-md @error('tags')
                             is-invalid
-                        @enderror" name="tags[]" id="tags-multi-select"
-                        multiple>
+                        @enderror" wire:model="tags" id="tags-multi-select" multiple>
                         <optgroup label="Pilih label">
-                           @foreach ($tags as $tag)
-                              @if (in_array($tag->name, old('tags', [])))
-                                 <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
-                              @else
-                                 <option value="{{ $tag->name }}">{{ $tag->name }}</option>
-                              @endif
+                           @foreach ($tagsItem as $tag)
+                           <option value="{{ $tag->name }}">{{ $tag->name }}</option>
                            @endforeach
                         </optgroup>
                      </select>
                   </div>
                   <div class="col-lg-2">
                      <label for="user_id" class="form-label">Author</label>
-                     <input type="text"
-                        class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}" readonly>
-                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                     <input type="text" class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}"
+                        readonly>
                   </div>
                </div>
-               <div class="row mb-3">
-                  <div class="col-lg-12">
-                     <label for="slug" class="form-label">Slug <sup class="text-danger">*</sup></label>
-                     <div class="input-group">
-                        <span class="input-group-text" id="slug-input-addon">{{ config('app.url') }}posts/</span>
-                        <input type="text"
-                           class="form-control @error('slug') is-invalid @enderror" wire:model="slug" id="slug">
+
+               <div class="row mb-3 @if (in_array($category_id, [3, 6, 7])) @else d-none @endif">
+                  <div class="col-12">
+                     <label for="files" class="mb-2">File
+                        @if ($category_id == 6 || $category_id == 7)
+                        Audio
+                        @elseif($category_id == 3)
+                        Video
+                        @endif
+                        <sup class="text-danger">*</sup>
+                     </label>
+                     <div>
+                        <input type="file" name="file_path" id="file_path"
+                           class="form-control @error('file_path') is-invalid @enderror" wire:model='file_path'>
                      </div>
-                     @error('slug')
-                        <div class="invalid-feedback">
-                           {{ $message }}
-                        </div>
+                     @error('file_path')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
                      @enderror
+                     <div class="invalid-feedback" id="error_message">
+                     </div>
                   </div>
+                  <span class="text-muted">File harus berformat mp3, mp4 atau mkv</span>
                </div>
                <div class="row mb-3">
                   <div class="col-12">
@@ -85,20 +83,21 @@
                         <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
                      </div>
                      @error('files')
-                        <div class="invalid-feedback">
-                           {{ $message }}
-                        </div>
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
                      @enderror
                   </div>
                </div>
                <div class="col-12 mb-5">
                   <label for="body" class="mb-2">Body <sup class="text-danger">*</sup></label>
                   <div wire:ignore>
-                     <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4" wire:model='body'></textarea>
+                     <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4"
+                        wire:model='body'></textarea>
                      @error('body')
-                        <div class="invalid-feedback">
-                           {{ $message }}
-                        </div>
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
                      @enderror
                   </div>
                </div>
@@ -115,22 +114,13 @@
                         <i class="mdi mdi-content-save-check ms-2"></i>
                      </button>
                   </div>
-                  <div class="col">
-                     <button class="btn btn-primary" type="button" wire:click='store("no-return")'>
-                        Simpan Data Dan Isi Kembali
-                        <i class="mdi mdi-content-save-edit ms-2"></i>
-                     </button>
-                  </div>
                </div>
             </div>
          </div>
       </div>
    </div>
+   @push('scripts')
    <script>
-      var title = '{{ $title }}';
-      document.getElementById('slug').value = title;
-
-
       $(document).ready(function() {
          $('#tags-multi-select').select2({
             // theme: 'bootstrap-5',
@@ -140,6 +130,10 @@
          });
          $('#category_id').select2({
             theme: 'bootstrap-5'
+         });
+         $('#category_id').on('change', function (e) {
+            var data = $('#category_id').select2("val");
+            @this.set('category_id', data);
          });
          // $('#category_id').on('change', function() {
          //    var url = "{{ config('app.url') }}/" + this.value + "/";
@@ -169,7 +163,9 @@
 
          FilePond.registerPlugin(FilePondPluginImagePreview);
          const inputElement = document.querySelector('#files');
+         const inputElementAdditional = document.querySelector('#files_media');
          const pond = FilePond.create(inputElement);
+         const pondAdditional = FilePond.create(inputElementAdditional);
 
          pond.setOptions({
             allowMultiple: 'true',
@@ -184,32 +180,45 @@
             }
          });
 
-         Livewire.on('stored', () => {
-            pond.removeFiles();
-            @this.set('description', '');
-         });
+         pondAdditional.setOptions({
+            allowMultiple: 'true',
+            server: {
+               process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                  @this.upload('files', file, load, error, progress);
 
-         $('#category_id').change(function() {
-            var selectedText = $('option:selected', this).text();
-            var selectedSlug = $('option:selected', this).data('slug');
-            console.log("selectedText : " + selectedText);
-            var url = "{{ config('app.url') }}" + selectedSlug + "/";
-            $('#slug-input-addon').text(url);
-            var fileExtension;
-            if (selectedText == 'Ebook') {
-               $('#label-file').text('Ebook File (PDF)')
-               fileExtension = ['pdf'];
-            } else if (selectedText == 'Video' || selectedText == 'Musik' || selectedText == 'Audio') {
-               $('#label-file').text('Media Pilihan')
-               fileExtension = ['mp4', 'mp3']; // tambahkan format file media yang diperbolehkan di sini
-            } else {
-               $('#label-file').text('Image Pilihan')
-               fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+               },
+               revert: (filename, load) => {
+                  @this.removeUpload('files', filename, load);
+               },
             }
          });
 
+         Livewire.on('stored', () => {
+            pond.removeFiles();
+            @this.set('body', '');
+         });
+
+
       });
 
+      /* $('#category_id').change(function() {
+         var selectedText = $('option:selected', this).text();
+         var selectedSlug = $('option:selected', this).data('slug');
+         console.log("selectedText : " + selectedText);
+         var url = "{{ config('app.url') }}" + selectedSlug + "/";
+         $('#slug-input-addon').text(url);
+         var fileExtension;
+         if (selectedText == 'Ebook') {
+            $('#label-file').text('Ebook File (PDF)')
+            fileExtension = ['pdf'];
+         } else if (selectedText == 'Video' || selectedText == 'Musik' || selectedText == 'Audio') {
+            $('#label-file').text('Media Pilihan')
+            fileExtension = ['mp4', 'mp3']; // tambahkan format file media yang diperbolehkan di sini
+         } else {
+            $('#label-file').text('Image Pilihan')
+            fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
+         }
+      }); */
       // document.getElementById('createPost').addEventListener('submit', function(event) {
       //    event.preventDefault(); // Mencegah pengiriman formulir secara langsung
 
@@ -223,4 +232,60 @@
       //    this.submit();
       // });
    </script>
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+         const mediaFileInput = document.getElementById('file_path');
+
+         // Pastikan mediaFileInput ada
+         if (!mediaFileInput) return;
+
+         mediaFileInput.addEventListener('change', function() {
+            const file = mediaFileInput.files[0];
+            
+            if (!file) {
+                  Swal.fire({
+                     title: "Gagal Submit",
+                     html: "Media file harus disertakan",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Media file harus disertakan');
+                  mediaFileInput.value = ''; // Reset input file
+                  return;
+            }
+
+            // Cek ukuran file (20MB = 20 * 1024 * 1024 bytes)
+            if (file.size > 20 * 1024 * 1024) {
+                  Swal.fire({
+                     title: "Gagal Upload",
+                     html: "Ukuran media file tidak boleh lebih besar dari <span class='text-danger'>20MB</span>",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Ukuran media file tidak boleh lebih besar dari 20MB');
+                  mediaFileInput.value = ''; // Reset input file
+                  return;
+            }
+
+            // Cek ekstensi file
+            const allowedFormats = ['mp3', 'mp4', 'mkv'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedFormats.includes(fileExtension)) {
+                  Swal.fire({
+                     title: "Gagal Upload",
+                     html: "Media file harus berformat media: <span class='text-danger'>mp3, mp4, mkv</span>",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Media file harus berformat media: mp3, mp4, mkv');
+                  mediaFileInput.value = ''; // Reset input file
+                  return;
+            }
+         });
+      });
+   </script>
+   @endpush
 </div>

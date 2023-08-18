@@ -8,7 +8,7 @@
             <th>Dibuat</th>
             <th>Detail</th>
             <th class="text-center">
-               <i class="align-middle" data-feather="edit"></i>
+               <i class="fas fa-lg fa-edit"></i>
             </th>
          </tr>
       </thead>
@@ -26,17 +26,19 @@
                <td class="text-center">
                   <div class="dropdown">
                      <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                        <i class="align-middle" data-feather="more-horizontal"></i>
+                        <i class="fas fa-ellipsis fa-lg"></i>
                      </a>
 
                      <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $tag->id }})">
-                           Lihat postingan terkait
+                           <i class="fas fa-eye fa-sm me-3"></i> Lihat postingan terkait
                         </a>
                         <a class="dropdown-item text-success text-decoration-none" wire:click="edit({{ $tag->id }})">
-                           Edit
+                           <i class="fas fa-edit fa-sm me-3"></i>Edit
                         </a>
-                        <a class="text-danger text-decoration-none dropdown-item" wire:click="findId({{ $tag->id }})" data-bs-toggle="modal" data-bs-target="#deleteTagModal">Hapus</a>
+                        <a class="text-danger text-decoration-none dropdown-item" wire:click="deleteConfirmation({{ $tag->id }})">
+                           <div class="far fa-trash-alt me-3"></div>
+                           Hapus</a>
                      </div>
                   </div>
                </td> 

@@ -16,7 +16,7 @@ class EventCreate extends Component
 {
     use WithFileUploads;
 
-    public $title, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location, $status, $user_id;
+    public $title, $slug, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location, $status, $user_id;
     public $files = [];
 
     public function mount($user)
@@ -63,6 +63,9 @@ class EventCreate extends Component
     {
         // dd($this->all());
         try {
+            $this->slug = Str::slug($this->title);
+            $this->title = Str::of($this->title)->title();
+
             $this->validate($this->rules(), $this->message);
 
             $this->parseDateRange();
@@ -80,11 +83,12 @@ class EventCreate extends Component
                 'title' => 'Berhasil dibuat',
                 'text' => 'Berhasil menambahkan data Event',
             ]);
+            return redirect()->route('events.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda',
+                'text' => 'Ada beberapa kesalahan pada input Anda <br>' . $e->validator->errors(),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -132,14 +136,26 @@ class EventCreate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/storage/events/detail/" . time() . $key . '.png';
-            \file_put_contents(\public_path() . $image_name, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+        $directoryPath = public_path('storage/events/detail/');
+
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
         }
 
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $title = Str::slug($this->title);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $key++;
+                $image_name = "/storage/events/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
+        }
         $this->description = $dom->saveHTML();
     }
 

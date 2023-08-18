@@ -10,10 +10,9 @@ use Livewire\WithPagination;
 class EbookIndex extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
 
     public $search, $filter_date;
-    public $paginate;
+    public $paginate = 5;
     public $user;
     public $ebook_id;
     public $statusUpdate = false;
@@ -26,7 +25,6 @@ class EbookIndex extends Component
 
     public function mount($user)
     {
-        $this->paginate = 5;
         $this->user = $user;
     }
 
@@ -43,8 +41,8 @@ class EbookIndex extends Component
 
             return $query->whereDate('published_at', '>=', $startDate)
                          ->whereDate('published_at', '<=', $endDate);
-        })->paginate($this->paginate);
-        $ebooks = $query;
+        });
+        $ebooks = $query->paginate($this->paginate);
         return view('livewire.dashboard.ebooks.ebook-index', [
             'ebooks' => $ebooks,
         ]);

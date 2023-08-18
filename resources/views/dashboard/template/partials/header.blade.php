@@ -99,7 +99,7 @@
                         <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                            <i class="mdi mdi-cog-outline fs-4"></i>
                         </span>
-                        <a href="{{ route('settings.profile', auth()->user()) }}" class="stretched-link">Setelan</a>
+                        <a href="{{ route('settings') }}" class="stretched-link">Setelan</a>
                         <small class="text-muted mb-0">Pengelola Akun</small>
                      </div>
                      <div class="dropdown-shortcuts-item col">
@@ -223,13 +223,8 @@
          </li>
          <!--/ Notification -->
 
-         <!-- User -->
-         {{-- @livewire('dashboard.partials.header-user-dropdown') --}}
+         <!-- User Dropdown -->
          <livewire:dashboard.partials.header-user-dropdown />
-         {{-- @livewire('dashboard.partials.header-user-dropdown', ['user' => auth()->user()]) --}}
-         <!--/ User -->
-
-
 
       </ul>
    </div>

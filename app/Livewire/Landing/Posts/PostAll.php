@@ -12,11 +12,6 @@ class PostAll extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = [
-        "swalS",
-        "swalE",
-    ];
-
     public $category;
     public $paginate = 5;
     public $search, $filter_date, $filter_category;
@@ -66,25 +61,7 @@ class PostAll extends Component
         });
         
         $posts = $query;
-        $this->emit('refreshAOS');
+        $this->dispatch('refreshAOS');
         return view('livewire.landing.posts.post-all', compact('posts', 'categories'));
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-    
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

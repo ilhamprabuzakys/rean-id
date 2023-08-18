@@ -1,0 +1,16 @@
+Super Admin:
+username: superadmin
+password: superadmin
+
+username: superadmin2
+password: superadmin2
+
+Admin:
+
+username: admin
+password: admin
+
+Member:
+
+username: member
+password: member

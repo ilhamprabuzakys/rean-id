@@ -11,6 +11,11 @@ class News extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function scopeGlobalSearch($query, $search)  
     {
         $search = strtolower($search);

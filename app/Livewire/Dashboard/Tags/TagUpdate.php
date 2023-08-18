@@ -13,6 +13,13 @@ class TagUpdate extends Component
     public $name, $tagId;
     public $statusUpdate;
 
+    #[On('dataEdit')]
+    public function setData($tag){
+        dd($tag);
+        $this->name = $tag["name"];
+        $this->tagId = $tag["id"];
+    }
+
     public function mount($statusUpdate)
     {
         $this->statusUpdate = $statusUpdate;
@@ -20,13 +27,6 @@ class TagUpdate extends Component
     public function render()
     {
         return view('livewire.dashboard.tags.tag-update');
-    }
-
-    #[On('edit')]
-    public function setData($tag){
-        dd($tag);
-        $this->name = $tag["name"];
-        $this->tagId = $tag["id"];
     }
 
     public function update(){
@@ -43,12 +43,19 @@ class TagUpdate extends Component
             ]);
 
             $name = $this->name;
-            $this->dispatch("storeUpdate", "Berhasil mengubah tag $oldname menjadi $name");
-            $this->dispatch('alertSuccess', 'Data berhasil diupdate');
+            $this->dispatch('alert', [
+                'title' => 'Berhasil',
+                'message' => "Data berhasil diubah dari {$oldname} ke {name}",
+                'type' => 'success',
+            ]);
             $this->resetInput();
         } else{
             $this->dispatch("errorUpdate");
-            $this->dispatch('alertError', 'Data gagal diupdate');
+            $this->dispatch('swal:modal', [
+                'title' => 'Gagal Update',
+                'text' => "Terjadi kesalahan, coba refresh halaman",
+                'icon' => 'error',
+            ]);
             $this->resetInput();
         }
     }

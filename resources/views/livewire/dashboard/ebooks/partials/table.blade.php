@@ -1,5 +1,5 @@
 {{-- @dd($ebooks) --}}
-<table class="dt-complex-header table table-bordered" wire:poll.visible.2000ms>
+<table class="dt-complex-header table table-bordered">
 
     <thead class="table-light">
        <tr>
@@ -9,7 +9,7 @@
           <th>Pages</th>
           <th>Tanggal Publish</th>
           <th class="text-center">
-             <i class="fas fa-pencil-square"></i>
+             <i class="fas fa-lg fa-edit"></i>
           </th>
        </tr>
     </thead>
@@ -32,12 +32,11 @@
              <td class="text-center">
                 <div class="dropdown">
                    <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                      <i class="align-middle" data-feather="more-horizontal"></i>
+                     <i class="fas fa-lg fa-ellipsis"></i>
                    </a>
-
                    <div class="dropdown-menu dropdown-menu-end">
-                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('ebooks.edit', $ebook) }}">Edit</a>
-                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})">Hapus</a>
+                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('ebooks.edit', $ebook) }}"><i class="fas fa-md fa-edit me-3"></i>Edit</a>
+                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $ebook->id }})"><i class="far fa-md fa-trash-alt me-3"></i>Hapus</a>
                    </div>
                 </div>
              </td>

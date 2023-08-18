@@ -22,17 +22,17 @@
              </div>
              <div class="row justify-content-between">
                 <div class="col-1 d-flex justify-content-start">
-                   <select class="form-select" name="paginate" id="paginate" wire:model='paginate'>
+                   <select class="form-select" name="paginate" id="paginate" wire:model.live='paginate'>
                       <option value="5">5</option>
                       <option value="10">10</option>
                       <option value="15">15</option>
                    </select>
                 </div>
                 <div class="col-7 d-flex justify-content-start">
-                   <input type="text" name="search" id="search" wire:model="search" class="form-control" placeholder="Ketik sesuatu..">
+                   <input type="text" name="search" id="search" wire:model.live="search" class="form-control" placeholder="Ketik sesuatu..">
                 </div>
                 <div class="col-4 d-flex justify-content-start">
-                   <select class="form-select" name="rolefilter" id="rolefilter" wire:model='rolefilter'>
+                   <select class="form-select" name="rolefilter" id="rolefilter" wire:model.live='rolefilter'>
                       <option selected value="">Semua Role</option>
                       @foreach ($roles as $role)
                          <option value="{{ $role->key }}">{{ $role->label }}</option>

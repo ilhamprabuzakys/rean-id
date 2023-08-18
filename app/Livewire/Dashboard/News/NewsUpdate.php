@@ -17,7 +17,7 @@ class NewsUpdate extends Component
     use WithFileUploads;
 
     public $user_id;
-    public $title, $about, $file_path, $body;
+    public $title, $slug, $about, $file_path, $body;
     public $existingFile;
     public $news;
     public $filePathOrName = '';
@@ -80,52 +80,30 @@ class NewsUpdate extends Component
         return view('livewire.dashboard.news.news-update');
     }
 
-    /* public function update()
-    {
-        
-        $validatedData = $this->processFilePath();
-        $this->deleteRemovedImages();
-        $validatedData['body'] = $this->processDescriptionImages();
-        $validatedData['user_id'] = $this->user_id;
-        try {
-            $this->validate($this->rules(), $this->message);
-            $this->news->update($validatedData);
-        } catch (\Throwable $th) {
-            $this->dispatch('swal:modal', [
-                'icon' => 'error',
-                'title' => 'Error',
-                'text' => 'Terjadi kesalahan saat menyimpan data',
-            ]);
-        }
-        $this->dispatch('swal:modal', [
-            'icon' => 'success',
-            'title' => 'Update Data',
-            'text' => 'Data berhasil diperbarui',
-        ]);
-    }
- */
     public function update()
     {
         // dd($this->all());
         try {
+            $this->slug = Str::slug($this->title);
+            $this->title = Str::of($this->title)->title();
+
             $this->validate($this->rules(), $this->messages);
             $this->storeFiles();
             $this->deleteRemovedImages();
             $this->processDescriptionImages();
 
             $this->news->update($this->all());
-
             $this->dispatch('swal:modal', [
                 'icon' => 'success',
                 'title' => 'Update Berhasil',
                 'text' => 'Berhasil memperbarui data Berita',
             ]);
+            return redirect()->route('news.index');
         } catch (ValidationException $e) {
-            dd($e->validator->errors());
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($e),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -199,14 +177,26 @@ class NewsUpdate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/storage/news/detail/" . time() . $key . '.png';
-            \file_put_contents(\public_path() . $image_name, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+        $directoryPath = public_path('storage/news/detail/');
+
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
         }
 
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $title = Str::slug($this->title);
+                $key++;
+                $image_name = "/storage/news/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
+        }
         $this->body = $dom->saveHTML();
     }
 

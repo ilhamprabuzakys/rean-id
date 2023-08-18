@@ -41,13 +41,5 @@ class CategorySeeder extends Seeder
             'name' => 'Audio',
             'slug' => 'audio',
         ]);
-        Category::create([
-            'name' => 'Ebook',
-            'slug' => 'ebook',
-        ]);
-        Category::create([
-            'name' => 'Event',
-            'slug' => 'event',
-        ]);
     }
 }

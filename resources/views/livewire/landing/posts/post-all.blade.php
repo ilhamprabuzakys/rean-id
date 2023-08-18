@@ -9,10 +9,10 @@
                </div>
                <div class="row">
                   <div class="col-8">
-                     <input type="text" class="form-control" placeholder="Cari sesuatu..." wire:model='search'>
+                     <input type="text" class="form-control" placeholder="Cari sesuatu..." wire:model.live='search'>
                   </div>
                   <div class="col-4">
-                     <input type="text" id="dateFilter" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model='filter_date'>
+                     <input type="text" id="dateFilter" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
                   </div>
                </div>
                <hr class="mt-5 mb-3">
@@ -30,7 +30,7 @@
                         {{ $posts->links() }}
                      </div>
                      <div class="col-2 ms-auto">
-                        <select class="form-select form-select-sm" name="filter_category" id="filter_category" wire:model='filter_category' style="padding-left: 1rem">
+                        <select class="form-select form-select-sm" name="filter_category" id="filter_category" wire:model.live='filter_category' style="padding-left: 1rem">
                             <option value="" selected>Semua</option>
                             @forelse ($categories as $category)
                                 <option value="{{ $category->slug }}">{{ $category->name }}</option>
@@ -40,7 +40,7 @@
                         </select>
                      </div>
                      <div class="col-1">
-                        <select class="form-select form-select-sm" name="paginate" id="paginate" wire:model='paginate' style="width: 75px; padding-left: 1rem; padding-right: 0">
+                        <select class="form-select form-select-sm" name="paginate" id="paginate" wire:model.live='paginate' style="width: 75px; padding-left: 1rem; padding-right: 0">
                             <option selected value="5">5</option>
                             <option value="10">10</option>
                         </select>
@@ -52,13 +52,12 @@
                      <article wire:key="post-{{ $post->id }}" class="card align-items-stretch flex-md-row mb-4 mb-md-7 border-0 no-gutters"
                         data-aos="fade-right" data-aos-once="true">
                         <div class="col-lg-5">
-                           <a href="blog-sidebar.html#!"
-                              class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
-                              @if ($post->file_path !== null && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
-                                 <img src="{{ asset('storage/' . $post->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                              @else
-                                 <img src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                              @endif
+                              <a href="blog-sidebar.html#!" class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
+                                 @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
+                                    <img src="{{ asset($post->files->first()->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
+                                 @else
+                                    <img src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
+                                 @endif
                            </a>
                         </div>
                         <div class="card-body d-flex flex-column col-auto p-md-0 ps-md-4">

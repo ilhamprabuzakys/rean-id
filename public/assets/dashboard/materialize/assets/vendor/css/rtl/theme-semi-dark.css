@@ -1303,6 +1303,7 @@ li.ui-timepicker-selected,
 }
 .bg-navbar-theme {
     color: #828393;
+    background-color: rgb(255 255 255 / 95%) !important;
 }
 .layout-navbar-fixed .window-scrolled .bg-navbar-theme.layout-navbar,
 .layout-horizontal .bg-navbar-theme.layout-navbar {

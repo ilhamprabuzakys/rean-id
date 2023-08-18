@@ -12,6 +12,7 @@ use App\Http\Controllers\MediaPostController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Utils\TableController;
@@ -30,13 +31,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', 'index')->name('dashboard');
         });
     
-        Route::controller(ProfileController::class)->group(function () {
-            Route::get('/settings/{user}/profile', 'index')->name('settings.profile');
-            Route::post('/settings/{user}/profile', 'update')->name('settings.profile.update');
-            Route::get('/settings/{user}/social-media', 'social_media')->name('settings.social-media');
-            Route::post('/settings/{user}/social-media', 'social_media_update')->name('settings.social-media.update');
-            Route::get('/settings/{user}/security', 'security')->name('settings.security');
-            Route::post('/settings/{user}/security', 'change_password')->name('settings.security.change-password');
+        Route::controller(SettingController::class)->group(function () {
+            Route::get('/profile', 'profile')->name('profile');
+            Route::get('/settings', 'settings')->name('settings');
         });
     
         Route::middleware(['except:role:member'])->group(function () {
@@ -97,7 +94,9 @@ Route::controller(LandingController::class)->group(function () {
     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
     // Route::prefix('home')->group(function() {
-    // });
+        // });
+    Route::get('/events', 'event')->name('home.events.index');
+    Route::get('/events/{event}', 'event_detail')->name('home.events.show');
 });
 
 Route::controller(TableController::class)->group(function () {

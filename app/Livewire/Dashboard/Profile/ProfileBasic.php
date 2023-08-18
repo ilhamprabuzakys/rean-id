@@ -3,11 +3,13 @@
 namespace App\Livewire\Dashboard\Profile;
 
 use App\Http\Controllers\EditProfile;
+use App\Livewire\Dashboard\Partials\HeaderUserDropdown;
 use App\Livewire\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -41,6 +43,7 @@ class ProfileBasic extends Component
         return view('livewire.dashboard.profile.profile-basic');
     }
 
+    #[On('file-upload')]
     public function update()
     {
         // // Langkah 2: Validasi data masukan
@@ -76,16 +79,13 @@ class ProfileBasic extends Component
     
         // Langkah 4: Perbarui data pengguna
         $this->user->update($validatedData);
-        // $this->user->update($this->all());
-        // dd('hey');
-        
-        // Kirim pesan kesuksesan atau apa pun yang Anda perlukan
-        $this->emit("handleUpdate", true);
-        $this->emitSelf('refresh-me');
-        // $this->emit('forceRefreshDropdown');
-        $this->emitTo('Dashboard.Partials.HeaderUserDropdown', 'updatedUser');
-        $this->emit('swalS', 'Penambahan Data', 'Data berhasil ditambahkan');
-
+        $this->dispatch('user-updated');
+        // $this->dispatch('user-updated')->to(HeaderUserDropdown::class);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data Profile berhasil diperbarui',
+            'type' => 'success',
+        ]);
     }
     
 
@@ -96,36 +96,5 @@ class ProfileBasic extends Component
         $this->address = auth()->user()->address;
         $this->email = auth()->user()->email;
         $this->username = auth()->user()->username;
-    }
-
-    public function handleUpdate($status){
-        if ($status == true) {
-            $this->emit('alertSuccess', 'Profil anda berhasil diperbarui');
-        } else {
-            $this->emit('alertError', 'Profil anda gagal diperbarui');
-        }
-    }
-
-    public function alertSuccess($message, $title = 'Berhasil')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-  
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

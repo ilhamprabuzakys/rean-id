@@ -1,7 +1,7 @@
 <div>
     <div class="col-md-12 col-12">
         <div class="card" id="card-social-media-user">
-           <form wire:submit.prevent='update({{ $user->id }})'>
+           <form wire:submit.prevent='update()'>
               @csrf
               <h5 class="card-header pb-1">Koneksi Akun Sosial</h5>
               <div class="card-body">
@@ -14,7 +14,7 @@
                     <div class="flex-grow-1 row">
                        <div class="col-2">
                           <h6 class="mb-0">Facebook</h6>
-                          @if ($user->facebook !== null && $user->facebook !== '')
+                          @if ($facebook !== null && $facebook !== '')
                              <small class="text-success">Connected</small>
                           @else
                              <small class="text-danger">Not Connected</small>
@@ -36,7 +36,7 @@
                     <div class="flex-grow-1 row">
                        <div class="col-2">
                           <h6 class="mb-0">Twitter</h6>
-                          @if ($user->twitter !== null && $user->twitter !== '')
+                          @if ($twitter !== null && $twitter !== '')
                              <small class="text-success">Connected</small>
                           @else
                              <small class="text-danger">Not Connected</small>
@@ -46,7 +46,7 @@
                           <div class="input-group">
                              <span class="input-group-text" id="slug-input-addon">www.twitter.com/</span>
                              <input type="text"
-                                class="form-control @error('twitter') is-invalid @enderror" name="twitter" wire:model='twitter' id="twitter" value="{{ old('twitter', $user->twitter) }}">
+                                class="form-control @error('twitter') is-invalid @enderror" name="twitter" wire:model='twitter' id="twitter" value="{{ old('twitter', $twitter) }}">
                           </div>
                        </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="flex-grow-1 row">
                        <div class="col-2">
                           <h6 class="mb-0">Instagram</h6>
-                          @if ($user->instagram !== null && $user->instagram !== '')
+                          @if ($instagram !== null && $instagram !== '')
                              <small class="text-success">Connected</small>
                           @else
                              <small class="text-danger">Not Connected</small>
@@ -68,7 +68,7 @@
                           <div class="input-group">
                              <span class="input-group-text" id="slug-input-addon">www.instagram.com/</span>
                              <input type="text"
-                                class="form-control @error('instagram') is-invalid @enderror" name="instagram" wire:model='instagram' id="instagram" value="{{ old('instagram', $user->instagram) }}">
+                                class="form-control @error('instagram') is-invalid @enderror" name="instagram" wire:model='instagram' id="instagram" value="{{ old('instagram', $instagram) }}">
                           </div>
                        </div>
                     </div>
@@ -80,7 +80,7 @@
                     <div class="flex-grow-1 row">
                        <div class="col-2">
                           <h6 class="mb-0">Gmail</h6>
-                          @if ($user->gmail !== null && $user->gmail !== '')
+                          @if ($gmail !== null && $gmail !== '')
                              <small class="text-success">Connected</small>
                           @else
                              <small class="text-danger">Not Connected</small>
@@ -89,7 +89,7 @@
                        <div class="col-10 text-end">
                           <div class="input-group">
                              <input type="text"
-                                class="form-control @error('gmail') is-invalid @enderror" name="gmail" wire:model='gmail' id="gmail" value="{{ old('gmail', $user->gmail) }}">
+                                class="form-control @error('gmail') is-invalid @enderror" name="gmail" wire:model='gmail' id="gmail" value="{{ old('gmail', $gmail) }}">
                              <span class="input-group-text" id="slug-input-addon">@gmail.com</span>
                           </div>
                        </div>
@@ -102,7 +102,7 @@
                     <div class="flex-grow-1 row">
                        <div class="col-2">
                           <h6 class="mb-0">YouTube</h6>
-                          @if ($user->youtube !== null && $user->youtube !== '')
+                          @if ($youtube !== null && $youtube !== '')
                              <small class="text-success">Connected</small>
                           @else
                              <small class="text-danger">Not Connected</small>
@@ -112,7 +112,7 @@
                           <div class="input-group">
                              <span class="input-group-text" id="slug-input-addon">www.youtube.com/@/</span>
                              <input type="text"
-                                class="form-control @error('youtube') is-invalid @enderror" name="youtube" wire:model='youtube' id="youtube" value="{{ old('youtube', $user->youtube) }}">
+                                class="form-control @error('youtube') is-invalid @enderror" name="youtube" wire:model='youtube' id="youtube" value="{{ old('youtube', $youtube) }}">
                           </div>
                        </div>
                     </div>

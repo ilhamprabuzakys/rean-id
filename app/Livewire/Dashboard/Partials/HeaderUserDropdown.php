@@ -2,19 +2,13 @@
 
 namespace App\Livewire\Dashboard\Partials;
 
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use Livewire\Component;
 
 class HeaderUserDropdown extends Component
 {
-    protected $listener = [
-        'updatedUser' => 'loadUser',
-        'refresh-me' => '$refresh',
-        'forceRefreshDropdown' => '$refresh',
-        
-    ];
-
-    public $user;
+   /*  public $user;
 
     public function loadUser()
     {
@@ -27,8 +21,9 @@ class HeaderUserDropdown extends Component
     public function mount()
     {
         $this->loadUser();
-    }
+    } */
 
+    #[On('user-updated')]
     public function render()
     {
         return view('livewire.dashboard.partials.header-user-dropdown');

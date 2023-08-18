@@ -50,8 +50,11 @@
                </div>
             </div>
          </div>
-         <div class="float-end my-3">
-            <button class="btn btn-primary px-2" type="button" wire:click="update()"><i class="fas fa-save me-2"></i>Perbarui Berita</button>
+         <div class="col-12 mb-3 d-flex justify-content-end gap-3">
+            <a class="btn btn-light" href="{{ route('news.index') }}"><i
+                  class="mdi mdi-arrow-left me-2"></i>Kembali</a>
+            <button class="btn btn-primary" type="button" wire:click='update()' wire:loading.attr="disabled"><i
+                  class="mdi mdi-content-save-check me-2"></i>Perbarui Data</button>
          </div>
       </div>
    </div>

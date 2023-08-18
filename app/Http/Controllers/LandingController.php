@@ -6,6 +6,7 @@ use App\Mail\MailNotify;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\ContactMessage;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -74,6 +75,20 @@ class LandingController extends Controller
         ], compact('category', 'posts'));
     }
 
+    public function event()
+    {
+        return view('landing.home.events.index', [
+            'title' => 'Daftar Events',
+        ]);
+    }
+    
+    public function event_detail(Event $event)
+    {
+        return view('landing.home.events.show', [
+            'title' => $event->title,
+        ]);
+    }
+   
     public function cns_radio()
     {
         return view('landing.home.static.cns-radio', [
@@ -85,6 +100,13 @@ class LandingController extends Controller
     {
         return view('landing.home.static.contact-us', [
             'title' => 'Contact Us',
+        ]);
+    }
+    
+    public function chat()
+    {
+        return view('landing.home.static.chat', [
+            'title' => 'Chatingan Dulu',
         ]);
     }
     

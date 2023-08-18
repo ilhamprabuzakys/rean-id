@@ -104,17 +104,21 @@
             </div>
             <div class="col-6 mb-3">
                <div class="form-check form-switch mb-2">
-                  <input class="form-check-input" type="checkbox" wire:model='status' id="status" checked="1">
+                  <input class="form-check-input" type="checkbox" wire:model='status' id="status">
                   <label class="form-check-label" for="status">Aktif</label>
                </div>
             </div>
-            <div class="col-6 mb-3 d-flex justify-content-end">
-               <button class="btn btn-primary" type="button" wire:click='update()'><i class="fas fa-save me-2"></i>Simpan</button>
+            <div class="col-6 mb-3 d-flex gap-3 justify-content-end">
+               <a class="btn btn-light" href="{{ route('events.index') }}"><i
+                  class="mdi mdi-arrow-left me-2"></i>Kembali</a>
+               <button class="btn btn-primary" type="button" wire:click='update()' wire:loading.attr="disabled"><i
+                  class="mdi mdi-content-save-check me-2"></i>Perbarui Data</button>
             </div>
          </div>
       </div>
    </div>
 
+   {{-- @dd($existingFiles) --}}
    @push('scripts')
       <script>
          $(document).ready(function() {
@@ -153,13 +157,11 @@
             const pond = FilePond.create(inputElement, {
                files: @json($existingFiles),
             });
-
             pond.setOptions({
                allowMultiple: 'true',
                server: {
                   process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
                      @this.upload('files', file, load, error, progress);
-
                   },
                   // revert: (filename, load) => {
                   //    @this.removeUpload('files', filename, load);

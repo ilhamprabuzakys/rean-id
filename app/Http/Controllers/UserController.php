@@ -13,22 +13,9 @@ class UserController extends Controller
 {
     public function index()
     {
-        // $users = cache()->remember('users', now()->addDays(1), function() {
-        //     return User::with(['posts'])->orderBy('updated_at', 'desc')->get();
-        // });
-
-        $users = User::with(['posts', 'login_info', 'event_logs'])->orderBy('updated_at', 'desc')->get();
-
-        $roles = collect([
-            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
-            (object) ['key' => 'admin', 'label' => 'Admin'],
-            (object) ['key' => 'member', 'label' => 'Member'],
-        ]);
-
-        confirmDelete('Apakah anda yakin untuk menghapus data user ini?', 'Data yang dihapus akan masuk ke tempat sampah.');
         return view('dashboard.users.index', [
-            'title' => 'Daftar Users',
-        ], compact('users', 'roles'));
+            'title' => 'Daftar User',
+        ]);
     }
     
     public function create()

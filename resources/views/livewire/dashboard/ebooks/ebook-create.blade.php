@@ -52,7 +52,16 @@
                   @enderror
                </div>
                <div class="col-12">
-                  <label for="files" class="mb-2">Poster Event <sup class="text-danger">*</sup></label>
+                  <label class="mb-2" for="file_path">File PDF</label>
+                  <input type="file" name="file_path" id="file_path" wire:model='file_path' class="form-control @error('file_path') is-invalid @enderror">
+                  @error('file_path')
+                     <div class="invalid-feedback">
+                        {{ $message }}
+                     </div>
+                  @enderror
+               </div>
+               <div class="col-12">
+                  <label for="files" class="mb-2">Cover Ebook <sup class="text-danger">*</sup></label>
                   <div wire:ignore>
                      <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
                   </div>
@@ -62,15 +71,7 @@
                      </div>
                   @enderror
                </div>
-               <div class="col-12">
-                  <label class="mb-2" for="file_path">File PDF</label>
-                  <input type="file" name="file_path" id="file_path" wire:model='file_path' class="form-control @error('file_path') is-invalid @enderror">
-                  @error('file_path')
-                     <div class="invalid-feedback">
-                        {{ $message }}
-                     </div>
-                  @enderror
-               </div>
+               
                <div class="col-12">
                   <label class="mb-2" for="file_path">Ringkasan/Sinopsis</label>
                   <div wire:ignore>

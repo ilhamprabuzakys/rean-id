@@ -1,4 +1,4 @@
-<table class="dt-complex-header table table-bordered" wire:poll.visible.2000ms>
+<table class="dt-complex-header table table-bordered">
 
     <thead class="table-light">
        <tr>
@@ -8,7 +8,7 @@
           <th>Dibuat Oleh</th>
           <th>Tanggal Publish</th>
           <th class="text-center">
-             <i class="fas fa-pencil-square"></i>
+             <i class="fas fa-edit"></i>
           </th>
        </tr>
     </thead>

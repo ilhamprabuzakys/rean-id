@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('post_name')->nullable();
             $table->string('slug')->unique();
             $table->text('body')->nullable();
-            $table->text('file_path')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-            $table->date('date');
             $table->integer('views')->default(0); // Tambahkan kolom views
             $table->foreignId('category_id')->nullable();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            // $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->foreignId('user_id');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

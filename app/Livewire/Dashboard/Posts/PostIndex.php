@@ -5,6 +5,11 @@ namespace App\Livewire\Dashboard\Posts;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
+use DOMDocument;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,42 +19,57 @@ class PostIndex extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search;
-    public $popularityFilter = 0;
+    public $filter_popularity = '';
+    public $filter_category = '';
     public $paginate = 10;
     
-    public $title, $post_id, $post_item, $filter_category, $filter_status;
-    // public $filter_tags = [];
+    public $title, $post_id, $post_item, $filter_status, $filter_date;
     public $statusUpdate = false;
 
-    protected $updatesQueryString = ['search', 'filter_category', 'filter_status'];
+/*     protected $updatesQueryString = ['search', 'filter_category', 'filter_status', 'filter_date'];
     protected $queryString = [
         'search' => ['except' => ''],
         'filter_category' => ['except' => ''],
         'filter_status' => ['except' => ''],
+        'filter_date' => ['except' => ''],
     ];
-
+ */
     public function mount()
     {
         $this->search = request()->query('search');
-        // jika Anda ingin mengatur nilai default $slug ketika komponen dimuat
-        // $this->slug = Str::slug($this->name);
     }
     
     public function render()
     {
-        $posts = $this->search === null 
-        ? Post::with(['tags', 'user', 'category'])->latest('updated_at')->when($this->filter_category,   function($query) {
-            return $query->where('category_id', $this->filter_category);
-        })->when($this->filter_status,   function($query) {
+        $query = Post::with(['category', 'tags', 'user', 'files'])->latest('created_at')
+        ->when($this->search, function ($query) {
+            return $query->globalSearch($this->search);
+        })->when($this->filter_category, function($query) {
+            $query->whereHas('category', function($q) {
+                return $q->where('id', $this->filter_category);
+            });
+        })->when($this->filter_status, function($query) {
             return $query->where('status', $this->filter_status);
-        })->paginate($this->paginate) 
-        : Post::with(['tags', 'user', 'category'])->latest('updated_at')
-        ->globalSearch($this->search)
-        ->when($this->filter_category, function($query) {
-            return $query->where('category_id', $this->filter_category);
-        })->when($this->filter_status,   function($query) {
-            return $query->where('status', $this->filter_status);
-        })->paginate($this->paginate);
+        })->when($this->filter_date, function ($query) {
+            $dateRange = explode(' to ', $this->filter_date);
+            $startDate = $dateRange[0];
+            $endDate = $dateRange[1] ?? $dateRange[0];
+            return $query->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
+        })->when($this->filter_popularity, function($query) {
+            switch ($this->filter_popularity) {
+                case '1-20':
+                    return $query->whereBetween('views', [1, 20]);
+                case '21-50':
+                    return $query->whereBetween('views', [21, 50]);
+                case '51-100':
+                    return $query->whereBetween('views', [51, 100]);
+                case '100+':
+                    return $query->where('views', '>', 100);
+            }
+        });
+
+        $posts = $query->paginate($this->paginate);
 
         $categories = Category::oldest('name')->get();
         $tags = Tag::oldest('name')->get();
@@ -66,6 +86,16 @@ class PostIndex extends Component
         $this->title = null;
         $this->post_id = null;
         $this->post_item = null;
+    }
+
+    #[On('reset-filter')]
+    public function resetFilter()
+    {
+        $this->search = '';
+        $this->filter_status = '';
+        $this->filter_category = '';
+        $this->filter_date = '';
+        $this->filter_popularity = '';
     }
 
     public function closeModal()
@@ -90,44 +120,73 @@ class PostIndex extends Component
 
     public function pending($id)
     {
-        $post = Post::findOrFail($id);
-        $post->update(['status' => 'pending']);
-        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        Post::findOrFail($id)->update(['status' => 'pending']);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil diubah ke <b>Pending</b>',
+            'type' => 'success',
+        ]);
     }
     
     public function reject($id)
     {
-        $post = Post::findOrFail($id);
-        $post->update(['status' => 'rejected']);
-        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        Post::findOrFail($id)->update(['status' => 'rejected']);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil diubah ke <b>Rejected</b>',
+            'type' => 'success',
+        ]);
     }
     
     public function approve($id)
     {
-        $post = Post::findOrFail($id);
-        $post->update(['status' => 'approved']);
-        $this->dispatch('alertSuccess', 'Status <b>' .$post->title. '</b> berhasil diperbarui', 'Perubahan Status');
+        Post::findOrFail($id)->update(['status' => 'approved']);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil diubah ke <b>Approved</b>',
+            'type' => 'success',
+        ]);
     }
 
-    public function delete()
-    {   
-        Post::findOrFail($this->post_item['id'])->delete();
-        $this->dispatch('alertSuccess', 'Data berhasil dihapus');
-        $this->dispatchBrowserEvent('close-modal');
+    public function deleteConfirmation($id)
+    {
+        $this->post_id = $id;
+        $this->dispatch('swal:confirmation', [
+            'title' => 'Postingan',
+        ]);
     }
 
-    public function alertSuccess($message, $title = 'Berhasil')
+    #[On('deleteConfirmed')]
+    public function destroy()
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-  
-    public function alertError($message, $title = 'Error')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-  
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
+        $post = Post::findOrFail($this->post_id);
+
+        // Hapus image yang diupload sama Summernote.
+        $dom = new DOMDocument();
+        $dom->loadHTML($post->body, 9);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $key => $img) {
+            $path = \public_path();
+            $path .= $img->getAttribute('src');
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+        // Menghapus file yang terkait dengan post
+        foreach ($post->files as $file) {
+            // Hapus file fisik
+            Storage::delete(str_replace('storage/', '', $file->file_path));
+            // Hapus entri dari database
+            $file->delete();
+        }
+
+        // Menghapus post
+        $post->delete();
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil dihapus',
+            'type' => 'success',
+        ]);
     }
 }

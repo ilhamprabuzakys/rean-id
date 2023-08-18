@@ -5,7 +5,7 @@
 @section('content')
    <h4 class="fw-bold py-3 mb-4">
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Daftar Ebook /</a>
+      <a class="text-muted fw-light" href="{{ route('ebooks.index') }}">Daftar Ebook /</a>
       Buat Ebook
    </h4>
    <livewire:dashboard.ebooks.ebook-create  :user="auth()->user()->id"/>

@@ -47,9 +47,9 @@
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}"/>
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.css') }}"/>
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.css') }}" />
 
    <!-- Vendor -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
@@ -61,9 +61,9 @@
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/pages/page-auth.css') }}">
    <!-- Helpers -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/helpers.js') }}"></script>
-    <!-- Pace CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
+   <!-- Pace CSS -->
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
 
    <!-- Jquery  -->
    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
@@ -207,10 +207,12 @@
       Livewire.on('swal:modal', data => {
          Swal.fire({
             title: data[0].title,
-            text: data[0].text,
+            html: data[0].text,
             icon: data[0].icon,
+            showConfirmButton: true,
             // confirmButtonText: 'Okay',
             timer: data[0].duration ?? 2500,
+            timerProgressBar: true,
          })
       });
    </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style layout-menu-fixed " dir="ltr" data-theme="theme-semi-dark" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
+<html lang="en" class="light-style layout-menu-fixed layout-menu-collapsed" dir="ltr" data-theme="theme-semi-dark" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
    data-template="vertical-menu-template">
 
 <head>
@@ -57,7 +57,6 @@
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
 
 
-
    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/template-customizer.js') }}"></script>
@@ -75,7 +74,7 @@
    @stack('style')
    @stack('styles')
    @stack('css')
-   
+
    <livewire:styles />
 </head>
 
@@ -116,23 +115,19 @@
       </div>
 
       <!-- Overlay -->
-      {{-- <div class="layout-overlay layout-menu-toggle"></div> --}}
+      <div class="layout-overlay layout-menu-toggle"></div>
       <!-- Drag Target Area To SlideIn Menu On Small Screens -->
       <div class="drag-target"></div>
 
    </div>
    <!-- / Layout wrapper -->
 
-
-   {{-- <div class="buy-now">
-      <a href="https://1.envato.market/materialize_admin" target="_blank" class="btn btn-danger btn-buy-now">Buy Now</a>
-   </div> --}}
-
    @include('sweetalert::alert')
    @include('dashboard.template.partials.modal.logout')
    @include('dashboard.template.partials.modal.notifikasi')
-   
+
    <livewire:scripts />
+   {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
    @stack('script')
    @stack('modal')
 
@@ -170,7 +165,7 @@
       Livewire.on('swal:modal', data => {
          Swal.fire({
             title: data[0].title,
-            text: data[0].text,
+            html: data[0].text,
             icon: data[0].icon,
             confirmButtonText: 'Ok',
             timer: data[0].duration ?? 2500,
@@ -198,7 +193,7 @@
             }
          });
       });
-      
+
       Livewire.on('swal:filepond', data => {
          Swal.fire({
             title: 'Apakah kamu yakin?',
@@ -220,16 +215,63 @@
             }
          });
       });
+      
+      Livewire.on('swal:postmedia', data => {
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Data " + data[0].title + " yang dihapus akan benar2 dihapus kamu tidak dapat mengembalikan file tersebut!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, saya yakin.',
+            cancelButtonText: 'Batalkan.'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               Livewire.dispatch('mediaDeleteConfirmed'); // emit event
+               Swal.fire(
+                  data[0].title + ' Berhasil Dihapus!',
+                  'Data yang kamu pilih berhasil dihapus.',
+                  'success'
+               )
+            }
+         });
+      });
+      
+      Livewire.on('swal:ebookpdf', data => {
+         Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Data " + data[0].title + " yang dihapus akan benar2 dihapus kamu tidak dapat mengembalikan pdf tersebut!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, saya yakin.',
+            cancelButtonText: 'Batalkan.'
+         }).then((result) => {
+            if (result.isConfirmed) {
+               Livewire.dispatch('pdfDeleteConfirmed'); // emit event
+               Swal.fire(
+                  data[0].title + ' Berhasil Dihapus!',
+                  'Data yang kamu pilih berhasil dihapus.',
+                  'success'
+               )
+            }
+         });
+      });
 
       Livewire.on('alert', data => {
-         toastr[data[0].type](data[0].message, data[0].title ?? ''), toastr.options = {
-             "closeButton": true,
-             "progressBar": true,
-             "debug": true,
-             "newest": true,
-             "preventDuplicates": true,
-         }
-     });
+         toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "debug": true,
+            "newest": true,
+            "preventDuplicates": true,
+            "positionClass": "toast-top-center"
+         };
+
+         toastr[data[0].type](data[0].message, data[0].title ?? '');
+      });
    </script>
    @stack('scripts')
 </body>

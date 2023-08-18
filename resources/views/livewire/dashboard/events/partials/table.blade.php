@@ -10,7 +10,7 @@
          <th>Sampai</th>
          <th class="text-center">
             {{-- <i class="align-middle" data-feather="edit"></i> --}}
-            <i class="fas fa-pencil-alt"></i>
+            <i class="fas fa-edit fa-lg"></i>
          </th>
       </tr>
    </thead>
@@ -36,7 +36,7 @@
             <td class="text-center">
                <div class="dropdown">
                   <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                     <i class="align-middle" data-feather="more-horizontal"></i>
+                     <i class="fas fa-ellipsis"></i>
                   </a>
 
                   <div class="dropdown-menu dropdown-menu-end">

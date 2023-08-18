@@ -31,8 +31,11 @@ class TagCreate extends Component
         ]);
 
         $name = $tag->name;
-        $this->emit("storeTag", "Tag $name berhasil ditambahkan");
-        $this->emit('alertSuccess', 'Data berhasil ditambahkan');
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => "Data {$name} berhasil ditambahkan",
+            'type' => 'success',
+        ]);
         $this->resetInput();
     }
 

@@ -14,9 +14,6 @@
             @else
                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
             @endif
-
-
-
             <div class="button-wrapper">
                <label
                   for="upload"
@@ -53,36 +50,6 @@
                </div>
             @enderror
          </div>
-         {{-- <script>
-               function readImage(input) {
-                  if (input.files && input.files[0]) {
-                     var reader = new FileReader();
-
-                     reader.onload = function(e) {
-                        $('#uploadedAvatar').attr('src', e.target.result).show();
-                        // $('.image-preview-container').show();
-                        // $('#cancel-button').show();
-
-                     };
-
-                     reader.readAsDataURL(input.files[0]);
-                  }
-               }
-
-               $("#upload").change(function() {
-                  var fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
-
-                  if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) != -1) {
-                     readImage(this);
-                  } else {
-                     alert('Format gambar tidak diizinkan, tolong pastikan ekstensi file adalah : jpeg, jpg, png, webp');
-                  }
-               });
-
-               $("#img-reset-btn").click(function() {
-                  $('#uploadedAvatar').attr('src', "{{ asset('assets/img/avatar/avatar-1.png') }}").show();
-               });
-            </script> --}}
       </div>
       <div class="card-body pt-2 mt-1">
          <div class="row mt-2 gy-4">
@@ -126,7 +93,7 @@
                      type="username"
                      id="username"
                      name="username"
-                     wire:model='username' />
+                     wire:model.live='username' />
                   <label for="username">Username</label>
                   @error('username')
                      <div class="invalid-feedback">
@@ -148,8 +115,7 @@
                         class="form-control @error('phone') is-invalid @enderror"
                         placeholder="0851 6278 3743" />
                      <label
-                        for="phone">Phone
-                        Number</label>
+                        for="phone">Nomor Telepon</label>
                   </div>
                   <span
                      class="input-group-text">ID (+62)</span>
@@ -203,7 +169,7 @@
       let file = inputField.files[0]
       let reader = new FileReader();
       reader.onloadend = () => {
-         window.Livewire.emit('fileUpload', reader.result)
+         window.Livewire.dispatch('file-upload', reader.result)
       }
       reader.readAsDataURL(file);
    })

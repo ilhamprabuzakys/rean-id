@@ -7186,8 +7186,8 @@ fill: #fefefe;
     }
 }
 .spinner-grow {
-    --bs-spinner-width: 2rem;
-    --bs-spinner-height: 2rem;
+    --bs-spinner-width: 3rem;
+    --bs-spinner-height: 3rem;
     --bs-spinner-vertical-align: -0.125em;
     --bs-spinner-animation-speed: 0.75s;
     --bs-spinner-animation-name: spinner-grow;

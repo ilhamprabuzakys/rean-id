@@ -7,12 +7,6 @@ use Livewire\Component;
 
 class SocialMedia extends Component
 {
-    protected $listeners = [
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-    ];
-    
     public $facebook, $twitter, $instagram, $youtube, $gmail;
 
     public function rules()
@@ -40,11 +34,6 @@ class SocialMedia extends Component
         'gmail.regex' => 'Username gmail tidak boleh mengandung karakter "-".',
     ];
     
-    public function updated($propertyName)
-    {
-        $this->validateOnly($propertyName);
-    }
-    
     public function mount()
     {
         $this->facebook = auth()->user()->facebook;
@@ -59,10 +48,11 @@ class SocialMedia extends Component
         $user = auth()->user();
         return view('livewire.dashboard.security.social-media', compact('user'));
     }
-    public function update($id)
+
+    public function update()
     {
         $this->validate();
-        $user = User::findOrFail($id);
+        $user = User::findOrFail(auth()->user()->id);
         $user->update([
             'facebook' => $this->facebook,
             'twitter' => $this->twitter,
@@ -71,22 +61,12 @@ class SocialMedia extends Component
             'gmail' => $this->gmail,
         ]);
 
-        $this->emit('alertSuccess', 'Berhasil memperbarui tautan media sosial');
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Berhasil memperbarui tautan media sosial anda',
+            'type' => 'success',
+        ]);
         // \session()->flash("success","Berhasil memperbarui tautan media sosial");
     }
 
-    public function alertSuccess($message, $title = 'Berhasil')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-  
-    public function alertError($message, $title = 'Error')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-  
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
-    }
 }

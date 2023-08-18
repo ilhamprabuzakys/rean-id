@@ -54,21 +54,7 @@ class TagIndex extends Component
     public function edit($id){
         $tag = Tag::findOrFail($id);
         $this->statusUpdate = true;
-        $this->dispatch("edit", $tag)->to(TagUpdate::class);
-    }
-
-    public function destroy()
-    {
-        $tag = Tag::findOrFail($this->tag_id);
-        $tag->delete();
-
-        $this->dispatch('alert', [
-            'title' => 'Berhasil',
-            'message' => 'Data berhasil dihapus',
-            'type' => 'success',
-        ]);
-
-        $this->dispatch('close-modal');
+        $this->dispatch("dataEdit", $tag)->to(TagUpdate::class);
     }
 
     public function storeUpdate(){
@@ -116,6 +102,27 @@ class TagIndex extends Component
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function deleteConfirmation($id)
+    {
+        $this->tag_id = $id;
+        $this->dispatch('swal:confirmation', [
+            'title' => 'Label',
+        ]);
+    }
+
+    #[On('deleteConfirmed')]
+    public function destroy()
+    {
+        $tag = Tag::findOrFail($this->tag_id);
+        $tag->delete();
+
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Data berhasil dihapus',
+            'type' => 'success',
+        ]);
     }
 
 }

@@ -12,12 +12,6 @@ use Livewire\Component;
 
 class EmailChange extends Component
 {
-    protected $listeners = [
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-    ];
-
     public $current_password, $current_email, $new_email, $otp;
     public $clickSendEmail = false;
     public $current_user;
@@ -49,8 +43,7 @@ class EmailChange extends Component
 
     public function render()
     {
-        $user_id = auth()->user()->id;
-        return view('livewire.dashboard.security.email-change', compact('user_id'));
+        return view('livewire.dashboard.security.email-change');
     }
 
     public function sendEmail()

@@ -18,7 +18,7 @@ class NewsCreate extends Component
     use WithFileUploads;
 
     public $user_id;
-    public $title, $about, $file_path, $body;
+    public $title, $slug, $about, $file_path, $body;
 
     public function resetInput()
     {
@@ -71,6 +71,8 @@ class NewsCreate extends Component
     public function store($action = null)
     {
         try {
+            $this->slug = Str::slug($this->title);
+            $this->title = Str::of($this->title)->title();
             $this->validate($this->rules(), $this->messages, $this->validationAttributes);
 
             $this->processDescriptionImages();
@@ -84,15 +86,12 @@ class NewsCreate extends Component
             ]);
             $this->resetInput();
             $this->dispatch('stored');
-            if ($action == 'save-and-continue') {
-                return; // Tidak melakukan redirect, hanya menampilkan pesan
-            }
             return redirect()->route('news.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($e), 
             ]);
             // Mengirim error bag ke komponen Livewire
             $this->setErrorBag($e->validator->getMessageBag());
@@ -130,12 +129,25 @@ class NewsCreate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
+        $directoryPath = public_path('storage/news/detail/');
+
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
+
         foreach ($images as $key => $img) {
-            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/storage/news/detail/" . time() . $key . '.png';
-            \file_put_contents(\public_path() . $image_name, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $title = Str::slug($this->title);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $key++;
+                $image_name = "/storage/news/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
         }
         $this->body = $dom->saveHTML();
     }

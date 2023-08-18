@@ -9,17 +9,11 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Post;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\On;
 
 class UserIndex extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = [
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-    ];
 
     public $search;
     public $rolefilter = '';
@@ -44,14 +38,14 @@ class UserIndex extends Component
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
         
-        $users = $this->search === null ? User::latest('updated_at')->when($this->rolefilter, function($query) {
+        $query = User::with(['posts'])->latest('created_at')
+        ->when($this->search, function ($query) {
+            return $query->globalSearch($this->search);
+        })->when($this->rolefilter, function($query) {
             return $query->where('role', $this->rolefilter);
-        })
-        ->paginate($this->paginate) : User::latest('updated_at')->when($this->rolefilter, function($query) {
-            return $query->where('role', $this->rolefilter);
-        })
-        ->globalSearch($this->search)
-        ->paginate($this->paginate);
+        });
+
+        $users = $query->paginate($this->paginate);
         
         return view('livewire.dashboard.users.user-index', [
             'users' => $users,
@@ -106,9 +100,13 @@ class UserIndex extends Component
         ]);
         $name = $validatedData['name'];
         $this->resetInput();
-        $this->emit('alertSuccess', 'Berhasil menambahkan User baru', 'Pembuatan User');
-        $this->dispatchBrowserEvent('close-modal');
-        // $this->emit('userStore');
+        $this->dispatch('alert', [
+            'type' => 'success',
+            'title' => 'Berhasil ditambahkan',
+            'message' => 'Data berhasil ditambahkan'
+        ]);
+        $this->dispatch('close-modal');
+        // $this->dispatch('userStore');
     }
 
     public function update()
@@ -123,15 +121,31 @@ class UserIndex extends Component
             'password' => \bcrypt($validatedData['password']),
         ]);
         $this->resetInput();
-        $this->emit('alertSuccess', 'Berhasil memperbarui data User', 'Update User');
-        $this->dispatchBrowserEvent('close-modal');
+        $this->dispatch('alert', [
+            'type' => 'success',
+            'title' => 'Berhasil diperbarui',
+            'message' => 'Data berhasil diperbarui'
+        ]);
+        $this->dispatch('close-modal');
+    }
+
+    public function deleteConfirmation($id)
+    {
+        $this->user_id = $id;
+        $this->dispatch('swal:confirmation', [
+            'title' => 'User'
+        ]);
     }
     
+    #[On('deleteConfirmed')]
     public function destroy()
     {
         User::find($this->user_id)->delete();
-        $this->emit('alertSuccess', 'Berhasil menghapus akun User', 'Penghapusan User');
-        $this->dispatchBrowserEvent('close-modal');
+        $this->dispatch('alert', [
+            'type' => 'success',
+            'title' => 'Berhasil dihapus',
+            'message' => 'Data berhasil dihapus'
+        ]);
     }
 
     public function editUser(int $user_id) 
@@ -185,17 +199,17 @@ class UserIndex extends Component
 
     public function alertSuccess($message, $title = 'Berhasil')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
     }
   
     public function alertError($message, $title = 'Error')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
     }
   
     public function alertInfo($message, $title = 'Informasi')
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
+        $this->dispatch('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 
 }

@@ -17,7 +17,7 @@
                              type="password"
                              name="current_password"
                              wire:model.lazy='current_password'
-                             id="current_password"
+                             id="email.current_password"
                              placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
                           <label
                              for="current_password">Masukkan password saat ini</label>
@@ -152,7 +152,7 @@
                     type="reset"
                     class="btn btn-outline-secondary"
                     wire:click='resetForm()'>
-                    Cancel
+                    Batalkan
                  </button>
               </div>
            </form>

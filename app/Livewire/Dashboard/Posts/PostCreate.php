@@ -35,52 +35,65 @@ class PostCreate extends Component
     {
         return [
             'title' => ['required', 'min:4', Rule::unique('posts')],
-            'slug' => ['required'],
             'body' => ['required'],
-            'files.*' => ['max:20000', 'mimes:jpg,jpeg,png,webp'],
+            'files.*' => ['required', 'max:20000', 'mimes:jpg,jpeg,png,webp'],
         ];
     }
 
-    protected $message = [
+    protected $messages = [
         'title.required' => 'Judul harus diisi',
         'title.min' => 'Judul tidak boleh terlalu pendek',
-        'description.required' => 'Deskripsi harus diisi',
-        'description.min' => 'Deskripsi tidak boleh terlalu pendek',
-        'province.required' => 'Provinsi harus diisi',
-        'city.required' => 'Kota harus diisi',
-        'merge_date.required' => 'Tanggal harus diisi',
-        'contact_email.required' => 'Kontak Email harus diisi',
-        'organizer.required' => 'Penyelenggara harus diisi',
-        'location.required' => 'Lokasi harus diisi',
+        'title.unique' => 'Data postingan dengan judul ini sudah ada',
+        'body.required' => 'Body harus diisi',
+        'files.*.required' => 'Cover image harus disertakan',
         'files.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
         'files.*.mimes' => 'Format file harus gambar',
     ];
 
+    public function resetInput()
+    {
+        $this->title = null;
+        $this->body = null;
+        $this->files = null;
+        $this->file_path = null;
+    }
+
     public function render()
     {
         $categories = Category::oldest('name')->get();
-        $tags = Tag::oldest('name')->get();
+        $tagsItem = Tag::oldest('name')->get();
         $statuses = collect([
             (object) ['key' => 'pending', 'label' => 'Pending'],
             (object) ['key' => 'approved', 'label' => 'Approved'],
             (object) ['key' => 'rejected', 'label' => 'Rejected'],
         ]);
-        return view('livewire.dashboard.posts.post-create', compact('categories', 'tags', 'statuses'));
+        return view('livewire.dashboard.posts.post-create', compact('categories', 'tagsItem', 'statuses'));
     }
 
-    public function store()
+    public function store($action = null)
     {
         try {
-            $this->validate($this->rules(), $this->message);
-
-            $this->parseDateRange();
+            $rules = $this->rules();
+            if (in_array($this->category_id, [3, 6, 7])) {
+                $rules['file_path'] = 'required|max:20000|mimes:mp3,mp4,mkv';
+                $this->messages['file_path.required'] = 'Media file harus disertakan';
+                $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
+                $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
+            }
+            $this->validate($rules, $this->messages);
+            $this->slug = Str::slug($this->title);
+            $this->title = Str::of($this->title)->title();
             $this->processDescriptionImages();
 
             // Simpan data ke variabel
             $post = Post::create($this->all());
-
+            $this->storeTags($post);
             // Simpan files
-            $this->storeFiles($post);  // Mengirim id data ke fungsi storeFiles
+            $this->storeFiles($post);
+            // Simpan file media jika ada
+            if ($this->file_path !== null && in_array($this->category_id, [3, 6, 7])) {
+                $this->storeMediaFile($post);
+            }
             $this->resetInput();
             $this->dispatch('stored');
             $this->dispatch('swal:modal', [
@@ -88,11 +101,15 @@ class PostCreate extends Component
                 'title' => 'Berhasil dibuat',
                 'text' => 'Berhasil menambahkan data ' . $post->category->name,
             ]);
+            if ($action == 'save-and-continue') {
+                return; // Tidak melakukan redirect, hanya menampilkan pesan
+            }
+            return redirect()->route('posts.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($e),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -100,27 +117,66 @@ class PostCreate extends Component
         }
     }
 
+    private function storeTags($post)
+    {
+        if ($this->tags) {
+            // Ambil input tags dari user
+            $inputTags = $this->tags;
+
+            // Inisialisasi array untuk menampung ID tags
+            $tagIds = [];
+
+            foreach ($inputTags as $tagName) {
+                // Cek apakah tag sudah ada atau belum
+                $tag = Tag::firstWhere('name', $tagName);
+
+                if (!$tag) {
+                    // Jika tag belum ada, buat tag baru
+                    $tag = Tag::create(['name' => $tagName]);
+                }
+
+                // Tambahkan ID tag ke dalam array
+                $tagIds[] = $tag->id;
+            }
+
+            // Lakukan proses sync dengan ID tags
+            $post->tags()->sync($tagIds);
+        }
+        $post->save();
+    }
+
+    private function storeMediaFile($post) 
+    {
+        $objName = Str::slug($post->title); // Menggunakan slug agar aman untuk nama file
+        $directoryPath = public_path('storage/posts/media/');
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
+        if ($this->file_path)
+        {
+            $timestamp = now()->format('H:i_d-m-Y');
+            $extension = $this->file_path->getClientOriginalExtension();
+            // Membuat format nama file
+            $filename = "{$post->id}_{$objName}_{$timestamp}.{$extension}";
+
+            // Menyimpan file dengan nama yang telah diformat
+            $path = $this->file_path->storeAs('posts/media', $filename);
+
+            $storedPath = "storage/" . $path;
+
+            FilePost::create([
+                'file_path' => $storedPath,
+                'post_id' => $post->id
+            ]);
+        }
+    }
+
     private function storeFiles($post)
     {
-        // if ($this->files) {
-        //     $objName = Str::slug($post->title); // Menggunakan slug agar aman untuk nama file
-
-        //     $timestamp = now()->format('H:i_d-m-Y');
-        //     $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file
-
-        //     // Membuat format nama file
-        //     $filename = "{$post->id}_{$objName}_{$timestamp}.{$extension}";
-
-        //     // Menyimpan file dengan nama yang telah diformat
-        //     $path = $this->file_path->storeAs('posts/cover', $filename);
-
-        //     $storedPath = "storage/" . $path;
-
-        //     FilePost::create([
-        //         'file_path' => $storedPath,
-        //         'post_id' => $post->id
-        //     ]);
-        // }
+        $directoryPath = public_path('storage/posts/cover/');
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
         if ($this->files) {
             $objName = Str::slug($post->title); // Menggunakan slug agar aman untuk nama file
 
@@ -151,14 +207,26 @@ class PostCreate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/storage/posts/detail/" . time() . $key . '.png';
-            \file_put_contents(\public_path() . $image_name, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+        $directoryPath = public_path('storage/posts/detail/');
+
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
         }
 
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $title = Str::slug($this->title);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $key++;
+                $image_name = "/storage/posts/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
+        }
         $this->body = $dom->saveHTML();
     }
 }

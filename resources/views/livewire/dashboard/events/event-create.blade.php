@@ -109,8 +109,11 @@
                      <label class="form-check-label" for="status">Aktif</label>
                   </div>
                </div>
-               <div class="col-6 mb-3 d-flex justify-content-end">
-                  <button class="btn btn-primary" type="button" wire:click='store()'><i class="fas fa-save me-2"></i>Simpan</button>
+               <div class="col-6 mb-3 d-flex gap-3 justify-content-end">
+                  <a class="btn btn-light" href="{{ route('events.index') }}"><i
+                     class="mdi mdi-arrow-left me-2"></i>Kembali</a>
+                  <button class="btn btn-primary" type="button" wire:click='store()' wire:loading.attr="disabled"><i
+                     class="mdi mdi-content-save-check me-2"></i>Simpan Data</button>
                </div>
             </div>
          </form>

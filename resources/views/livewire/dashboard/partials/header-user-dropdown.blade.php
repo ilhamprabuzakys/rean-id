@@ -1,10 +1,10 @@
 <li class="nav-item navbar-dropdown dropdown-user dropdown">
     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
        <div class="avatar avatar-online">
-          @if ($user->avatar == null)
+          @if (auth()->user()->avatar == null)
              <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
           @else
-             <img src="{{ asset($user->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+             <img src="{{ asset(auth()->user()->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
           @endif
        </div>
     </a>
@@ -14,16 +14,16 @@
              <div class="d-flex">
                 <div class="flex-shrink-0 me-3">
                    <div class="avatar avatar-online">
-                      @if ($user->avatar == null)
+                      @if (auth()->user()->avatar == null)
                          <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                       @else
-                         <img src="{{ asset($user->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
+                         <img src="{{ asset(auth()->user()->avatar) }}" alt class="w-px-40 h-auto rounded-circle img-profile-header">
                       @endif
                    </div>
                 </div>
                 <div class="flex-grow-1">
-                   <span class="fw-semibold d-block">{{ $user->name }}</span>
-                   <small class="text-muted">{{ $user->role }}</small>
+                   <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                   <small class="text-muted">{{ auth()->user()->role }}</small>
                 </div>
              </div>
           </a>
@@ -32,13 +32,13 @@
           <div class="dropdown-divider"></div>
        </li>
        <li>
-          <a class="dropdown-item" href="{{ route('settings.profile', $user) }}">
+          <a class="dropdown-item" href="{{ route('settings', ['tab' => 'profile']) }}">
              <i class="mdi mdi-account-outline me-2"></i>
              <span class="align-middle">My Profile</span>
           </a>
        </li>
        <li>
-          <a class="dropdown-item" href="{{ route('settings.security', $user) }}">
+          <a class="dropdown-item" href="{{ route('settings', ['tab' => 'security']) }}">
              <i class="mdi mdi-cog-outline me-2"></i>
              <span class="align-middle">Settings</span>
           </a>

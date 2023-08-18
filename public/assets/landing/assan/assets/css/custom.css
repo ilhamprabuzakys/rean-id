@@ -1,27 +1,93 @@
 article .tag-post-item {
-   font-size: 13px;
-   padding: 5px 10px;
+    font-size: 13px;
+    padding: 5px 10px;
 }
 
 article .img-post-item {
-   max-height: 200px;
-   min-height: 200px;
-   min-width: 375px;
-   max-width: 375px;
-   object-fit: cover;
+    max-height: 200px;
+    min-height: 200px;
+    min-width: 375px;
+    max-width: 375px;
+    object-fit: cover;
 }
 
 section.post-detail .post-detail-img-container {
-   max-width: 1156px
+    max-width: 845px;
 }
 
 section.post-detail .post-detail-img-container img {
-   width: -webkit-fill-available;
-   height: 500px;
-   object-fit: cover;
+    width: -webkit-fill-available;
+    height: 500px;
+    object-fit: cover;
 }
 
 .swiper .cns-swiper img {
-   width: -webkit-fill-available;
-   height: 600px;
+    width: -webkit-fill-available;
+    height: 600px;
+}
+
+.whatsapp-icon {
+    fill: white;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    padding: 3px;
+    position: fixed;
+    bottom: 15px;
+    right: 70px;
+    background-color: green;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.whatsapp-icon:hover {
+    box-shadow: 2px 2px 11px rgba(0, 0, 0, 0.7);
+}
+
+.whatsapp-ico {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-right: 4.1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #29d129;
+    color: #fff;
+    fill: #fff;
+    padding: 4px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 100%;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    z-index: 1031;
+}
+
+.whatsapp-ico:hover {
+    box-shadow: 2px 2px 11px rgba(0, 0, 0, 0.7);
+}
+
+/* .whatsapp-ico.show {
+   visibility: visible;
+   opacity: 1;
+   transform: none;
+} */
+
+
+/* Summernote */
+img.note-float-left {
+   padding-right: 15px;
+   padding-bottom: 2px;
+}
+
+img.note-float-right {
+   padding-left: 15px;
+   padding-bottom: 2px;
 }

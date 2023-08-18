@@ -1,11 +1,9 @@
 @extends('dashboard.template.dashboard')
 @section('content')
-   <!-- start page title -->
    <h4 class="fw-bold py-3 mb-4">
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-      Daftar Users
+      Daftar User
    </h4>
-   <!-- end page title -->
    <div class="row">
       <livewire:dashboard.users.user-index />
    </div>

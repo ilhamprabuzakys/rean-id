@@ -27,7 +27,6 @@ class PostFactory extends Factory
             'title' => $title,
             'slug' => $slug,
             'body' => $body,
-            'date' => date('Y-m-d'),
             'category_id' => \random_int(1, 6),
             'user_id' => \random_int(1, User::count()),
             'status' => fake()->randomElement(['approved', 'rejected']),

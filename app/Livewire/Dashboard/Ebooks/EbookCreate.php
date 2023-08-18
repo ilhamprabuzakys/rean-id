@@ -79,7 +79,7 @@ class EbookCreate extends Component
             // Simpan data ke variabel
             $ebook = Ebook::create($this->all());
             // Simpan files
-            $this->storePDF($ebook, $ebook->id);
+            $this->storePDF($ebook);
             $this->storeFiles($ebook);  // Mengirim id ebook ke fungsi storeFiles
 
             $this->resetInput();
@@ -89,11 +89,12 @@ class EbookCreate extends Component
                 'title' => 'Berhasil dibuat',
                 'text' => 'Berhasil menambahkan data Ebook',
             ]);
+            return redirect()->route('ebooks.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda \n' . $e->validator->errors(),
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($e),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -108,14 +109,26 @@ class EbookCreate extends Component
         $dom->loadHTML($content, 9);
         $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $key => $img) {
-            $data = \base64_decode(explode(',', explode(';', $img->getAttribute('src'))[1])[1]);
-            $image_name = "/storage/ebooks/detail/" . time() . $key . '.png';
-            \file_put_contents(\public_path() . $image_name, $data);
-            $img->removeAttribute('src');
-            $img->setAttribute('src', $image_name);
+        $directoryPath = public_path('storage/ebooks/detail/');
+
+        if (!file_exists($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
         }
 
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+            // Cek apakah ini adalah data base64
+            if (strpos($src, 'data:image/') === 0) {
+                $data = \base64_decode(explode(',', explode(';', $src)[1])[1]);
+                $title = Str::slug($this->title);
+                $timestamp = now()->format('H:i_d-m-Y');
+                $key++;
+                $image_name = "/storage/ebooks/detail/{$title}_detail-{$key}_{$timestamp}.png";
+                \file_put_contents(\public_path() . $image_name, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', $image_name);
+            }
+        }
         $this->body = $dom->saveHTML();
     }
 
@@ -145,13 +158,6 @@ class EbookCreate extends Component
 
     public function storePDF($ebook)
     {
-        if (is_array($this->file_path)) {
-            dd('file_path adalah array', $this->file_path);
-        }
-        if (is_array($ebook->title)) {
-            dd('title adalah array', $ebook->title);
-        }
-        
         if ($this->file_path) {
             $timestamp = now()->format('H:i_d-m-Y');
             // $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file

@@ -65,10 +65,11 @@
                </div>
             </div>
          </div>
-         <div class="float-end my-3">
-            <button class="btn btn-primary px-2" type="button" wire:click="store()" wire:loading.attr="disabled"><i class="fas fa-save me-2"></i>Simpan Berita</button>
-            <button class="btn btn-primary px-2" type="button" wire:click="store('save-and-continue')" wire:loading.attr="disabled"><i class="fas fa-pen-to-square me-2"></i>Simpan Dan Tambah
-               Kembali</button>
+         <div class="col-12 mb-3 d-flex justify-content-end gap-3">
+            <a class="btn btn-light" href="{{ route('news.index') }}"><i
+                  class="mdi mdi-arrow-left me-2"></i>Kembali</a>
+            <button class="btn btn-primary" type="button" wire:click='store()' wire:loading.attr="disabled"><i
+                  class="mdi mdi-content-save-check me-2"></i>Simpan Data</button>
          </div>
       </div>
    </div>
