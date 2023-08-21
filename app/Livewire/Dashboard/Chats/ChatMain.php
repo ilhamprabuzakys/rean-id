@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire\Dashboard\Logs;
+namespace App\Livewire\Dashboard\Chats;
 
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class LogSuperAdmin extends Component
+class ChatMain extends Component
 {
     public function mount()
     {
@@ -14,7 +14,7 @@ class LogSuperAdmin extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.logs.log-super-admin');
+        return view('livewire.dashboard.chats.chat-main');
     }
 
 }

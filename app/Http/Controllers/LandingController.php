@@ -82,10 +82,10 @@ class LandingController extends Controller
         ]);
     }
     
-    public function event_detail(Event $event)
+    public function event_detail()
     {
         return view('landing.home.events.show', [
-            'title' => $event->title,
+            'title' => 'Detail Event',
         ]);
     }
    

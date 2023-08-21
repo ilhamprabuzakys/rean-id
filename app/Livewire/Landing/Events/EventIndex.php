@@ -7,10 +7,7 @@ use Livewire\Component;
 
 class EventIndex extends Component
 {
-    public function mount()
-    {
-
-    }
+    public $kota, $provinsi, $tanggal;
 
     public function render()
     {

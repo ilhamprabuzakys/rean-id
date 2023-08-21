@@ -80,6 +80,8 @@ class ProfileBasic extends Component
         // Langkah 4: Perbarui data pengguna
         $this->user->update($validatedData);
         $this->dispatch('user-updated');
+        $this->dispatch('refresh')->to(ChatList::class);
+        $this->dispatch('refresh')->to(ChatCreate::class);
         // $this->dispatch('user-updated')->to(HeaderUserDropdown::class);
         $this->dispatch('alert', [
             'title' => 'Berhasil',

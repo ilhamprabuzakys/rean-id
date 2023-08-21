@@ -1,4 +1,5 @@
 @extends('landing.layouts.template')
+@section('header-class', 'navbar-link-white')
 @push('particle')
    <!--Particles-js-->
    <div class="position-fixed start-0 top-0 bottom-0 end-0 z-fixed pe-none w-100 h-100 start-0 top-0"

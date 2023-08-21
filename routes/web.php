@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\EventController;
@@ -44,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('/events', EventController::class)->except(['show']);
             Route::resource('/ebooks', EbookController::class)->except(['show']);
             Route::resource('/news', NewsController::class);
+            Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
             Route::get('/coordinates/json', [Coordinates::class, 'json'])->name('events.map');
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
             Route::resource('/users', UserController::class);
@@ -96,7 +98,11 @@ Route::controller(LandingController::class)->group(function () {
     // Route::prefix('home')->group(function() {
         // });
     Route::get('/events', 'event')->name('home.events.index');
-    Route::get('/events/{event}', 'event_detail')->name('home.events.show');
+    // Route::get('/events/{event}', 'event_detail')->name('home.events.show');
+    Route::get('/events-show', 'event_detail')->name('home.events.show');
+    Route::get('/ebooks', 'ebook')->name('home.ebooks.index');
+    Route::get('/ebooks-show', 'ebook_detail')->name('home.ebooks.show');
+    // Route::get('/ebooks/{ebook}', 'ebook_detail')->name('home.ebooks.show');
 });
 
 Route::controller(TableController::class)->group(function () {

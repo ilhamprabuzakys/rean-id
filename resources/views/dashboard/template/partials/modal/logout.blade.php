@@ -10,10 +10,11 @@
          </div>
          <div class="modal-footer">
             {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button> --}}
-            <form action="{{ route('logout') }}" method="post">
+            {{-- <form action="{{ route('logout') }}" method="post">
             @csrf
                <button type="submit" class="btn btn-danger">Keluar</button>
-            </form>
+            </form> --}}
+            <livewire:auth.logout />
          </div>
       </div>
    </div>

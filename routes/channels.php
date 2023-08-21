@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Broadcast;
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
+});
+
+Broadcast::channel('chat.{receiver}', function (User $user, $receiver) {
+    # Check if user is same as receiver
+    // dd($user->id);
+    \Illuminate\Support\Facades\Log::info('Authenticated User ID:', [$user->id]);
+    \Illuminate\Support\Facades\Log::info('Receiver ID:', [$receiver]);
+    \Illuminate\Support\Facades\Log::info((int) $user->id === (int) $receiver);
+    return (int) $user->id === (int) $receiver;
 });

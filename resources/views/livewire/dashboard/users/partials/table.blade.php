@@ -21,6 +21,11 @@
          <tr>
             <th scope="row">{{ $loop->iteration + ($paginate * ($users->currentPage()-1)) }}</th>
             <td class="text-center">
+               {{-- <div class="avatar-wrapper me-3">
+                  <div class="avatar rounded-2 bg-label-secondary">
+                     <img src="../../assets/img/ecommerce-images/product-9.png" alt="Product-9" class="rounded-2">
+                  </div>
+               </div> --}}
                @if ($user->avatar == null)
                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt
                   class="w-px-40 h-auto rounded-circle img-profile-header">

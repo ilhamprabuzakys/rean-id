@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Auth;
 
+use App\Livewire\Dashboard\Chats\ChatCreate;
+use App\Livewire\Dashboard\Chats\ChatList;
 use App\Models\LoginInfo;
 use App\Models\User;
 use Carbon\Carbon;
@@ -76,10 +78,12 @@ class Login extends Component
 
             $now = Carbon::now()->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss');
             auth()->user()->update([
+                'status' => 'online',
                 'last_login_at' => $now,
                 'last_login_ip' => request()->ip()
             ]);
-
+            $this->dispatch('refresh')->to(ChatList::class);
+            $this->dispatch('refresh')->to(ChatCreate::class);
             $this->dispatch('swal:modal', [
                 'icon' => 'success',
                 'title' => 'Login berhasil',

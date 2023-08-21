@@ -8,4 +8,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+/*     build: {
+        rollupOptions: {
+          external: ['pusher-js'], // Tambahkan nama package Pusher.js di sini
+        },
+    }, */
 });

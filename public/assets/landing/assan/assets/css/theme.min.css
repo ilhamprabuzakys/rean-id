@@ -7193,6 +7193,9 @@ fill: #fefefe;
     --bs-spinner-animation-name: spinner-grow;
     background-color: currentcolor;
     opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 .spinner-grow-sm {
     --bs-spinner-width: 1rem;

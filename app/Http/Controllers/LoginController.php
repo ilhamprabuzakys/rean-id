@@ -158,6 +158,9 @@ class LoginController extends Controller
             ]);
 
             Alert::success('Berhasil Login!', 'Selamat datang di dashboard.');
+            Auth::user()->update([
+                'status' => 'online',
+            ]);
             return redirect()->intended('/dashboard')->with('success', 'Berhasil Login!');
         }
 
@@ -169,11 +172,15 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        Auth::user()->update([
+            'status' => 'offline',
+        ]);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         Alert::success('Berhasil logout!', 'Terimakasih telah menggunakan layanan kami.');
-        return redirect('/login')->with('success', 'Berhasil Logout, Sampai jumpa lagi!');
+        // return redirect('/login')->with('success', 'Berhasil Logout, Sampai jumpa lagi!');
+        return back()->with('success', 'Berhasil Logout, Sampai jumpa lagi!');
     }
 }

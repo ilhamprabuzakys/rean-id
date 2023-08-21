@@ -23,16 +23,16 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                            <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
-                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Kategori</a>
-                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Label</a>
+                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Macam Karya</a>
+                           <a class="dropdown-item" href="{{ route('home.category_list') }}">Macam Event</a>
                            <a class="dropdown-item" href="{{ route('home.contact') }}">Halaman Kontak</a>
                         </div>
                      </li>
                      <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Artikel')->first()) ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Artikel')->first()) }}">Artikel</a>
                      </li>
-                     <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Ebook')->first()) ? ' active' : '' }}">
-                        <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Ebook')->first()) }}">Ebook</a>
+                     <li class="nav-item {{ request()->url() == route('home.events.index') ? ' active' : '' }}">
+                        <a class="nav-link" href="{{ route('home.events.index') }}">Event</a>
                      </li>
                      <li class="nav-item {{ request()->url() == route('home.category_view', $categories->where('name', 'Event')->first()) ? ' active' : '' }}">
                         <a class="nav-link" href="{{ route('home.category_view', $categories->where('name', 'Event')->first()) }}">Events</a>
