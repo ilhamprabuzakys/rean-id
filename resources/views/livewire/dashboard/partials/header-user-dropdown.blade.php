@@ -51,7 +51,6 @@
              <i class="mdi mdi-logout me-2"></i>
              <span class="align-middle">Log Out</span>
           </a>
-          {{-- <livewire:logout /> --}}
        </li>
     </ul>
  </li>

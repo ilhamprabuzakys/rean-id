@@ -14,6 +14,13 @@
                   <i></i>
                </span>
             </button>
+            {{-- Search Bar --}}
+            <div class="nav-item me-3 me-lg-0">
+               <a href="#" data-bs-target="#modal-search-bar" data-bs-toggle="modal" class="nav-link lh-1">
+                  <i class="bx bx-search-alt-2 fs-5 lh-1"></i>
+               </a>
+               <!--Search-bar-2-collapse-->
+            </div>
             <!--Navbar Button-->
             {{-- <div class="nav-item me-3 me-lg-0 ms-lg-4 ms-xl-5">
                @auth
@@ -22,49 +29,36 @@
                <a href="{{ route('logout') }}" class="btn btn-success btn-sm rounded-pill">Keluar</a>
                @endauth
             </div> --}}
-            @php
-            $rand = rand(1,5);
-            @endphp
             @auth
             <div class="nav-item me-3 me-lg-0 dropdown">
                <!--:User:-->
-               <a href="header-logged-in.html#" class="btn btn-primary dropdown-toggle rounded-pill py-0 ps-0 pe-2"
-                  data-bs-auto-close="outside" data-bs-toggle="dropdown">
-                  @if (auth()->user()->avatar !== NULL)
-                  <img src="{{ asset(auth()->user()->avatar) }}" alt="avatar" class="avatar sm rounded-circle me-1">
-                  @else
-                  <img src="{{ asset('assets/img/avatar/avatar-'. $rand .'.png') }}" alt="avatar"
-                     class="avatar sm rounded-circle me-1">
-                  @endif
+               <a href="#" class="btn btn-primary dropdown-toggle rounded-pill py-0 ps-0 pe-2"
+                  data-bs-toggle="dropdown">
+                  <img
+                     src="{{ asset(auth()->user()->avatar !== NULL ? auth()->user()->avatar : 'assets/img/avatar/avatar-1.png') }}"
+                     alt="avatar" class="avatar sm rounded-circle me-1">
                   <small>{{ auth()->user()->name }}</small>
                </a>
                <!--:User dropdown:-->
                <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
-                  <a href="header-logged-in.html#!" class="dropdown-header border-bottom p-4">
-                     <div class="d-flex align-items-center">
-                        <div>
-                           @if (auth()->user()->avatar !== NULL)
-                           <img src="{{ asset(auth()->user()->avatar) }}" alt="avatar"
-                              class="avatar xl rounded-pill me-3">
-                           @else
-                           <img src="{{ asset('assets/img/avatar/avatar-'. $rand .'.png') }}" alt="avatar"
-                              class="avatar xl rounded-pill me-3">
-                           @endif
+                  <div class="py-5 px-3 border-bottom">
+                     <div class="row">
+                        <div class="col-3">
+                           <img src="{{ asset(auth()->user()->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                              alt="avatar" class="avatar xl rounded-pill me-3" style="object-fit: cover">
                         </div>
-                        <div>
-                           <h5 class="mb-0 text-body">{{ auth()->user()->name }}</h5>
-                           <span class="d-block mb-2 text-lowercase"><span class="__cf_email__"
-                                 data-cfemail="3d575c4c48545358555c4f7d5952505c5453135e5250">{{ auth()->user()->email
-                                 }}</span></span>
-                           <a href="{{ route('dashboard') }}">
-                              <div class="small d-inline-block link-underline fw-semibold">Lihat dashboard</div>
+                        <div class="col-7">
+                           <h5 class="ms-2 mb-0">{{ auth()->user()->name }}</h5>
+                           <span class="ms-2 mb-2">{{ auth()->user()->email }}</span>
+                           <a href="{{ route('dashboard') }}" class="ms-2 small link-underline fw-semibold">
+                              Lihat dashboard
                            </a>
                         </div>
                      </div>
-                  </a>
+                  </div>
                   <form action="{{ route('logout') }}" method="POST" id="logoutForm">
                      @csrf
-                     <a href="#" onclick="document.getElementById('logoutForm').submit();"
+                     <a href="#" onclick="confirmLogout(event);"
                         class="dropdown-item rounded-top-0 p-3">
                         <span class="d-block text-end">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -78,11 +72,20 @@
                         </span>
                      </a>
                   </form>
+                  <script>
+                     function confirmLogout(event) {
+                        event.preventDefault(); // Mencegah tindakan default dari link (navigasi)
+
+                        if (window.confirm('Apakah Anda yakin ingin keluar?')) {
+                           document.getElementById('logoutForm').submit(); // Submit form jika pengguna mengkonfirmasi
+                        }
+                     }
+                  </script>
                </div>
             </div>
             @else
             <div class="nav-item me-3 me-lg-0 ms-lg-4 ms-xl-5 dropdown">
-               <a href="header-login.html#" class="btn btn-outline-primary px-4 btm-sm rounded-pill py-1"
+               <a href="header-login.html#" class="btn btn-primary px-4 btm-sm rounded-pill py-1"
                   data-bs-auto-close="outside" data-bs-toggle="dropdown">
                   Sign In
                </a>
@@ -136,7 +139,6 @@
             </div>
             @endauth
          </div>
-
          <!--Navbar Collapse-->
          <div class="collapse navbar-collapse" id="mainNavbarTheme">
 
@@ -154,10 +156,12 @@
                      class="nav-link {{ str_starts_with(request()->url(), route('home.semua_postingan')) ? 'active' : '' }}">Data</a>
                </li>
                <li class="nav-item me-lg-2">
-                  <a href="{{ route('home.events.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('home.events.index')) ? 'active' : '' }}">Events</a>
+                  <a href="{{ route('home.events.index') }}"
+                     class="nav-link {{ str_starts_with(request()->url(), route('home.events.index')) ? 'active' : '' }}">Events</a>
                </li>
                <li class="nav-item me-lg-2">
-                  <a href="{{ route('home.ebooks.index') }}" class="nav-link {{ str_starts_with(request()->url(), route('home.ebooks.index')) ? 'active' : '' }}">Ebooks</a>
+                  <a href="{{ route('home.ebooks.index') }}"
+                     class="nav-link {{ str_starts_with(request()->url(), route('home.ebooks.index')) ? 'active' : '' }}">Ebooks</a>
                </li>
                <li class="nav-item me-lg-2">
                   <a href="{{ route('home.cns') }}"
@@ -230,3 +234,5 @@
       </div>
    </nav>
 </header>
+
+<livewire:landing.partials.search-bar />

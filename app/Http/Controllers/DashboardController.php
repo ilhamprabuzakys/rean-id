@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller

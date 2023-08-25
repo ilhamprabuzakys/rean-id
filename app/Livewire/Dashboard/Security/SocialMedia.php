@@ -19,7 +19,7 @@ class SocialMedia extends Component
             'gmail' => $this->gmail == null ? '' : ['min:6', 'regex:/^[^-]*$/'],
         ];
     }
-    
+
 
     protected $messages = [
         'facebook.min' => 'Username facebook minimal harus 6 karakter.',
@@ -33,7 +33,7 @@ class SocialMedia extends Component
         'gmail.min' => 'Username gmail minimal harus 6 karakter.',
         'gmail.regex' => 'Username gmail tidak boleh mengandung karakter "-".',
     ];
-    
+
     public function mount()
     {
         $this->facebook = auth()->user()->facebook;
@@ -51,22 +51,37 @@ class SocialMedia extends Component
 
     public function update()
     {
-        $this->validate();
-        $user = User::findOrFail(auth()->user()->id);
-        $user->update([
-            'facebook' => $this->facebook,
-            'twitter' => $this->twitter,
-            'instagram' => $this->instagram,
-            'youtube' => $this->youtube,
-            'gmail' => $this->gmail,
-        ]);
-
-        $this->dispatch('alert', [
-            'title' => 'Berhasil',
-            'message' => 'Berhasil memperbarui tautan media sosial anda',
-            'type' => 'success',
-        ]);
-        // \session()->flash("success","Berhasil memperbarui tautan media sosial");
+        if ($this->facebook == null && $this->twitter == null && $this->instagram == null && $this->youtube == null && $this->gmail == null) {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Jika anda ingin menautkan social media harap isi data dengan benar',
+            ]);
+        } else {
+            try {
+                $this->validate();
+                auth()->user()->update([
+                    'facebook' => $this->facebook,
+                    'twitter' => $this->twitter,
+                    'instagram' => $this->instagram,
+                    'youtube' => $this->youtube,
+                    'gmail' => $this->gmail,
+                ]);
+                $this->dispatch('alert', [
+                    'title' => 'Berhasil',
+                    'message' => 'Berhasil memperbarui tautan media sosial anda',
+                    'type' => 'success',
+                ]);
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . \getErrorsString($e),
+                ]);
+    
+                // Mengirim error bag ke komponen Livewire
+                $this->setErrorBag($e->validator->getMessageBag());
+            }
+        }
     }
-
 }

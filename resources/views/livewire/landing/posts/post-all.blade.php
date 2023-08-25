@@ -9,7 +9,7 @@
                </div>
                <div class="row">
                   <div class="col-8">
-                     <input type="text" class="form-control" placeholder="Cari sesuatu..." wire:model.live='search'>
+                     <input type="text" class="form-control" placeholder="Cari sesuatu..." wire:model.live.debounce.500ms='search'>
                   </div>
                   <div class="col-4">
                      <input type="text" id="dateFilter" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
@@ -67,7 +67,7 @@
                                     {{ $post->title }}
                                  </a>
                               </h4>
-                              <div><a href="#" class="badge badge-soft-primary">{{ $post->category->name }}</a></div>
+                              <div><a href="{{ route('home.category_view', $post->category) }}" class="badge badge-soft-primary">{{ $post->category->name }}</a></div>
                            </div>
 
                            <p class="text-muted flex-grow-1 d-none d-lg-block">

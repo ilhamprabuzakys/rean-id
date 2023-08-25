@@ -3030,6 +3030,8 @@ fieldset:disabled .btn {
     color: var(--bs-nav-link-color);
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
         border-color 0.15s ease-in-out;
+    cursor: pointer;
+    user-select: none;
 }
 @media (prefers-reduced-motion: reduce) {
     .nav-link {
@@ -8361,7 +8363,7 @@ html:not([dir="rtl"])
     white-space: nowrap;
 }
 .nav .nav-link:not(.active):hover {
-    color: #9495a2 !important;
+    color: #1d3cff !important;
 }
 .nav-tabs .nav-link,
 .nav-pills .nav-link {

@@ -5,7 +5,8 @@
  > div { pointer-events: auto;  }
 }
 ::-webkit-scrollbar {
-   width: 5px
+   width: 5px;
+   height: 5px; /* Mengatur tinggi dari scrollbar saat horizontal */
 }
 
 ::-webkit-scrollbar-track {
@@ -113,10 +114,6 @@ table tbody tr.event-tr td div.dropdown a.text-muted {
 
 table tbody tr td div.dropdown .dropdown-toggle::after {
    display: none;
-}
-
-.nav .nav-item {
-   cursor: pointer !important;
 }
 
 /* Pills Breadcumb */

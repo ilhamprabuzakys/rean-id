@@ -47,56 +47,58 @@ class Login extends Component
 
     public function authenticate()
     {
-        try {
-            $this->validate();
-
-            $login_type = filter_var($this->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-            $user = User::where($login_type, $this->login)->first();
-            if (!$user) {
-                return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
-            }
-
-            if (!Hash::check($this->password, $user->password)) {
-                return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
-            }
-
-            if ($user->email_verified_at === null) {
-                return $this->failedLoginResponse('Akun anda belum dibekukan atau terkena dinonaktifkan sementara');
-            }
-
-            if ($user->active == 0) {
-                return $this->failedLoginResponse('Akun telah dinonaktifkan karena melanggar ketentuan komunitas kami. Hubungi admin jika ini merupakan suatu kesalahan.');
-            }
-
-            $user->createToken('user login')->plainTextToken;
-
-            $credentials = [$login_type => $this->login, 'password' => $this->password];
-            if (!Auth::attempt($credentials, $this->remember)) {
-                return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
-            }
-
-            $now = Carbon::now()->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss');
-            auth()->user()->update([
-                'status' => 'online',
-                'last_login_at' => $now,
-                'last_login_ip' => request()->ip()
-            ]);
-            $this->dispatch('refresh')->to(ChatList::class);
-            $this->dispatch('refresh')->to(ChatCreate::class);
+        if ($this->login == null && $this->password == null)
+        {
             $this->dispatch('swal:modal', [
-                'icon' => 'success',
-                'title' => 'Login berhasil',
-                'text' => 'Akan diredirect ke dashboard',
-                'duration' => 3000,
+                'icon' => 'error',
+                'title' => 'Login Gagal',
+                'text' => 'Harap masukkan kredensial anda sebelum login'
             ]);
-
-            $this->saveLoginInfo($now);
-
-            return redirect()->intended('/dashboard');
-        } catch (ValidationException $e) {
-            $errorMessage = \getErrorsString($e);
-            $this->failedLoginResponse('Terjadi kesalahan, periksa kembali data anda:<br>' . $errorMessage);
+        } else {
+            try {
+                $this->validate();
+    
+                $login_type = filter_var($this->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    
+                $user = User::where($login_type, $this->login)->first();
+                if (!$user) {
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                }
+    
+                if (!Hash::check($this->password, $user->password)) {
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                }
+    
+                if ($user->email_verified_at === null) {
+                    return $this->failedLoginResponse('Akun anda belum dibekukan atau terkena dinonaktifkan sementara');
+                }
+    
+                if ($user->active == 0) {
+                    return $this->failedLoginResponse('Akun telah dinonaktifkan karena melanggar ketentuan komunitas kami. Hubungi admin jika ini merupakan suatu kesalahan.');
+                }
+    
+                $user->createToken('user login')->plainTextToken;
+    
+                $credentials = [$login_type => $this->login, 'password' => $this->password];
+                if (!Auth::attempt($credentials, $this->remember)) {
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                }
+    
+                $this->dispatch('refresh')->to(ChatList::class);
+                $this->dispatch('refresh')->to(ChatCreate::class);
+                $this->dispatch('swal:modal', [
+                    'icon' => 'success',
+                    'title' => 'Login berhasil',
+                    'text' => 'Akan diredirect ke dashboard',
+                    'duration' => 3000,
+                ]);
+                
+                \saveUserLoginInfo();
+                return redirect()->intended('/dashboard');
+            } catch (ValidationException $e) {
+                $errorMessage = \getErrorsString($e);
+                $this->failedLoginResponse('Terjadi kesalahan, periksa kembali data anda:<br>' . $errorMessage);
+            }
         }
     }
 

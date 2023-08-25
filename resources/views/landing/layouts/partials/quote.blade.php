@@ -1,6 +1,6 @@
 <section class="jarallax text-white position-relative overflow-hidden bg-dark" data-speed=".2">
    <!--Section background image parallax-->
-   <img src="assets/img/backgrounds/bg3.jpg" class="jarallax-img" alt="">
+   <img src="{{ asset('assets/landing/assan/assets/img/backgrounds/bg3.jpg') }}" class="jarallax-img" alt="">
 
    <!--Overlay-->
    <div class="position-absolute w-100 h-100 start-0 top-0 bg-dark opacity-75"></div>

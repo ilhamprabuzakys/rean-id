@@ -38,10 +38,15 @@
       href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Karla:wght@300;400;500;600;700&amp;display=swap') }}"
       rel="stylesheet">
 
-   <!-- Icons -->
+   <!-- Material Design Icons -->
    <link rel="stylesheet"
       href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/materialdesignicons.css') }}" />
+
+   <!--Font Awesome Icons-->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/fontawesome.css') }}" />
+
+   <!--Box Icons-->
+   {{-- <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/fonts/boxicons/css/boxicons.min.css') }}"> --}}
 
    <!-- Core CSS -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/core.css') }}"
@@ -144,6 +149,7 @@
    @include('dashboard.template.partials.modal.notifikasi')
 
    <livewire:scripts />
+   @livewireChartsScripts
    {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
    @stack('script')
    @stack('modal')

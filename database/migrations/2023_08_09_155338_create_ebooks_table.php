@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('ebooks', function (Blueprint $table) {
             $table->id();
+            $table->integer('like')->default(0);
+            $table->integer('views')->default(0); // Tambahkan kolom views
             $table->string('title');
             $table->string('description');
             $table->string('pages');

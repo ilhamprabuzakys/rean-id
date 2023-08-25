@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             // $table->text('profile_path')->nullable();
             $table->text('avatar')->nullable();
-            $table->text('address')->nullable();
-            $table->string('city')->nullable();
+            $table->text('description')->nullable();
             $table->string('phone')->nullable();
         });
     }

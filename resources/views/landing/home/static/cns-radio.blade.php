@@ -139,9 +139,7 @@
 @endsection
 @section('hero')
    <!--::Start Hero BG Shape Divider::-->
-   <section class="position-relative bg-dark text-white jarallax" data-speed=".2">
-      <!--:Hero BG:-->
-      <img src="{{ asset('assets/img/hero-image/background-1.jpg') }}" alt="" class="jarallax-img opacity-25">
+   <section class="position-relative bg-gradient-primary text-white">
       <!--:Hero Divider:-->
       <svg class="w-100 position-absolute start-0 bottom-0 z-1 mb-n1" height="48" fill="currentColor"
          preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"
@@ -157,11 +155,15 @@
       </svg>
       <div class="container position-relative py-12 py-lg-15">
          <div class="row pb-5">
-            <div class="col-lg-10 mx-auto text-center">
+            <div class="col-lg-10">
+               <ol class="breadcrumb mb-3">
+                  <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">CNS Radio</li>
+               </ol>
                <!--:Heading:-->
                <h1 class="display-1 mb-4">CNS Radio</h1>
                <!--:Subheading:-->
-               <p class="lead mb-5">Cegah Narkoba Streaming Radio adalah Radio berbasis streaming yang dimaksudkan sebagai jembatan kepada masyarakat untuk berkomunikasi serta menyampaikan informasi dan
+               <p class="lead mb-3">Cegah Narkoba Streaming Radio adalah Radio berbasis streaming yang dimaksudkan sebagai jembatan kepada masyarakat untuk berkomunikasi serta menyampaikan informasi dan
                   edukasi, dalam upaya pencegahan terhadap bahaya penyalahgunaan dan peredaran gelap narkoba. Mari Kita War On Drugs!!! </p>
                <!--:Action button:-->
                {{-- <a href="#!" class="btn btn-white btn-lg px-4 px-lg-5 rounded-pill btn-hover-arrow">

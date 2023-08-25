@@ -21,14 +21,14 @@
                 </div>
              </div>
              <div class="row justify-content-between">
-                <div class="col-1 d-flex justify-content-start">
+                <div class="col-lg-1 col-sm-2 col-md-2 d-flex justify-content-start">
                    <select class="form-select" name="paginate" id="paginate" wire:model.live='paginate'>
                       <option value="5">5</option>
                       <option value="10">10</option>
                       <option value="15">15</option>
                    </select>
                 </div>
-                <div class="col-7 d-flex justify-content-start">
+                <div class="col-lg-7 col-md-6 col-sm-6 d-flex justify-content-start">
                    <input type="text" name="search" id="search" wire:model.live="search" class="form-control" placeholder="Ketik sesuatu..">
                 </div>
                 <div class="col-4 d-flex justify-content-start">

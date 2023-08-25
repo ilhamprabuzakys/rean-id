@@ -4,3 +4,10 @@
 @section('content')
 <livewire:landing.events.event-index />
 @endsection
+@push('scripts')
+<script>
+   $("#filter_date").flatpickr({
+      mode: "range",
+   });
+</script>
+@endpush

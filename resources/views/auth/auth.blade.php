@@ -216,6 +216,37 @@
          })
       });
    </script>
+   <script>
+      window.addEventListener("message", function(event) {
+         console.log("Pesan diterima:", event.data);
+         if (event.data === "loginSuccess") {
+            window.location.href = "{{ route('dashboard') }}";
+         }
+      });
+
+
+      // Google Login
+      function googleLogin() {
+         const url = `{{ route('google.login') }}`;
+      
+         // Tentukan ukuran dan posisi window baru
+         const width = 600;
+         const height = 400;
+         //  const left = (window.innerWidth - width) / 2;
+         //  const top = (window.innerHeight - height) / 2;
+         // Hitung posisi tengah
+         const left = window.screenX + (window.outerWidth - width) / 2;
+         const top = window.screenY + (window.outerHeight - height) / 2.5; // Pengurangan dengan 2.5 agar sedikit lebih ke atas dari tengah
+      
+         // Buka window baru
+         const newWindow = window.open(url, 'googleLogin', `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${width},height=${height},left=${left},top=${top}`);
+         
+         // Fokus ke window baru
+         newWindow.focus();
+      
+         return false;
+      }
+   </script>
 </body>
 
 </html>

@@ -69,6 +69,16 @@ class PostIndex extends Component
             }
         });
 
+        if (auth()->user()->role == 'admin') {
+            $query = $query->whereHas('user', function ($query) {
+                $query->where('role', '!=', 'superadmin');
+            });
+        }
+        
+        if (auth()->user()->role == 'member') {
+            $query = $query->where('user_id', auth()->user()->id);
+        }
+
         $posts = $query->paginate($this->paginate);
 
         $categories = Category::oldest('name')->get();

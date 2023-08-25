@@ -62,7 +62,6 @@
                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                                    valign="top">
                                                    Hi {{ $data['user_nama'] }},<br>
-                                                   di tempat<br>
                                                    Ini adalah kode verifikasi otp mu, pastikan masukan kode sesuai yang dibawah ini yaa :
                                                    <br>
                                                 </td>

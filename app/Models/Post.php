@@ -32,7 +32,7 @@ class Post extends Model
 
     /**
      * Get the index name for the model.
-    */
+     */
     /* public function searchableAs()
     {
         return 'post_index';
@@ -82,45 +82,47 @@ class Post extends Model
         }
     }
 
-    public function scopeGlobalSearch($query, $search)  
+    public function scopeGlobalSearch($query, $search)
     {
         $search = strtolower($search);
-        
+
         return $query
-        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)", 
-        ["%{$search}%", "%{$search}%"]) 
-        ->orWhereHas('category', function($q) use ($search){
-           $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]); 
-         })
-        ->orWhereHas('user', function($q) use ($search){
-           $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
-         });
+            ->whereRaw(
+                "(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)",
+                ["%{$search}%", "%{$search}%"]
+            )
+            ->orWhereHas('category', function ($q) use ($search) {
+                $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
+            })
+            ->orWhereHas('user', function ($q) use ($search) {
+                $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);
+            });
     }
 
 
     public static function mostViewed($posts, $limit = 5, $category = null)
     {
         $filteredPosts = $posts;
-    
+
         if ($category) {
             $filteredPosts = $filteredPosts->filter(function ($post) use ($category) {
                 return $post->category->name == $category;
             });
         }
-        
+
         return $filteredPosts->sortByDesc('views')->take($limit);
     }
 
     public function mostViewed2($limit = 5, $category = null)
     {
         $filteredPosts = $this;
-        
+
         if ($category) {
             $filteredPosts = $filteredPosts->whereHas('category', function ($query) use ($category) {
                 $query->where('name', $category);
             });
         }
-        
+
         return $filteredPosts->sortByDesc('views')->take($limit);
     }
 
@@ -143,5 +145,10 @@ class Post extends Model
     public function files()
     {
         return $this->hasMany(FilePost::class);
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'post_likes');
     }
 }

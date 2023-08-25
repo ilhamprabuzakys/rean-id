@@ -12,7 +12,6 @@ class PostAll extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public $category;
     public $paginate = 5;
     public $search, $filter_date, $filter_category;
 

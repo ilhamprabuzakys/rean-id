@@ -1,5 +1,12 @@
 <?php
 
+use App\Models\LoginInfo;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use Jenssegers\Agent\Agent;
+use Stevebauman\Location\Facades\Location;
+
 function generateOTP()
 {
     $otpLength = 6;
@@ -30,7 +37,22 @@ function echoTime($var_time)
 
 function getErrorsString($e)
 {
-    $errors = $e->validator->errors()->toArray();
+    // Jika $e adalah instansi dari ValidationException, kita akan mengambil validator errors dari dalamnya
+    if ($e instanceof Illuminate\Validation\ValidationException) {
+        $errors = $e->validator->errors()->toArray();
+    }
+    // Jika $e adalah instansi dari MessageBag (hasil dari getErrorBag()), kita akan mengubahnya menjadi array
+    elseif ($e instanceof Illuminate\Support\MessageBag) {
+        $errors = $e->toArray();
+    }
+    // Jika $e adalah array, kita langsung menggunakannya sebagai $errors
+    elseif (is_array($e)) {
+        $errors = $e;
+    }
+    // Jika tidak memenuhi kedua kondisi di atas, kita bisa mengatur default atau mengembalikan pesan error
+    else {
+        return 'Terjadi kesalahan yang tidak dikenal.';
+    }
     $errorString = '<br>';
     foreach ($errors as $field => $errorList) {
         foreach ($errorList as $error) {
@@ -40,7 +62,7 @@ function getErrorsString($e)
     return $errorString;
 }
 
-function echoLogSubject($e) 
+function echoLogSubject($e)
 {
     $var = class_basename($e);
     if ($var == 'Post') {
@@ -53,7 +75,7 @@ function echoLogSubject($e)
     echo $var;
 }
 
-function echoLogEvent($e) 
+function echoLogEvent($e)
 {
     $var = $e;
     if ($var == 'created') {
@@ -64,4 +86,43 @@ function echoLogEvent($e)
         $var = 'Penghapusan';
     }
     echo $var;
+}
+
+function getPublicIP()
+{
+    // Logic untuk mendapatkan IP public.
+    $response = Http::get('http://ipecho.net/plain');
+    return $response->body();
+}
+
+function saveUserLoginInfo()
+{
+    $now = Carbon::now()->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss');
+    $ip = \getPublicIP();
+    $location = Location::get($ip);
+    $agent = new Agent();
+    $device = $agent->isDesktop() ? 'Desktop' : ($agent->isMobile() ? 'Mobile' : 'WebKit');
+
+    User::find(auth()->user()->id)->update([
+        'status' => 'online',
+        'last_login_at' => $now,
+        'last_login_ip' => $ip
+    ]);
+
+    LoginInfo::create([
+        'user_id' => auth()->user()->id,
+        'browser' => $agent->browser(),
+        'os' => $agent->platform(),
+        'device' => $device,
+        'login_at' => Carbon::parse(Carbon::now())->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss'),
+        'login_ip' => $ip,
+        'country' => $location->countryName,
+        'country_code' => $location->countryCode,
+        'region' => $location->regionName,
+        'region_code' => $location->regionCode,
+        'city' => $location->cityName,
+        'zip_code' => $location->zipCode,
+        'latitude' => $location->latitude,
+        'longitude' => $location->longitude,
+    ]);
 }

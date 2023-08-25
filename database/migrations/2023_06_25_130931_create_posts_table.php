@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('body')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->integer('views')->default(0); // Tambahkan kolom views
+            // $table->integer('like')->default(0);
             $table->foreignId('category_id')->nullable();
             // $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
             $table->foreignId('user_id');

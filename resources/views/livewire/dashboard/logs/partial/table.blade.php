@@ -10,7 +10,7 @@
       </tr>
    </thead>
    <tbody>
-      @foreach ($logs as $key => $log)
+      @forelse ($logs as $key => $log)
          <tr>
             <th scope="row">{{ $loop->iteration + $paginate * ($logs->currentPage() - 1) }}</th>
             <td>
@@ -35,7 +35,13 @@
             </td>
             <td>{{ echoTime($log->created_at) }}</td>
          </tr>
-      @endforeach
+      @empty
+      <tr>
+         <td colspan="6">
+            <h5 class="text-center my-3">Data tidak ditemukan.</h5>
+         </td>
+      </tr>
+      @endforelse
    </tbody>
 </table>
 <div class="float-end mt-5 me-3">

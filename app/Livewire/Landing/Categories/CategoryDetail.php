@@ -11,11 +11,6 @@ class CategoryDetail extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = [
-        "swalS",
-        "swalE",
-    ];
-
     public $category;
     public $paginate = 5;
     public $search, $filter_date;
@@ -46,6 +41,7 @@ class CategoryDetail extends Component
     {
         $query = Post::with(['tags', 'user', 'category'])
         ->latest('updated_at')
+        ->where('category_id', $this->category->id)
         ->when($this->search, function ($query) {
             return $query->globalSearch($this->search);
         })
@@ -63,25 +59,7 @@ class CategoryDetail extends Component
 
         $posts = $query;
 
-        $this->emit('refreshAOS');
+        $this->dispatch('refreshAOS');
         return view('livewire.landing.categories.category-detail', compact('posts'));
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-    
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

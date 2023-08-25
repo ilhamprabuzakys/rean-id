@@ -5,18 +5,23 @@ namespace App\Livewire\Dashboard\Security;
 use App\Models\User;
 use App\Rules\MatchingPassword;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class PasswordChange extends Component
 {
-    public $current_password, $new_password, $confirmation_password;
+    public $current_password;
+
+    #[Rule('min:6|required', onUpdate: true)]
+    public $new_password;
+
+    #[Rule('same:new_password', onUpdate: true)]
+    public $confirmation_password;
 
     protected function rules()
     {
         return [
             'current_password' => ['min:6', 'required', new MatchingPassword],
-            'new_password' => ['min:6', 'required'],
-            'confirmation_password' => ['same:new_password'],
         ];
     }
 
@@ -42,32 +47,39 @@ class PasswordChange extends Component
 
     public function update()
     {
-        try {
-            $this->validate($this->rules(), $this->messages, $this->validationAttributes);
-
-            User::findOrFail(auth()->user()->id)->update(['password' => bcrypt($this->new_password)]);
-
-            $this->dispatch('swal:modal', [
-                'icon' => 'success',
-                'title' => 'Update berhasil',
-                'text' => 'Password anda berhasil diganti',
-            ]);
-
-            $this->dispatch('alert', [
-                'title' => 'Berhasil',
-                'message' => 'Perubahan password berhasil diterapkan',
-                'type' => 'success',
-            ]);
-        } catch (ValidationException $e) {
-            $errorMessage = \getErrorsString($e);
+        if ($this->current_password == null && $this->new_password == null && $this->confirmation_password == null) {
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . $errorMessage,
+                'text' => 'Jika anda ingin merubah password harap isi semua data yang diperlukan.'
             ]);
-
-            // Mengirim error bag ke komponen Livewire
-            $this->setErrorBag($e->validator->getMessageBag());
+        } else {
+            try {
+                $this->validate($this->rules(), $this->messages, $this->validationAttributes);
+    
+                User::findOrFail(auth()->user()->id)->update(['password' => bcrypt($this->new_password)]);
+    
+                $this->dispatch('swal:modal', [
+                    'icon' => 'success',
+                    'title' => 'Update berhasil',
+                    'text' => 'Password anda berhasil diganti',
+                ]);
+    
+                $this->dispatch('alert', [
+                    'title' => 'Berhasil',
+                    'message' => 'Perubahan password berhasil diterapkan',
+                    'type' => 'success',
+                ]);
+            } catch (ValidationException $e) {
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . \getErrorsString($e),
+                ]);
+    
+                // Mengirim error bag ke komponen Livewire
+                $this->setErrorBag($e->validator->getMessageBag());
+            }
         }
     }
 

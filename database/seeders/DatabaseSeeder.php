@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $seeders = [
             UserSeeder::class,
-            PostSeeder::class,
             CategorySeeder::class,
             TagSeeder::class,
             CompanySeeder::class,

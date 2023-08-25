@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->integer('views')->default(0); // Tambahkan kolom views
+            $table->integer('like')->default(0);
             $table->string('title');
             $table->string('slug', 255);
             $table->text('description');

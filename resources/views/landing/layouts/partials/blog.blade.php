@@ -10,7 +10,7 @@
            </div>
 
            <div class="col-md-4 text-md-end" data-aos="fade-right" data-aos-duration="400">
-               <a href="index-landing-business.html#!"
+               <a href="{{ asset('index-landing-business.html#!') }}"
                    class="btn btn-rise btn-outline-primary flex-center p-0 rounded-circle width-10x height-10x">
                    <div class="btn-rise-bg bg-primary"></div>
                    <div class="btn-rise-text small">Our blog</div>
@@ -24,7 +24,7 @@
                    <!--Article-->
                    <article class="card-hover hover-lift">
                        <div class="position-relative rounded-3 overflow-hidden">
-                           <img src="assets/img/960x640/3.jpg" class="img-fluid img-zoom" alt="">
+                           <img src="{{ asset('assets/landing/assan/assets/img/960x640/3.jpg') }}" class="img-fluid img-zoom" alt="">
                        </div>
                        <div class="pt-4">
                            <h4 class="link-multiline">
@@ -36,7 +36,7 @@
                        </div>
 
                        <!--Post link-->
-                       <a href="index-landing-business.html#" class="stretched-link"></a>
+                       <a href="{{ asset('index-landing-business.html#') }}" class="stretched-link"></a>
                    </article>
                </div>
                <div class="col-lg-4 mb-4 mb-lg-0" data-aos="fade-up" data-aos-duration="400"
@@ -44,7 +44,7 @@
                    <!--Article-->
                    <article class="card-hover hover-lift">
                        <div class="position-relative rounded-3 overflow-hidden">
-                           <img src="assets/img/960x640/4.jpg" class="img-fluid img-zoom" alt="">
+                           <img src="{{ asset('assets/landing/assan/assets/img/960x640/4.jpg') }}" class="img-fluid img-zoom" alt="">
                        </div>
                        <div class="pt-4">
                            <h4 class="link-multiline">
@@ -55,14 +55,14 @@
                            </p>
                        </div>
                        <!--Post link-->
-                       <a href="index-landing-business.html#" class="stretched-link"></a>
+                       <a href="{{ asset('index-landing-business.html#') }}" class="stretched-link"></a>
                    </article>
                </div>
                <div class="col-lg-4" data-aos="fade-up" data-aos-duration="400" data-aos-delay="150">
                    <!--Article-->
                    <article class="card-hover hover-lift">
                        <div class="position-relative rounded-3 overflow-hidden">
-                           <img src="assets/img/960x640/5.jpg" class="img-fluid img-zoom" alt="">
+                           <img src="{{ asset('assets/landing/assan/assets/img/960x640/5.jpg') }}" class="img-fluid img-zoom" alt="">
                        </div>
                        <div class="pt-4">
                            <h4 class="link-multiline">
@@ -74,7 +74,7 @@
                        </div>
 
                        <!--Post link-->
-                       <a href="index-landing-business.html#" class="stretched-link"></a>
+                       <a href="{{ asset('index-landing-business.html#') }}" class="stretched-link"></a>
                    </article>
 
                </div>

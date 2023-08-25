@@ -5,7 +5,7 @@
          <tr>
             <th>#</th>
             <th class="text-center">
-               <i class="fas fa-lg fa-face-grin-wink"></i>
+               <i class="fas fa-lg fa-face-grin-wink text-primary"></i>
             </th>
             <th>Nama</th>
             <th>Email</th>
@@ -26,13 +26,8 @@
                      <img src="../../assets/img/ecommerce-images/product-9.png" alt="Product-9" class="rounded-2">
                   </div>
                </div> --}}
-               @if ($user->avatar == null)
-               <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt
-                  class="w-px-40 h-auto rounded-circle img-profile-header">
-               @else
-               <img src="{{ asset($user->avatar) }}" alt
-                  class="w-px-40 h-auto rounded-circle img-profile-header">
-               @endif
+               <img src="{{ asset($user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt
+                  class="w-px-40 h-px-40 rounded-circle img-profile-header" style="object-fit: cover">
             </td>
             <td>
                {{ $user->name }} <span class="text-primary">{{ $user->id == auth()->user()->id ? ' (Anda)' : '' }}</span>

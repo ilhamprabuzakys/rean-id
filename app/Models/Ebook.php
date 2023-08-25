@@ -15,7 +15,7 @@ class Ebook extends Model
         $search = strtolower($search);
 
         return $query
-        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(status) LIKE ?)",
+        ->whereRaw("(LOWER(title) LIKE ? OR LOWER(author) LIKE ?)",
         ["%{$search}%", "%{$search}%"])
         ->orWhereHas('user', function($q) use ($search){
            $q->whereRaw("LOWER(name) LIKE ?", ["%{$search}%"]);

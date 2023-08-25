@@ -13,27 +13,27 @@
                    <!--Partner-->
                    <div
                        class="d-flex justify-content-center align-items-center px-4 py-3 width-13x h-auto">
-                       <img class="img-fluid img-invert" src="assets/img/partners/dark/nasdaq.svg" alt="">
+                       <img class="img-fluid img-invert" src="{{ asset('assets/landing/assan/assets/img/partners/dark/nasdaq.svg') }}" alt="">
                    </div>
                    <!--Partner-->
                    <div
                        class="d-flex justify-content-center align-items-center px-4 py-3 width-13x h-auto">
-                       <img class="img-fluid img-invert" src="assets/img/partners/dark/zillow.svg" alt="">
+                       <img class="img-fluid img-invert" src="{{ asset('assets/landing/assan/assets/img/partners/dark/zillow.svg') }}" alt="">
                    </div>
                    <!--Partner-->
                    <div
                        class="d-flex justify-content-center align-items-center px-4 py-3 width-13x h-auto">
-                       <img class="img-fluid img-invert" src="assets/img/partners/dark/slack.svg" alt="">
+                       <img class="img-fluid img-invert" src="{{ asset('assets/landing/assan/assets/img/partners/dark/slack.svg') }}" alt="">
                    </div>
                    <!--Partner-->
                    <div
                        class="d-flex justify-content-center align-items-center px-4 py-3 width-13x h-auto">
-                       <img class="img-fluid img-invert" src="assets/img/partners/dark/google.svg" alt="">
+                       <img class="img-fluid img-invert" src="{{ asset('assets/landing/assan/assets/img/partners/dark/google.svg') }}" alt="">
                    </div>
                    <!--Partner-->
                    <div
                        class="d-flex justify-content-center align-items-center px-4 py-3 width-13x h-auto">
-                       <img class="img-fluid img-invert" src="assets/img/partners/dark/amazon.svg" alt="">
+                       <img class="img-fluid img-invert" src="{{ asset('assets/landing/assan/assets/img/partners/dark/amazon.svg') }}" alt="">
                    </div>
                </div>
            </div>

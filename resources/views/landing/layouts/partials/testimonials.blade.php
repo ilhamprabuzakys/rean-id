@@ -52,7 +52,7 @@
                                    <div class="position-relative me-3">
                                        <!--Avatar Image-->
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/4.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/4.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Nala Goins</h5>
@@ -84,7 +84,7 @@
 
                                    <div class="position-relative me-3">
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/5.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/5.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Lilja Peltola</h5>
@@ -119,7 +119,7 @@
                                    <div class="position-relative me-3">
                                        <!--Avatar Image-->
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/6.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/6.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Adam Macofey</h5>
@@ -152,7 +152,7 @@
                                    <div class="position-relative me-3">
                                        <!--Avatar Image-->
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/7.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/7.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Alex Lee</h5>
@@ -185,7 +185,7 @@
                                    <div class="position-relative me-3">
                                        <!--Avatar Image-->
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/8.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/8.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Jayden Massey</h5>
@@ -218,7 +218,7 @@
 
                                    <div class="position-relative me-3">
                                        <img class="position-relative avatar lg rounded-circle p-1"
-                                           src="assets/img/avatar/9.jpg" alt="">
+                                           src="{{ asset('assets/landing/assan/assets/img/avatar/9.jpg') }}" alt="">
                                    </div>
                                    <div>
                                        <h5 class="mb-0">Raymond Atkins</h5>

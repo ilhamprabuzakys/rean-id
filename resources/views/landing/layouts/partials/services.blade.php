@@ -1,168 +1,60 @@
-<section class="bg-body-tertiary position-relative overflow-hidden">
-   <div class="container py-9 py-lg-11 position-relative">
-       <div class="row justify-content-between">
-           <div class="col-lg-5 mb-7 mb-lg-0">
-               <h6 class="mb-3 text-body-secondary">What we offer</h6>
-               <h2 class="display-4 pe-lg-5 mb-5 mb-lg-8" data-aos="fade-left" data-aos-duration="400">We
-                   take your
-                   Business to the next level
-               </h2>
-               <div class="w-lg-75">
-                   <nav class="nav nav-pills flex-column" role="tablist" style="--bs-nav-pills-link-active-bg:var(--bs-secondary-bg);--bs-nav-pills-link-active-color:var(--bs-primary)">
-                       <a href="index-landing-business.html#code" class="nav-link rounded-pill active px-5 fs-5 py-3 mb-1"
-                           data-bs-toggle="tab"><span>Code</span></a>
-                       <a href="index-landing-business.html#strategy" class="nav-link rounded-pill fs-5 px-5 py-3 mb-1"
-                           data-bs-toggle="tab"><span>Strategy</span></a>
-                       <a href="index-landing-business.html#design" class="nav-link rounded-pill fs-5 px-5 py-3"
-                           data-bs-toggle="tab"><span>Design</span></a>
-                   </nav>
-               </div>
-           </div>
-           <div class="col-lg-7">
-               <div class="tab-content">
-                   <div class="tab-pane active fade show" id="code">
-                       <div class="position-relative">
-                           <h3 class="mb-3">Code</h3>
-                           <p class="mb-5">
-                               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                               non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                           </p>
-                           <ul class="list-unstyled mb-0">
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       We design and development
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Mobile Solutions / App
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Microsite / web special
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Website / relaunch
-                                   </p>
-                               </li>
-                           </ul>
-                       </div>
-                   </div>
-                   <div class="tab-pane fade" id="strategy">
-                       <div class="position-relative">
-                           <h3 class="mb-3">Strategy</h3>
-                           <p class="mb-5">
-                               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                               non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                           </p>
-                           <ul class="list-unstyled mb-0">
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Digital & communication strategy
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Customer journeys
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Internal communication strategy
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Brand story
-                                   </p>
-                               </li>
-                           </ul>
-                       </div>
-                   </div>
-                   <div class="tab-pane fade" id="design">
-                       <div class="position-relative">
-                           <h3 class="mb-3">Design</h3>
-                           <p class="mb-5">
-                               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                               consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                               cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                               non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                           </p>
-                           <ul class="list-unstyled mb-0">
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       UX Design
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Keynote design
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Corporate Design
-                                   </p>
-                               </li>
-                               <li class="d-flex py-2 align-items-center">
-                                   <div class="me-3">
-                                       <i class="bx bx-check fs-4 text-body-secondary"></i>
-                                   </div>
-                                   <p class="mb-0">
-                                       Logo design & illustrations
-                                   </p>
-                               </li>
-                           </ul>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
+<section class="position-relative bg-primary text-white overflow-hidden">
+    <!--begin: Divider shape-->
+    <svg class="position-absolute start-0 top-0" style="color: var(--bs-body-bg);" width="100%" height="48"
+        preserveAspectRatio="none" viewBox="0 0 1284 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M0 0L31.03 14.5833C60.99 29.1667 121.98 58.3333 182.97 62.5C245.03 66.6667 306.02 45.8333 367.01 35.4167C428 25 488.99 25 549.98 37.5C610.97 50 673.03 75 734.02 70.8333C795.01 66.6667 856 33.3333 916.99 31.25C977.98 29.1667 1038.97 58.3333 1101.03 75C1162.02 91.6667 1223.01 95.8333 1252.97 97.9167L1284 100V0H1252.97C1223.01 0 1162.02 0 1101.03 0C1038.97 0 977.98 0 916.99 0C856 0 795.01 0 734.02 0C673.03 0 610.97 0 549.98 0C488.99 0 428 0 367.01 0C306.02 0 245.03 0 182.97 0C121.98 0 60.99 0 31.03 0H0Z"
+            fill="currentColor"></path>
+    </svg>
+    <!--end: Divider shape-->
+
+    <div class="container py-9 py-lg-11 position-relative">
+        <div class="row pt-7">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <!--Subtitle-->
+                <h6 class="mb-3 text-body-white">Hiburan</h6>
+
+                <!--title-->
+                <h2 class="display-4 mb-0" data-aos="fade-left" data-aos-duration="400">
+                    Event saat ini.
+                </h2>
+            </div>
+            <div class="col-8" data-aos="fade-right">
+                <div class="position-relative d-flex justify-content-md-end align-items-center mb-3">
+                    <!--Buttons navigation-->
+                    <div
+                        class="swiper3-button-prev start-0 swiper-button-prev mt-0 position-relative rounded-pill width-5x height-5x border border-primary text-primary bg-white me-2">
+                    </div>
+                    <div
+                        class="swiper3-button-next swiper-button-next mt-0 position-relative end-0 rounded-pill width-5x height-5x border border-primary text-primary bg-white">
+                    </div>
+                </div>
+                <!--Testimonial card-->
+                <div class="swiper-container event-saat-ini overflow-hidden">
+                    <div class="swiper-wrapper">
+                        @forelse($events as $event)
+                        <div class="swiper-slide">
+
+                            <!--Article-->
+                            <article class="card-hover position-relative d-flex justify-content-end">
+                                <div class="d-block rounded-5 overflow-hidden">
+                                    <img src="{{ asset($event->files->first()->file_path) }}" alt=""
+                                        class="img-fluid position-relative" style="height: 300px; object-fit: cover;">
+                                </div>
+                                <div class="d-block p-4">
+                                    <div class="link-multiline fs-4 lh-sm fw-semibold">
+                                        {{ $event->title }}
+                                    </div>
+                                </div>
+                                <a href="{{ route('home.events.show', $event) }}" class="stretched-link"></a>
+                            </article>
+                        </div>
+                        @empty
+                            <h4>Tidak ada event yang berlangsung</h4>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

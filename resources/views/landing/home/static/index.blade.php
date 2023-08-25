@@ -5,6 +5,48 @@
    <div class="position-fixed start-0 top-0 bottom-0 end-0 z-fixed pe-none w-100 h-100 start-0 top-0"
    id="particles-js"></div>
 @endpush
+@push('scripts')
+   <script>
+      //Classic
+      var swiperClassic = new Swiper(".swiper-classic", {
+         effect: "fade",
+         slidesPerView: 1,
+         spaceBetween: 0,
+         loop: true,
+         autoplay: {
+            delay: 2500
+         },
+         pagination: {
+            el: ".swiperClassic-pagination",
+            clickable: true
+         },
+         navigation: {
+            nextEl: ".swiperClassic-button-next",
+            prevEl: ".swiperClassic-button-prev"
+         }
+      });
+   </script>
+   <script>
+      Splitting();
+      //Splitting text
+
+      //Swiper Slider
+      var swiper3 = new Swiper(".event-saat-ini", {
+         autoHeight: true,
+         spaceBetween: 16,
+         slidesPerView: 1,
+         spaceBetween: 16,
+         pagination: {
+            el: ".swiper3-pagination",
+            clickable: true
+         },
+         navigation: {
+            nextEl: ".swiper3-button-next",
+            prevEl: ".swiper3-button-prev"
+         }
+      });
+   </script>
+@endpush
 @section('hero')
    @include('landing.layouts.partials.hero-agency')
 @endsection
@@ -22,7 +64,7 @@
    <!--/end: Services section-->
 
    <!--begin: quote parallax section-->
-   @include('landing.layouts.partials.quote')
+   {{-- @include('landing.layouts.partials.quote') --}}
    <!--/end: quote parallax section-->
 
    <!--begin: Testimonials section-->
@@ -152,6 +194,5 @@
         },
         "retina_detect": true
     });
-
 </script>
 @endpush

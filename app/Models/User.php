@@ -56,10 +56,10 @@ class User extends Authenticatable
         return $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
     }
 
-    public function scopeGlobalSearch($query, $search)  
+    public function scopeGlobalSearch($query, $search)
     {
         $search = strtolower($search);
-        
+
         return $query->whereRaw("LOWER(name) LIKE '%{$search}%' OR 
                                 LOWER(email) LIKE '%{$search}%' OR
                                 LOWER(username) LIKE '%{$search}%' OR 
@@ -72,27 +72,27 @@ class User extends Authenticatable
     }
 
 
-    public function posts() 
+    public function posts()
     {
         return $this->hasMany(Post::class);
     }
-    
-    public function events() 
+
+    public function events()
     {
         return $this->hasMany(Event::class);
     }
-    
-    public function news() 
+
+    public function news()
     {
         return $this->hasMany(News::class);
     }
-    
-    public function ebooks() 
+
+    public function ebooks()
     {
         return $this->hasMany(Ebook::class);
     }
-    
-    public function event_logs() 
+
+    public function event_logs()
     {
         return $this->hasMany(EventLog::class);
     }
@@ -106,9 +106,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(LoginInfo::class);
     }
-    
+
     public function social_media()
     {
         return $this->hasMany(UserSocialMedia::class);
+    }
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'post_likes');
     }
 }

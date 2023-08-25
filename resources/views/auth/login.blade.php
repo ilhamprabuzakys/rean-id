@@ -16,5 +16,14 @@ data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark
       <span>Buat akun dulu</span>
    </a>
 </p>
-@include('auth.partials.3rd')
+<div class="divider my-4">
+   <div class="divider-text">atau</div>
+</div>
+
+<div class="d-flex justify-content-center gap-2">
+   <a href="{{ route('google.login') }}" class="bg-danger rounded btn text-white btn-text-google-plus">
+      <i class="tf-icons mdi mdi-24px mdi-google me-2"></i>
+      <span class="">Sign in with Google</span>
+   </a>
+</div>
 @endsection

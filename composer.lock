@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf581c50102f0cbdf4d28ca1f36a7b0f",
+    "content-hash": "453953acfb9bcad665028ab5d27f859f",
     "packages": [
         {
             "name": "algolia/algoliasearch-client-php",
@@ -63,16 +63,16 @@
         },
         {
             "name": "asantibanez/livewire-charts",
-            "version": "dev-master",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ricklambrechts/livewire-charts.git",
-                "reference": "badbd7d8729f8e30cf512f0ca62b14ddcc7c5fcd"
+                "url": "https://github.com/asantibanez/livewire-charts.git",
+                "reference": "802416ee7ad27337098c4af7df25be79a14e6619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ricklambrechts/livewire-charts/zipball/badbd7d8729f8e30cf512f0ca62b14ddcc7c5fcd",
-                "reference": "badbd7d8729f8e30cf512f0ca62b14ddcc7c5fcd",
+                "url": "https://api.github.com/repos/asantibanez/livewire-charts/zipball/802416ee7ad27337098c4af7df25be79a14e6619",
+                "reference": "802416ee7ad27337098c4af7df25be79a14e6619",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,6 @@
                 "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
                 "phpunit/phpunit": "^8.0|^9.5.10"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -101,19 +100,7 @@
                     "Asantibanez\\LivewireCharts\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Asantibanez\\LivewireCharts\\Tests\\": "tests"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "vendor/bin/phpunit"
-                ],
-                "test-coverage": [
-                    "vendor/bin/phpunit --coverage-html coverage"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -131,9 +118,10 @@
                 "livewire-charts"
             ],
             "support": {
-                "source": "https://github.com/ricklambrechts/livewire-charts/tree/master"
+                "issues": "https://github.com/asantibanez/livewire-charts/issues",
+                "source": "https://github.com/asantibanez/livewire-charts/tree/v3.0.0"
             },
-            "time": "2023-07-25T22:22:42+00:00"
+            "time": "2023-07-25T22:14:18+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -12072,7 +12060,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "asantibanez/livewire-charts": 20,
         "livewire/livewire": 10
     },
     "prefer-stable": true,

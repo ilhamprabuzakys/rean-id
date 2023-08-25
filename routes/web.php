@@ -5,6 +5,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingController;
@@ -74,35 +75,20 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-// Route::controller(HomeController::class)->group(function () {
-//     Route::get('/', 'index')->name('index');
-//     Route::get('/all-post', 'all_post')->name('home.all_post');
-//     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
-//     Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
-//     Route::get('/cns-radio', 'cns_radio')->name('home.cns');
-//     Route::get('/contact-us', 'contact')->name('home.contact');
-//     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
-//     Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
-// });
-
-Route::controller(LandingController::class)->group(function () {
+Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/all-post', 'all_post')->name('home.all_post');
     Route::get('/semua-postingan', 'semua_postingan')->name('home.semua_postingan');
+    Route::get('/events/{event}', 'event_detail')->name('home.events.show');
+    Route::get('/events', 'event')->name('home.events.index');
     Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
     Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
     Route::get('/cns-radio', 'cns_radio')->name('home.cns');
     Route::get('/contact-us', 'contact')->name('home.contact');
     Route::post('/contact-us', 'contact_send')->name('home.contact_send');
-    Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
-    // Route::prefix('home')->group(function() {
-        // });
-    Route::get('/events', 'event')->name('home.events.index');
-    // Route::get('/events/{event}', 'event_detail')->name('home.events.show');
-    Route::get('/events-show', 'event_detail')->name('home.events.show');
     Route::get('/ebooks', 'ebook')->name('home.ebooks.index');
-    Route::get('/ebooks-show', 'ebook_detail')->name('home.ebooks.show');
-    // Route::get('/ebooks/{ebook}', 'ebook_detail')->name('home.ebooks.show');
+    Route::get('/ebooks/{ebook}', 'ebook_detail')->name('home.ebooks.show');
+    Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
 });
 
 Route::controller(TableController::class)->group(function () {

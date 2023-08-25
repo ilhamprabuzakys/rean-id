@@ -5,7 +5,7 @@
             <div class="card-header flex-column flex-md-row">
 
                <div class="row mb-3 justify-content-start">
-                  <div class="col-lg-3">
+                  <div class="col-lg-3 col-sm-3">
                      <label for="filter-category" class="form-label">Kategori {{ $filter_category }}</label>
                      <select class="form-select form-select-md" id="filter-category" 
                      wire:model.live='filter_category'>
@@ -15,7 +15,7 @@
                         @endforeach
                      </select>
                   </div>
-                  <div class="col-lg-3">
+                  <div class="col-lg-3 col-sm-2">
                      <label for="filter-status" class="form-label">Status</label>
                      <select class="form-select form-select-md" name="status" id="filter-status" wire:model.live='filter_status'>
                         <option selected value="">Semua</option>
@@ -24,7 +24,7 @@
                         @endforeach
                      </select>
                   </div>
-                  <div class="col-lg-6 d-flex align-items-end align-self-end justify-content-end gap-3">
+                  <div class="col-lg-6 col-sm-7 d-flex align-items-end align-self-end justify-content-end gap-3">
                      <div><a class="btn btn-danger" href="#" wire:click='$dispatch("reset-filter")'>
                         <span><i class="fas fa-refresh"></i>
                            <span class="d-none d-sm-inline-block">Reset Filter</span></span>
@@ -44,10 +44,10 @@
                         <option value="15">15</option>
                      </select>
                   </div>
-                  <div class="col-3 d-flex justify-content-start">
+                  <div class="col-3 col-sm-4 d-flex justify-content-start">
                      <input type="text" name="search" id="search" wire:model.live="search" class="form-control" placeholder="Ketik sesuatu..">
                   </div>
-                  <div class="col-3 d-flex justify-content-start">
+                  <div class="col-3 col-sm-3 d-flex justify-content-start">
                      <select class="form-select form-select-md" name="filter_popularity" id="filter_popularity" wire:model.live='filter_popularity'>
                         <option selected value="">Pilih rentang views</option>
                         <option value="1-20">1 - 20</option>
@@ -56,7 +56,7 @@
                         <option value="100+">100 - keatas</option>
                      </select>
                   </div>
-                  <div class="col-5 d-flex justify-content-start">
+                  <div class="col-5 col-sm-3 d-flex justify-content-start">
                      <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
                   </div>
                   {{-- <div class="col-4 d-flex justify-content-start">

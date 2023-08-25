@@ -17,7 +17,7 @@
            <div class="col-xl-4 col-lg-3">
                <div class="d-flex align-items-center">
                    <!--Video button-->
-               <a href="https://vimeo.com/353105087" data-glightbox data-gallery="03"
+               <a href="{{ asset('https://vimeo.com/353105087') }}" data-glightbox data-gallery="03"
                class="btn btn-primary ms-lg-auto me-3 btn-circle-ripple width-8x height-8x rounded-circle d-flex justify-content-center align-items-center">
                <i class="bx bx-play fs-1"></i>
            </a>
@@ -30,7 +30,7 @@
                data-aos-duration="400">
                <!--:Icon:-->
               <div class="width-5x height-5x mb-5 flex-center">
-               <img data-inject-svg src="assets/img/graphics/icons/hand-shake.svg"
+               <img data-inject-svg src="{{ asset('assets/landing/assan/assets/img/graphics/icons/hand-shake.svg') }}"
                class="w-100 h-100 fill-primary" alt="">
               </div>
                <h5 class="mb-3">Relationships</h5>
@@ -43,7 +43,7 @@
                data-aos-duration="400">
               <!--:Icon:-->
               <div class="width-5x height-5x mb-5 flex-center">
-               <img data-inject-svg src="assets/img/graphics/icons/target.svg"
+               <img data-inject-svg src="{{ asset('assets/landing/assan/assets/img/graphics/icons/target.svg') }}"
                class="w-100 h-100 fill-warning" alt="">
               </div>
                <h5 class="mb-3">Mission & vision</h5>
@@ -55,7 +55,7 @@
            <div class="col-md-4" data-aos="fade-right" data-aos-delay="200" data-aos-duration="400">
                <!--:Icon:-->
               <div class="width-5x height-5x mb-5 flex-center">
-               <img data-inject-svg src="assets/img/graphics/icons/magic-wand.svg"
+               <img data-inject-svg src="{{ asset('assets/landing/assan/assets/img/graphics/icons/magic-wand.svg') }}"
                class="w-100 h-100 fill-info" alt="">
               </div>
                <h5 class="mb-3">Best results</h5>

@@ -8,21 +8,6 @@ use Livewire\Component;
 
 class HeaderUserDropdown extends Component
 {
-   /*  public $user;
-
-    public function loadUser()
-    {
-        $this->dispatch('refresh-me');
-        // dd('helo');
-        // $this->user = auth()->user()->fresh();  // Muat ulang data pengguna dari database
-        $this->user = \App\Models\User::find(auth()->id());
-    }
-
-    public function mount()
-    {
-        $this->loadUser();
-    } */
-
     #[On('user-updated')]
     public function render()
     {

@@ -1,4 +1,3 @@
-
 <div class="divider my-4">
    <div class="divider-text">atau</div>
 </div>

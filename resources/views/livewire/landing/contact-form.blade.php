@@ -22,7 +22,7 @@
         </button>
     </div>
     @endif
-    <form wire:submit.prevent='store'>
+    <form wire:submit.prevent='store' id="form">
         <div class="row">
            <div class="col-sm-6 mb-3">
               <label class="form-label" for="name">Nama anda</label>

@@ -99,13 +99,21 @@
 
    Livewire.on('alert', data => {
       toastr.options = {
-         "closeButton": true,
-         "progressBar": true,
-         "debug": true,
+         "closeButton": false,
+         "progressBar": false,
+         "debug": false,
          "newest": true,
          "preventDuplicates": true,
-         "positionClass": "toast-top-center"
+         "positionClass": "toast-top-center",
+         "timeOut": 2000,
       };
+
+      // "showMethod": 'bounceIn',
+      // "hideMethod": 'bounceOut',
+      // "closeMethod": 'bounceOut',
+      // "showEasing": 'swing',
+      // "hideEasing": 'linear',
+      // "closeEasing": 'linear',
 
       toastr[data[0].type](data[0].message, data[0].title ?? '');
    });
