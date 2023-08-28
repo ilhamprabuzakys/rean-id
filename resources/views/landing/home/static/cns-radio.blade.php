@@ -158,7 +158,7 @@
             <div class="col-lg-10">
                <ol class="breadcrumb mb-3">
                   <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">CNS Radio</li>
+                  <li class="breadcrumb-item active fw-bold" aria-current="page">CNS Radio</li>
                </ol>
                <!--:Heading:-->
                <h1 class="display-1 mb-4">CNS Radio</h1>

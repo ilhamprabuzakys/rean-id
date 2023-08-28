@@ -16,10 +16,10 @@
                      </h2>
                      <div class="d-flex pt-2 mb-0 small align-items-center">
                         @if ($post->user->avatar == null)
-                        <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt=""
+                        <img style="object-fit: cover;" src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt=""
                            class="width-3x height-3x rounded-circle me-2">
                         @else
-                        <img src="{{ asset($post->user->avatar) }}" alt=""
+                        <img style="object-fit: cover;" src="{{ asset($post->user->avatar) }}" alt=""
                            class="width-3x height-3x rounded-circle me-2">
                         @endif
                         <span class="text-body-secondary d-inline-block">By <a href="blog-article-basic.html#!"
@@ -40,10 +40,10 @@
          <div class="post-detail-img-container container">
             @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION),
             ['jpeg', 'jpg', 'png']))
-            <img src="{{ asset($post->files->first()->file_path) }}" alt=""
+            <img style="object-fit: cover;" src="{{ asset($post->files->first()->file_path) }}" alt=""
                class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
             @else
-            <img src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}" alt=""
+            <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}" alt=""
                class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
             @endif
          </div>
@@ -52,25 +52,21 @@
             <div class="col-xl-9 mx-auto">
                <article class="article mb-9">
                   @if($media_post != null)
-                  @foreach($media_post as $post)
-                  @foreach($post->files as $file)
-                  @if(Str::endsWith($file->file_path, '.mp3'))
-                  <div>
-                     <audio controls>
-                        <source src="{{ asset($file->file_path) }}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                     </audio>
-                  </div>
-                  @elseif(Str::endsWith($file->file_path, '.mp4'))
-                  <div>
-                     <video controls width="320" height="240">
-                        <source src="{{ asset($file->file_path) }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                     </video>
-                  </div>
-                  @endif
-                  @endforeach
-                  @endforeach
+                     @if(Str::endsWith($media_post->file_path, '.mp3'))
+                     <div>
+                        <audio controls>
+                           <source src="{{ asset($media_post->file_path) }}" type="audio/mpeg">
+                           Your browser does not support the audio element.
+                        </audio>
+                     </div>
+                     @elseif(Str::endsWith($media_post->file_path, '.mp4'))
+                     <div>
+                        <video controls width="320" height="240">
+                           <source src="{{ asset($media_post->file_path) }}" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     @endif
                   @endif
 
                   {!! $post->body !!}
@@ -83,22 +79,22 @@
                   </div>
                   <div>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img src="https://uigator.com/assan/5.1/public/assets/img/brands/facebook.svg" alt=""
+                        <img style="object-fit: cover;" src="https://uigator.com/assan/5.1/public/assets/img/brands/facebook.svg" alt=""
                            class="width-2x height-2x hover-lift">
                      </a>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img src="https://uigator.com/assan/5.1/public/assets/img/brands/twitter.svg" alt=""
+                        <img style="object-fit: cover;" src="https://uigator.com/assan/5.1/public/assets/img/brands/twitter.svg" alt=""
                            class="width-2x height-2x hover-lift">
                      </a>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img src="assets/img/brands/Linkedin.svg" alt="" class="width-2x height-2x hover-lift">
+                        <img style="object-fit: cover;" src="assets/img/brands/Linkedin.svg" alt="" class="width-2x height-2x hover-lift">
                      </a>
                   </div>
                </div> --}}
 
                <div class="mt-5">
                   @forelse ($post->tags as $tag)
-                  <a class="btn btn-sm btn-soft-secondary mb-1" href="#">#{{ $tag->name }}</a>
+                  <a class="btn btn-sm btn-soft-secondary mb-1" href="{{ route('home.tag_view', $tag) }}">#{{ $tag->name }}</a>
                   @empty
                   @endforelse
                </div>
@@ -136,8 +132,8 @@
                         </svg>
                      </a>
                   </li>
-                  <li class="list-inline-item align-middle float-end">
-                     <span class="ms-1">{{ $post->likes->count() }}</span>
+                  <li class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
+                     <span class="ms-1 me-1">Like: {{ $post->likes->count() }}</span>
                      <button href="#" wire:click='likeThis()' class="border-0 bg-transparent">
                         <i class="bx {{ $post->likes->contains(auth()->user()) ? 'bxs-heart' : 'bx-heart' }}  text-danger"
                            style="font-size: 22px"></i>
@@ -150,7 +146,7 @@
                <ul class="list-unstyled mb-7">
                   <li class="d-flex mb-3">
                      <div class="me-3">
-                        <img src="assets/img/avatar/1.jpg" alt="" class="width-5x height-5x rounded-circle">
+                        <img style="object-fit: cover;" src="assets/img/avatar/1.jpg" alt="" class="width-5x height-5x rounded-circle">
                      </div>
                      <div class="px-3 py-4 border rounded border-end">
                         <div class="d-flex mb-3 justify-content-between">
@@ -172,7 +168,7 @@
                   <!--media-->
                   <li class="d-flex mb-3">
                      <div class="me-3">
-                        <img src="assets/img/avatar/3.jpg" alt="" class="width-5x height-5x rounded-circle">
+                        <img style="object-fit: cover;" src="assets/img/avatar/3.jpg" alt="" class="width-5x height-5x rounded-circle">
                      </div>
                      <div class="px-3 py-4 border rounded border-end">
                         <div class="d-flex mb-3 justify-content-between">
@@ -287,5 +283,11 @@
             @endforelse
          </div>
       </div>
+      <script>
+         window.addEventListener('notAuthenticatedLikeEvent', function(e) {
+            return alert('Untuk memberikan like pada postingan anda harus login terlebih dahulu!');
+         });
+      </script>
    </section>
+
 </div>

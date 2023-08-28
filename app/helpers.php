@@ -53,10 +53,10 @@ function getErrorsString($e)
     else {
         return 'Terjadi kesalahan yang tidak dikenal.';
     }
-    $errorString = '<br>';
+    $errorString = '<br><br>';
     foreach ($errors as $field => $errorList) {
         foreach ($errorList as $error) {
-            $errorString .= "<span class='text-danger'>" . $error . "</span><br>";
+            $errorString .= "<span class='text-danger text-start'>" . $error . "</span><br>";
         }
     }
     return $errorString;
@@ -95,17 +95,25 @@ function getPublicIP()
     return $response->body();
 }
 
+function saveUserLogoutInfo()
+{
+    User::find(auth()->user()->id)->update([
+        'status' => 'offline',
+        'last_activity_at' => now(),
+    ]);
+}
+
 function saveUserLoginInfo()
 {
-    $now = Carbon::now()->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss');
     $ip = \getPublicIP();
+    // $ip = request()->ip();
     $location = Location::get($ip);
     $agent = new Agent();
     $device = $agent->isDesktop() ? 'Desktop' : ($agent->isMobile() ? 'Mobile' : 'WebKit');
 
     User::find(auth()->user()->id)->update([
         'status' => 'online',
-        'last_login_at' => $now,
+        'last_login_at' => now(),
         'last_login_ip' => $ip
     ]);
 
@@ -125,4 +133,14 @@ function saveUserLoginInfo()
         'latitude' => $location->latitude,
         'longitude' => $location->longitude,
     ]);
+}
+
+function formatTanggalIndonesia($tanggal) {
+    $hari = array("Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu");
+    $bulan = array("", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+
+    $namaHari = $hari[date('w', strtotime($tanggal))];
+    $namaBulan = $bulan[date('n', strtotime($tanggal))];
+
+    return $namaHari . ", " . date('d', strtotime($tanggal)) . " " . $namaBulan . " " . date('Y', strtotime($tanggal));
 }

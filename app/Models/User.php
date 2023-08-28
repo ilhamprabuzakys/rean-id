@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +41,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        if ($eventName == 'deleted') {
+            $activity->properties = $this->attributes;
+        }
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('User')
+            ->logFillable('*')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $aksi = '';
+                switch ($eventName) {
+                    case 'created':
+                        $aksi = 'ditambahkan';
+                        break;
+                    case 'updated':
+                        $aksi = 'diperbarui';
+                        break;
+                    case 'deleted':
+                        $aksi = 'dihapus';
+                        break;
+                }
+                return "Data User telah {$aksi}";
+            });
+    }
 
     public function scopeCountUser($query, $role = null)
     {

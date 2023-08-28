@@ -7,12 +7,45 @@ use App\Events\TagActionEvent;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 
 class Tag extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory, Sluggable, LogsActivity;
+    
     protected $guarded = ['id'];
     protected $table = 'tags';
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        if ($eventName == 'deleted') {
+            $activity->properties = $this->attributes;
+        }
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Label')
+            ->logFillable('*')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $aksi = '';
+                switch ($eventName) {
+                    case 'created':
+                        $aksi = 'dibuat';
+                        break;
+                    case 'updated':
+                        $aksi = 'diperbarui';
+                        break;
+                    case 'deleted':
+                        $aksi = 'dihapus';
+                        break;
+                }
+                return "Data Label telah {$aksi}";
+            });
+    }
 
     public function getRouteKeyName()
     {
@@ -26,32 +59,6 @@ class Tag extends Model
                 'source' => 'name'
             ]
         ];
-    }
-
-    public static function clearCache()
-    {
-        cache()->forget('tags');
-        cache()->forget('tagsCount');
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::created(function (Tag $tag) {
-            event(new LogEventAction('created', $tag));
-            event(new TagActionEvent($tag));
-        });
-
-        static::updated(function (Tag $tag) {
-            event(new LogEventAction('updated', $tag));
-            event(new TagActionEvent($tag));
-        });
-
-        static::deleted(function (Tag $tag) {
-            event(new LogEventAction('deleted', $tag));
-            event(new TagActionEvent($tag));
-        });
     }
 
     public function posts()

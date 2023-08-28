@@ -45,9 +45,9 @@
                            <a href="blog-sidebar.html#!"
                               class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
                               @if ($post->file_path !== null && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
-                                 <img src="{{ asset('storage/' . $post->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
+                                 <img style="object-fit: cover;" src="{{ asset('storage/' . $post->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
                               @else
-                                 <img src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
+                                 <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
                               @endif
                            </a>
                         </div>
@@ -68,10 +68,10 @@
                            <div class="mt-auto mb-1 row">
                               <div class="col-9 d-flex">
                                  @if ($post->user->avatar == null)
-                                    <img class="me-3 avatar d-flex align-self-center sm rounded-circle" src="{{ asset('assets/img/avatar/avatar-' . rand(1, 5) . '.png') }}" alt=""
+                                    <img style="object-fit: cover;" class="me-3 avatar d-flex align-self-center sm rounded-circle" src="{{ asset('assets/img/avatar/avatar-' . rand(1, 5) . '.png') }}" alt=""
                                        height="36">
                                  @else
-                                    <img class="me-3 avatar d-flex align-self-center sm rounded-circle" src="{{ asset($post->user->avatar) }}" alt="" height="36">
+                                    <img style="object-fit: cover;" class="me-3 avatar d-flex align-self-center sm rounded-circle" src="{{ asset($post->user->avatar) }}" alt="" height="36">
                                  @endif
                                  <div class="flex-grow-1">
                                     <span class="m-0 fs-13"><a href="#">{{ $post->user->name }}</a></span>
@@ -81,7 +81,7 @@
                               <div class="col-3 d-flex justify-content-end">
                                  @forelse ($post->tags as $tag)
                                     @if($loop->iteration > 2) @break @endif
-                                    <div class="me-1"><a href="#" class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a></div>
+                                    <div class="me-1"><a href="{{ route('home.tag_view', $tag) }}" class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a></div>
                                  @empty
                                  @endforelse
                               </div>

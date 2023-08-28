@@ -7,8 +7,8 @@
       <div class="row pb-7 pt-lg-9 align-items-center">
          <div class="col-12 col-lg-7 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
-               <li class="breadcrumb-item"><a href="blog-sidebar.html#">Home</a></li>
-               <li class="breadcrumb-item active" aria-current="page">{{ __('Daftar Postingan') }}</li>
+               <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+               <li class="breadcrumb-item active fw-bold" aria-current="page">{{ __('Daftar Postingan') }}</li>
             </ol>
             <h2 class="display-2 mb-4">
                {{ __('Daftar Postingan') }}

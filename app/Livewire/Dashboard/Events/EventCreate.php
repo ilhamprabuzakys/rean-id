@@ -59,12 +59,52 @@ class EventCreate extends Component
         return view('livewire.dashboard.events.event-create');
     }
 
+    #[On('checkLocation')]
+    public function checkLocation()
+    {
+        if ($this->latitude == null && $this->longitude == null) {
+            $this->addError('location', 'Tolong tentukan lokasi dari event melalui tombol Pilih lokasi!');
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+            ]);
+            return;
+        } else {
+            $this->dispatch('alert', [
+                'type' => 'success',
+                'title' => 'Lokasi berhasil disimpan',
+                'text' => 'Pemilihan lokasi berhasil.',
+            ]);
+        }
+    }
+
     public function store()
     {
         // dd($this->all());
         try {
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
+
+            if ($this->latitude == null && $this->longitude == null) {
+                $this->addError('location', 'Tolong tentukan lokasi dari event melalui tombol Pilih lokasi!');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
+
+            if ($this->files == null) {
+                $this->addError('files', 'Tolong sertakan minimal satu foto cover untuk Event!');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
 
             $this->validate($this->rules(), $this->message);
 
@@ -88,7 +128,7 @@ class EventCreate extends Component
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada input Anda <br>' . $e->validator->errors(),
+                'text' => 'Ada beberapa kesalahan pada input Anda:' . \getErrorsString($e),
             ]);
 
             // Mengirim error bag ke komponen Livewire
@@ -194,6 +234,15 @@ class EventCreate extends Component
 
     public function closeModal()
     {
+        if ($this->latitude == null && $this->longitude == null) {
+            $this->addError('location', 'Tolong tentukan lokasi dari event melalui tombol Pilih lokasi!');
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+            ]);
+            return;
+        }
         $this->dispatch('close-modal');
     }
 }

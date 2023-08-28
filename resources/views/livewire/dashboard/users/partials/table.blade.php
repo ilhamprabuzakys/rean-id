@@ -1,5 +1,5 @@
 <div class="table-responsive">
-   <table class="dt-complex-header table table-bordered" id="users-table">
+   <table class="dt-complex-header table table-sm table-bordered" id="users-table">
 
       <thead class="table-light">
          <tr>
@@ -9,8 +9,14 @@
             </th>
             <th>Nama</th>
             <th>Email</th>
+            <th>Status Email</th>
             <th>Role</th>
-            <th>Dibuat</th>
+            <th class="text-center">Status Akun</th>
+            <th class="text-center">
+               <i class="fas fa-lg fa-edit"></i>
+            </th>
+            <th class="text-center">Status</th>
+            <th>Bergabung pada</th>
             <th class="text-center">
                <i class="fas fa-edit fa-lg"></i>
             </th>
@@ -30,15 +36,60 @@
                   class="w-px-40 h-px-40 rounded-circle img-profile-header" style="object-fit: cover">
             </td>
             <td>
-               {{ $user->name }} <span class="text-primary">{{ $user->id == auth()->user()->id ? ' (Anda)' : '' }}</span>
+               {{ $user->name }} <span class="text-primary">{{ $user->id == auth()->user()->id ? ' (Anda)' : ''
+                  }}</span>
             </td>
             <td>{{ $user->email }}</td>
+            <td class="text-center">
+               @if($user->email_verified_at == null)
+               <span class="text-danger"><i class="fas fa-xmark"></i></span>
+               @else
+               <span class="text-success"><i class="fas fa-check"></i></span>
+               @endif
+            </td>
             <td>
                @php
                $role = ucfirst($user->role);
                $role = $role != 'Superadmin' ? $role : 'Super Admin'
                @endphp
                {{ $role }}
+            </td>
+            <td class="text-center">
+               @if ($user->active == TRUE)
+               <span class="text-success"><i class="fas fa-check"></i></span>
+               @else
+               <span class="text-danger"><i class="fas fa-xmark"></i></span>
+               @endif
+            </td>
+            <td class="text-center">
+               <div class="dropdown">
+                  <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button"
+                     data-bs-toggle="dropdown" aria-haspopup="true">
+                     <i class="fas fa-lg fa-ellipsis"></i>
+                  </a>
+                  @if($user->role != 'superadmin')
+                  <div class="dropdown-menu dropdown-menu-end">
+                        @if ($user->active == TRUE)
+                        <a class="dropdown-item text-decoration-none" href="javascript:void(0)"
+                           wire:click.prevent='deactivate({{ $user->id }})'>
+                           <span class="text-danger"><i class="fas fa-md fa-xmark me-3"></i>Nonaktifkan</span>
+                        </a>
+                        @else
+                        <a class="dropdown-item text-decoration-none" href="javascript:void(0)"
+                           wire:click.prevent='activate({{ $user->id }})'>
+                           <span class="text-success"><i class="fas fa-md fa-check me-3"></i>Aktifkan</span>
+                        </a>
+                        @endif
+                     </div>
+                     @endif
+               </div>
+            </td>
+            <td class="text-center">
+               @if ($user->status == 'online')
+               <span class="badge badge-dot bg-success me-1"></span> Online
+               @else
+               <span class="badge badge-dot bg-danger me-1"></span> Offline
+               @endif
             </td>
             <td>{{ echoTime($user->created_at) }}</td>
             <td class="text-center">
@@ -50,8 +101,8 @@
 
                   <div class="dropdown-menu dropdown-menu-end">
                      <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal"
-                     data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $user->id }})">
-                     Lihat postingan {{ $user->id == auth()->user()->id ? 'saya' : 'terkait' }}
+                        data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $user->id }})">
+                        Lihat postingan {{ $user->id == auth()->user()->id ? 'saya' : 'terkait' }}
                      </a>
                      @if ($user->id != auth()->user()->id)
                      <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="modal"

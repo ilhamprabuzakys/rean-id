@@ -2597,6 +2597,9 @@ fieldset:disabled .btn {
         transition: none;
     }
 }
+.table tr>td .dropdown {
+    position: static;
+}
 .dropup,
 .dropend,
 .dropdown,
@@ -6249,11 +6252,11 @@ input:-internal-autofill-selected {
     color: #6d788d !important;
 }
 .bg-label-success {
-    background-color: #eafbdf !important;
-    color: #55cc80 !important;
+    background-color: #b9ffcb !important;
+    color: #20a342 !important;
 }
 .bg-label-info {
-    background-color: #def6fe !important;
+    background-color: #d0f3ff !important;
     color: #26c6f9 !important;
 }
 .bg-label-warning {
@@ -6261,7 +6264,7 @@ input:-internal-autofill-selected {
     color: #fdb528 !important;
 }
 .bg-label-danger {
-    background-color: #ffe4e4 !important;
+    background-color: #ffc9c9 !important;
     color: #ff4d49 !important;
 }
 .bg-label-light {

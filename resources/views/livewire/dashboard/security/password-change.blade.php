@@ -2,9 +2,7 @@
    <div class="card mb-4">
       <h5 class="card-header">
          Ganti Password
-         <div class="text-muted small mt-2 mb-0">
-            <small>Lupa password anda? klik link berikut untuk reset password, <a href="{{ route('password.request') }}" >Klik disini</a>.</small>
-         </div>
+         
          <div class="text-muted small mt-1 mb-0">
             <small>Jika anda mendaftar dengan akun google, maka password anda adalah nama depan email yang anda gunakan saat registrasi/login yakni <strong>{{ explode('@', auth()->user()->email)[0] }}</strong>.</small>
          </div>

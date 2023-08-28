@@ -15,21 +15,12 @@ class UserIndex extends Component
 {
     use WithPagination;
 
-    public $search;
+    public $search, $filter_date;
     public $rolefilter = '';
     public $paginate = 5;
 
     public $name, $email, $password, $role, $user_id, $user, $dataposts;
     
-    protected $updatesQueryString = ['search'];
-    protected $queryString = ['search' => ['except' => '']];
-
-
-    public function mount()
-    {
-        $this->search = request()->query('search');
-    }
-
     public function render()
     {
         $roles = collect([
@@ -38,11 +29,18 @@ class UserIndex extends Component
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
         
-        $query = User::with(['posts'])->latest('created_at')
+        $query = User::with(['posts'])->latest('updated_at')
         ->when($this->search, function ($query) {
             return $query->globalSearch($this->search);
         })->when($this->rolefilter, function($query) {
             return $query->where('role', $this->rolefilter);
+        })->when($this->filter_date, function ($query) {
+            $dateRange = explode(' to ', $this->filter_date);
+            $startDate = $dateRange[0];
+            $endDate = $dateRange[1] ?? $dateRange[0];
+
+            return $query->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
         });
 
         $users = $query->paginate($this->paginate);
@@ -96,7 +94,8 @@ class UserIndex extends Component
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
             'role' => $validatedData['role'],
-            'password' => \bcrypt($validatedData['password']),
+            'password' => $validatedData['password'],
+            'email_verified_at' => \now()
         ]);
         $name = $validatedData['name'];
         $this->resetInput();
@@ -118,7 +117,7 @@ class UserIndex extends Component
             'email' => $validatedData['email'],
             'username' => $validatedData['username'],
             'role' => $validatedData['role'],
-            'password' => \bcrypt($validatedData['password']),
+            'password' => $validatedData['password'],
         ]);
         $this->resetInput();
         $this->dispatch('alert', [
@@ -197,19 +196,26 @@ class UserIndex extends Component
         $this->resetPage();
     }
 
-    public function alertSuccess($message, $title = 'Berhasil')
+    public function activate($id)
     {
-        $this->dispatch('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
+        $user = User::find($id);
+        $user->update(['active' => TRUE]);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Akun User '. $user->name .' berhasil <strong>diaktifkan</strong>',
+            'type' => 'success',
+        ]);
     }
-  
-    public function alertError($message, $title = 'Error')
+    
+    public function deactivate($id)
     {
-        $this->dispatch('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-  
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatch('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
+        $user = User::find($id);
+        $user->update(['active' => FALSE]);
+        $this->dispatch('alert', [
+            'title' => 'Berhasil',
+            'message' => 'Akun User <strong>'. $user->name .'</strong> berhasil <strong>dinonaktifkan</strong>',
+            'type' => 'success',
+        ]);
     }
 
 }

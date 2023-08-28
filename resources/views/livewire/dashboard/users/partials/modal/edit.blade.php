@@ -3,14 +3,14 @@
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-header">
-            <h3 class="modal-title">Edit Data</h3>
+            <h3 class="modal-title">Edit Data User <strong>{{ $name }}</strong></h3>
             <button type="button" wire:click="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <form wire:submit.prevent="update">
             <div class="modal-body">
                <div class="row justify-content-between mb-2">
                   <div class="col-3">
-                     <label for="title" class="form-label">Name <sup class="text-danger">*</sup></label>
+                     <label for="title" class="form-label">Nama <sup class="text-danger">*</sup></label>
                   </div>
                   <div class="col-9">
                      <input type="text"
@@ -47,9 +47,6 @@
                   <div class="col-9">
                      <select class="form-select" name="role" id="role" wire:model.lazy="role">
                         <option selected>Pilih Role</option>
-                        {{-- <option value="superadmin">Super Admin</option>
-                        <option value="admin">Admin</option>
-                        <option value="member">Member</option> --}}
                         @foreach ($roles as $role)
                            <option value="{{ $role->key }}">{{ $role->label }}</option>
                         @endforeach

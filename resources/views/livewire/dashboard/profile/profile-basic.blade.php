@@ -6,15 +6,15 @@
       <!-- Account -->
       <div class="card-body">
          <div class="d-flex align-items-start align-items-sm-center gap-4">
-            @if ($this->avatar)
+            @if ($this->avatar && is_object($this->avatar) && method_exists($this->avatar, 'temporaryUrl'))
             <img src="{{ $this->avatar->temporaryUrl() }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded"
-               id="uploadedAvatar" />
-            @elseif (auth()->user()->avatar)
-            <img src="{{ asset(auth()->user()->avatar) }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded"
-               id="uploadedAvatar" />
+               id="uploadedAvatar" style="object-fit: cover" />
+            @elseif ($user->avatar)
+            <img src="{{ asset($user->avatar) }}" alt="user-avatar" class="d-block w-px-120 h-px-120 rounded"
+               id="uploadedAvatar" style="object-fit: cover" />
             @else
             <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="user-avatar"
-               class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
+               class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" style="object-fit: cover" />
             @endif
             <div class="button-wrapper">
                <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
@@ -22,7 +22,7 @@
                   <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
                   <input type="file" id="upload" wire:model='avatar' class="account-file-input d-none">
                </label>
-               <button type="button" class="btn btn-outline-secondary account-image-reset mb-3" id="img-reset-btn">
+               <button type="button" class="btn btn-outline-secondary account-image-reset mb-3" wire:click='$dispatch("cancelAvatar")' id="img-reset-btn">
                   <i class="mdi mdi-reload d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Urungkan</span>
                </button>

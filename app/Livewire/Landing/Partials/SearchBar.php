@@ -21,10 +21,10 @@ class SearchBar extends Component
         if (strlen($this->search) > 0) {
             // dd($this->search);
             // Query untuk mencari data dari keempat model berdasarkan kata kunci
-            $results['posts'] = Post::where('title', 'like', '%' . $this->search . '%')->get();
-            $results['events'] = Event::where('title', 'like', '%' . $this->search . '%')->get();
-            $results['ebooks'] = Ebook::where('title', 'like', '%' . $this->search . '%')->get();
-            $results['news'] = News::where('title', 'like', '%' . $this->search . '%')->get();
+            $results['posts'] = Post::globalSearch($this->search)->get();
+            $results['events'] = Event::globalSearch($this->search)->get();
+            $results['ebooks'] = Ebook::globalSearch($this->search)->get();
+            $results['news'] = News::globalSearch($this->search)->get();
             // dd($results);
         }
         return view('livewire.landing.partials.search-bar', compact('results'));

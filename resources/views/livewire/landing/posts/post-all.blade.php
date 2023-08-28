@@ -52,12 +52,8 @@
                      <article wire:key="post-{{ $post->id }}" class="card align-items-stretch flex-md-row mb-4 mb-md-7 border-0 no-gutters"
                         data-aos="fade-right" data-aos-once="true">
                         <div class="col-lg-5">
-                              <a href="blog-sidebar.html#!" class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
-                                 @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
-                                    <img src="{{ asset($post->files->first()->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                                 @else
-                                    <img src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                                 @endif
+                              <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post])}}" class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
+                                 <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
                            </a>
                         </div>
                         <div class="card-body d-flex flex-column col-auto p-md-0 ps-md-4">
@@ -92,7 +88,7 @@
                                     @if ($loop->iteration > 2)
                                     @break
                                  @endif
-                                 <div class="me-1"><a href="#" class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a></div>
+                                 <div class="me-1"><a href="{{ route('home.tag_view', $tag) }}"" class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a></div>
                               @empty
                               @endforelse
                            </div>

@@ -17,24 +17,24 @@
                <div class="avatar avatar-sm">
                    @if ($message->user->avatar == null)
                    <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="Avatar"
-                       class="rounded-circle">
+                       class="rounded-circle" style="object-fit: cover">
                    @else
-                   <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="rounded-circle">
+                   <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="rounded-circle" style="object-fit: cover">
                    @endif
                </div>
            </div>
        </div>
    </li>
    @else
-   <li class="chat-message">
+   <li class="chat-message" wire:key='{{ $message->id }}'>
        <div class="d-flex overflow-hidden">
            <div class="user-avatar flex-shrink-0 me-3">
                <div class="avatar avatar-sm">
                    @if ($message->user->avatar == null)
                    <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="Avatar"
-                       class="rounded-circle">
+                       class="rounded-circle" style="object-fit: cover">
                    @else
-                   <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="rounded-circle">
+                   <img src="{{ asset($message->user->avatar) }}" alt="Avatar" class="rounded-circle" style="object-fit: cover">
                    @endif
                </div>
            </div>

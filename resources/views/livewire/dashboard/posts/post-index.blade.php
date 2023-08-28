@@ -24,8 +24,8 @@
                         @endforeach
                      </select>
                   </div>
-                  <div class="col-lg-6 col-sm-7 d-flex align-items-end align-self-end justify-content-end gap-3">
-                     <div><a class="btn btn-danger" href="#" wire:click='$dispatch("reset-filter")'>
+                  <div class="col-lg-4 col-sm-7 d-flex align-items-end align-self-end justify-content-end gap-3">
+                     <div><a class="btn btn-danger" href="javascript:void(0)" wire:click='$dispatch("reset-filter")'>
                         <span><i class="fas fa-refresh"></i>
                            <span class="d-none d-sm-inline-block">Reset Filter</span></span>
                      </a></div>

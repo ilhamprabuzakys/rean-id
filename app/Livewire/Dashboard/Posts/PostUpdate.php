@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard\Posts;
 
 use App\Models\Category;
 use App\Models\FilePost;
+use App\Models\FilePostMedia;
 use App\Models\Post;
 use App\Models\Tag;
 use DOMDocument;
@@ -20,6 +21,7 @@ class PostUpdate extends Component
     use WithFileUploads;
     public $post, $title, $slug, $category_id, $file_path, $body, $status, $user_id;
     public $files = [];
+    public $newTags = [];
     public $tags = [];
     public $existingFiles = [];
     public $filePathOrName = '';
@@ -61,7 +63,7 @@ class PostUpdate extends Component
                     ],
                 ];
             })->toArray();
-            
+
         if (in_array($post->category_id, [3, 6, 7])) {
             $this->existingMediaFile = $post->files
                 ->filter(function ($file) use ($allowedExtensions) {
@@ -138,13 +140,18 @@ class PostUpdate extends Component
             $hasMediaFile = false;
 
             // Cek apakah ada file dengan ekstensi media di $post->files
-            foreach ($this->post->files as $file) {
-                $fileExtension = pathinfo($file->file_path, PATHINFO_EXTENSION);
-                if (in_array($fileExtension, $mediaExtensions)) {
-                    $hasMediaFile = true;
-                    break;
-                }
+            // foreach ($this->post->files as $file) {
+            //     $fileExtension = pathinfo($file->file_path, PATHINFO_EXTENSION);
+            //     if (in_array($fileExtension, $mediaExtensions)) {
+            //         $hasMediaFile = true;
+            //         break;
+            //     }
+            // }
+
+            if ($this->post->media) {
+                $hasMediaFile = true;
             }
+
             // dd(!$hasMediaFile);
             if (in_array($this->category_id, [3, 6, 7]) && !$hasMediaFile) {
                 $rules['file_path'] = 'required|max:20000|mimes:mp3,mp4,mkv';
@@ -152,6 +159,16 @@ class PostUpdate extends Component
                 $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
             }
+            if ($this->post->files->count() < 1 && $this->files == null) {
+                $this->addError('files', 'Cover image harus disertakan.');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
+
 
             $this->validate($rules, $this->messages);
             $this->deleteRemovedImages();
@@ -164,18 +181,27 @@ class PostUpdate extends Component
             // Simpan file media jika ada
             // Jika category_id di luar dari 3, 6, 7
             if (!in_array($this->category_id, [3, 6, 7])) {
-                foreach ($this->post->files as $file) {
-                    $fileExtension = pathinfo($file->file_path, PATHINFO_EXTENSION);
-                    $mediaExtensions = ['mp3', 'mp4', 'mkv']; // contoh ekstensi file media
-
-                    // Jika file adalah file media
-                    if (in_array($fileExtension, $mediaExtensions)) {
-                        // Hapus dari penyimpanan
-                        Storage::delete(str_replace('storage/', '', $file->file_path));
+                if ($this->post->media) {
+                    $media_file = $this->post->media->first();
+                    if ($media_file) {
+                        //  Hapus dari penyimpanan
+                        Storage::delete(str_replace('storage/', '', $media_file->file_path));
                         // Hapus dari database
-                        $file->delete();
+                        $media_file->delete();
                     }
                 }
+                // foreach ($this->post->files as $file) {
+                //     $fileExtension = pathinfo($file->file_path, PATHINFO_EXTENSION);
+                //     $mediaExtensions = ['mp3', 'mp4', 'mkv']; // contoh ekstensi file media
+
+                //     // Jika file adalah file media
+                //     if (in_array($fileExtension, $mediaExtensions)) {
+                //         // Hapus dari penyimpanan
+                //         Storage::delete(str_replace('storage/', '', $file->file_path));
+                //         // Hapus dari database
+                //         $file->delete();
+                //     }
+                // }
             } else {
                 // Logika penyimpanan file media Anda sebelumnya
                 if ($this->file_path !== null) {
@@ -223,9 +249,10 @@ class PostUpdate extends Component
 
             $storedPath = "storage/" . $path;
 
-            FilePost::create([
+            FilePostMedia::create([
                 'file_path' => $storedPath,
-                'post_id' => $post->id
+                'post_id' => $post->id,
+                'file_extension' => $extension
             ]);
         }
     }
@@ -233,6 +260,7 @@ class PostUpdate extends Component
 
     private function storeTags()
     {
+        // dd($this->newTags);
         if ($this->tags) {
             // Ambil input tags dari user
             $inputTags = $this->tags;
@@ -271,7 +299,7 @@ class PostUpdate extends Component
     public function seriouslyMediaRemoveFile()
     {
         // Coba temukan file berdasarkan path di database
-        $file = FilePost::find($this->mediaFileID);
+        $file = FilePostMedia::find($this->mediaFileID);
 
         if ($file) {
             // Ini adalah file yang sudah ada, jadi kita hapus dari database dan penyimpanan

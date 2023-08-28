@@ -46,7 +46,8 @@
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/fontawesome.css') }}" />
 
    <!--Box Icons-->
-   {{-- <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/fonts/boxicons/css/boxicons.min.css') }}"> --}}
+   {{--
+   <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/fonts/boxicons/css/boxicons.min.css') }}"> --}}
 
    <!-- Core CSS -->
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/core.css') }}"
@@ -72,9 +73,12 @@
    <!-- Helpers -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/helpers.js') }}"></script>
    <!-- Pace CSS -->
-   {{-- <link rel="stylesheet"
-      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}"> --}}
-   {{-- <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}"> --}}
+   {{--
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
+   --}}
+   {{--
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}"> --}}
 
 
    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -98,6 +102,16 @@
 
    <livewire:styles />
    {{-- @vite('resources/js/app.css') --}}
+
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D84783NT2M"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-D84783NT2M');
+   </script>
 </head>
 
 <body>
@@ -150,7 +164,6 @@
 
    <livewire:scripts />
    @livewireChartsScripts
-   {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
    @stack('script')
    @stack('modal')
 
@@ -166,8 +179,9 @@
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/hammer/hammer.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/i18n/i18n.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/menu.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/ui-popover.js') }}"></script>
+
    <!-- endbuild -->
 
    <!-- Vendors JS -->
@@ -215,8 +229,8 @@
    </script> --}}
    {{-- @vite('resources/js/app.js') --}}
    @stack('scripts')
-{{--    <script>
-       document.addEventListener("DOMContentLoaded", function() {
+   {{-- <script>
+      document.addEventListener("DOMContentLoaded", function() {
          Echo.private(`chat.2`).listen('.MessageSent', (e) => {
             console.log('eh');
             console.log(e);

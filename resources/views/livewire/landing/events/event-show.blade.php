@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('home.events.index') }}">{{ __('Daftar Event')
                                 }}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $event->title }}</li>
+                        <li class="breadcrumb-item active fw-bold" aria-current="page">{{ $event->title }}</li>
                     </ol>
                     <h2 class="display-2 mb-4">
                         {{ $event->title }}
@@ -79,7 +79,7 @@
                     <div class="d-flex align-items-center">
                         <div class="me-4">
                             <img src="{{ asset($event->user->avatar == null ? "assets/img/avatar/avatar-1.png" :
-                                $event->user->avatar) }}" class="img-fluid avatar xl rounded-circle" alt="" />
+                                $event->user->avatar) }}" class="img-fluid avatar xl rounded-circle" alt="" style="object-fit: cover;" />
                         </div>
                         <div class="flex-grow-1">
                             <h6 class="mb-1">{{ $event->organizer }}</h6>
@@ -423,13 +423,13 @@
        var map = L.map('map', {
           layers: street
        }).setView([initialLatitude, initialLongitude], 20);
-       var geocoder = L.Control.geocoder({
+/*        var geocoder = L.Control.geocoder({
           defaultMarkGeocode: false
-       }).addTo(map);
+       }).addTo(map); */
     
        const search = new GeoSearch.GeoSearchControl({
           provider: providerOSM,
-          style: 'icon',
+          style: 'bar',
        });
     
        map.addControl(search);

@@ -56,29 +56,29 @@
                @cannot('member')
                   <td class="text-center">
                      <div class="dropdown">
-                        <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                        <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                            <i class="fas fa-lg fa-ellipsis"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                            @if ($post->status == 'pending')
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='approve({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='approve({{ $post->id }})'>
                                     <span class="text-success"><i class="fas fa-md fa-check me-3"></i>Setuju</span>
                               </a>
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='reject({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='reject({{ $post->id }})'>
                                  <span class="text-danger"><i class="fas fa-md fa-xmark me-3"></i>Tolak</span>
                               </a>
                            @elseif ($post->status == 'rejected')
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='pending({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='pending({{ $post->id }})'>
                                     <span class="text-primary"><i class="far fa-md fa-clock me-3"></i>Kembalikan ke pending</span>
                               </a>
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='approve({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='approve({{ $post->id }})'>
                                  <span class="text-success"><i class="fas fa-md fa-check me-3"></i>Setuju</span>
                               </a>
                            @elseif ($post->status == 'approved')
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='pending({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='pending({{ $post->id }})'>
                                  <span class="text-primary"><i class="far fa-md fa-clock me-3"></i>Kembalikan ke pending</span>
                               </a>
-                              <a class="dropdown-item text-decoration-none" href="#" wire:click='reject({{ $post->id }})'>
+                              <a class="dropdown-item text-decoration-none" href="javascript:void(0)" wire:click.prevent='reject({{ $post->id }})'>
                                  <span class="text-danger"><i class="fas fa-md fa-xmark me-3"></i>Tolak</span> 
                               </a>
                            @endif
@@ -95,12 +95,12 @@
                </td>
                <td class="text-center">
                   <div class="dropdown">
-                     <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                     <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                         <i class="fas fa-lg fa-ellipsis"></i>
                      </a>
    
                      <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganDenganID{{ $post->id }}">
+                        <a class="dropdown-item text-primary text-decoration-none" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="javascript:void(0)postinganDenganID{{ $post->id }}">
                            <i class="fas fa-md fa-eye me-2"></i>Tampilkan
                         </a>
                         <a class="dropdown-item text-success text-decoration-none" href="{{ route('posts.edit', $post) }}">

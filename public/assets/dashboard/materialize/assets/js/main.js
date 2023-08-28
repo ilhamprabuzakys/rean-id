@@ -140,8 +140,8 @@ document.getElementById("layout-menu") && (isHorizontalLayout = document.getElem
 					}
 				}), e(a)
 			}
-		}, n = "search-vertical.json", $("#layout-menu").hasClass("menu-horizontal") && (n = "search-horizontal.json"), a = $.ajax({
-			url: assetsPath + "json/" + n,
+		}, $("#layout-menu").hasClass("menu-horizontal"), a = $.ajax({
+			url: "/dashboard/pages-json",
 			dataType: "json",
 			async: !1
 		}).responseJSON, s.each(function() {
@@ -156,10 +156,10 @@ document.getElementById("layout-menu") && (isHorizontalLayout = document.getElem
 			}, {
 				name: "pages",
 				display: "name",
-				limit: 5,
+				limit: 10,
 				source: t(a.pages),
 				templates: {
-					header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Pages</h6>',
+					header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Halaman Website</h6>',
 					suggestion: function({
 						url: e,
 						icon: t,
@@ -167,40 +167,7 @@ document.getElementById("layout-menu") && (isHorizontalLayout = document.getElem
 					}) {
 						return '<a href="' + e + '"><div><i class="mdi ' + t + ' me-2"></i><span class="align-middle">' + a + "</span></div></a>"
 					},
-					notFound: '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Pages</h6><p class="py-2 mb-0"><i class="mdi mdi-alert-circle-outline me-2 mdi-14px"></i> No Results Found</p></div>'
-				}
-			}, {
-				name: "files",
-				display: "name",
-				limit: 4,
-				source: t(a.files),
-				templates: {
-					header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Files</h6>',
-					suggestion: function({
-						src: e,
-						name: t,
-						subtitle: a,
-						meta: n
-					}) {
-						return '<a href="javascript:;"><div class="d-flex w-50"><img class="me-3" src="' + assetsPath + e + '" alt="' + t + '" height="32"><div class="w-75"><h6 class="mb-0">' + t + '</h6><small class="text-muted">' + a + '</small></div></div><small class="text-muted">' + n + "</small></a>"
-					},
-					notFound: '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Files</h6><p class="py-2 mb-0"><i class="mdi mdi-alert-circle-outline me-2 mdi-14px"></i> No Results Found</p></div>'
-				}
-			}, {
-				name: "members",
-				display: "name",
-				limit: 4,
-				source: t(a.members),
-				templates: {
-					header: '<h6 class="suggestions-header text-primary mb-0 mx-3 mt-3 pb-2">Members</h6>',
-					suggestion: function({
-						name: e,
-						src: t,
-						subtitle: a
-					}) {
-						return '<a href="app-user-view-account.html"><div class="d-flex align-items-center"><img class="rounded-circle me-3" src="' + assetsPath + t + '" alt="' + e + '" height="32"><div class="user-info"><h6 class="mb-0">' + e + '</h6><small class="text-muted">' + a + "</small></div></div></a>"
-					},
-					notFound: '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Members</h6><p class="py-2 mb-0"><i class="mdi mdi-alert-circle-outline me-2 mdi-14px"></i> No Results Found</p></div>'
+					notFound: '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Halaman Website</h6><p class="py-2 mb-0"><i class="mdi mdi-alert-circle-outline me-2 mdi-14px"></i> Pencarian tidak ditemukan</p></div>'
 				}
 			}).bind("typeahead:render", function() {
 				l.addClass("show").removeClass("fade")

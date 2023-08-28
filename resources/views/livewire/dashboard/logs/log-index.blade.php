@@ -60,29 +60,27 @@
          <div class="col-12">
             <div class="card shadow-md">
                <div class="card-header">
-                  <div class="card-header flex-column flex-md-row">
-                     <div class="row">
-                        <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2">
-                           <select class="form-select" name="paginate" id="paginate" wire:model.live='paginate'>
-                              <option value="5">5</option>
-                              <option value="10">10</option>
-                              <option value="15">15</option>
-                           </select>
-                        </div>
-                        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4">
-                           <input type="text" name="search" id="search" wire:model.live="search" class="form-control"
-                              placeholder="Ketik sesuatu..">
-                        </div>
-                        <div class="col-lg-4 col-xl-4 col-md-4 col-sm-3">
-                           <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control"
-                              placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
-                        </div>
-                        <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
-                           <div><a class="btn btn-danger" href="#" wire:click='$dispatch("reset-filter")'>
-                                 <span><i class="fas fa-refresh"></i>
-                                    <span class="d-none d-sm-inline-block">Reset</span></span>
-                              </a></div>
-                        </div>
+                  <div class="row">
+                     <div class="col-lg-1 col-xl-1 col-md-2 col-sm-2">
+                        <select class="form-select" name="paginate" id="paginate" wire:model.live='paginate'>
+                           <option value="5">5</option>
+                           <option value="10">10</option>
+                           <option value="15">15</option>
+                        </select>
+                     </div>
+                     <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4">
+                        <input type="text" name="search" id="search" wire:model.live="search" class="form-control"
+                           placeholder="Ketik sesuatu..">
+                     </div>
+                     <div class="col-lg-4 col-xl-4 col-md-4 col-sm-3">
+                        <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control"
+                           placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
+                     </div>
+                     <div class="col-lg-3 col-xl-3 col-md-3 col-sm-3">
+                        <div><a class="btn btn-danger" href="javascript:void(0)" wire:click='$dispatch("reset-filter")'>
+                              <span><i class="fas fa-refresh"></i>
+                                 <span class="d-none d-sm-inline-block">Reset</span></span>
+                           </a></div>
                      </div>
                   </div>
                </div>

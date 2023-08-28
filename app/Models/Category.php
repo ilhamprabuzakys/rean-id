@@ -3,17 +3,46 @@
 namespace App\Models;
 
 use App\Events\CategoryActionEvent;
-use App\Events\LogEventAction;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable;
-
+    use HasFactory, Sluggable, LogsActivity;
     protected $guarded = ['id'];
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        if ($eventName == 'deleted') {
+            $activity->properties = $this->attributes;
+        }
+    }
+    
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Kategori')
+            ->logFillable('*')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $aksi = '';
+                switch ($eventName) {
+                    case 'created':
+                        $aksi = 'dibuat';
+                        break;
+                    case 'updated':
+                        $aksi = 'diperbarui';
+                        break;
+                    case 'deleted':
+                        $aksi = 'dihapus';
+                        break;
+                }
+                return "Data Kategori telah {$aksi}";
+            });
+    }
 
     public function getRouteKeyName()
     {
@@ -40,32 +69,6 @@ class Category extends Model
         return $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
     }
     
-    public static function boot()
-    {
-        parent::boot();
-
-        static::created(function (Category $category) {
-            event(new LogEventAction('created', $category));
-            event(new CategoryActionEvent($category));
-        });
-
-        static::updated(function (Category $category) {
-            event(new LogEventAction('updated', $category));
-            event(new CategoryActionEvent($category));
-        });
-
-        static::deleted(function (Category $category) {
-            event(new LogEventAction('deleted', $category));
-            event(new CategoryActionEvent($category));
-        });
-    }
-
-    public static function clearCache()
-    {
-        Cache::forget('categories');
-        Cache::forget('categoriesCount');
-    }
-
     // Eloquent Relationship
     public function posts() 
     {

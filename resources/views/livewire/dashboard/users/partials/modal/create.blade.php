@@ -10,7 +10,7 @@
             <div class="modal-body">
                <div class="row justify-content-between mb-2">
                   <div class="col-3">
-                     <label for="title" class="form-label">Name <sup class="text-danger">*</sup></label>
+                     <label for="title" class="form-label">Nama<sup class="text-danger">*</sup></label>
                   </div>
                   <div class="col-9">
                      <input type="text"

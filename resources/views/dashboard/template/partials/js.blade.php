@@ -114,7 +114,11 @@
       // "showEasing": 'swing',
       // "hideEasing": 'linear',
       // "closeEasing": 'linear',
+      
+      var message = data[0].message ?? data[0].text;
+      var type = data[0].icon ?? data[0].type;
+      var title = data[0].title;
 
-      toastr[data[0].type](data[0].message, data[0].title ?? '');
+      toastr[type](message, title);
    });
 </script>

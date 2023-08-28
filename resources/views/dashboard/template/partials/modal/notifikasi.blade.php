@@ -1,8 +1,6 @@
 <!--  Large modal example -->
 @php
-   $notifications = \App\Models\EventLog::where('user_id', auth()->user()->id)
-       ->orderBy('updated_at', 'desc')
-       ->get();
+$notifications = \Spatie\Activitylog\Models\Activity::causedBy(auth()->user())->latest('created_at')->get();
 @endphp
 <div class="modal fade zoomIn" id="notifikasiModal" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-dialog-scrollable" role="document">
@@ -12,71 +10,92 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
-            <ul class="list-group">
+            <div class="list-group">
                @foreach ($notifications as $notification)
-                  @php
-                     $event = '';
-                     switch ($notification->event) {
-                         case 'created':
-                             $event = ' telah dibuat';
-                             break;
-                         case 'updated':
-                             $event = ' telah diperbarui';
-                             break;
-                         case 'deleted':
-                             $event = ' telah dihapus';
-                             break;
-                         default:
-                             $event = ' ?';
-                             break;
-                     }
-                     
-                     $namespace = 'App\Models\\';
-                     $subject_type = substr($notification->subject_type, strlen($namespace));
-                     
-                     if ($subject_type == 'Category') {
-                         $subject_type = 'Kategori';
-                     } elseif ($subject_type == 'Post') {
-                         $subject_type = 'Postingan';
-                     }
-                     
-                     $created_time = $notification->created_at;
-                     $now = now();
-                     $time_diff = $created_time->diff($now);
-                     $formatted_time = '';
-                     if ($time_diff->days > 0) {
-                         $formatted_time = $time_diff->days . ' hari yang lalu';
-                     } elseif ($time_diff->h > 0) {
-                         $formatted_time = $time_diff->h . ' jam yang lalu';
-                     } elseif ($time_diff->i > 0) {
-                         $formatted_time = $time_diff->i . ' menit yang lalu';
-                     } else {
-                         $formatted_time = 'Baru saja';
-                     }
-                     $time = $formatted_time;
-                  @endphp
-                  <li class="dropdown-notifications-list scrollable-container">
-                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
-                           <div class="d-flex gap-2">
-                              <div class="flex-shrink-0">
-                                 <div class="avatar me-1">
-                                    <span class="avatar-initial rounded-circle bg-label-success"><i class="mdi mdi-check-outline"></i></span>
-                                 </div>
-                              </div>
-                              <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
-                                 <h6 class="mb-1 text-truncate">Data {{ $subject_type }} {{ $event }}</h6>
-                                 <small class="text-truncate text-body">Tabel {{ $subject_type }} {{ $event }}, silahkan cek kembali dilaman nya masing-masing</small>
-                              </div>
-                              <div class="flex-shrink-0 dropdown-notifications-actions">
-                                 <small class="text-muted">{{ $time }}</small>
+               @php
+               $event = '';
+               switch ($notification->event) {
+               case 'created':
+               $event = ' penambahan';
+               break;
+               case 'updated':
+               $event = ' perubahan';
+               break;
+               case 'deleted':
+               $event = ' penghapusan';
+               break;
+               default:
+               $event = ' ?';
+               break;
+               }
+               $created_time = $notification->created_at;
+               $now = now();
+               $time_diff = $created_time->diff($now);
+               $formatted_time = '';
+               if ($time_diff->days > 0) {
+               $formatted_time = $time_diff->days . ' hari yang lalu';
+               } elseif ($time_diff->h > 0) {
+               $formatted_time = $time_diff->h . ' jam yang lalu';
+               } elseif ($time_diff->i > 0) {
+               $formatted_time = $time_diff->i . ' menit yang lalu';
+               } else {
+               $formatted_time = 'Baru saja';
+               }
+               $time = $formatted_time;
+               @endphp
+               <div
+                  class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer waves-effect">
+                  <div class="avatar me-1 w-px-50">
+                     @if($notification->event == 'created')
+                     <span class="avatar-initial rounded-circle bg-label-primary">
+                        <i class="mdi mdi-plus"></i>
+                     </span>
+                     @elseif ($notification->event == 'updated')
+                     <span class="avatar-initial rounded-circle bg-label-success">
+                        <i class="mdi mdi-note-edit-outline"></i>
+                     </span>
+                     @else
+                     <span class="avatar-initial rounded-circle bg-label-danger">
+                        <i class="mdi mdi-trash-can-outline"></i>
+                     </span>
+                     @endif
+                  </div>
+                  {{-- <img src="../../assets/img/avatars/2.png" alt="User Image" class="rounded-circle me-3 w-px-50">
+                  --}}
+                  <div class="w-100">
+                     <div class="d-flex justify-content-between">
+                        <div class="user-info ps-2">
+                           <h6 class="mb-0">{{ $notification->description }}</h6>
+                           <div>
+                              <small>Terjadi {{ $event }} data pada tabel {{
+                                 $notification->log_name }}</small>
+                           </div>
+                           <div class="d-flex align-items-center mt-1">
+                              <div class="user-status me-2 d-flex align-items-center">
+                                 @if($notification->event == 'created')
+                                 <span class="badge badge-dot bg-primary me-1"></span>
+                                 <small>Penambahan</small>
+                                 @elseif ($notification->event == 'updated')
+                                 <span class="badge badge-dot bg-success me-1"></span>
+                                 <small>Perubahan</small>
+                                 </span>
+                                 @else
+                                 <span class="badge badge-dot bg-danger me-1"></span>
+                                 <small>Penghapusan</small>
+                                 </span>
+                                 @endif
                               </div>
                            </div>
-                        </li>
-                     </ul>
-                  </li>
+                        </div>
+                        <small class="text-muted">{{ $time }}</small>
+                        {{-- <div class="add-btn">
+                           <button class="btn btn-primary btn-sm waves-effect waves-light">{{ $time }}</button>
+                        </div> --}}
+                     </div>
+                  </div>
+               </div>
                @endforeach
-            </ul>
+            </div>
          </div>
       </div><!-- /.modal-content -->
    </div><!-- /.modal-dialog -->

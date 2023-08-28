@@ -70,7 +70,7 @@
                   </div>
                </div>
                <div class="col-6 mb-3">
-                  <label for="contact_email" class="mb-2">Kontak Email <sup class="text-danger">*</sup></label>
+                  <label for="contact_email" class="mb-2">Email Penyelenggara <sup class="text-danger">*</sup></label>
                   <div class="input-group">
                      <input type="text" class="form-control @error('contact_email') is-invalid @enderror" placeholder="kontak@gmail.com" wire:model='contact_email' id="contact_email">
                      <span class="input-group-text"><i class="fas fa-mail-bulk text-primary"></i></span>
@@ -146,7 +146,7 @@
                ['color', ['color']],
                ['para', ['ul', 'ol', 'paragraph']],
                ['table', ['table']],
-               ['insert', ['link', 'picture', 'video']],
+               ['insert', ['link', 'picture']],
                ['view', ['codeview', 'help']],
             ]
          });

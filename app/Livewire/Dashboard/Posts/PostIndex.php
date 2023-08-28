@@ -191,6 +191,16 @@ class PostIndex extends Component
             $file->delete();
         }
 
+        // Menghapus file media yang terkait dengan post (jika ada)
+        if ($post->media) {
+            if ($post->media->first()) {
+                // Hapus file fisik
+                Storage::delete(str_replace('storage/', '', $post->media->first()->file_path));
+                // Hapus entri dari database
+                $post->media->first()->delete();
+            }
+        }
+
         // Menghapus post
         $post->delete();
         $this->dispatch('alert', [

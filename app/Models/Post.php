@@ -9,10 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Models\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
+    use HasFactory, SoftDeletes, Sluggable, LogsActivity;
     protected $guarded = ['id'];
     protected $table = 'posts';
 
@@ -37,31 +40,33 @@ class Post extends Model
     {
         return 'post_index';
     }  */
-
-    public static function clearCache()
+    public function tapActivity(Activity $activity, string $eventName)
     {
-        cache()->forget('posts');
-        cache()->forget('postsCount');
+        if ($eventName == 'deleted') {
+            $activity->properties = $this->attributes;
+        }
     }
-
-    public static function boot()
+    
+    public function getActivitylogOptions(): LogOptions
     {
-        parent::boot();
-
-        static::created(function (Post $post) {
-            event(new LogEventAction('created', $post));
-            event(new PostActionEvent($post));
-        });
-
-        static::updated(function (Post $post) {
-            event(new LogEventAction('updated', $post));
-            event(new PostActionEvent($post));
-        });
-
-        static::deleted(function (Post $post) {
-            event(new LogEventAction('deleted', $post));
-            event(new PostActionEvent($post));
-        });
+        return LogOptions::defaults()
+            ->useLogName('Postingan')
+            ->logFillable('*')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $aksi = '';
+                switch ($eventName) {
+                    case 'created':
+                        $aksi = 'dibuat';
+                        break;
+                    case 'updated':
+                        $aksi = 'diperbarui';
+                        break;
+                    case 'deleted':
+                        $aksi = 'dihapus';
+                        break;
+                }
+                return "Data Postingan telah {$aksi}";
+            });
     }
 
     // public function mostViewed($limit = 5)
@@ -145,6 +150,11 @@ class Post extends Model
     public function files()
     {
         return $this->hasMany(FilePost::class);
+    }
+    
+    public function media()
+    {
+        return $this->hasMany(FilePostMedia::class);
     }
 
     public function likes()

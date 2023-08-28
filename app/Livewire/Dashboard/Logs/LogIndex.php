@@ -60,13 +60,13 @@ class LogIndex extends Component
     {
         $query = [];
         if ($this->isSuperAdmin == true) {
-            $query = EventLog::with(['subject', 'user'])->latest('created_at')
+            $query = \Spatie\Activitylog\Models\Activity::latest('created_at')
                 ->when($this->role, function ($query) {
-                    $query->whereHas('user', function ($query) {
+                    $query->whereHas('causer', function ($query) {
                         $query->where('role', $this->role);
                     });
                 })->when($this->search, function ($query) {
-                    return $query->globalSearch($this->search);
+                    return $query->where('log_name', 'like', '%' . $this->search . '%');
                 })->when($this->filter_date, function ($query) {
                     $dateRange = explode(' to ', $this->filter_date);
                     $startDate = $dateRange[0];
@@ -75,45 +75,15 @@ class LogIndex extends Component
                         ->whereDate('created_at', '<=', $endDate);
                 });
         }
-
         if ($this->isAdmin == true) {
-            $query = EventLog::with(['subject', 'user'])->latest('created_at')
-                ->whereHas('user', function ($query) {
+            $query = $query->whereHas('causer', function ($query) {
                     $query->where('role', '!=', 'superadmin');
-                })
-                ->when($this->role, function ($query) {
-                    $query->whereHas('user', function ($query) {
-                        $query->where('role', $this->role);
-                    });
-                })->when($this->search, function ($query) {
-                    return $query->globalSearch($this->search);
-                })->when($this->filter_date, function ($query) {
-                    $dateRange = explode(' to ', $this->filter_date);
-                    $startDate = $dateRange[0];
-                    $endDate = $dateRange[1] ?? $dateRange[0];
-                    return $query->whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate);
                 });
         }
-        
         if ($this->isMember == true) {
-            $query = EventLog::with(['subject', 'user'])->latest('created_at')
-                ->whereHas('user', function ($query) {
-                    $query->where('role', 'member');
-                })
-                ->when($this->role, function ($query) {
-                    $query->whereHas('user', function ($query) {
-                        $query->where('role', $this->role);
-                    });
-                })->when($this->search, function ($query) {
-                    return $query->globalSearch($this->search);
-                })->when($this->filter_date, function ($query) {
-                    $dateRange = explode(' to ', $this->filter_date);
-                    $startDate = $dateRange[0];
-                    $endDate = $dateRange[1] ?? $dateRange[0];
-                    return $query->whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate);
-                });
+            $query = $query->whereHas('causer', function ($query) {
+                $query->where('role', 'member');
+            });
         }
         $logs = $query->paginate($this->paginate);
         return view('livewire.dashboard.logs.log-index', compact('logs'));

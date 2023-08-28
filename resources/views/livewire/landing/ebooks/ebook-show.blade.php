@@ -6,7 +6,6 @@
                     <h2 class="display-1 mb-4">
                         Ebook.
                     </h2>
-
                     <p class="lead mb-0">
                         {{ $ebook->description }}
                     </p>

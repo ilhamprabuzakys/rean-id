@@ -92,9 +92,9 @@
    
                   </div>
                   <div class="col-12 mt-5">
-                     <h5 class="text-center">Lokasi Detail Map  <button type="button" class="btn btn-primary btn-refresh rounded-circle px-2"><i class="fas fa-refresh text-white"></i></button></h5>
+                     <h5 class="text-center">Lokasi Detail Map</h5>
                      <div class="px-3">
-                        <div id="map{{ $event->id }}" style="height: 400px; border-radius: 20px;"></div>
+                        <div id="map{{ $event->id }}" wire:key='map{{ $event->id }}' style="height: 400px;"></div>
 
                         <div id="map-container{{ $event->id }}"></div>
                      </div>
@@ -125,22 +125,19 @@
    var initialLatitude = {{ $event->latitude }};
    var initialLongitude = {{ $event->longitude }};
 
-   var map = L.map('map{{ $event->id }}', {
+   var map{{$event->id}} = L.map('map{{ $event->id }}', {
       layers: L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', tileLayerOptions)
    }).setView([initialLatitude, initialLongitude], 20);
 
-   var geocoder = L.Control.geocoder({
-      defaultMarkGeocode: false
-   }).addTo(map);
-
    var search = new GeoSearch.GeoSearchControl({
+      notFoundMessage: 'Maaf alamat yang kamu cari tidak ditemukan, tolong cari alamat terdekat secara manual.',
       provider: new GeoSearch.OpenStreetMapProvider(),
-      style: 'icon',
+      style: 'bar',
    });
 
-   map.addControl(search);
+   map{{$event->id}}.addControl(search);
    var theMarker = {};
-   theMarker = L.marker([initialLatitude, initialLongitude]).addTo(map);
+   theMarker = L.marker([initialLatitude, initialLongitude]).addTo(map{{$event->id}});
 
    /*    let location = '{{ $event->location }}';
       let province = '{{ $event->province }}';
@@ -163,19 +160,19 @@
    //       }, 0);
    //    }
    // });
-   // $('#showEvent{{ $event->id }}').on('shown.bs.modal', function() {
-   //    map.invalidateSize();
-   // });
+   $('#showEvent{{ $event->id }}').on('shown.bs.modal', function() {
+      Livewire.dispatch('refreshMap');
+   });
+
    $('.btn-refresh').on('click', function() {
-      console.log('refresh..');
-      // window.Livewire.dispatch('refreshMap');
-      map.invalidateSize();
+      console.log('Map refreshed..');
+      map{{$event->id}}.invalidateSize();
    });
-/* 
-   document.addEventListener('refreshMap', function() {
-      console.log('refresh..');
-      map.invalidateSize();
+
+   window.addEventListener('refreshMap', function() {
+      // console.log('Map refreshed..');
+      map{{$event->id}}.invalidateSize();
    });
- */
+
    $('#map{{ $event->id }}').appendTo('#map-container{{ $event->id }}');
 </script>

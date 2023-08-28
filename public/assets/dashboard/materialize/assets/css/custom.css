@@ -16,7 +16,9 @@
 ::-webkit-scrollbar-thumb {
    background-color: #5154ff
 }
-
+.leaflet-bottom.leaflet-right .leaflet-control-attribution.leaflet-control {
+   display: none
+}
 /* Add Post Form */
 .row.form-button .badge {
    padding-left: 120px;

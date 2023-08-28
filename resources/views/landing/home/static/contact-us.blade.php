@@ -89,7 +89,7 @@ $company = \App\Models\Company::first();
          <div class="col-12 col-lg-7 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-               <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+               <li class="breadcrumb-item active fw-bold" aria-current="page">Contact Us</li>
             </ol>
             <h1 class="display-2 mb-3">
                Kirim pesan untuk kami

@@ -80,7 +80,7 @@
                   <div class="col-12">
                      <label for="files" class="mb-2">Cover Image <sup class="text-danger">*</sup></label>
                      <div wire:ignore>
-                        <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
+                        <div id="files" class="filepond @error('files') is-invalid @enderror" wire:model='files'></div>
                      </div>
                      @error('files')
                      <div class="invalid-feedback">
@@ -89,7 +89,7 @@
                      @enderror
                   </div>
                </div>
-               <div class="col-12 mb-5">
+               <div class="col-12 mb-3">
                   <label for="body" class="mb-2">Body <sup class="text-danger">*</sup></label>
                   <div wire:ignore>
                      <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4"
@@ -101,6 +101,11 @@
                      @enderror
                   </div>
                </div>
+               @can('superadmin')
+                  <div class="col-12 mb-4">
+                     <p class="text-muted">Anda login sebagai <strong>Super Admin</strong>, data yang anda tambahkan akan otomatis masuk ke dalam status <strong>Approved</strong>.</p>
+                  </div>
+               @endcan
                <div class="row form-button mx-1">
                   <div class="col">
                      <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
@@ -156,7 +161,7 @@
                ['color', ['color']],
                ['para', ['ul', 'ol', 'paragraph']],
                ['table', ['table']],
-               ['insert', ['link', 'picture', 'video']],
+               ['insert', ['link', 'picture']],
                ['view', ['codeview', 'help']],
             ]
          });

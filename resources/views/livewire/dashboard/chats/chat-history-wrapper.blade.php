@@ -1,4 +1,5 @@
-<div class="chat-history-wrapper" wire:poll.visible>
+<div class="chat-history-wrapper" wire:poll="$dispatch('loadConversation', { conversation: {{ $selectedConversation }}, receiver: {{ $receiverInstance }} })">
+    {{-- wire:poll="$dispatch('loadConversation', { conversation: {{ $selectedConversation }}, receiver: {{ $receiverInstance }} })" --}}
     <div class="chat-history-header border-bottom">
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex overflow-hidden align-items-center">
@@ -10,9 +11,9 @@
                 @endif
             </div>
             
-            @if ($selectedConversation)
+            {{-- @if ($selectedConversation)
                 @include('livewire.dashboard.chats.components.chat-header-actions')
-            @endif
+            @endif --}}
         </div>
     </div>
 

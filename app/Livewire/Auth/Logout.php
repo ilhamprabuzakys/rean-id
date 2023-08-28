@@ -18,8 +18,8 @@ class Logout extends Component
     public function logout()
     {
         // Update status user ke 'offline'
-        Auth::user()->update(['status' => 'offline']);
-
+        \saveUserLogoutInfo();
+        
         // Logout user
         Auth::logout();
 

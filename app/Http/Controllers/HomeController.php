@@ -7,7 +7,10 @@ use App\Models\Category;
 use App\Models\Ebook;
 use App\Models\Event;
 use App\Models\News;
+use App\Models\Tag;
 use Jenssegers\Agent\Agent;
+use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 
 class HomeController extends Controller
 {
@@ -40,6 +43,17 @@ class HomeController extends Controller
     {
         return view('landing.home.static.contact-us', [
             'title' => 'Contact Us',
+        ]);
+    }
+    
+    public function analytics()
+    {
+        // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
+        $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(7));
+        dd($analyticsData);
+        return view('welcome', [
+            'title' => 'Analytics Data',
+            'analyticsData' => $analyticsData,
         ]);
     }
     
@@ -91,6 +105,14 @@ class HomeController extends Controller
         return view('landing.home.categories.single-category', [
             'title' => 'Daftar ' . $category->name,
         ], compact('category', 'posts'));
+    }
+
+    public function tag_view(Tag $tag)
+    {
+        $posts = $tag->posts->sortByDesc('updated_at');
+        return view('landing.home.tags.single-tag', [
+            'title' => 'Tag ' . $tag->name,
+        ], compact('tag', 'posts'));
     }
 
     public function event()

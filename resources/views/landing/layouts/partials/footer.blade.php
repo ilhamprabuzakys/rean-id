@@ -1,7 +1,7 @@
 <footer id="footer" class="bg-body footer" style="font-family: Poppins; font-weight: 600">
     <div class="container pt-9 pt-lg-11 pb-5">
         <div class="row">
-            <div class="col-sm-7 mb-4 mb-sm-0">
+            <div class="col-lg-5 col-sm-7 mb-4 mb-sm-0">
                 <h5 class="mb-0 text-body-secondary">JL.M.T. Haryono No. 11, Cawang, <br>
                     Kramat Jati, Jakarta Timur 13630,<br>
                     Indonesia</h5>
@@ -46,15 +46,18 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-5 text-sm-end">
-                <a href="!" class="fs-6 link-hover-underline">Hubungi Kami: 184</a><br><br>
+            <div class="col-lg-2 col-sm-5">
+                <img src="{{ asset('assets/img/rean-logo-brand.png')}}" alt="" style="width: -webkit-fill-available; height: -webkit-fill-available;">
+            </div>
+            <div class="col-lg-5 col-sm-7 text-sm-center text-lg-end">
+                <a href="javascript:void()" class="fs-6 link-hover-underline">Hubungi Kami: 184</a><br><br>
                 <a class="fs-6 link-hover-underline"><span class="__cf_email__"
                         data-cfemail="caa7aba3a68aaea5a7aba3a4e4abadafa4a9b3">callcenter@bnn.go.id</span></a>
             </div>
         </div>
         <hr class="my-4">
-        <div class="row">
-            <div class="col-sm-7 mb-3 mb-sm-0">
+        <div class="row justify-content-between">
+            <div class="col-sm-5 mb-3 mb-sm-0">
                 <div class="d-flex align-items-center">
                     <a href="https://cegahnarkoba.bnn.go.id" target="_blank">
                         <h6 class="mb-2 text-body-secondary">Website Cegah Narkoba</h6>
@@ -83,12 +86,15 @@
                     </a>
                 </div>
             </div>
-            <div class="col-sm-5 small text-sm-end">
+            {{-- <div class="col-sm-2 d-flex justify-content-end align-items-center">
+                <img src="{{ asset('assets/img/rean-text-logo-dark.png')}}" alt="" style="width: -webkit-fill-available; height: auto;">
+            </div> --}}
+            <div class="col-sm-5 small text-sm-end d-flex justify-content-end align-items-center">
                 <span class="d-block lh-sm text-body-secondary">© Copyright
                     <script>
                         document.write(new Date().getFullYear())
 
-                    </script>2023. Assan
+                    </script>2023. REAN.ID
                 </span>
             </div>
         </div>

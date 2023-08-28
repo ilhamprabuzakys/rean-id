@@ -9,14 +9,14 @@
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                <li class="breadcrumb-item"><a href="{{ route('home.category_list') }}">{{ __('Kategori Postingan') }}</a></li>
-               <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
+               <li class="breadcrumb-item active fw-bold" aria-current="page">{{ $category->name }}</li>
             </ol>
             {{-- <h2 class="display-2 mb-4">
                {{ __('Daftar Postingan') }}
             </h2> --}}
             <h1 class="mb-0 display-3">Daftar {{ $category->name }}</h1>
             <p class="lead mb-0">
-               Berisi semua data postingan dengan tipe {{ $category->name }}.
+               Berisi semua data postingan dengan tipe <strong>{{ $category->name }}</strong>.
             </p>
          </div>
       </div>

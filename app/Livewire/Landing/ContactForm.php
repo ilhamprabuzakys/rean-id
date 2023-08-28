@@ -9,12 +9,7 @@ use Livewire\Component;
 
 class ContactForm extends Component
 {
-    protected $listeners = [
-        "alertS",
-        "alertE",
-    ];
-
-    public $name, $email, $subject, $message;
+    public $name, $email, $subject, $message, $recaptcha;
 
     public function rules()
     {
@@ -23,6 +18,7 @@ class ContactForm extends Component
             'email' => ['required', 'min:4', 'email'],
             'subject' => ['required', 'min:4'],
             'message' => ['required', 'min:10', 'max:255'],
+            'recaptcha' => ['required'],
         ];
     }
 
@@ -34,12 +30,14 @@ class ContactForm extends Component
         'subject.required' => 'Subjek itu wajib diisi.',
         'subject.min' => 'Subjek kamu terlalu pendek.',
         'message.min' => 'Pesan yang kamu masukkan terlalu pendek.',
+        'recaptcha.required' => 'Tolong lakukan pemeriksaan Captcha.',
     ];
  
     protected $validationAttributes = [
         'email' => 'email address',
         'subject' => 'subjek',
         'message' => 'pesan',
+        'recaptcha' => 'captcha',
     ];
 
     public function updated($propertyName)
@@ -56,33 +54,24 @@ class ContactForm extends Component
 
     public function store()
     {
-        $this->validate();
-        $message = ContactMessage::create($this->all());
-
         try {
+            $this->validate();
+            $message = ContactMessage::create($this->all());
             Mail::to(\env('MAIL_USERNAME'))->send(new MailNotify($message));
+            $this->dispatch('alert', [
+                'type' => 'success',
+                'title' => 'Berhasil',
+                'message' => 'Pesan berhasil dikirim',
+            ]);
             session()->flash('success', 'Pesan yang kamu tulis <b>berhasil</b> dikirim!');
         } catch (\Throwable $th) {
+            $this->dispatch('alert', [
+                'type' => 'error',
+                'title' => 'Gagal',
+                'message' => 'Pesan gagal dikirim, tolong coba lagi',
+            ]);
             session()->flash('fails', 'Terjadi <b>kesalahan</b>, periksa kembali pesanmu.');
         }
 
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-    
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
     }
 }

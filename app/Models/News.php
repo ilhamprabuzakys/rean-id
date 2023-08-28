@@ -5,12 +5,36 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
     protected $guarded = ['id'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->useLogName('Berita')
+            ->logFillable('*')
+            ->setDescriptionForEvent(function(string $eventName) {
+                $aksi = '';
+                switch ($eventName) {
+                    case 'created':
+                        $aksi = 'dibuat';
+                        break;
+                    case 'updated':
+                        $aksi = 'diperbarui';
+                        break;
+                    case 'deleted':
+                        $aksi = 'dihapus';
+                        break;
+                }
+                return "Data Berita telah {$aksi}";
+            });
+    }
+    
     public function getRouteKeyName()
     {
         return 'slug';

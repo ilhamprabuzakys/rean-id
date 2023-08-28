@@ -62,8 +62,9 @@
                                  border: 1px solid #006eff;
                                  border-radius: 10px;">
                               <h5>{{ $existingMediaFile->file_name }}</h5>
-                              <p class="text-muted mb-0">{{ $existingMediaFile->source_path }} - <span class="text-primary">{{
-                                 $existingMediaFile->file_size }}</span></p>
+                              <p class="text-muted mb-0">{{ $existingMediaFile->source_path }} - <span
+                                    class="text-primary">{{
+                                    $existingMediaFile->file_size }}</span></p>
                            </div>
                         </div>
                         <div class="col-3 d-flex justify-content-start align-items-center">
@@ -160,7 +161,7 @@
                   ['color', ['color']],
                   ['para', ['ul', 'ol', 'paragraph']],
                   ['table', ['table']],
-                  ['insert', ['link', 'picture', 'video']],
+                  ['insert', ['link', 'picture']],
                   ['view', ['codeview', 'help']],
                ]
             });
@@ -191,6 +192,10 @@
                placeholder: 'Pilih Tag',
                allowClear: true,
                tags: true,
+            });
+            $('#tags-multi-select').on('change', function (e) {
+               var data = $('#tags-multi-select').select2("val");
+               @this.set('tags', data);
             });
             $('#category_id').select2({
                theme: 'bootstrap-5'

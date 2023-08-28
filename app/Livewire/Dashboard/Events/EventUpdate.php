@@ -95,12 +95,53 @@ class EventUpdate extends Component
         return view('livewire.dashboard.events.event-update');
     }
 
+    #[On('checkLocation')]
+    public function checkLocation()
+    {
+        if ($this->latitude == null && $this->longitude == null) {
+            $this->addError('location', 'Tolong tentukan lokasi dari event melalui tombol Pilih lokasi!');
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+            ]);
+            return;
+        } else {
+            $this->dispatch('alert', [
+                'type' => 'success',
+                'title' => 'Lokasi berhasil diperbarui',
+                'text' => 'Titik lokasi berhasil diperbarui.',
+            ]);
+        }
+    }
+
     public function update()
     {
         // dd($this->all());
         try {
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
+
+            if ($this->latitude == null && $this->longitude == null) {
+                $this->addError('location', 'Tolong tentukan lokasi dari event melalui tombol Pilih lokasi!');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
+
+            if ($this->event->files->count() < 1 && $this->files == null) {
+                $this->addError('files', 'Tolong sertakan minimal satu foto cover untuk Event!');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
+
             $this->validate($this->rules(), $this->messages);
 
             $this->parseDateRange();

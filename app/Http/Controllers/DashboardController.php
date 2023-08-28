@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Ebook;
+use App\Models\Event;
+use App\Models\News;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -17,6 +20,9 @@ class DashboardController extends Controller
         $jumlahPostingan = Post::count();
         $jumlahKategori = Category::count();
         $jumlahLabel = Tag::count();
+        $jumlahEvent = Event::count();
+        $jumlahEbook = Ebook::count();
+        $jumlahBerita = News::count();
 
         $jumlahSuperadmin = User::where('role', 'superadmin')->count();
         $jumlahAdmin = User::where('role', 'admin')->count();
@@ -26,6 +32,107 @@ class DashboardController extends Controller
 
         return view('dashboard.pages.basic', [
             'title' => 'Dashboard',
-        ], compact('user', 'jumlahUser', 'jumlahPostingan', 'jumlahKategori', 'jumlahLabel', 'jumlahSuperadmin', 'jumlahAdmin', 'jumlahMember'));
+        ], compact('user', 'jumlahUser', 'jumlahPostingan', 'jumlahKategori', 'jumlahLabel', 'jumlahEvent',
+        'jumlahEbook', 'jumlahBerita', 'jumlahSuperadmin', 'jumlahAdmin', 'jumlahMember'));
+    }
+
+    public function getPageData()
+    {
+        $pages = collect([
+            [
+                'name' => 'Dashboard Utama',
+                'icon' => 'mdi-monitor',
+                'url' => route('dashboard')
+            ],
+            [
+                'name' => 'Daftar Event',
+                'icon' => 'mdi-calendar-check',
+                'url' => route('events.index')
+            ],
+            [
+                'name' => 'Buat Event',
+                'icon' => 'mdi-calendar-check',
+                'url' => route('events.create')
+            ],
+            [
+                'name' => 'Daftar Postingan',
+                'icon' => 'mdi-library-outline',
+                'url' => route('posts.index')
+            ],
+            [
+                'name' => 'Buat Postingan',
+                'icon' => 'mdi-library-outline',
+                'url' => route('posts.create')
+            ],
+            [
+                'name' => 'Daftar Ebook',
+                'icon' => 'mdi-book-check-outline',
+                'url' => route('ebooks.index')
+            ],
+            [
+                'name' => 'Buat Ebook',
+                'icon' => 'mdi-book-check-outline',
+                'url' => route('ebooks.create')
+            ],
+            [
+                'name' => 'Daftar Berita',
+                'icon' => 'mdi-newspaper-check',
+                'url' => route('news.index')
+            ],
+            [
+                'name' => 'Buat Berita',
+                'icon' => 'mdi-newspaper-check',
+                'url' => route('news.create')
+            ],
+            [
+                'name' => 'Daftar Kategori',
+                'icon' => 'mdi-layers-outline',
+                'url' => route('categories.index')
+            ],
+            [
+                'name' => 'Daftar Label',
+                'icon' => 'mdi-tag-multiple-outline',
+                'url' => route('tags.index')
+            ],
+            [
+                'name' => 'Daftar User',
+                'icon' => 'mdi-account-group-outline',
+                'url' => route('users.index')
+            ],
+            [
+                'name' => 'Buat User',
+                'icon' => 'mdi-account-group-outline',
+                'url' => route('users.create')
+            ],
+            [
+                'name' => 'Daftar Aktivitas',
+                'icon' => 'mdi-resistor',
+                'url' => route('logs.index')
+            ],
+            [
+                'name' => 'Layanan Chat',
+                'icon' => 'mdi-forum-outline',
+                'url' => route('chats.index')
+            ],
+            [
+                'name' => 'Settings Profile',
+                'icon' => 'mdi-account-outline',
+                'url' => route('settings', ['tab' => 'profile'])
+            ],
+            
+            [
+                'name' => 'Settings Keamanan',
+                'icon' => 'mdi-cog-outline',
+                'url' => route('settings', ['tab' => 'security'])
+            ],
+        ]);
+    
+        return $pages;
+    }
+
+    public function getPagesJson()
+    {
+        $pages = $this->getPageData();
+        return response()->json(['pages' => $pages]);
     }
 }

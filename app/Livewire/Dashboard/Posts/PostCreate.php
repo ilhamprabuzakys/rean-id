@@ -7,6 +7,7 @@ use App\Models\Tag;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\FilePost;
+use App\Models\FilePostMedia;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -72,6 +73,16 @@ class PostCreate extends Component
 
     public function store($action = null)
     {
+        if ($this->title == null && $this->category_id == null && $this->body == null)
+        {
+            $this->dispatch('swal:modal', [
+                'icon' => 'error',
+                'title' => 'Terjadi Kesalahan',
+                'text' => 'Anda belum mengisi apapun, harap isi form sebelum submit',
+            ]);
+            return;
+        }
+
         try {
             $rules = $this->rules();
             if (in_array($this->category_id, [3, 6, 7])) {
@@ -80,7 +91,20 @@ class PostCreate extends Component
                 $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
             }
+
+            if ($this->files == null) {
+                $this->addError('files', 'Cover image harus disertakan.');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
+
             $this->validate($rules, $this->messages);
+
+
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
             $this->processDescriptionImages();
@@ -164,9 +188,10 @@ class PostCreate extends Component
 
             $storedPath = "storage/" . $path;
 
-            FilePost::create([
+            FilePostMedia::create([
                 'file_path' => $storedPath,
-                'post_id' => $post->id
+                'post_id' => $post->id,
+                'file_extension' => $extension
             ]);
         }
     }

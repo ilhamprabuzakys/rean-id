@@ -8,10 +8,10 @@
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                <li class="breadcrumb-item"><a href="{{ route('home.all_post') }}">{{ __('Daftar Postingan') }}</a></li>
-               <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($post->title, 40, '..') }}</li>
+               <li class="breadcrumb-item active fw-bold" aria-current="page">{{ Str::limit($post->title, 35, '..') }}</li>
             </ol>
             <h2 class="display-3 mb-4">
-               {{ Str::limit($post->title, 40, '..') }}
+               {{ Str::limit($post->title, 35, '..') }}
             </h2>
          </div>
       </div>

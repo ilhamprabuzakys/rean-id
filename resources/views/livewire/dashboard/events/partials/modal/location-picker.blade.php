@@ -2,34 +2,37 @@
    <div class="modal-dialog modal-xl">
       <div class="modal-content">
          <div class="modal-header">
-            <div class="row justify-content-start">
-               <div class="col-3">
+            <div class="row gy-3 justify-content-start">
+               <div class="col-lg-2 col-sm-4">
                   <label for="coordinates" class="form-label fs-5">Lokasi Acara <sup class="text-danger">*</sup></label>
                </div>
-               <div class="col-3">
-                  <input type="text"
-                     class="form-control" wire:model='location' id="locationInput">
+               <div class="col-lg-4 col-sm-6">
+                  <div class="form-floating form-floating-outline">
+                     <input type="text" readonly disabled class="form-control" wire:model='location' id="locationInput">
+                     <label for="location">Alamat Detail</label>
+                  </div>
                </div>
-               <div class="col-3">
-                  <input type="text"
-                     class="form-control" wire:model="latitude" readonly>
+               <div class="col-lg-3 col-sm-5">
+                  <div class="form-floating form-floating-outline">
+                     <input type="text" class="form-control" wire:model="latitude" readonly disabled>
+                     <label for="latitude">Koordinat Latitude</label>
+                  </div>
                </div>
-               <div class="col-3">
-                  <input type="text" class="form-control" wire:model="longitude" readonly>
+               <div class="col-lg-3 col-sm-5">
+                  <div class="form-floating form-floating-outline">
+                     <input type="text" class="form-control" wire:model="longitude" readonly disabled>
+                     <label for="longitude">Koordinat Longitude</label>
+                  </div>
                </div>
             </div>
-            <button type="button" wire:click="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
+            <button type="button" wire:click="closeModal" class="btn-close" data-bs-dismiss="modal"
+               aria-label="Close"></button>
          </div>
          <div class="modal-body">
             <div class="row">
                <!-- Draggable Marker With Popup -->
                <div class="col-12">
-                  <div class="card ">
-                     <div class="card-body">
-                        <div class="leaflet-map" id="map" style="height: 400px;" wire:ignore></div>
-                     </div>
-                  </div>
+                  <div class="leaflet-map" id="map" style="height: 400px;" wire:ignore></div>
                </div>
                <!-- /Draggable Marker With Popup -->
             </div>
@@ -39,7 +42,8 @@
             {{-- <button type="button" wire:click="closeModal" class="btn btn-danger" data-bs-dismiss="modal">
                <i class="fas fa-xmark fa-md me-2"></i>
                Batalkan</button> --}}
-            <button id="save-button" class="btn btn-primary px-2" wire:click="closeModal" type="button" data-bs-dismiss="modal>
+            <button id="save-button" class="btn btn-primary px-2" wire:click="closeModal" type="button"
+               data-bs-dismiss="modal">
                <i class="fas fa-save fa-md me-2"></i>
                Konfirmasi lokasi</button>
          </div>
@@ -107,9 +111,9 @@
    var map = L.map('map', {
       layers: street
    }).setView([initialLatitude, initialLongitude], 20);
-   var geocoder = L.Control.geocoder({
-      defaultMarkGeocode: false
-   }).addTo(map);
+   // var geocoder = L.Control.geocoder({
+   //    defaultMarkGeocode: false
+   // }).addTo(map);
 
    // Ini adalah kode untuk menambahkan control pencarian
    // const search = new L.Control.Search({
@@ -123,15 +127,12 @@
    // }});
 
    const search = new GeoSearch.GeoSearchControl({
+      notFoundMessage: 'Maaf alamat yang kamu cari tidak ditemukan, tolong cari alamat terdekat secara manual.',
       provider: providerOSM,
-      style: 'icon',
+      style: 'bar',
    });
 
    map.addControl(search);
-
-   const baseLayers = {
-      'Street': street,
-   };
 
    let theMarker = {};
 
@@ -195,7 +196,10 @@
       });
    });
 
-   const layerControl = L.control.layers(baseLayers).addTo(map);
+   $('#locationPickerModal').on('hide.bs.modal', function() {
+      Livewire.dispatch('checkLocation');
+   });
+   
 
    document.addEventListener('livewire:contentChanged', function() {
       if (map) {

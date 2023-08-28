@@ -36,7 +36,7 @@
                   data-bs-toggle="dropdown">
                   <img
                      src="{{ asset(auth()->user()->avatar !== NULL ? auth()->user()->avatar : 'assets/img/avatar/avatar-1.png') }}"
-                     alt="avatar" class="avatar sm rounded-circle me-1">
+                     alt="avatar" class="avatar sm rounded-circle me-1" style="object-fit: cover;">
                   <small>{{ auth()->user()->name }}</small>
                </a>
                <!--:User dropdown:-->

@@ -8,9 +8,9 @@
         <a class="d-flex align-items-center">
             <div class="flex-shrink-0 avatar avatar-{{ $user->status == 'online' ? 'online' : 'offline' }}">
                 @if ($user->avatar == null)
-                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="Avatar" class="rounded-circle">
+                <img src="{{ asset('assets/img/avatar/avatar-1.png') }}" alt="Avatar" class="rounded-circle" style="object-fit: cover">
                 @else
-                <img src="{{ asset($user->avatar) }}" alt="Avatar" class="rounded-circle">
+                <img src="{{ asset($user->avatar) }}" alt="Avatar" class="rounded-circle" style="object-fit: cover">
                 @endif
             </div>
             <div class="chat-contact-info flex-grow-1 ms-3">

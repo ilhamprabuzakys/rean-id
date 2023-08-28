@@ -28,7 +28,7 @@ return new class extends Migration
             // Masuknya ke relasi USER
             $table->string('contact_email');
             $table->string('organizer');
-            $table->boolean('status');
+            $table->boolean('status')->default(TRUE);
             $table->foreignId('user_id');
             $table->timestamps();
         });

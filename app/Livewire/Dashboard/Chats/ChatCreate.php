@@ -82,18 +82,21 @@ class ChatCreate extends Component
                 'last_time_message' => now(),
             ]);
 
-            $createdMessage = Message::create([
-                'conversation_id' => $createdConversation->id,
-                'sender_id' => \auth()->user()->id,
-                'receiver_id' => $receiver_id,
-                'body' => $this->message,
-            ]);
+            // $createdMessage = Message::create([
+            //     'conversation_id' => $createdConversation->id,
+            //     'sender_id' => \auth()->user()->id,
+            //     'receiver_id' => $receiver_id,
+            //     'body' => $this->message,
+            // ]);
+            // $createdConversation->last_time_message = $createdMessage->created_at;
 
-            $createdConversation->last_time_message = $createdMessage->created_at;
+            $createdConversation->last_time_message = $createdConversation->created_at;
             $createdConversation->save();
 
             $this->dispatch('refreshList')->to(ChatList::class);
+            sleep(1);
             $this->dispatch('chatUserSelected', $createdConversation, $createdConversation->receiver_id)->to(ChatList::class);
+            // $this->dispatch('chatUserSelected', $createdConversation, $createdConversation->receiver_id)->to(ChatList::class);
         } else {
             // Jika ada Conversation yang sesuai, Anda bisa melakukan aksi lain atau menambah pesan ke Conversation yang sudah ada
             $this->dispatch('chatUserSelected', $existingConversation, $existingConversation->receiver_id)->to(ChatList::class);
