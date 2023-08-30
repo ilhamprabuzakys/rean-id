@@ -2,14 +2,25 @@
 
 namespace App\Livewire\Dashboard\Profile;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ProfileIndex extends Component
 {
-    public $user;
+    public $tab = '';
+    protected $updatesQueryString = ['tab'];
+    protected $queryString = [
+        'tab' => ['except' => ''],
+    ];
+
+    #[On('tab')]
+    public function tabChange($tab)
+    {
+        $this->tab = $tab;
+    }
+    
     public function render()
     {
-        $this->user = auth()->user();
         return view('livewire.dashboard.profile.profile-index');
     }
 }

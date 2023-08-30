@@ -97,7 +97,9 @@ function getPublicIP()
 
 function saveUserLogoutInfo()
 {
-    User::find(auth()->user()->id)->update([
+    $user = User::find(auth()->user()->id);
+    $user->disableLogging();
+    $user->update([
         'status' => 'offline',
         'last_activity_at' => now(),
     ]);
@@ -110,8 +112,9 @@ function saveUserLoginInfo()
     $location = Location::get($ip);
     $agent = new Agent();
     $device = $agent->isDesktop() ? 'Desktop' : ($agent->isMobile() ? 'Mobile' : 'WebKit');
-
-    User::find(auth()->user()->id)->update([
+    $user = User::find(auth()->user()->id);
+    $user->disableLogging();
+    $user->update([
         'status' => 'online',
         'last_login_at' => now(),
         'last_login_ip' => $ip

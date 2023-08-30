@@ -50,23 +50,23 @@
 
          <div class="row">
             <div class="col-xl-9 mx-auto">
-               <article class="article mb-9">
+               <article class="article mb-9 dropcap">
                   @if($media_post != null)
-                     @if(Str::endsWith($media_post->file_path, '.mp3'))
-                     <div>
-                        <audio controls>
-                           <source src="{{ asset($media_post->file_path) }}" type="audio/mpeg">
-                           Your browser does not support the audio element.
-                        </audio>
-                     </div>
-                     @elseif(Str::endsWith($media_post->file_path, '.mp4'))
-                     <div>
-                        <video controls width="320" height="240">
-                           <source src="{{ asset($media_post->file_path) }}" type="video/mp4">
-                           Your browser does not support the video tag.
-                        </video>
-                     </div>
-                     @endif
+                  @if(Str::endsWith($media_post->file_path, '.mp3'))
+                  <div>
+                     <audio controls>
+                        <source src="{{ asset($media_post->file_path) }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                     </audio>
+                  </div>
+                  @elseif(Str::endsWith($media_post->file_path, '.mp4'))
+                  <div>
+                     <video controls width="320" height="240">
+                        <source src="{{ asset($media_post->file_path) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                     </video>
+                  </div>
+                  @endif
                   @endif
 
                   {!! $post->body !!}
@@ -79,22 +79,26 @@
                   </div>
                   <div>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img style="object-fit: cover;" src="https://uigator.com/assan/5.1/public/assets/img/brands/facebook.svg" alt=""
+                        <img style="object-fit: cover;"
+                           src="https://uigator.com/assan/5.1/public/assets/img/brands/facebook.svg" alt=""
                            class="width-2x height-2x hover-lift">
                      </a>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img style="object-fit: cover;" src="https://uigator.com/assan/5.1/public/assets/img/brands/twitter.svg" alt=""
+                        <img style="object-fit: cover;"
+                           src="https://uigator.com/assan/5.1/public/assets/img/brands/twitter.svg" alt=""
                            class="width-2x height-2x hover-lift">
                      </a>
                      <a href="blog-article-basic.html#!" class="d-inline-block me-1">
-                        <img style="object-fit: cover;" src="assets/img/brands/Linkedin.svg" alt="" class="width-2x height-2x hover-lift">
+                        <img style="object-fit: cover;" src="assets/img/brands/Linkedin.svg" alt=""
+                           class="width-2x height-2x hover-lift">
                      </a>
                   </div>
                </div> --}}
 
                <div class="mt-5">
                   @forelse ($post->tags as $tag)
-                  <a class="btn btn-sm btn-soft-secondary mb-1" href="{{ route('home.tag_view', $tag) }}">#{{ $tag->name }}</a>
+                  <a class="btn btn-sm btn-soft-secondary mb-1" href="{{ route('home.tag_view', $tag) }}">#{{ $tag->name
+                     }}</a>
                   @empty
                   @endforelse
                </div>
@@ -132,7 +136,8 @@
                         </svg>
                      </a>
                   </li>
-                  <li class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
+                  <li
+                     class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
                      <span class="ms-1 me-1">Like: {{ $post->likes->count() }}</span>
                      <button href="#" wire:click='likeThis()' class="border-0 bg-transparent">
                         <i class="bx {{ $post->likes->contains(auth()->user()) ? 'bxs-heart' : 'bx-heart' }}  text-danger"
@@ -146,7 +151,8 @@
                <ul class="list-unstyled mb-7">
                   <li class="d-flex mb-3">
                      <div class="me-3">
-                        <img style="object-fit: cover;" src="assets/img/avatar/1.jpg" alt="" class="width-5x height-5x rounded-circle">
+                        <img style="object-fit: cover;" src="assets/img/avatar/1.jpg" alt=""
+                           class="width-5x height-5x rounded-circle">
                      </div>
                      <div class="px-3 py-4 border rounded border-end">
                         <div class="d-flex mb-3 justify-content-between">
@@ -168,7 +174,8 @@
                   <!--media-->
                   <li class="d-flex mb-3">
                      <div class="me-3">
-                        <img style="object-fit: cover;" src="assets/img/avatar/3.jpg" alt="" class="width-5x height-5x rounded-circle">
+                        <img style="object-fit: cover;" src="assets/img/avatar/3.jpg" alt=""
+                           class="width-5x height-5x rounded-circle">
                      </div>
                      <div class="px-3 py-4 border rounded border-end">
                         <div class="d-flex mb-3 justify-content-between">

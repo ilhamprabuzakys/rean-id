@@ -31,23 +31,24 @@ class PostDetail extends Component
             if ($this->post->likes->contains(auth()->user())) {
                 // Pengguna sudah menyukai post, maka kita hapus like-nya
                 $this->post->likes()->detach(auth()->id());
-
+                $this->post->disableLogging();
                 // Log aktivitas
-                activity('Postingan')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
-                    ->performedOn($this->post)
-                    ->causedBy(auth()->user())
-                    ->withProperties([
-                        'action' => 'unliked',
-                        'post_target' => $this->post->id,
-                        'action_user' => auth()->user()->id,
-                        'post_author' => $this->post->user->id,
-                        'message' => auth()->user()->name . ' batal menyukai postingan ' . $this->post->title,
-                    ])
-                    ->event('unliked')
-                    ->log(auth()->user()->name . ' batal menyukai postingan ' . $this->post->title);
+                // activity('Postingan')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
+                //     ->performedOn($this->post)
+                //     ->causedBy(auth()->user())
+                //     ->withProperties([
+                //         'action' => 'unliked',
+                //         'post_target' => $this->post->id,
+                //         'action_user' => auth()->user()->id,
+                //         'post_author' => $this->post->user->id,
+                //         'message' => auth()->user()->name . ' batal menyukai postingan ' . $this->post->title,
+                //     ])
+                //     ->event('unliked')
+                //     ->log(auth()->user()->name . ' batal menyukai postingan ' . $this->post->title);
             } else {
                 // Pengguna belum menyukai post, maka kita tambahkan like-nya
                 $this->post->likes()->attach(auth()->id());
+                $this->post->disableLogging();
                 // Log aktivitas
                 activity('Postingan')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
                     ->performedOn($this->post)

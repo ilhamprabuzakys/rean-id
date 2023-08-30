@@ -28,7 +28,7 @@
       </button>
    </div>
    @endif
-   <form id="form">
+   <form id="form" wire:submit.prevent='store'>
       <div class="row">
          <div class="col-sm-6 mb-3">
             <label class="form-label" for="name">Nama anda</label>
@@ -101,7 +101,7 @@
          </p>
          {{-- <input type="submit" name="submit" wire:model='submit' value="Kirim pesan" id="sendBtn"
             class="btn btn-lg btn-primary"> --}}
-         <button type="button" class="btn btn-lg btn-primary" id="send-btn-contact" wire:click.prevent='store'>
+         <button type="submit" class="btn btn-lg btn-primary" id="send-btn-contact">
             <div wire:loading wire:target='store'>
                <span class="spinner-border" role="status" aria-hidden="true"></span>
                <span class="visually-hidden">Loading...</span>

@@ -37,8 +37,8 @@ $company = \App\Models\Company::first();
                </div>
             </div>
          </div>
-
-         <div class="col-md-12 mt-3">
+         @guest
+         <div class="col-md-12 mt-5">
             <div class="px-4 py-7 px-lg-5 py-lg-7 border border-2 rounded-3 position-relative" data-aos="fade-up">
                <div class="position-relative">
 
@@ -56,6 +56,7 @@ $company = \App\Models\Company::first();
                </div>
             </div>
          </div>
+         @endguest         
       </div>
    </div>
 </section>

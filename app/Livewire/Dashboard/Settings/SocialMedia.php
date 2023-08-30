@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Dashboard\Security;
+namespace App\Livewire\Dashboard\Settings;
 
 use App\Models\User;
 use Livewire\Component;
@@ -46,7 +46,7 @@ class SocialMedia extends Component
     public function render()
     {
         $user = auth()->user();
-        return view('livewire.dashboard.security.social-media', compact('user'));
+        return view('livewire.dashboard.settings.social-media', compact('user'));
     }
 
     public function update()

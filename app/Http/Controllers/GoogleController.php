@@ -41,7 +41,18 @@ class GoogleController extends Controller
                     // password tidak akan digunakan ;)
                     'password' => \bcrypt(explode('@', $oauthUser->getEmail())[0]),
                     'avatar' => $oauthUser->avatar,
+                    'email_verified_at' => now(),
                 ]);
+                $newUser->disableLogging();
+                /* activity('Registration')
+                    ->causedBy($newUser)
+                    ->withProperties([
+                        'action' => 'registration',
+                        'action_user' =>  $newUser->id,
+                        'message' => 'Akun anda berhasil dibuat',
+                    ])
+                    ->event('registration')
+                    ->log('Akun anda berhasil dibuat'); */
                 Auth::login($newUser);
                 \saveUserLoginInfo();
                 return redirect()->intended('dashboard');

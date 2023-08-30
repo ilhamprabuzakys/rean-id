@@ -26,39 +26,40 @@
                     <h2 class="display-2 mb-4">
                         {{ $event->title }}
                     </h2>
-                    <p class="mb-0 lead pe-lg-8">{{ $event->city . ', ' . $event->province }}</p>
+                    <p class="mb-0 lead pe-lg-8"><i class="bx bx-map me-2 align-center"></i><span class="align-end">{{ $event->city . ', ' . $event->province }}</span></p>
                 </div>
                 <div class="col-xl-4">
                     <div class="d-flex align-items-center justify-content-xl-end">
                         <!--Share options-->
                         <div class="dropdown text-dark text-end">
-                            <a href="#" data-bs-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+                            <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                                class="btn btn-primary dropdown-toggle">
                                 <i class="bx bx-share-alt fs-4 me-2"></i>
                                 Bagikan
                             </a>
                             <div class="dropdown-menu dropdown-menu-end mt-2">
-                                <a href="#" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark">
                                     <div class="d-flex align-items-center">
-                                        <i class="bx bx-link fs-5 me-2"></i>
+                                        <i class="bx bx-link fs-5 me-2 text-secondary"></i>
                                         <span>Copy link</span>
                                     </div>
                                 </a>
-                                <a href="#" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark">
                                     <div class="d-flex align-items-center">
-                                        <i class="bx bxl-facebook fs-5 me-2"></i>
-                                        <span>Share via facebook</span>
+                                        <i class="bx bxl-facebook fs-5 me-2 text-primary"></i>
+                                        <span>Bagikan ke facebook</span>
                                     </div>
                                 </a>
-                                <a href="#" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark">
                                     <div class="d-flex align-items-center">
-                                        <i class="bx bxl-twitter fs-5 me-2"></i>
-                                        <span>Share via Twitter</span>
+                                        <i class="bx bxl-twitter fs-5 me-2 text-info"></i>
+                                        <span>Bagikan ke Twitter</span>
                                     </div>
                                 </a>
-                                <a href="#" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark">
                                     <div class="d-flex align-items-center">
-                                        <i class="bx bxl-whatsapp fs-5 me-2"></i>
-                                        <span>Share via Whatsapp</span>
+                                        <i class="bx bxl-whatsapp fs-5 me-2 text-success"></i>
+                                        <span>Bagikan ke Whatsapp</span>
                                     </div>
                                 </a>
                             </div>
@@ -73,25 +74,47 @@
         <div class="container py-9 py-lg-11">
             <div class="row mb-3">
                 <div class="col-md-6 mb-7 mb-md-0">
-                    <small class="d-block text-body-secondary mb-2">Deskripsi:</small>
-                    {!! $event->description !!}
-                    <small class="d-block text-body-secondary mb-4">Penyelenggara:</small>
-                    <div class="d-flex align-items-center">
-                        <div class="me-4">
-                            <img src="{{ asset($event->user->avatar == null ? "assets/img/avatar/avatar-1.png" :
-                                $event->user->avatar) }}" class="img-fluid avatar xl rounded-circle" alt="" style="object-fit: cover;" />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <small class="d-block text-body-secondary mb-2">Deskripsi:</small>
+                            <span class="mb-0 pb-3 border-bottom">{!! $event->description !!}</span>
                         </div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1">{{ $event->organizer }}</h6>
-                            <p class="small mb-1 text-body-secondary">
-                                <i class="bx bxs-mail"></i> {{ $event->contact_email }}
-                            </p>
-                            <p class="mb-0">
-                                <a href="/@/{{$event->user->username}}" class="link-hover-underline">Penyelenggara</a>
-                            </p>
+                        <div class="col-sm-12 col-lg-12">
+                            <span class="d-block text-body-secondary mb-2">Penyelenggara:</span>
+                            <div class="row">
+                                <div class="col-sm-6 mb-4 col-6">
+                                    <small class="text-body-secondary block">Nama:</small>
+                                    <span class="d-block mb-0 pb-2 border-bottom">{{ $event->organizer }}</span>
+                                </div>
+                                <div class="col-sm-6 mb-4 col-6">
+                                    <small class="text-body-secondary block">Email Penyelenggara</small>
+                                    <span class="d-block mb-0 pb-2 border-bottom">
+                                        {{ $event->contact_email }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="d-block text-body-secondary mb-2">Diupload oleh:</span>
+                            <div class="d-flex align-items-center">
+                                <div class="me-4">
+                                    <img src="{{ asset($event->user->avatar == null ? " assets/img/avatar/avatar-1.png"
+                                        : $event->user->avatar) }}" class="img-fluid avatar xl rounded-circle" alt=""
+                                    style="object-fit: cover;" />
+                                </div>
+                                <div class="flex-grow-1">
+                                    <a href="/u/{{ $event->user->username }}">
+                                        <h6 class="mb-1">{{ $event->user->name }}</h6>
+                                        <p class="small mb-1 text-body-secondary">
+                                            {{ '@' . $event->user->username }}
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-12 mb-4 col-sm-12">
@@ -101,10 +124,10 @@
                             $end_date = \Carbon\Carbon::parse($event->end_date);
                             $diffInDays = $start_date->diffInDays($end_date);
                             @endphp
-                            <h5 class="mt-1 mb-0 pb-4 border-bottom">
+                            <h6 class="mt-1 mb-0 pb-4 border-bottom">
                                 {{ \Carbon\Carbon::parse($event->start_date)->format('F d, Y h:i A') }} - {{
                                 \Carbon\Carbon::parse($event->end_date)->format('F d, Y h:i A') }}
-                            </h5>
+                            </h6>
                         </div>
                         <div class="col-sm-4 mb-4 col-6">
                             <small class="text-body-secondary block">Durasi:</small>
@@ -123,8 +146,8 @@
                             </h5>
                         </div>
                         <div class="col-sm-12 mb-4 col-12">
-                            <small class="text-body-secondary block">Alamat Lengkap</small>
-                            <h5 class="lead mb-0 pb-4 border-bottom">{{ $event->location }}</h5>
+                            <small class="text-body-secondary block mb-2">Alamat Lengkap</small>
+                            <span class="d-block mb-0 pb-3 border-bottom">{{ $event->location }}</span>
                         </div>
                         <div class="col-sm-4 mb-4 col-6">
                             <small class="text-body-secondary">Status:</small>
@@ -428,8 +451,9 @@
        }).addTo(map); */
     
        const search = new GeoSearch.GeoSearchControl({
+          notFoundMessage: 'Maaf alamat yang kamu cari tidak ditemukan, tolong cari alamat terdekat secara manual.',
           provider: providerOSM,
-          style: 'bar',
+          style: 'icon',
        });
     
        map.addControl(search);

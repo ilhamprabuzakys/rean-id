@@ -26,7 +26,7 @@
                   <div class="input-group input-group-merge">
                      <div class="form-floating form-floating-outline">
                         <input class="form-control" type="email" id="current_email" name="current_email"
-                           value='{{ auth()->user()->email }}' readonly />
+                           value='{{ $user->email }}' readonly />
                         <label for="current_email">Email saat ini</label>
                      </div>
                      <span class="input-group-text"><i class="mdi mdi-email-outline"></i></span>

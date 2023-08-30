@@ -36,7 +36,7 @@ class ChartIndex extends Component
             ->addSlice('Pending', $posts->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $posts->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $posts->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
 
         $categories = Category::all();
-        $columnChartModel = (new ColumnChartModel())->setTitle('Data Master')
+        $columnChartModel = (new ColumnChartModel())->setTitle('Data Postingan')
         ->setAnimated(true);
 
         foreach ($categories as $category) {

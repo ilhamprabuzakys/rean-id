@@ -119,7 +119,8 @@
 function shareToWhatsApp(message) {
     const phoneNumber = '6285280800064'; // CNS Radio 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+   //  const whatsappUrl = `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
     // Tentukan ukuran dan posisi window baru
     const width = 600;

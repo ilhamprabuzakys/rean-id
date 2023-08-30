@@ -27,19 +27,19 @@
                <li class="nav-item">
                   <a
                      class="nav-link {{ $tab == 'profile' ? 'active' : '' }} {{ $tab == '' ? 'active' : '' }}"
-                     wire:click='$dispatch("tab", {tab: "profile"})'><i
+                     wire:click.prevent='$dispatch("tab", {tab: "profile"})'><i
                         class="mdi mdi-account-outline mdi-20px me-1"></i>Informasi Akun</a>
                </li>
                <li class="nav-item">
                   <a
                      class="nav-link {{ $tab == 'security' ? 'active' : '' }}"
-                     wire:click='$dispatch("tab", {tab: "security"})'><i
+                     wire:click.prevent='$dispatch("tab", {tab: "security"})'><i
                         class="mdi mdi-lock-open-outline mdi-20px me-1"></i>Keamanan</a>
                </li>
                <li class="nav-item">
                   <a
                      class="nav-link {{ $tab == 'social-media' ? 'active' : '' }}"
-                     wire:click='$dispatch("tab", {tab: "social-media"})'><i
+                     wire:click.prevent='$dispatch("tab", {tab: "social-media"})'><i
                         class="mdi mdi-link mdi-20px me-1"></i>Sosial Media</a>
                </li>
             </ul>
@@ -48,20 +48,20 @@
       <div class="row">
          @switch($tab)
             @case('profile')
-               <livewire:dashboard.profile.profile-basic />
+               <livewire:dashboard.settings.profile-basic />
             @break
 
             @case('security')
-               <livewire:dashboard.security.password-change />
-               <livewire:dashboard.security.email-change />
+               <livewire:dashboard.settings.security.password-change />
+               <livewire:dashboard.settings.security.email-change />
             @break
 
             @case('social-media')
-               <livewire:dashboard.security.social-media />
+               <livewire:dashboard.settings.social-media />
             @break
 
             @default
-               <livewire:dashboard.profile.profile-basic />
+               <livewire:dashboard.settings.profile-basic />
          @endswitch
       </div>
    </div>

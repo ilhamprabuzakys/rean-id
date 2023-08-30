@@ -37,7 +37,7 @@ class RecentLoginActivity extends Component
                 ->whereDate('created_at', '<=', $endDate);
         });
 
-        $login_info =  $query->paginate(10);;
+        $login_info =  $query->paginate($this->paginate);
         return view('livewire.dashboard.recent-login-activity', compact('login_info'));
     }
 

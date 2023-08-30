@@ -163,7 +163,7 @@
    @include('dashboard.template.partials.modal.notifikasi')
 
    <livewire:scripts />
-   @livewireChartsScripts
+   {{-- <livewire:charts-scripts /> --}}
    @stack('script')
    @stack('modal')
 
@@ -254,6 +254,7 @@
          disableStats: true,
       });
    </script> --}}
+   @livewireChartsScripts
 </body>
 
 </html>

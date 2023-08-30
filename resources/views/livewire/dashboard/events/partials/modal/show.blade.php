@@ -132,7 +132,7 @@
    var search = new GeoSearch.GeoSearchControl({
       notFoundMessage: 'Maaf alamat yang kamu cari tidak ditemukan, tolong cari alamat terdekat secara manual.',
       provider: new GeoSearch.OpenStreetMapProvider(),
-      style: 'bar',
+      style: 'icon',
    });
 
    map{{$event->id}}.addControl(search);

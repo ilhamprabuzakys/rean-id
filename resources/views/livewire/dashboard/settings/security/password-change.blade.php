@@ -2,9 +2,9 @@
    <div class="card mb-4">
       <h5 class="card-header">
          Ganti Password
-         
+         <livewire:dashboard.settings.security.reset-password-link />
          <div class="text-muted small mt-1 mb-0">
-            <small>Jika anda mendaftar dengan akun google, maka password anda adalah nama depan email yang anda gunakan saat registrasi/login yakni <strong>{{ explode('@', auth()->user()->email)[0] }}</strong>.</small>
+            <small>Jika anda mendaftar dengan akun google, maka password anda adalah nama depan email yang anda gunakan saat registrasi/login yakni <strong>{{ explode('@', $user->email)[0] }}</strong>.</small>
          </div>
       </h5>
       <div class="card-body">
@@ -30,7 +30,7 @@
                   <div class="input-group input-group-merge">
                      <div class="form-floating form-floating-outline">
                         <input class="form-control" type="email" id="current_email" name="current_email"
-                           value='{{ auth()->user()->email }}' readonly />
+                           value='{{ $user->email }}' readonly />
                         <label for="current_email">Email saat ini</label>
                      </div>
                      <span class="input-group-text"><i class="mdi mdi-email-outline"></i></span>

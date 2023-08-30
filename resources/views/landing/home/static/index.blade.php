@@ -1,91 +1,45 @@
 @extends('landing.layouts.template')
 @section('header-class', 'navbar-link-white')
 @push('particle')
-   <!--Particles-js-->
-   <div class="position-fixed start-0 top-0 bottom-0 end-0 z-fixed pe-none w-100 h-100 start-0 top-0"
-   id="particles-js"></div>
+<div class="position-fixed start-0 top-0 bottom-0 end-0 z-fixed pe-none w-100 h-100 start-0 top-0" id="particles-js">
+</div>
 @endpush
-@push('scripts')
-   <script>
-      //Classic
-      var swiperClassic = new Swiper(".swiper-classic", {
-         effect: "fade",
-         slidesPerView: 1,
-         spaceBetween: 0,
-         loop: true,
-         autoplay: {
-            delay: 2500
-         },
-         pagination: {
-            el: ".swiperClassic-pagination",
-            clickable: true
-         },
-         navigation: {
-            nextEl: ".swiperClassic-button-next",
-            prevEl: ".swiperClassic-button-prev"
-         }
-      });
-   </script>
-   <script>
-      Splitting();
-      //Splitting text
-
-      //Swiper Slider
-      var swiper3 = new Swiper(".event-saat-ini", {
-         autoHeight: true,
-         spaceBetween: 16,
-         slidesPerView: 1,
-         spaceBetween: 16,
-         pagination: {
-            el: ".swiper3-pagination",
-            clickable: true
-         },
-         navigation: {
-            nextEl: ".swiper3-button-next",
-            prevEl: ".swiper3-button-prev"
-         }
-      });
-   </script>
-@endpush
-@section('hero')
-   @include('landing.layouts.partials.hero-agency')
-@endsection
 @section('content')
-   <!--begin:Partners section-->
-   @include('landing.layouts.partials.partners')
-   <!--/end:Partners section-->
+<!--begin:Partners section-->
+{{-- @include('landing.layouts.partials.partners') --}}
+<!--/end:Partners section-->
 
-   <!--begin:About section-->
-   @include('landing.layouts.partials.about')
-   <!--end/:About section-->
+<!--begin: Highlighted Content section-->
+@include('landing.layouts.partials.highlighted-content')
+<!--/end: Highlighted Content section-->
 
-   <!--begin: Services section-->
-  @include('landing.layouts.partials.services')
-   <!--/end: Services section-->
+<!--begin: Event section-->
+@include('landing.layouts.partials.event')
+<!--/end: Event section-->
 
-   <!--begin: quote parallax section-->
-   {{-- @include('landing.layouts.partials.quote') --}}
-   <!--/end: quote parallax section-->
+<!--begin:About section-->
+@include('landing.layouts.partials.about')
+<!--end/:About section-->
 
-   <!--begin: Testimonials section-->
-   @include('landing.layouts.partials.testimonials')
-   <!--/end: Testimonials section-->
+<!--begin: quote parallax section-->
+{{-- @include('landing.layouts.partials.quote') --}}
+<!--/end: quote parallax section-->
 
-   <!--begin: feature image section-->
-   @include('landing.layouts.partials.feature-image')
-   <!--/end: feature image section-->
+<!--begin: feature image section-->
+{{-- @include('landing.layouts.partials.feature-image') --}}
+<!--/end: feature image section-->
 
-   <!--begin: Process section-->
-   @include('landing.layouts.partials.process')
-   <!--/end: Process section-->
+<!--begin: Process section-->
+@include('landing.layouts.partials.process')
+<!--/end: Process section-->
 
-   <!--begin:Blog section-->
-   @include('landing.layouts.partials.blog')
-   <!--/end:Blog section-->
+<!--begin:Blog section-->
+@include('landing.layouts.partials.blog')
+<!--/end:Blog section-->
 
-   <!--begin: Newsletter section-->
-   @include('landing.layouts.partials.news-latter')
-   <!--/end: Newsletter section-->
+<!--begin: Newsletter section-->
+@include('landing.layouts.partials.contact')
+<!--/end: Newsletter section-->
 @endsection
 @push('scripts')
 @include('landing.layouts.partials.js.hero-slider')
@@ -196,3 +150,94 @@
     });
 </script>
 @endpush
+@push('scripts')
+<script>
+    //Classic
+      var swiperClassic = new Swiper(".swiper-classic", {
+         effect: "fade",
+         slidesPerView: 1,
+         spaceBetween: 0,
+         loop: true,
+         autoplay: {
+            delay: 2500
+         },
+         pagination: {
+            el: ".swiperClassic-pagination",
+            clickable: true
+         },
+         navigation: {
+            nextEl: ".swiperClassic-button-next",
+            prevEl: ".swiperClassic-button-prev"
+         }
+      });
+</script>
+<script>
+    Splitting();
+      //Splitting text
+
+      //Swiper Slider
+      var swiper3 = new Swiper(".event-saat-ini", {
+         autoHeight: true,
+         spaceBetween: 16,
+         slidesPerView: 1,
+         spaceBetween: 16,
+         pagination: {
+            el: ".swiper3-pagination",
+            clickable: true
+         },
+         navigation: {
+            nextEl: ".swiper3-button-next",
+            prevEl: ".swiper3-button-prev"
+         }
+      });
+
+      //swiper-testimonials
+      var swiperAuto = new Swiper(".swiper-testimonials", {
+        effect: "fade",
+        autoHeight: true,
+        spaceBetween: 16,
+        slidesPerView: 1,
+        grabCursor: false,
+        pagination: {
+          el: ".swiperAuto-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiperAuto-button-next",
+          prevEl: ".swiperAuto-button-prev",
+        }
+      });
+
+       //Swiper Slider
+       var swiper5 = new Swiper(".data-master", {
+         autoHeight: true,
+         spaceBetween: 16,
+         breakpoints: {
+            640: {
+               slidesPerView: 2,
+               spaceBetween: 16
+            },
+            768: {
+               slidesPerView: 3,
+               spaceBetween: 16
+            },
+            1024: {
+               slidesPerView: 4,
+               spaceBetween: 20
+            }
+         },
+         pagination: {
+            el: ".swiper-master-pagination",
+            clickable: true
+         },
+         navigation: {
+            nextEl: ".swiper-master-button-next",
+            prevEl: ".swiper-master-button-prev"
+         }
+      });
+</script>
+
+@endpush
+@section('hero')
+@include('landing.layouts.partials.hero-agency')
+@endsection

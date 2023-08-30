@@ -1,4 +1,3 @@
-<!--  Large modal example -->
 @php
 $notifications = \Spatie\Activitylog\Models\Activity::causedBy(auth()->user())->latest('created_at')->get();
 @endphp
@@ -54,9 +53,25 @@ $notifications = \Spatie\Activitylog\Models\Activity::causedBy(auth()->user())->
                      <span class="avatar-initial rounded-circle bg-label-success">
                         <i class="mdi mdi-note-edit-outline"></i>
                      </span>
-                     @else
+                     @elseif ($notification->event == 'deleted')
                      <span class="avatar-initial rounded-circle bg-label-danger">
                         <i class="mdi mdi-trash-can-outline"></i>
+                     </span>
+                     @elseif ($notification->event == 'profile')
+                     <span class="avatar-initial rounded-circle bg-label-success">
+                        <i class="mdi mdi-account-outline"></i>
+                     </span>
+                     @elseif ($notification->event == 'ganti-password')
+                     <span class="avatar-initial rounded-circle bg-label-success">
+                        <i class="mdi mdi-lock-outline"></i>
+                     </span>
+                     @elseif ($notification->event == 'ganti-email')
+                     <span class="avatar-initial rounded-circle bg-label-success">
+                        <i class="mdi mdi-email-outline"></i>
+                     </span>
+                     @elseif ($notification->event == 'liked')
+                     <span class="avatar-initial rounded-circle bg-label-danger">
+                        <i class="mdi mdi-heart-outline"></i>
                      </span>
                      @endif
                   </div>
@@ -67,19 +82,31 @@ $notifications = \Spatie\Activitylog\Models\Activity::causedBy(auth()->user())->
                         <div class="user-info ps-2">
                            <h6 class="mb-0">{{ $notification->description }}</h6>
                            <div>
-                              <small>Terjadi {{ $event }} data pada tabel {{
-                                 $notification->log_name }}</small>
+                              <small>
+                                 @if($notification->event == 'ganti-email')
+                                 Email untuk akun anda berhasil diperbarui.
+                                 @elseif($notification->event == 'ganti-password')
+                                 Password untuk akun anda berhasil diperbarui.
+                                 @elseif($notification->event == 'profile')
+                                 Pembaharuan berhasil diterapkan.
+                                 @elseif($notification->event == 'liked')
+                                 Postingan anda disukai oleh orang lain
+                                 @else
+                                 Terjadi {{ $event }} data pada tabel {{ $notification->log_name }}
+                                 @endif
+                              </small>
                            </div>
                            <div class="d-flex align-items-center mt-1">
                               <div class="user-status me-2 d-flex align-items-center">
                                  @if($notification->event == 'created')
                                  <span class="badge badge-dot bg-primary me-1"></span>
                                  <small>Penambahan</small>
-                                 @elseif ($notification->event == 'updated')
+                                 @elseif ($notification->event == 'updated' || $notification->event == 'profile' ||
+                                 $notification->event == 'ganti-email' || $notification->event == 'ganti-password' || $notification->event == 'liked' )
                                  <span class="badge badge-dot bg-success me-1"></span>
                                  <small>Perubahan</small>
                                  </span>
-                                 @else
+                                 @elseif ($notification->event == 'deleted')
                                  <span class="badge badge-dot bg-danger me-1"></span>
                                  <small>Penghapusan</small>
                                  </span>

@@ -23,7 +23,7 @@
                 </div>
                 <div class="flex-grow-1">
                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
-                   <small class="text-muted">{{ auth()->user()->role }}</small>
+                   <small class="text-muted">Login sebagai {{ auth()->user()->role }}</small>
                 </div>
              </div>
           </a>
@@ -32,7 +32,16 @@
           <div class="dropdown-divider"></div>
        </li>
        <li>
-          <a class="dropdown-item" href="{{ route('settings', ['tab' => 'profile']) }}">
+          <a class="dropdown-item" href="javascript:void(0)">
+             <i class="mdi mdi-clock-outline me-2"></i>
+             <span class="align-middle text-muted small">Terakhir login {{ \Carbon\Carbon::parse(auth()->user()->last_activity_at)->diffForHumans() }}</span>
+          </a>
+       </li>
+       <li>
+          <div class="dropdown-divider"></div>
+       </li>
+       <li>
+          <a class="dropdown-item" href="{{ route('profile') }}">
              <i class="mdi mdi-account-outline me-2"></i>
              <span class="align-middle">My Profile</span>
           </a>
@@ -47,7 +56,7 @@
           <div class="dropdown-divider"></div>
        </li>
        <li>
-          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <a class="dropdown-item" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#logoutModal">
              <i class="mdi mdi-logout me-2"></i>
              <span class="align-middle">Log Out</span>
           </a>

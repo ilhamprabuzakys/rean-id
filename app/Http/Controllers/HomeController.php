@@ -32,6 +32,13 @@ class HomeController extends Controller
         return view('landing.home.static.index', compact('posts', 'categories', 'events'));
     }
 
+    public function about()
+    {
+        return view('landing.home.static.about', [
+            'title' => 'About',
+        ]);
+    }
+    
     public function cns_radio()
     {
         return view('landing.home.static.cns-radio', [

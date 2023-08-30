@@ -3,11 +3,11 @@
        <div class="row mb-7">
            <div class="col-lg-8 mx-auto text-center">
                <div class="mb-3" data-aos="fade-up">
-                   <h6 class="mb-0">Data-driven methodologies.
+                   <h6 class="mb-0">Pengembangan dan Penyuluhan.
                    </h6>
                </div>
                <div class="mb-3" data-aos="fade-up">
-                   <h1 class="mb-0 display-4">Our work process
+                   <h1 class="mb-0 display-4">Proses Layanan Kami
                    </h1>
                </div>
            </div>
@@ -18,11 +18,9 @@
                    <span
                        class="d-block position-absolute start-50 top-0 translate-middle-x lh-1 display-1 opacity-25">01</span>
                    <div class="position-relative pt-4 pt-lg-6">
-                       <h5 class="mb-4">Collaboration</h5>
+                       <h5 class="mb-4">Edukasi Holistik</h5>
                        <p class="mb-0 opacity-75 w-lg-75">
-                           Lorem ipsum dolor sit amet elit, sed do eiusmod tempor
-                           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                           ullamco laboris nisi ut aliquip commodo consequat.
+                        Melalui pendekatan yang komprehensif, kami menjangkau seluruh segmen masyarakat, dari remaja hingga orang dewasa, dengan informasi yang akurat tentang bahaya narkoba. Mempersiapkan generasi masa depan dengan pengetahuan untuk membuat pilihan yang tepat.
                        </p>
                    </div>
                </div>
@@ -32,11 +30,9 @@
                    <span
                        class="d-block position-absolute start-50 top-0 translate-middle-x lh-1 display-1 opacity-25">02</span>
                    <div class="position-relative pt-4 pt-lg-6">
-                       <h5 class="mb-4">Execution</h5>
+                       <h5 class="mb-4">Pemberdayaan Komunitas</h5>
                        <p class="mb-0 opacity-75 w-lg-75">
-                           Lorem ipsum dolor sit amet elit, sed do eiusmod tempor
-                           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                           ullamco laboris nisi ut aliquip commodo consequat.
+                        Kami percaya kekuatan ada di tangan komunitas. Dengan serangkaian workshop, seminar, dan program pelatihan, kami memberdayakan masyarakat untuk berdiri bersama melawan penyalahgunaan narkoba dan membantu sesama yang membutuhkan.
                        </p>
                    </div>
                </div>
@@ -46,11 +42,9 @@
                    <span
                        class="d-block position-absolute start-50 top-0 translate-middle-x lh-1 display-1 opacity-25">03</span>
                    <div class="position-relative pt-4 pt-lg-6">
-                       <h5 class="mb-4">Financial Intelligence</h5>
+                       <h5 class="mb-4">Jaringan Dukungan Luas</h5>
                        <p class="mb-0 opacity-75 w-lg-75">
-                           Lorem ipsum dolor sit amet elit, sed do eiusmod tempor
-                           labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                           ullamco laboris nisi ut aliquip commodo consequat.
+                        Ketika seseorang berjuang melawan ketergantungan, dukungan adalah kunci. Komunitas kami menawarkan jaringan dukungan yang luas, mulai dari konseling hingga rehabilitasi, untuk memastikan setiap individu mendapatkan bantuan yang mereka butuhkan.
                        </p>
                    </div>
                </div>

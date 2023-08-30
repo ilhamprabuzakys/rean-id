@@ -1,34 +1,52 @@
 <div>
-    <h4 class="fw-bold py-3 mb-4">
-        <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-        <a class="text-muted fw-light" href="{{ route('posts.index') }}">Profile /</a>
-        Informasi Akun
-     </h4>
-     <div class="row">
-        <div class="col-md-12">
-           <ul
-              class="nav nav-pills flex-column flex-md-row mb-3 gap-2 gap-lg-0">
-              <li class="nav-item">
-                 <a
-                    class="nav-link active"
-                    href="javascript:void(0);"><i
-                       class="mdi mdi-account-outline mdi-20px me-1"></i>Informasi Akun</a>
-              </li>
-              <li class="nav-item">
-                 <a
-                    class="nav-link"
-                    href="{{ route('settings.security', auth()->user()) }}"><i
-                       class="mdi mdi-lock-open-outline mdi-20px me-1"></i>Keamanan</a>
-              </li>
-              <li class="nav-item">
-                 <a
-                    class="nav-link"
-                    href="{{ route('settings.social-media', auth()->user()) }}"><i
-                       class="mdi mdi-link mdi-20px me-1"></i>Sosial Media</a>
-              </li>
-           </ul>
-           <livewire:dashboard.profile.profile-basic />
-           
-        </div>
-     </div>
+   <h4 class="fw-bold py-3 mb-4">
+      <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      <a class="text-muted fw-light" href="{{ route('profile') }}">Profile /</a>
+      @switch($tab)
+         @case('profile')
+            Informasi Akun
+         @break
+         @case('postingan')
+            Postingan
+         @break
+         @case('ebook')
+            Ebook 
+         @break
+         @case('event')
+            Event
+         @break
+         @case('berita')
+            Berita
+         @break
+         @default
+            Informasi Akun
+      @endswitch
+   </h4>
+   <!-- Header -->
+   @include('livewire.dashboard.profile.partials.header')
+   <!--/ Header -->
+   
+   <!-- Navbar pills -->
+   {{-- @include('livewire.dashboard.profile.partials.navbar-pills') --}}
+   <!--/ Navbar pills -->
+   
+   @switch($tab)
+   @case('profile')
+   <livewire:dashboard.profile.profile-basic />
+   @break
+   @case('postingan')
+   <livewire:dashboard.profile.profile-post />
+   @break
+   @case('ebook')
+   <livewire:dashboard.profile.profile-ebook />
+   @break
+   @case('event')
+   <livewire:dashboard.profile.profile-event />
+   @break
+   @case('berita')
+   <livewire:dashboard.profile.profile-news />
+   @break
+   @default
+   <livewire:dashboard.profile.profile-basic />
+   @endswitch
 </div>

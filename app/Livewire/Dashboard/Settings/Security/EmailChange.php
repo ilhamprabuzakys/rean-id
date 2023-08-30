@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Livewire\Dashboard\Security;
+namespace App\Livewire\Dashboard\Settings\Security;
 
+use App\Livewire\Dashboard\Settings\ProfileBasic;
 use App\Mail\MailOtp;
 use App\Models\User;
 use App\Models\VerificationCode;
@@ -9,11 +10,12 @@ use App\Rules\MatchingPassword;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class EmailChange extends Component
 {
-    public $current_password, $current_email, $new_email, $otp;
+    public $current_password, $current_email, $new_email, $otp, $user;
     public $clickSendEmail = false;
     public $otpSended = false;
 
@@ -41,7 +43,14 @@ class EmailChange extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.security.email-change');
+        $this->initializeUser();
+        return view('livewire.dashboard.settings.security.email-change');
+    }
+
+    #[On('refresh')]
+    public function initializeUser()
+    {
+        $this->user = auth()->user();
     }
 
     public function sendEmail()
@@ -134,13 +143,27 @@ class EmailChange extends Component
                             'expired' => true,
                             'expired_at' => Carbon::now()->toDateTimeString()
                         ]);
-                        auth()->user()->update(['email' => $this->new_email]);
-                        $this->resetForm();
+                        $this->user->disableLogging();
+                        $this->user->update(['email' => $this->new_email]);
+                        activity('Ganti Email')
+                            ->causedBy($this->user)
+                            ->withProperties([
+                                'action' => 'update',
+                                'action_user' => $this->user->id,
+                                'message' => 'Berhasil mengganti email anda menjadi ' . $this->new_email,
+                            ])
+                            ->event('ganti-email')
+                            ->log('Email anda berhasil diperbarui');
+                        
+                        $this->dispatch('refresh')->self();
+                        $this->dispatch('refresh')->to(PasswordChange::class);
+                        $this->dispatch('refresh')->to(ProfileBasic::class);
                         $this->dispatch('swal:modal', [
                             'icon' => 'success',
                             'title' => 'Berhasil',
-                            'text' => 'Email anda berhasil diubah menjadi:<br><b>' . auth()->user()->email . '</b>'
+                            'text' => 'Email anda berhasil diubah menjadi:<br><b>' . $this->new_email . '</b>'
                         ]);
+                        $this->resetForm();
                     }
                 } catch (ValidationException $e) {
                     $this->dispatch('swal:modal', [
@@ -168,20 +191,5 @@ class EmailChange extends Component
         $this->current_password = null;
         $this->new_email = null;
         $this->otp = null;
-    }
-
-    public function alertSuccess($message, $title = 'Berhasil')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-
-    public function alertError($message, $title = 'Error')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 }

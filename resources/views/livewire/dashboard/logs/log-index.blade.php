@@ -2,7 +2,11 @@
    {{-- Care about people's approval and you will be their prisoner. --}}
    <h4 class="fw-bold py-3 mb-4">
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
+      @if($isMember == true)
+      <a class="text-muted fw-bold active" href="javascript:void()">Log Aktivitas</a>
+      @else
       <a class="text-muted fw-light" href="{{ route('logs.index') }}">Log Aktivitas /</a>
+      @endif
       @if($isMember == false)
          @switch($tab)
             @case('semua')

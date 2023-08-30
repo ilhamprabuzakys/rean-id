@@ -4,6 +4,7 @@
             <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end"
                 id="app-chat-contacts">
                 <div class="sidebar-body">
+                    <i class="mdi mdi-close mdi-20px cursor-pointer position-absolute top-0 end-0 mt-2 me-2 fs-4 d-lg-none d-block" data-overlay="" data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
                     <!-- Chat & Contacts -->
                     <livewire:dashboard.chats.chat-list />
                     <livewire:dashboard.chats.chat-create />

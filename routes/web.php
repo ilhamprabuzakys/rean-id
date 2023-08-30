@@ -5,24 +5,18 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EbookController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HeroImageController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LandingController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MediaPostController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Utils\TableController;
 use App\Http\Controllers\WebsiteBuilderController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
-use Spatie\Analytics\Facades\Analytics;
-use Spatie\Analytics\Period;
 
 // Paksa URL route menggunakan konfigurasi di ENV
 URL::forceRootUrl(config('app.url'));
@@ -48,15 +42,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
             Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
             Route::resource('/events', EventController::class)->except(['show']);
-            Route::resource('/ebooks', EbookController::class)->except(['show']);
             Route::resource('/news', NewsController::class);
-            Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
             Route::resource('/users', UserController::class);
         });
-
+        
         Route::get('/posts/checkSlug', [PostController::class, 'checkSlug'])->name('posts.checkslug');
         Route::resource('/posts', PostController::class);
+        Route::resource('/ebooks', EbookController::class)->except(['show']);
+        Route::get('/chats', [ChatController::class, 'index'])->name('chats.index');
 
         Route::middleware(['role:superadmin,admin'])->group(function () {
             Route::resource('/categories', CategoryController::class);
@@ -81,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['record.visitor'])->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/about', 'about')->name('home.about');
         Route::get('/all-post', 'all_post')->name('home.all_post');
         Route::get('/semua-postingan', 'semua_postingan')->name('home.semua_postingan');
         Route::get('/events/{event}', 'event_detail')->name('home.events.show');

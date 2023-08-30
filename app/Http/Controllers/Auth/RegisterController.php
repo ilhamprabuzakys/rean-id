@@ -161,6 +161,17 @@ class RegisterController extends Controller
                     'role' => 'member',
                     'email_verified_at' => now(),
                 ]);
+                $newUser->disableLogging();
+                /* activity('Registration')
+                    ->causedBy($newUser)
+                    ->withProperties([
+                        'action' => 'registration',
+                        'action_user' =>  $newUser->id,
+                        'message' => 'Akun anda berhasil dibuat',
+                    ])
+                    ->event('registration')
+                    ->log('Akun anda berhasil dibuat');
+                     */
                 $otpM->update([
                     'expired' => true,
                     'expired_at' => Carbon::now()->toDateTimeString()
@@ -196,7 +207,7 @@ class RegisterController extends Controller
                     'auth_field' => ['required'],
                     'password' => ['required', 'min:5', 'max:50', 'confirmed'],
                     'username' => ['min:4', 'max:255', 'unique:users'],
-                ];  
+                ];
             }
             $data = [];
             $validator = Validator::make($request->all(), $rules);
@@ -227,7 +238,7 @@ class RegisterController extends Controller
                 $validatedData['email'] = $data['email'];
                 if ($request->input('username') == '') {
                     $validatedData['username'] = explode('@', $validatedData['email'])[0];
-                } 
+                }
             } elseif ($data['mobile_no']) {
                 $validatedData['email'] = $data['mobile_no'];
             }

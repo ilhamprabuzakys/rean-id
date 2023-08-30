@@ -16,7 +16,7 @@
             </button>
             {{-- Search Bar --}}
             <div class="nav-item me-3 me-lg-0">
-               <a href="#" data-bs-target="#modal-search-bar" data-bs-toggle="modal" class="nav-link lh-1">
+               <a href="javascript:void(0)" data-bs-target="#modal-search-bar" data-bs-toggle="modal" class="nav-link lh-1">
                   <i class="bx bx-search-alt-2 fs-5 lh-1"></i>
                </a>
                <!--Search-bar-2-collapse-->
@@ -37,7 +37,7 @@
                   <img
                      src="{{ asset(auth()->user()->avatar !== NULL ? auth()->user()->avatar : 'assets/img/avatar/avatar-1.png') }}"
                      alt="avatar" class="avatar sm rounded-circle me-1" style="object-fit: cover;">
-                  <small>{{ auth()->user()->name }}</small>
+                  <small>{{ Str::limit(auth()->user()->name, 5, '') }}</small>
                </a>
                <!--:User dropdown:-->
                <div class="dropdown-menu shadow-lg dropdown-menu-end dropdown-menu-xs p-0">
@@ -58,7 +58,7 @@
                   </div>
                   <form action="{{ route('logout') }}" method="POST" id="logoutForm">
                      @csrf
-                     <a href="#" onclick="confirmLogout(event);"
+                     <a href="javascript:void(0)" onclick="confirmLogout(event);"
                         class="dropdown-item rounded-top-0 p-3">
                         <span class="d-block text-end">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -85,57 +85,9 @@
             </div>
             @else
             <div class="nav-item me-3 me-lg-0 ms-lg-4 ms-xl-5 dropdown">
-               <a href="header-login.html#" class="btn btn-primary px-4 btm-sm rounded-pill py-1"
-                  data-bs-auto-close="outside" data-bs-toggle="dropdown">
+               <a href="{{ route('login') }}" class="btn btn-primary px-4 btm-sm rounded-pill py-1">
                   Sign In
                </a>
-               <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-4">
-                  <!--:Sign In Form:-->
-                  <form class="needs-validation" novalidate="">
-                     <div>
-                        <h3 class="mb-1">
-                           Welcome back!
-                        </h3>
-                        <p class="mb-4 text-body-secondary">
-                           Please Sign In with details...
-                        </p>
-                     </div>
-                     <div class="input-icon-group mb-3">
-                        <span class="input-icon">
-                           <i class="bx bx-envelope"></i>
-                        </span>
-                        <input type="email" required="" class="form-control" autofocus="" placeholder="Username">
-                     </div>
-                     <div class="input-icon-group mb-3">
-                        <span class="input-icon">
-                           <i class="bx bx-key"></i>
-                        </span>
-                        <input type="password" required="" class="form-control" placeholder="Password">
-                     </div>
-                     <div class="mb-3 d-flex justify-content-between">
-                        <div class="form-check">
-                           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                           <label class="form-check-label" for="flexCheckDefault">
-                              Remember me
-                           </label>
-                        </div>
-                        <div>
-                           <label class="text-end d-block small mb-0"><a href="page-account-forget-password.html"
-                                 class="link-decoration">Forget Password?</a></label>
-                        </div>
-                     </div>
-
-                     <div class="d-grid">
-                        <button class="btn btn-primary btn-hover-arrow" type="submit">
-                           <span>Sign in</span>
-                        </button>
-                     </div>
-                     <p class="pt-4 mb-0 text-body-secondary">
-                        Don’t have an account yet? <a href="page-account-signup.html"
-                           class="ms-2 pb-0 fw-semibold link-underline">Sign Up</a>
-                     </p>
-                  </form>
-               </div>
             </div>
             @endauth
          </div>
@@ -145,16 +97,24 @@
             <!--begin:Navbar items-->
             <ul class="navbar-nav ms-auto">
 
-               <li class="nav-item me-lg-2">
+               {{-- <li class="nav-item me-lg-2">
                   <a href="{{ route('home.all_post') }}" class="nav-link">Artikel</a>
-               </li>
+               </li> --}}
                {{-- <li class="nav-item me-lg-2">
                   <a href="{{ route('home.category_list') }}" class="nav-link">Kategori</a>
                </li> --}}
-               <li class="nav-item me-lg-2">
-                  <a href="{{ route('home.semua_postingan') }}"
-                     class="nav-link {{ str_starts_with(request()->url(), route('home.semua_postingan')) ? 'active' : '' }}">Data</a>
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle " href="javascript:void(0)" role="button"
+                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                     data-bs-auto-close="click">Data
+                  </a>
+                  <div class="dropdown-menu">
+                     <a class="dropdown-item" href="{{ route('home.category_list') }}">Kategori</a>
+                     <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
+                     <a class="dropdown-item" href="{{ route('home.about') }}">About</a>
+                  </div>
                </li>
+
                <li class="nav-item me-lg-2">
                   <a href="{{ route('home.events.index') }}"
                      class="nav-link {{ str_starts_with(request()->url(), route('home.events.index')) ? 'active' : '' }}">Events</a>

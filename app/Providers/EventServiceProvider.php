@@ -14,6 +14,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Spatie\Activitylog\Events\ActivityCreated;
+use Spatie\Activitylog\Events\ActivityUpdated;
+use Spatie\Activitylog\Events\ActivityDeleted;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -37,6 +40,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         TagActionEvent::class => [
             TagCacheListener::class,
+        ],
+        ActivityCreated::class => [
+            SendLivewireRefreshEvent::class,
+        ],
+        ActivityUpdated::class => [
+            SendLivewireRefreshEvent::class,
+        ],
+        ActivityDeleted::class => [
+            SendLivewireRefreshEvent::class,
         ],
     ];
 

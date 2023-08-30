@@ -70,7 +70,7 @@ class Login extends Component
                 }
     
                 if ($user->email_verified_at === null) {
-                    return $this->failedLoginResponse('Akun anda belum dibekukan atau terkena dinonaktifkan sementara');
+                    return $this->failedLoginResponse('Akun anda dibekukan atau dinonaktifkan sementara');
                 }
     
                 if ($user->active == 0) {
@@ -92,7 +92,6 @@ class Login extends Component
                     'text' => 'Akan diredirect ke dashboard',
                     'duration' => 3000,
                 ]);
-                
                 \saveUserLoginInfo();
                 return redirect()->intended('/dashboard');
             } catch (ValidationException $e) {

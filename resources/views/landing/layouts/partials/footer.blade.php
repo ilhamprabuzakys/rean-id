@@ -65,17 +65,17 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <!-- Social button -->
-                    <a href="#" class="d-inline-block link-dark mb-1 me-2 si rounded-pill si-hover-facebook">
+                    <a href="#" class="d-inline-block mb-1 me-2 si rounded-pill si-hover-facebook">
                         <i class="bx bxl-facebook fs-5"></i>
                         <i class="bx bxl-facebook fs-5"></i>
                     </a>
                     <!-- Social button -->
-                    <a href="#" class="d-inline-block link-dark mb-1 me-2 si rounded-pill si-hover-twitter">
+                    <a href="#" class="d-inline-block mb-1 me-2 si rounded-pill si-hover-twitter">
                         <i class="bx bxl-twitter fs-5"></i>
                         <i class="bx bxl-twitter fs-5"></i>
                     </a>
                     <!-- Social button -->
-                    <a href="#" class="d-inline-block link-dark mb-1 me-2 si rounded-pill si-hover-linkedin">
+                    <a href="#" class="d-inline-block mb-1 me-2 si rounded-pill si-hover-linkedin">
                         <i class="bx bxl-linkedin fs-5"></i>
                         <i class="bx bxl-linkedin fs-5"></i>
                     </a>

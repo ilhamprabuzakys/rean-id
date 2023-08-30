@@ -11,11 +11,11 @@
                         <option value="15">15</option>
                     </select>
                 </div>
-                <div class="col-3 col-sm-4 d-flex justify-content-start">
+                <div class="col-lg-5 col-sm-4 d-flex justify-content-start">
                     <input type="text" name="search" id="search" wire:model.live="search" class="form-control"
                         placeholder="Ketik sesuatu..">
                 </div>
-                <div class="col-3 col-sm-3 d-flex justify-content-start">
+                <div class="col-lg-3 col-sm-3 d-flex justify-content-start">
                     <select class="form-select form-select-md" name="filter_device" id="filter_device"
                         wire:model.live='filter_device'>
                         <option selected value="">Pilih device</option>
@@ -23,7 +23,7 @@
                         <option value="Desktop">Desktop</option>
                     </select>
                 </div>
-                <div class="col-5 col-sm-3 d-flex justify-content-start">
+                <div class="col-lg-3 col-sm-3 d-flex justify-content-start">
                     <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control"
                         placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
                 </div>
@@ -42,7 +42,7 @@
 
         <div class="card-datatable">
             <div class="table-responsive">
-                <table class="table" id="aktivitas-table">
+                <table class="table table-sm" id="aktivitas-table">
                     <thead class="table-light">
                         <tr>
                             <th class="text-truncate">
@@ -72,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($login_info->sortByDesc('login_at') as $info)
+                        @foreach ($login_info as $info)
                         <tr>
                             @php
                             $deviceIcon =
@@ -109,7 +109,7 @@
                             $roleIcon = '<i class="mdi mdi-chart-donut mdi-20px text-success me-2"></i>';
                             $role = 'Admin';
                             } else {
-                            $roleIcon = '<i class="mdi mdi-account-online mdi-20px text-primary me-2"></i>';
+                            $roleIcon = '<i class="mdi mdi-account-outline mdi-20px text-primary me-2"></i>';
                             $role = 'Member';
                             }
                             @endphp
@@ -154,4 +154,3 @@
             </div>
         </div>
     </div>
-</div>

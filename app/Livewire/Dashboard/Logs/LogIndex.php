@@ -6,6 +6,7 @@ use App\Models\EventLog;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Spatie\Activitylog\Models\Activity;
 
 class LogIndex extends Component
 {
@@ -58,28 +59,30 @@ class LogIndex extends Component
 
     public function render()
     {
-        $query = [];
+        $query = Activity::latest('created_at')->when($this->search, function ($query) {
+            return $query->where('log_name', 'like', '%' . $this->search . '%');
+        })->when($this->filter_date, function ($query) {
+            $dateRange = explode(' to ', $this->filter_date);
+            $startDate = $dateRange[0];
+            $endDate = $dateRange[1] ?? $dateRange[0];
+            return $query->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
+        });
+
         if ($this->isSuperAdmin == true) {
-            $query = \Spatie\Activitylog\Models\Activity::latest('created_at')
-                ->when($this->role, function ($query) {
-                    $query->whereHas('causer', function ($query) {
-                        $query->where('role', $this->role);
-                    });
-                })->when($this->search, function ($query) {
-                    return $query->where('log_name', 'like', '%' . $this->search . '%');
-                })->when($this->filter_date, function ($query) {
-                    $dateRange = explode(' to ', $this->filter_date);
-                    $startDate = $dateRange[0];
-                    $endDate = $dateRange[1] ?? $dateRange[0];
-                    return $query->whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate);
+            $query = $query->when($this->role, function ($query) {
+                $query->whereHas('causer', function ($query) {
+                    $query->where('role', $this->role);
                 });
+            });
         }
+
         if ($this->isAdmin == true) {
             $query = $query->whereHas('causer', function ($query) {
-                    $query->where('role', '!=', 'superadmin');
-                });
+                $query->where('role', '!=', 'superadmin');
+            });
         }
+
         if ($this->isMember == true) {
             $query = $query->whereHas('causer', function ($query) {
                 $query->where('role', 'member');

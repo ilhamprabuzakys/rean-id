@@ -8,7 +8,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-D84783NT2M');
    </script>
    <!-- Required meta tags -->
@@ -37,13 +36,20 @@
    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
       rel="stylesheet">
 
+   <!--Master slider-->
+   <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/masterslider/style/masterslider.css') }}">
+   <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/masterslider/skins/black-1/style.css') }}">
+
    <!--Swiper slider-->
    <link rel="stylesheet"
       href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/swiper-bundle.min.css') }}">
+
    <!--G-lightbox-->
    <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/glightbox.min.css') }}">
    <!--AOS-->
    <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/vendor/node_modules/css/aos.css') }}">
+   <!--splitting text animation css-->
+   <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/css/splitting-text.min.css') }}">
    <!-- Main CSS -->
    <link rel="stylesheet" href="{{ asset('assets/landing/assan/assets/css/theme.min.css') }}">
    <!-- Custom CSS -->
@@ -56,22 +62,7 @@
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/toastr/toastr.js') }}"></script>
    <title>{{ $title ?? '' . config('app.name') }}</title>
    <style>
-      /* ::-webkit-scrollbar {
-                width: 5px;
-            }
-
-            ::-webkit-scrollbar-track {
-                display: none;
-                background-color: transparent;
-            }
-
-            ::-webkit-scrollbar-thumb {
-                background-color: #b3cbf8;
-            } */
-
-      body {
-         overflow: overlay;
-      }
+      body {}
 
       ::-webkit-scrollbar {
          width: 5px;
@@ -156,6 +147,10 @@
    @stack('vendor-js')
    {{-- SweetAlert 2 --}}
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+
+   <!--Mastert Slider start (Include jquery before master slider js)-->
+   <script src="{{ asset('assets/landing/assan/assets/vendor/masterslider/jquery.easing.min.js') }}"></script>
+   <script src="{{ asset('assets/landing/assan/assets/vendor/masterslider/masterslider.min.js') }}"></script>
 
    <!--begin:Swiper slider-->
    <script src="{{ asset('assets/landing/assan/assets/vendor/node_modules/js/swiper-bundle.min.js') }}"></script>

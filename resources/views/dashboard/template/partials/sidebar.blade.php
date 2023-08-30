@@ -1,9 +1,8 @@
-
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
 
    <div class="app-brand demo ">
-      <a href="{{ route('dashboard') }}" class="app-brand-link">
+      <a href="{{ route('index') }}" class="app-brand-link">
          <span class="app-brand-logo demo">
             <img src="{{ asset('assets/img/rean-logo-brand.png') }}" alt="" style="height: 30px">
          </span>
@@ -76,9 +75,10 @@
          </a>
       </li>
 
-    {{--   <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('media.posts')) ? 'active' : '' }}">
+      {{-- <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('media.posts')) ? 'active' : '' }}">
          <a href="{{ route('media.posts') }}" class="menu-link">
-            <i class="menu-icon tf-icons mdi {{ str_starts_with(request()->url(), route('media.posts')) ? 'mdi-folder-open-outline' : 'mdi-folder-outline' }}"></i>
+            <i
+               class="menu-icon tf-icons mdi {{ str_starts_with(request()->url(), route('media.posts')) ? 'mdi-folder-open-outline' : 'mdi-folder-outline' }}"></i>
             <div data-i18n="Media">Media</div>
          </a>
       </li> --}}
@@ -96,24 +96,6 @@
             </li>
             <li class="menu-item {{ request()->url() == route('events.create') ? 'active' : '' }}">
                <a href="{{ route('events.create') }}" class="menu-link">
-                  <div data-i18n="Tambah Data">Tambah Data</div>
-               </a>
-            </li>
-         </ul>
-      </li>
-      <li class="menu-item {{ str_starts_with(request()->url(), route('ebooks.index')) ? 'active open' : '' }}">
-         <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon tf-icons mdi mdi-book-check-outline"></i>
-            <div data-i18n="Ebooks">Ebooks</div>
-         </a>
-         <ul class="menu-sub">
-            <li class="menu-item {{ request()->url() == route('ebooks.index') ? 'active' : '' }}">
-               <a href="{{ route('ebooks.index') }}" class="menu-link">
-                  <div data-i18n="Semua">Semua</div>
-               </a>
-            </li>
-            <li class="menu-item {{ request()->url() == route('ebooks.create') ? 'active' : '' }}">
-               <a href="{{ route('ebooks.create') }}" class="menu-link">
                   <div data-i18n="Tambah Data">Tambah Data</div>
                </a>
             </li>
@@ -138,6 +120,24 @@
          </ul>
       </li>
       @endcannot
+      <li class="menu-item {{ str_starts_with(request()->url(), route('ebooks.index')) ? 'active open' : '' }}">
+         <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <i class="menu-icon tf-icons mdi mdi-book-check-outline"></i>
+            <div data-i18n="Ebooks">Ebooks</div>
+         </a>
+         <ul class="menu-sub">
+            <li class="menu-item {{ request()->url() == route('ebooks.index') ? 'active' : '' }}">
+               <a href="{{ route('ebooks.index') }}" class="menu-link">
+                  <div data-i18n="Semua">Semua</div>
+               </a>
+            </li>
+            <li class="menu-item {{ request()->url() == route('ebooks.create') ? 'active' : '' }}">
+               <a href="{{ route('ebooks.create') }}" class="menu-link">
+                  <div data-i18n="Tambah Data">Tambah Data</div>
+               </a>
+            </li>
+         </ul>
+      </li>
       @can('superadmin')
       <li class="menu-item {{ str_starts_with(request()->url(), route('users.index')) ? 'active open' : '' }}">
          <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -175,15 +175,12 @@
             <div data-i18n="Log Aktivitas">Log Aktivitas</div>
          </a>
       </li>
-      @can('superadmin')
       <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('chats.index')) ? 'active' : '' }}">
          <a href="{{ route('chats.index') }}" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-forum-outline"></i>
-            {{-- <i class="menu-icon tf-icons mdi mdi-chart-multiple"></i> --}}
             <div data-i18n="Layanan Chat">Layanan Chat</div>
          </a>
       </li>
-      @endcan
    </ul>
 
 

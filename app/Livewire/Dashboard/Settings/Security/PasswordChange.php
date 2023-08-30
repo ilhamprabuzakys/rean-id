@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Livewire\Dashboard\Security;
+namespace App\Livewire\Dashboard\Settings\Security;
 
 use App\Models\User;
 use App\Rules\MatchingPassword;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class PasswordChange extends Component
 {
-    public $current_password;
+    public $user, $current_password;
 
     #[Rule('min:6|required', onUpdate: true)]
     public $new_password;
@@ -41,8 +42,14 @@ class PasswordChange extends Component
 
     public function render()
     {
-        $user_id = auth()->user()->id;
-        return view('livewire.dashboard.security.password-change', compact('user_id'));
+        $this->initializeUser();
+        return view('livewire.dashboard.settings.security.password-change');
+    }
+
+    #[On('refresh')]
+    public function initializeUser()
+    {
+        $this->user = auth()->user();
     }
 
     public function update()
@@ -55,16 +62,35 @@ class PasswordChange extends Component
             ]);
         } else {
             try {
+                if ($this->new_password === $this->current_password) {
+                    $this->addError('new_password', 'Password baru tidak boleh sama dengan password saat ini');
+                    $this->dispatch('swal:modal', [
+                        'icon' => 'error',
+                        'title' => 'Terjadi Kesalahan',
+                        'text' => 'Terjadi kesalahan pada input anda: ' . \getErrorsString($this->getErrorBag())
+                    ]);
+                    return;
+                } 
                 $this->validate($this->rules(), $this->messages, $this->validationAttributes);
-    
-                User::findOrFail(auth()->user()->id)->update(['password' => bcrypt($this->new_password)]);
-    
+                $user = User::findOrFail(auth()->user()->id);
+                $user->disableLogging();
+                $user->update(['password' => bcrypt($this->new_password)]);
+                activity('Ganti Password')
+                    ->causedBy(auth()->user())
+                    ->withProperties([
+                        'action' => 'update',
+                        'action_user' => auth()->user()->id,
+                        'message' => 'Berhasil mengganti password anda',
+                    ])
+                    ->event('ganti-password')
+                    ->log('Password anda berhasil diperbarui');
+
                 $this->dispatch('swal:modal', [
                     'icon' => 'success',
                     'title' => 'Update berhasil',
                     'text' => 'Password anda berhasil diganti',
                 ]);
-    
+
                 $this->dispatch('alert', [
                     'title' => 'Berhasil',
                     'message' => 'Perubahan password berhasil diterapkan',
@@ -76,7 +102,7 @@ class PasswordChange extends Component
                     'title' => 'Terjadi Kesalahan',
                     'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . \getErrorsString($e),
                 ]);
-    
+
                 // Mengirim error bag ke komponen Livewire
                 $this->setErrorBag($e->validator->getMessageBag());
             }
@@ -88,20 +114,5 @@ class PasswordChange extends Component
         $this->current_password = null;
         $this->new_password = null;
         $this->confirmation_password = null;
-    }
-
-    public function alertSuccess($message, $title = 'Berhasil')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-
-    public function alertError($message, $title = 'Error')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatchBrowserEvent('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 }

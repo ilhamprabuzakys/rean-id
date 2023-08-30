@@ -4,6 +4,7 @@ namespace App\Livewire\Auth;
 
 use App\Livewire\Dashboard\Chats\ChatCreate;
 use App\Livewire\Dashboard\Chats\ChatList;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -18,8 +19,14 @@ class Logout extends Component
     public function logout()
     {
         // Update status user ke 'offline'
-        \saveUserLogoutInfo();
-        
+        $user = User::find(auth()->user()->id);
+        $user->disableLogging();
+        $user->update([
+            'status' => 'offline',
+            'last_activity_at' => now(),
+        ]);
+        // \saveUserLogoutInfo();
+        // $user->logout();
         // Logout user
         Auth::logout();
 

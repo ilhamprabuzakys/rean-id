@@ -3,7 +3,7 @@
       <tr>
          <th>#</th>
          <th>Informasi</th>
-         <th class="text-center">Pada Tabel</th>
+         <th class="text-center">Pada Data</th>
          <th>Subjek</th>
          <th>Oleh</th>
          <th>Terjadi</th>
@@ -25,12 +25,15 @@
             @else
             {{ $log->properties->get('title') ?? $log->properties->get('name') }}
             @endif
+            @if($log->event == 'profile')
+               Profile
+            @endif
          </td>
          <td>
             <a href="javascript:void(0)" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-placement="top"
                data-bs-content="
                Email: {{ optional($log->causer)->email ?? '' }}
-               " data-bs-original-title="{{ optional($log->causer)->name ?? '' }} @if ($log->causer->username == auth()->user()->username) {{ __(' (Anda)') }} @endif
+               " data-bs-original-title="{{ optional($log->causer)->name ?? '' }} @if (optional($log->subject)->username == auth()->user()->username) {{ __(' (Anda)') }} @endif
                ">
                @if ($log->causer)
                <span class="text-dark">{{ optional($log->causer)->name ?? '' }}</span>
