@@ -4,9 +4,9 @@
         <h5 class="text-primary mb-0">Chats</h5>
     </li>
     @forelse ($conversations as $conversation)
-    <li class="chat-contact-list-item {{ $conversation_active_id == $conversation->id ? 'active' : '' }}" wire:key='{{ $conversation->id }}'
+    <li class="chat-contact-list-item" wire:key='{{ $conversation->id }}'
         wire:click="$dispatch('chatUserSelected', { conversation: {{ $conversation }}, receiverId: {{ $this->getChatUserInstance($conversation, $name='id') }} })">
-        <a class="d-flex align-items-center" wire:poll>
+        <a class="d-flex align-items-center">
             <div
                 class="flex-shrink-0 avatar avatar-{{ $this->getChatUserInstance($conversation, $name='status') == 'online' ? 'online' : 'offline' }}">
                 @if ($this->getChatUserInstance($conversation, $name='avatar') == null)

@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Category;
+use App\Models\Ebook;
 use App\Models\Post;
 use App\Models\Visitor;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
@@ -25,15 +26,24 @@ class ChartIndex extends Component
     public function render()
     {
         // Deklarasi Sumber Data
-        
         $posts = Post::all();
-        $pieChartModel = (new PieChartModel())->setTitle('Data Postingan')
+        $ebooks = Ebook::all();
+        $postPieChartModel = (new PieChartModel())->setTitle('Data Postingan')
             ->setAnimated(true)
             ->setType('donut')
             ->legendPositionBottom()
             ->legendHorizontallyAlignedCenter()
             ->setDataLabelsEnabled(true)
             ->addSlice('Pending', $posts->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $posts->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $posts->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
+        
+        $ebookPieChartModel = (new PieChartModel())->setTitle('Data Ebook')
+            ->setAnimated(true)
+            ->setType('donut')
+            ->legendPositionBottom()
+            ->legendHorizontallyAlignedCenter()
+            ->setDataLabelsEnabled(true)
+            ->addSlice('Pending', $ebooks->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $ebooks->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $ebooks->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
+
 
         $categories = Category::all();
         $columnChartModel = (new ColumnChartModel())->setTitle('Data Postingan')
@@ -110,7 +120,7 @@ class ChartIndex extends Component
 
         return view(
             'livewire.dashboard.chart-index',
-            compact('columnChartModel', 'pieChartModel', 'lineChartModel', 'treeMapChartModel')
+            compact('columnChartModel', 'postPieChartModel', 'ebookPieChartModel', 'lineChartModel', 'treeMapChartModel')
         );
     }
 }

@@ -1,11 +1,13 @@
 <div>
    <section id="article-header" class="position-relative">
-      <div class="container pb-9 pb-lg-11 position-relative">
-         <article class="row pt-lg-7 pb-11 justify-content-center">
+      <div class="container @if($post->files->first() !== null) pb-9 pb-lg-11 @endif position-relative">
+         <article
+            class="row @if($post->files->first() !== null) pt-lg-7 pb-11 @else pt-lg-5 pb-5  @endif justify-content-center">
             <div class="col-lg-10 col-xl-9">
                <div class="position-relative pb-3 pb-lg-0">
                   <div class="d-flex align-items-center w-100">
-                     <a href="#" class="badge bg-primary rounded-pill me-3">{{
+                     <a href="{{ route('home.category_view', $post->category)}}"
+                        class="badge bg-primary rounded-pill me-3">{{
                         $post->category->name }}</a>
                      <small class="text-body-secondary">{{ echoTime($post->created_at) }}</small>
                   </div>
@@ -37,30 +39,29 @@
 
    <section class="position-relative border-bottom post-detail">
       <div class="container pb-9 pb-lg-11">
+         @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION),
+         ['jpeg', 'jpg', 'png']))
          <div class="post-detail-img-container container">
-            @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION),
-            ['jpeg', 'jpg', 'png']))
             <img style="object-fit: cover;" src="{{ asset($post->files->first()->file_path) }}" alt=""
                class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
-            @else
-            <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}" alt=""
-               class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
-            @endif
+            {{-- <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}"
+               alt="" class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14"> --}}
          </div>
+         @endif
 
          <div class="row">
             <div class="col-xl-9 mx-auto">
                <article class="article mb-9 dropcap">
                   @if($media_post != null)
                   @if(Str::endsWith($media_post->file_path, '.mp3'))
-                  <div>
+                  <div class="mb-3">
                      <audio controls>
                         <source src="{{ asset($media_post->file_path) }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                      </audio>
                   </div>
                   @elseif(Str::endsWith($media_post->file_path, '.mp4'))
-                  <div>
+                  <div class="mb-3">
                      <video controls width="320" height="240">
                         <source src="{{ asset($media_post->file_path) }}" type="video/mp4">
                         Your browser does not support the video tag.
@@ -106,7 +107,7 @@
                <ul class="list-inline mb-0 mt-4">
                   <li class="list-inline-item text-muted align-middle me-2 text-uppercase fs-13 fw-medium">Share:</li>
                   <li class="list-inline-item me-2 align-middle">
-                     <a href="#">
+                     <a href="javascript:void(0);" onclick="shareToFacebook()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                            class="feather feather-facebook icon-xs icon-dual-primary">
@@ -115,7 +116,7 @@
                      </a>
                   </li>
                   <li class="list-inline-item me-2 align-middle">
-                     <a href="#">
+                     <a href="javascript:void(0);" onclick="shareToTwitter()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                            class="feather feather-twitter icon-xs icon-dual-info">
@@ -126,20 +127,14 @@
                      </a>
                   </li>
                   <li class="list-inline-item align-middle">
-                     <a href="#">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                           class="feather feather-instagram icon-xs icon-dual-danger">
-                           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                           <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                           <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
+                     <a href="javascript:void(0);" onclick="shareToWhatsapp()">
+                        <i class="bx bxl-whatsapp icon-xs icon-dual-success" style="font-size: 26px"></i>
                      </a>
                   </li>
                   <li
                      class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
                      <span class="ms-1 me-1">Like: {{ $post->likes->count() }}</span>
-                     <button href="#" wire:click='likeThis()' class="border-0 bg-transparent">
+                     <button wire:click='likeThis()' class="border-0 bg-transparent">
                         <i class="bx {{ $post->likes->contains(auth()->user()) ? 'bxs-heart' : 'bx-heart' }}  text-danger"
                            style="font-size: 22px"></i>
                      </button>
@@ -223,7 +218,7 @@
       </div>
    </section>
 
-   <section class="position-relative border-bottom comment-section" wire:ignore>
+   {{-- <section class="position-relative border-bottom comment-section" wire:ignore>
       <div class="container pb-9 pb-lg-11">
          <div class="row mt-3">
             <div class="col-lg-12">
@@ -254,7 +249,7 @@
 
          </div>
       </div>
-   </section>
+   </section> --}}
 
    <section class="position-relative overflow-hidden">
       <div class="container py-9 py-lg-11">
@@ -264,7 +259,7 @@
             </div>
             @forelse($related_post as $key => $post)
             <div class="col-12 col-md-8 col-lg-6 col-xl-5 mb-4">
-               <a href="blog-article-basic.html#!"
+               <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post]) }}"
                   class="card-hover p-4 border d-flex flex-row hover-shadow-lg align-items-center rounded-3 hover-lift">
                   <div class="me-4 rounded-3 flex-shrink-0 overflow-hidden">
                      <img
@@ -290,11 +285,14 @@
             @endforelse
          </div>
       </div>
+      @push('scripts')
       <script>
-         window.addEventListener('notAuthenticatedLikeEvent', function(e) {
+         Livewire.on('notAuthenticated', function(e) {
+            console.log('not auth');
             return alert('Untuk memberikan like pada postingan anda harus login terlebih dahulu!');
          });
       </script>
+      @endpush
    </section>
 
 </div>

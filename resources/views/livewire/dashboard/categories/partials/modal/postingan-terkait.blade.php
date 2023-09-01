@@ -3,7 +3,7 @@
    <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
          <div class="modal-header">
-            <h3 class="modal-title" id="postinganTerkait">Daftar {{ $name }}</h3>
+            <h3 class="modal-title" id="postinganTerkait">Daftar Postingan dengan tipe <strong>{{ $category->name ?? '' }}</strong></h3>
             <button type="button" wire:click="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
@@ -20,7 +20,7 @@
                      </li>
                   @empty
                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Data {{ $name }} masih kosong.
+                        <span>Data Postingan dengan tipe <strong>{{ $category->name ?? '' }}</strong> masih kosong.</span>
                      </li>
                   @endforelse
                @endif

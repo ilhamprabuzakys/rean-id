@@ -14,9 +14,9 @@
                   <div class="input-group input-group-merge">
                      <div class="form-floating form-floating-outline">
                         <input class="form-control @error('current_password') is-invalid @enderror" type="password"
-                           name="current_password" wire:model.lazy='current_password' id="email.current_password"
+                           name="current_password" wire:model.lazy='current_password' id="password_current_password"
                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" />
-                        <label for="current_password">Masukkan password saat ini</label>
+                        <label for="password_current_password">Masukkan password saat ini</label>
                         @error('current_password')
                         <div class="invalid-feedback">
                            {{ $message }}
@@ -29,9 +29,9 @@
                <div class="col-md-6">
                   <div class="input-group input-group-merge">
                      <div class="form-floating form-floating-outline">
-                        <input class="form-control" type="email" id="current_email" name="current_email"
+                        <input class="form-control" type="email" id="password_current_email" name="current_email"
                            value='{{ $user->email }}' readonly />
-                        <label for="current_email">Email saat ini</label>
+                        <label for="password_current_email">Email saat ini</label>
                      </div>
                      <span class="input-group-text"><i class="mdi mdi-email-outline"></i></span>
                   </div>

@@ -10,7 +10,7 @@ class EbookIndex extends Component
 {
     public function render()
     {
-        $query = Ebook::latest('created_at')->get();
+        $query = Ebook::latest('created_at')->where('status', 'approved')->get();
         $ebooks = $query;
         return view('livewire.landing.ebooks.ebook-index', [
             'ebooks' => $ebooks,

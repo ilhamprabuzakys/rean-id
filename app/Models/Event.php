@@ -14,11 +14,11 @@ class Event extends Model
     use HasFactory, LogsActivity;
     protected $guarded = ['id'];
 
-    protected $dates = ['start_date', 'end_date'];
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
-    ];
+    // protected $dates = ['start_date', 'end_date'];
+    // protected $casts = [
+    //     'start_date' => 'date',
+    //     'end_date' => 'date',
+    // ];
 
 
     public function getRouteKeyName()

@@ -52,6 +52,15 @@
          <div class="row gy-4">
             @forelse($categories as $category)
             @php
+               $options = [
+                  ['icon' => 'bx-book-open', 'bg' => 'primary'],
+                  ['icon' => 'bx-image', 'bg' => 'success'],
+                  ['icon' => 'bx-photo-album', 'bg' => 'info'],
+                  ['icon' => 'bx-landscape', 'bg' => 'success'],
+                  ['icon' => 'bx-video', 'bg' => 'danger'],
+                  ['icon' => 'bx-headphone', 'bg' => 'info'],
+                  ['icon' => 'bx-music', 'bg' => 'danger']
+               ];
                $icon = '';
                $bg = '';
                switch ($category->name) {
@@ -83,10 +92,13 @@
                      $bg = 'danger';
                      break;
                   default:
+                     $randomOption = $options[array_rand($options)];
+                     $icon = $randomOption['icon'];
+                     $bg = $randomOption['bg'];
                      break;
                }
             @endphp
-            <div class="col-sm-6 col-lg-3 mb-2 mb-lg-0">
+            <div class="col-sm-3 col-lg-3 mb-2 mb-lg-0">
                <a href="{{ route('home.category_view', $category) }}" class="h-100 bg-{{ $bg }}-subtle hover-lift rounded-4 p-4 hover-shadow-lg card border-0 text-center">
 
                   <div class="mx-auto mb-4 width-8x height-8x flex-center bg-{{ $bg }} text-white fs-1 rounded-circle">

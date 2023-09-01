@@ -31,12 +31,13 @@
 
                      <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $category->id }})">
-                           Lihat postingan terkait
+                           <i class="fas fa-eye me-2"></i> Lihat postingan terkait
                         </a>
-                        <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="offcanvas" data-bs-target="#editCategory" wire:click.prefetch="editCategory({{ $category->id }})">
-                           Edit
+                        <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#editCategoryModal" wire:click.prefetch="editCategory({{ $category->id }})">
+                           <i class="fas fa-edit me-2"></i> Edit
                         </a>
-                        <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $category->id }})">Hapus</a>
+                        <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $category->id }})">
+                           <i class="far fa-trash-alt me-2"></i> Hapus</a>
                         {{-- <a class="text-danger text-decoration-none dropdown-item" href="{{ route('users.destroy', $user) }}" data-confirm-delete="true">Hapus</a> --}}
                      </div>
                   </div>

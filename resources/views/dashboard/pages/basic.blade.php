@@ -19,6 +19,7 @@
    </div>
 
    {{-- Cards Role --}}
+   @cannot('member')
    @php
    $superadmins = \App\Models\User::where('role', 'superadmin')->take(3)->get();
    $admins = \App\Models\User::where('role', 'admin')->take(3)->get();
@@ -26,12 +27,12 @@
    @endphp
    @include('dashboard.pages.modal.dashboard.roles-modal')
    @include('dashboard.pages.components.dashboard.card-roles-info')
+   @endcannot
    {{-- / End Cards Role --}}
 
-   {{-- Visitor Charts --}}
+   {{-- Charts SuperAdmin/ Admin --}}
    <livewire:dashboard.chart-index />
-
-   {{--/ Visitor Charts --}}
+   {{--/ Charts SuperAdmin/ Admin --}}
 
    <!-- Recent Logged In Activity -->
    <livewire:dashboard.recent-login-activity :user='$user' />

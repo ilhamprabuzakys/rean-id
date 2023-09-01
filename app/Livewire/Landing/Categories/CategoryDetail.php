@@ -15,12 +15,6 @@ class CategoryDetail extends Component
     public $paginate = 5;
     public $search, $filter_date;
 
-    protected $updatesQueryString = ['search', 'filter_date'];
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'filter_date' => ['except' => ''],
-    ];
-
     public function mount($category)
     {
         // $this->search = request()->query('search');
@@ -61,5 +55,11 @@ class CategoryDetail extends Component
 
         $this->dispatch('refreshAOS');
         return view('livewire.landing.categories.category-detail', compact('posts'));
+    }
+
+    public function resetFilter()
+    {
+        $this->search = null;
+        $this->filter_date = null;
     }
 }

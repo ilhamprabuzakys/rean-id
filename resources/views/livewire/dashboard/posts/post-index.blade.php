@@ -47,16 +47,31 @@
                   <div class="col-3 col-sm-4 d-flex justify-content-start">
                      <input type="text" name="search" id="search" wire:model.live="search" class="form-control" placeholder="Ketik sesuatu..">
                   </div>
-                  <div class="col-3 col-sm-3 d-flex justify-content-start">
-                     <select class="form-select form-select-md" name="filter_popularity" id="filter_popularity" wire:model.live='filter_popularity'>
-                        <option selected value="">Pilih rentang views</option>
-                        <option value="1-20">1 - 20</option>
-                        <option value="21-50">21 - 50</option>
-                        <option value="51-100">51 - 100</option>
-                        <option value="100+">100 - keatas</option>
-                     </select>
+                  <div class="col-lg-2 col-sm-3 d-flex justify-content-start">
+                     <div class="form-floating form-floating-outline">
+                        <select class="form-select" name="filter_popularity" id="filter_popularity" wire:model.live='filter_popularity'>
+                           <option selected value="">Pilih rentang views</option>
+                           <option value="1-20">1 - 20</option>
+                           <option value="21-50">21 - 50</option>
+                           <option value="51-100">51 - 100</option>
+                           <option value="100+">100 - keatas</option>
+                        </select>
+                        <label for="filter_popularity">Views</label>
+                     </div>
                   </div>
-                  <div class="col-5 col-sm-3 d-flex justify-content-start">
+                  <div class="col-lg-2 col-sm-3 d-flex justify-content-start">
+                     <div class="form-floating form-floating-outline">
+                        <select class="form-select" name="filter_like" id="filter_like" wire:model.live='filter_like'>
+                           <option selected value="">Pilih rentang like</option>
+                           <option value="1-20">1 - 20</option>
+                           <option value="21-50">21 - 50</option>
+                           <option value="51-100">51 - 100</option>
+                           <option value="100+">100 - keatas</option>
+                        </select>
+                        <label for="filter_like">Like</label>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6 d-flex justify-content-start">
                      <input type="text" id="filter_date" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
                   </div>
                   {{-- <div class="col-4 d-flex justify-content-start">

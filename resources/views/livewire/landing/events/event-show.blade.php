@@ -38,25 +38,25 @@
                                 Bagikan
                             </a>
                             <div class="dropdown-menu dropdown-menu-end mt-2">
-                                <a href="javascript:void(0);" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark" onclick=''>
                                     <div class="d-flex align-items-center">
                                         <i class="bx bx-link fs-5 me-2 text-secondary"></i>
                                         <span>Copy link</span>
                                     </div>
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark" onclick=''>
                                     <div class="d-flex align-items-center">
                                         <i class="bx bxl-facebook fs-5 me-2 text-primary"></i>
                                         <span>Bagikan ke facebook</span>
                                     </div>
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark" onclick=''>
                                     <div class="d-flex align-items-center">
                                         <i class="bx bxl-twitter fs-5 me-2 text-info"></i>
                                         <span>Bagikan ke Twitter</span>
                                     </div>
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item text-dark">
+                                <a href="javascript:void(0);" class="dropdown-item text-dark" onclick=''>
                                     <div class="d-flex align-items-center">
                                         <i class="bx bxl-whatsapp fs-5 me-2 text-success"></i>
                                         <span>Bagikan ke Whatsapp</span>
@@ -72,6 +72,21 @@
 
     <section>
         <div class="container py-9 py-lg-11">
+             @php
+                $status = '';
+                $status_bg = '';
+                $current_date = now(); // Asumsikan menggunakan Carbon untuk mendapatkan tanggal saat ini
+                if ($current_date < $event->start_date) {
+                    $status = 'Akan datang';
+                    $status_bg = 'success';
+                } elseif ($current_date >= $event->start_date && $current_date <= $event->end_date) {
+                    $status = 'Berlangsung';
+                    $status_bg = 'primary';
+                } else {
+                    $status = 'Berakhir';
+                    $status_bg = 'danger';
+                }
+            @endphp
             <div class="row mb-3">
                 <div class="col-md-6 mb-7 mb-md-0">
                     <div class="row">
@@ -98,8 +113,7 @@
                             <span class="d-block text-body-secondary mb-2">Diupload oleh:</span>
                             <div class="d-flex align-items-center">
                                 <div class="me-4">
-                                    <img src="{{ asset($event->user->avatar == null ? " assets/img/avatar/avatar-1.png"
-                                        : $event->user->avatar) }}" class="img-fluid avatar xl rounded-circle" alt=""
+                                    <img src="{{ asset($event->user->avatar ?? "assets/img/avatar/avatar-1.png") }}" class="img-fluid avatar xl rounded-circle" alt=""
                                     style="object-fit: cover;" />
                                 </div>
                                 <div class="flex-grow-1">
@@ -125,8 +139,8 @@
                             $diffInDays = $start_date->diffInDays($end_date);
                             @endphp
                             <h6 class="mt-1 mb-0 pb-4 border-bottom">
-                                {{ \Carbon\Carbon::parse($event->start_date)->format('F d, Y h:i A') }} - {{
-                                \Carbon\Carbon::parse($event->end_date)->format('F d, Y h:i A') }}
+                                {{ \Carbon\Carbon::parse($event->start_date)->format('F d, Y') }} - {{
+                                \Carbon\Carbon::parse($event->end_date)->format('F d, Y') }}
                             </h6>
                         </div>
                         <div class="col-sm-4 mb-4 col-6">
@@ -152,8 +166,7 @@
                         <div class="col-sm-4 mb-4 col-6">
                             <small class="text-body-secondary">Status:</small>
                             <a
-                                class="badge px-2 py-1 ms-2 d-inline badge-soft-{{ $event->status == TRUE ? 'primary' : 'danger'}}">{{
-                                $event->status == TRUE ? 'Berlangsung' : 'Berakhir'}}</a>
+                                class="badge px-2 py-1 ms-2 d-inline badge-soft-{{ $status_bg }}">{{ $status }}</a>
                         </div>
                     </div>
                 </div>

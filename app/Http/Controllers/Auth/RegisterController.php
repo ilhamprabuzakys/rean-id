@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\MailNotify;
 use App\Mail\MailOtp;
+use App\Mail\UserRegistrationMail;
 use App\Models\TempUser;
 use App\Models\User;
 use App\Models\VerificationCode;
@@ -74,7 +75,7 @@ class RegisterController extends Controller
                 'user_email' => $user->email,
                 'otp' => $verification_code->otp,
             ];
-            Mail::to($user->email)->send(new MailOtp($data));
+            Mail::to($data['user_email'])->send(new MailOtp($data));
             return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ke email: <b>$user->email</b>! ");
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->getMessage())->withInput();
@@ -101,7 +102,7 @@ class RegisterController extends Controller
             'user_email' => $user->email,
             'otp' => $verification_code->otp,
         ];
-        Mail::to($user->email)->send(new MailOtp($data));
+        Mail::to($data['user_email'])->send(new MailOtp($data));
         return redirect()->route('register.code_verification', $user)->with('success', "Kode verifikasi berhasil dikirim ulang ke email: <b>$user->email</b>! ");
     }
 
@@ -127,7 +128,7 @@ class RegisterController extends Controller
                 'user_email' => $user->email,
                 'otp' => $verification_code->otp,
             ];
-            Mail::to($user->email)->send(new MailOtp($data));
+            Mail::to($data['user_email'])->send(new MailOtp($data));
             session()->flash('success', "Kode verifikasi berhasil dikirim ulang ke email: <b>$user->email</b>!");
             // Redirect back to the same route without query string
             return redirect(route('register.code_verification', $user));
@@ -161,6 +162,13 @@ class RegisterController extends Controller
                     'role' => 'member',
                     'email_verified_at' => now(),
                 ]);
+                $data = [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'username' => explode('@', $user->email)[0],
+                    'password' => explode('@', $user->email)[0],
+                ];
+                $statusMail = Mail::to($newUser->email)->send(new UserRegistrationMail($data));
                 $newUser->disableLogging();
                 /* activity('Registration')
                     ->causedBy($newUser)
@@ -179,7 +187,7 @@ class RegisterController extends Controller
                 return redirect()->route('login')->with('success', "Akun anda telah <b>berhasil</b> dibuat, silahkan login!");
             }
         } catch (\Throwable $th) {
-            dd('error something went wrong', $th);
+            return redirect()->back()->with('fails', "Kode OTP yang anda masukkan tidak valid");
         }
     }
 
@@ -197,51 +205,42 @@ class RegisterController extends Controller
             // ]);
             $rules = [
                 'name' => ['required', 'max:50'],
-                'auth_field' => ['required'],
+                'email' => ['required', 'email', 'unique:users'],
                 'password' => ['required', 'min:5', 'max:50', 'confirmed'],
                 // 'email' => ['required', 'email:dns', 'unique:users'],
             ];
             if ($request->input('username') !== null) {
                 $rules = [
                     'name' => ['required', 'max:50'],
-                    'auth_field' => ['required'],
-                    'password' => ['required', 'min:5', 'max:50', 'confirmed'],
+                    'email' => ['required'],
+                    'password' => ['required', 'min:5', 'max:20', 'confirmed'],
                     'username' => ['min:4', 'max:255', 'unique:users'],
                 ];
             }
             $data = [];
-            $validator = Validator::make($request->all(), $rules);
-
-            $authField = $request->input('auth_field');
+            $validator = Validator::make($request->all(), $rules, [
+                'email.required' => 'Email harus diisi.',
+                'email.email' => 'Email harus berformat email, ada "@" nya.',
+                'name.required' => 'Nama harus diisi.',
+                'name.max' => 'Nama tidak boleh lebih dari 50 karakter.',
+                'password.required' => 'Password harus diisi.',
+                'password.min' => 'Password minimal itu 5 karakter.',
+                'password.max' => 'Password maksimal itu 20 karakter.',
+                'password.confirmed' => 'Password anda tidak cocok.',
+            ]);
 
             if ($validator->fails()) {
                 // dd($validator->errors());
                 return redirect()->back()->withErrors($validator)->withInput();
-            } else {
-                if (filter_var($authField, FILTER_VALIDATE_EMAIL)) {
-                    $data['email'] = $authField;
-                    // if ($request->input('username') == '') {
-                    //     $data['username'] = explode('@', $data['email'])[0];
-                    // } else {
-                    //     $data['username'] = $request->input('username');
-                    // }
-
-                } elseif (is_numeric($authField)) {
-                    $data['mobile_no'] = $authField;
-                } else {
-                    return redirect()->back()->withErrors($validator)->withInput();
-                }
-            }
+            } 
             $validatedData = $validator->validated();
             $validatedData['password'] = bcrypt($validatedData['password']);
-            if ($data['email']) {
-                $validatedData['email'] = $data['email'];
+            if ($request->input('email')) {
+                $validatedData['email'] = $request->input('email');
                 if ($request->input('username') == '') {
                     $validatedData['username'] = explode('@', $validatedData['email'])[0];
                 }
-            } elseif ($data['mobile_no']) {
-                $validatedData['email'] = $data['mobile_no'];
-            }
+            } 
             // dd($validatedData);
             $user = TempUser::create($validatedData);
             $otp = $this->generateOTP();

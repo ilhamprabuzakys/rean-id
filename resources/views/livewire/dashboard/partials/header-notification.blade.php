@@ -32,6 +32,8 @@
              break;
              case 'deleted':
              $event = ' penghapusan';
+             case 'imported':
+             $event = ' import';
              break;
              default:
              $event = ' ?';
@@ -85,6 +87,22 @@
                         <span class="avatar-initial rounded-circle bg-label-danger">
                            <i class="mdi mdi-heart-outline"></i>
                         </span>
+                        @elseif ($notification->event == 'approved')
+                        <span class="avatar-initial rounded-circle bg-label-success">
+                           <i class="mdi mdi-check-all"></i>
+                        </span>
+                        @elseif ($notification->event == 'rejected')
+                        <span class="avatar-initial rounded-circle bg-label-danger">
+                           <i class="mdi mdi-exclamation-thick"></i>
+                        </span>
+                        @elseif ($notification->event == 'pending')
+                        <span class="avatar-initial rounded-circle bg-label-primary">
+                           <i class="mdi mdi-information-outline"></i>
+                        </span>
+                        @elseif ($notification->event == 'imported')
+                        <span class="avatar-initial rounded-circle bg-label-success">
+                           <i class="mdi mdi-plus"></i>
+                        </span>
                         @endif
                       </div>
                    </div>
@@ -98,7 +116,15 @@
                         @elseif($notification->event == 'profile')
                         Data Profile anda berhasil diperbarui.
                         @elseif($notification->event == 'liked')
-                        Postingan anda disukai oleh orang lain
+                        Postingan {{ $notification->subject->title }} disukai oleh {{ $notification->causer->name }}
+                        @elseif($notification->event == 'approved')
+                        {{ $notification->properties['message'] }}
+                        @elseif($notification->event == 'pending')
+                        {{ $notification->properties['message'] }}
+                        @elseif($notification->event == 'rejected')
+                        {{ $notification->properties['message'] }}
+                        @elseif($notification->event == 'imported')
+                        Data User sukses diimpor.
                         @else
                         Terjadi {{ $event }} data pada tabel {{ $notification->log_name }}
                         @endif
@@ -118,13 +144,13 @@
              @endforelse
           </ul>
        </li>
-       @if ($banyakNotifikasi > 0)
+      {{--  @if ($banyakNotifikasi > 0)
        <li class="dropdown-menu-footer border-top p-2">
           <a href="#" class="btn btn-primary d-flex justify-content-center" data-bs-toggle="modal"
              data-bs-target="#notifikasiModal">
              Lihat semua notifikasi
           </a>
        </li>
-       @endif
+       @endif --}}
     </ul>
  </li>

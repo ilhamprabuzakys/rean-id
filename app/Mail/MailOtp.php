@@ -33,7 +33,7 @@ class MailOtp extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address("callcenter@bnn.go.id", "REAN.ID"),
+            from: new Address(env('MAIL_USERNAME'), "REAN.ID"),
             subject: "Kode OTP untuk verifikasi Email",
             // subject: "Permintaan",
             // replyTo: [

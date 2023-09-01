@@ -67,4 +67,9 @@ class TagDetail extends Component
         return view('livewire.landing.tags.tag-detail', compact('posts'));
     }
 
+    public function resetFilter()
+    {
+        $this->search = null;
+        $this->filter_date = null;
+    }
 }

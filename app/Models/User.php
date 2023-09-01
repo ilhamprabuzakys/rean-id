@@ -43,19 +43,24 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'username';
+    }
+
     public function tapActivity(Activity $activity, string $eventName)
     {
         if ($eventName == 'deleted') {
             $activity->properties = $this->attributes;
         }
     }
-    
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->useLogName('User')
             ->logFillable('*')
-            ->setDescriptionForEvent(function(string $eventName) {
+            ->setDescriptionForEvent(function (string $eventName) {
                 $aksi = '';
                 switch ($eventName) {
                     case 'created':

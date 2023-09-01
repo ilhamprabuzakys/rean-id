@@ -107,7 +107,7 @@
                </div>
                <div class="row mb-3">
                   <div class="col-12">
-                     <label for="files" class="mb-2">Cover Image <sup class="text-danger">*</sup></label>
+                     <label for="files" class="mb-2">Cover Image</label>
                      <div wire:ignore>
                         <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
                      </div>

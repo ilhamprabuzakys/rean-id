@@ -83,6 +83,7 @@ class EventCreate extends Component
     {
         // dd($this->all());
         try {
+            $this->status = true;
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
 

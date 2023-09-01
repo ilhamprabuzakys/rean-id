@@ -17,10 +17,10 @@ return new class extends Migration
             $table->integer('views')->default(0); // Tambahkan kolom views
             $table->string('title');
             $table->string('description');
-            $table->string('pages');
             $table->string('author');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('body');
-            $table->date('published_at');
+            $table->string('published_at', 5);
             $table->foreignId('user_id');
             $table->timestamps();
         });

@@ -15,6 +15,8 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebsiteBuilderController;
+use App\Mail\MailOtp;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
@@ -22,6 +24,15 @@ use Illuminate\Support\Facades\URL;
 URL::forceRootUrl(config('app.url'));
 
 require __DIR__ . '/auth.php';
+
+Route::get('/test-mail', function() {
+    $data = [
+        'user_nama' => 'TEST',
+        'user_email' => 'ilahazs.tiktok@gmail.com',
+        'otp' => 'TEST 123',
+    ];
+    Mail::to($data['user_email'])->send(new MailOtp($data));
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
@@ -76,18 +87,19 @@ Route::middleware(['record.visitor'])->group(function () {
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/about', 'about')->name('home.about');
-        Route::get('/all-post', 'all_post')->name('home.all_post');
-        Route::get('/semua-postingan', 'semua_postingan')->name('home.semua_postingan');
+        // Route::get('/all-post', 'all_post')->name('home.all_post');
+        Route::get('/daftar-postingan', 'semua_postingan')->name('home.semua_postingan');
+        Route::get('/users/{user}', 'user_view')->name('home.show_user');
         Route::get('/events/{event}', 'event_detail')->name('home.events.show');
         Route::get('/events', 'event')->name('home.events.index');
-        Route::get('/kategori/{category}', 'category_view')->name('home.category_view');
         Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
         Route::get('/tag/{tag}', 'tag_view')->name('home.tag_view');
         Route::get('/cns-radio', 'cns_radio')->name('home.cns');
         Route::get('/contact-us', 'contact')->name('home.contact');
-        Route::get('/analytics', 'analytics')->name('home.analytics');
+        // Route::get('/analytics', 'analytics')->name('home.analytics');
         Route::get('/ebooks', 'ebook')->name('home.ebooks.index');
         Route::get('/ebooks/{ebook}', 'ebook_detail')->name('home.ebooks.show');
+        Route::get('/{category}', 'category_view')->name('home.category_view');
         Route::get('/{category}/{post}', 'show_post')->name('home.show_post');
     });
 });

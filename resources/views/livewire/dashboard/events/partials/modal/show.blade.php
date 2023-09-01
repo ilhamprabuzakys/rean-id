@@ -80,7 +80,7 @@
                      <div><strong>Lokasi:</strong> {{ $event->location }}</div>
                      <div><strong>Kota:</strong> {{ $event->city }}</div>
                      <div><strong>Provinsi:</strong> {{ $event->province }}</div>
-                     <div><span><strong>Waktu:</strong> {{ $event->start_date }}</span><span> - {{ $event->end_date }}</span></div>
+                     <div><span><strong>Waktu:</strong> {{ $event->start_date }}</span><span> sampai {{ $event->end_date }}</span></div>
                      <div><strong>Penyelenggara:</strong> {{ $event->organizer }}</div>
                      <div><strong>Kontak:</strong> {{ $event->contact_email }}</div>
                      <div class="mt-3">

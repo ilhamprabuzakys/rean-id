@@ -1,5 +1,5 @@
 <!--  Large modal example -->
-<div wire:ignore.self class="modal fade" id="deleteTagModal" tabindex="-1" role="dialog">
+<div wire:ignore.self class="modal fade" id="deleteCategoryModal" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-header">
@@ -9,7 +9,7 @@
          <form wire:submit.prevent="destroy">
             <div class="modal-body">
                Apakah kamu yakin akan menghapus data ini?
-               <span class="d-block text-danger mt-3 text-sm">Dengan <strong>menghapus</strong> data ini akan membuat semua postingan yang memiliki label {{ $name }} menjadi <strong>NULL/Kosong</strong>.</span>
+               <span class="d-block text-danger mt-3 text-sm">Dengan <strong>menghapus</strong> data ini akan membuat semua postingan yang memiliki kategori ini menjadi <strong>NULL/Kosong</strong>.</span>
             </div>
             <div class="modal-footer">
                <button type="button" wire:click="closeModal" class="btn btn-danger" data-bs-dismiss="modal">

@@ -9,7 +9,7 @@
    <meta content="Rean ANTI NARKOBA" name="description" />
    <meta content="rean" name="author" />
    <!-- App favicon -->
-   <link rel="shortcut icon" href="{{ asset('icon.png') }}">
+   <link rel="shortcut icon" href="{{ asset('assets/img/rean-logo-brand.png') }}">
 
    <!-- Bootstrap Css -->
    <link href="{{ asset('assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -17,7 +17,6 @@
    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
    <!-- App Css-->
    <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
-
 </head>
 
 
@@ -46,12 +45,12 @@
                               style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;"
                               valign="top">
                               <div class="content"
-                                 style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">
+                                 style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 10px;">
                                  <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction"
                                     style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; margin: 0; border: none;">
                                     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                        <td class="content-wrap"
-                                          style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #495057; font-size: 14px; vertical-align: top; margin: 0;padding: 30px; box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03); ;border-radius: 7px; background-color: #fff;"
+                                          style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #495057; font-size: 14px; vertical-align: top; margin: 0;padding:20px; box-shadow: 0 0.75rem 1.5rem rgba(18,38,63,.03); ;border-radius: 7px; background-color: #fff;"
                                           valign="top">
                                           <meta itemprop="name" content="Confirm Email"
                                              style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" />
@@ -61,33 +60,52 @@
                                                 <td class="content-block"
                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                                    valign="top">
-                                                   Hi {{ $data['user_nama'] }},<br>
-                                                   Ini adalah kode verifikasi otp mu, pastikan masukan kode sesuai yang dibawah ini yaa :
+                                                   Hi {{ $user_nama }},<br>
+                                                   Pesan ini dibuat otomatis untuk menginformasikan kode OTP untuk keperluan sistem, ini kode OTPmu :
                                                    <br>
                                                 </td>
                                              </tr>
                                              <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-                                                <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler"
+                                                <td class="content-block"
                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                                    valign="top">
-                                                   <a href="#" itemprop="url"
-                                                      style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize; background-color: #63ad6f; margin: 0; border-color: #63ad6f; border-style: solid; border-width: 8px 16px;">{{ $otp }}</a>
+                                                   <style>
+                                                      .info-table {
+                                                          width: 100%;
+                                                      }
+                                                  
+                                                      .info-table td {
+                                                          padding: 4px 8px;
+                                                      }
+                                                  
+                                                      .label {
+                                                          font-weight: bold;
+                                                      }
+                                                  </style>
+                                                  <hr>
+                                                  <table class="info-table">
+                                                      <tr>
+                                                          <td class="label">Kode OTP</td>
+                                                          <td>:</td>
+                                                          <td>{{ $otp }}</td>
+                                                      </tr>
+                                                  </table>                                                  
+                                                  <hr>
                                                 </td>
                                              </tr>
                                              <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                                 <td class="content-block"
                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                                    valign="top">
-                                                   <b>Rean ANTI NARKOBA</b>
-                                                   <p>Team Rean</p>
+                                                   <br>
+                                                   Demi keamanan bersama tolong jangan share kode OTP ini kesiapapun.<br>
                                                 </td>
                                              </tr>
-
                                              <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                                 <td class="content-block"
                                                    style="text-align: center;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0;"
                                                    valign="top">
-                                                   © 2023 Rean ANTI NARKOBA
+                                                   ©2023 REAN.ID - BNN Cegah Narkoba
                                                 </td>
                                              </tr>
                                           </table>
@@ -106,18 +124,6 @@
             </div> <!-- container-fluid -->
          </div>
          <!-- End Page-content -->
-         <footer class="footer">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-sm-12">
-                     <script>
-                        document.write(new Date().getFullYear())
-                     </script> &copy; REAN.ID - Cegah Narkoba
-                  </div>
-               </div>
-            </div>
-         </footer>
-
       </div>
       <!-- end main content-->
 

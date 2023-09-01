@@ -32,7 +32,6 @@
                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#userSuperAdminModal"
                   class="role-edit-modal"><span>Lihat User</span></a>
             </div>
-            <a href="javascript:void(0);" class="text-muted"><i class="mdi mdi-content-copy mdi-20px"></i></a>
          </div>
       </div>
    </div>
@@ -71,7 +70,6 @@
                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#userAdminModal"
                   class="role-edit-modal"><span>Lihat User</span></a>
             </div>
-            <a href="javascript:void(0);" class="text-muted"><i class="mdi mdi-content-copy mdi-20px"></i></a>
          </div>
       </div>
    </div>
@@ -110,7 +108,6 @@
                <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#userMemberModal"
                   class="role-edit-modal"><span>Lihat User</span></a>
             </div>
-            <a href="javascript:void(0);" class="text-muted"><i class="mdi mdi-content-copy mdi-20px"></i></a>
          </div>
       </div>
    </div>

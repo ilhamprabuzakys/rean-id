@@ -61,19 +61,19 @@
                                 <div class="col-9 col-sm-8">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="fs-6 fw-medium">
+                                            <div class="fs-sm-5 fs-6 fw-medium">
                                                 @if($resultType == 'posts')
                                                 <a
                                                     href="{{ route('home.show_post', ['category' => $result->category, 'post' => $result->slug]) }}">
-                                                    {{ $result->title }}
+                                                    <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
                                                 </a>
                                                 @elseif($resultType == 'events')
                                                 <a href="{{ route('home.events.show', ['event' => $result->slug]) }}">
-                                                    {{ $result->title }}
+                                                    <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
                                                 </a>
                                                 @elseif($resultType == 'ebooks')
                                                 <a href="{{ route('home.ebooks.show', ['ebook' => $result->id]) }}">
-                                                    {{ $result->title }}
+                                                    <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
                                                 </a>
                                                 @endif
                                                 <!-- Anda bisa menambahkan kondisi lainnya jika ada jenis lain -->

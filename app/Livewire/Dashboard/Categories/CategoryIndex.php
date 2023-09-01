@@ -13,35 +13,18 @@ use Livewire\Attributes\On;
 class CategoryIndex extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
-
-    protected $listeners = [
-        "alertSuccess",
-        "alertError",
-        "alertInfo",
-        "swalS",
-        "swalE",
-    ];
 
     public $search;
     public $rolefilter = '';
     public $paginate = 5;
 
-    public $name, $category_id, $category, $dataposts;
-
-    protected $updatesQueryString = ['search'];
-    protected $queryString = ['search' => ['except' => '']];
-
-
-    public function mount()
-    {
-        $this->search = request()->query('search');
-    }
+    public $name, $category, $category_id, $dataposts;
 
     public function render()
     {
-        $categories = $this->search === null ? Category::with(['posts'])->latest('updated_at')->paginate($this->paginate) :
-            Category::with(['posts'])->latest('updated_at')->search($this->search)->paginate($this->paginate);
+        $categories = Category::with(['posts'])->latest('updated_at')->when($this->search, function($query) {
+            return $query->search($this->search);
+        })->paginate($this->paginate);
 
         return view('livewire.dashboard.categories.category-index', [
             'categories' => $categories,
@@ -56,8 +39,8 @@ class CategoryIndex extends Component
     }
 
     protected $messages = [
-        'name.required' => 'Nama harus terisi.',
-        'name.min' => 'Nama minimal harus 4 karakter.',
+        'name.required' => 'Nama Kategori harus terisi.',
+        'name.min' => 'Nama Kategori minimal harus 4 karakter.',
         'name.unique' => 'Kategori dengan nama ini sudah ada.',
     ];
 
@@ -78,32 +61,38 @@ class CategoryIndex extends Component
             'slug' => Str::slug($this->name),
         ]);
         $this->resetInput();
-        // $this->dispatch('close-modal');
-        $this->dispatch('close-offcanvas');
-        // $this->emit('alertSuccess', 'Berhasil menambahkan Kategori baru', 'Pembuatan Kategori');
+        $this->dispatch('close-modal');
         $this->dispatch('alert', [
             'title' => 'Berhasil',
             'message' => 'Data berhasil ditambahkan',
             'type' => 'success',
         ]);
-        // $this->emit('KategoriStore');
     }
 
     public function update()
     {
         $this->validate();
-        Category::find($this->category_id)->update([
-            'name' => $this->name,
-            'slug' => Str::slug($this->name),
-        ]);
-        $this->resetInput();
-        // $this->emit('alertSuccess', 'Berhasil memperbarui data Kategori', 'Update Kategori');
-        $this->dispatch('close-modal');
-        $this->dispatch('alert', [
-            'title' => 'Berhasil',
-            'message' => 'Data berhasil diperbarui',
-            'type' => 'success',
-        ]);
+        $category = Category::find($this->category_id);
+        if ($this->name == $category->name) {
+            $this->dispatch('alert', [
+                'title' => 'Tidak ada perubahan',
+                'message' => 'Data tidak berubah',
+                'type' => 'info',
+            ]);
+            $this->dispatch('close-modal');
+        } else {
+            $category->update([
+                'name' => $this->name,
+                'slug' => Str::slug($this->name),
+            ]);
+            $this->resetInput();
+            $this->dispatch('close-modal');
+            $this->dispatch('alert', [
+                'title' => 'Berhasil',
+                'message' => 'Data berhasil diperbarui',
+                'type' => 'success',
+            ]);
+        }
     }
 
     public function deleteConfirmation($id)
@@ -142,7 +131,6 @@ class CategoryIndex extends Component
         $category = Category::find($category_id);
         if ($category) {
             $this->category_id = $category->id;
-            $this->name = $category->name;
             $this->dataposts = Post::where('category_id', $category->id)->latest('updated_at')->get();
         } else {
             return back();
@@ -156,11 +144,12 @@ class CategoryIndex extends Component
 
     public function resetInput()
     {
-        $this->name = '';
+        $this->name = null;
     }
 
     public function closeModal()
     {
+        $this->resetValidation();	
         $this->resetInput();
     }
 
@@ -172,44 +161,5 @@ class CategoryIndex extends Component
     public function updatingSearch()
     {
         $this->resetPage();
-    }
-
-    public function swalS($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'success',
-            'title' => $title,
-            'text' => $text,
-
-        ]);
-    }
-
-    public function swalE($title, $text)
-    {
-        $this->emit('swalBasic', [
-            'icon' => 'error',
-            'title' => $title,
-            'text' => $text,
-        ]);
-    }
-
-    public function swalD($title, $text)
-    {
-        $this->emit('swalDelete');
-    }
-
-    public function alertSuccess($message, $title = 'Berhasil')
-    {
-        $this->dispatch('alert', ['type' => 'success', 'title' => $title, 'message' => $message]);
-    }
-
-    public function alertError($message, $title = 'Error')
-    {
-        $this->dispatch('alert', ['type' => 'error',  'title' => $title, 'message' => $message]);
-    }
-
-    public function alertInfo($message, $title = 'Informasi')
-    {
-        $this->dispatch('alert', ['type' => 'info',  'title' => $title, 'message' => $message]);
     }
 }

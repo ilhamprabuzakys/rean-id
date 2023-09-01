@@ -13,7 +13,7 @@
     </svg>
     <div class="container pt-12 pb-12 position-relative z-1">
         <div class="row mt-13 d-flex align-items-center justify-content-center text-center">
-            <div class="col-lg-8 col-sm-12 d-flex align-items-end pt-3 text-start">
+            <div class="col-lg-8 col-sm-12 order-lg-1 order-2 d-flex align-items-end pt-3 text-start">
                 <div data-aos data-aos-delay="400"
                 data-aos-mirror="true" data-aos-once="false">
                     <h2 class="display-4 fw-bold splitting-up" data-splitting>
@@ -24,23 +24,22 @@
                     </h3>
                     <h4 class="splitting-up" data-splitting>#IsiDenganKarya</h4>
                     <div class="mt-5">
-                        <a href="{{ route('login') }}"
+                        <a onclick="shareToWhatsApp('Halo, saya tertarik dengan komunitas ini, bisa izinkan saya untuk bergabung dengan Anda!')"
                             class="btn btn-outline-white rounded-pill py-lg-3 px-lg-6 border-2 btn-hover-text" data-aos='fade-right' data-aos-once="false">
                             <span class="btn-hover-label label-default">Mari bergabung</span>
-                            <span class="btn-hover-label label-hover">Kirim karyamu</span>
+                            <span class="btn-hover-label label-hover">Ikut berkarya</span>
                         </a>
                     </div>
                 </div>
 
             </div>
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-4 col-sm-12 order-lg-2 order-1">
                 <div>
                     <div id="logo-container" class="logo-hero mx-auto">
                         <div id="logo-3d" style="width: 300px; height: 300px;"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

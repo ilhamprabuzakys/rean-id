@@ -18,7 +18,7 @@ class EventUpdate extends Component
     use WithFileUploads;
 
     public $event, $user_id;
-    public $title, $slug, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location, $status;
+    public $title, $slug, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location;
     public $files = [];
     public $existingFiles = [];
     public $filePathOrName = '';
@@ -39,7 +39,6 @@ class EventUpdate extends Component
         $this->latitude = $event->latitude;
         $this->longitude = $event->longitude;
         $this->location = $event->location;
-        $this->status = $event->status;
         // Ambil semua file terkait dengan data ini
         $this->existingFiles = $event->files->map(function ($file) {
             return [

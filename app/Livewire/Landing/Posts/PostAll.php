@@ -38,7 +38,7 @@ class PostAll extends Component
     public function render()
     {
         $categories = Category::oldest('name')->get();
-        $query = Post::with(['tags', 'user', 'category'])
+        $query = Post::with(['tags', 'user', 'category'])->where('status', 'approved')
         ->latest('updated_at')
         ->when($this->search, function ($query) {
             return $query->globalSearch($this->search);
@@ -62,5 +62,12 @@ class PostAll extends Component
         $posts = $query;
         $this->dispatch('refreshAOS');
         return view('livewire.landing.posts.post-all', compact('posts', 'categories'));
+    }
+
+    public function resetFilter()
+    {
+        $this->search = null;
+        $this->filter_date = null;
+        $this->filter_category = null;
     }
 }

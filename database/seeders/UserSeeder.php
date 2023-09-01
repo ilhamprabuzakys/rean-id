@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'role' => 'superadmin',
             'password' => \bcrypt('superadmin'),
             'email_verified_at' => now(),
+            'avatar' => 'assets/img/avatar/avatar-1.png',
         ]);
         User::create([
             'name' => 'Super Admin 2',
@@ -28,6 +29,7 @@ class UserSeeder extends Seeder
             'role' => 'superadmin',
             'password' => \bcrypt('superadmin'),
             'email_verified_at' => now(),
+            'avatar' => 'assets/img/avatar/avatar-1.png',
         ]);
         User::create([
             'name' => 'Admin',
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
             'role' => 'admin',
             'password' => \bcrypt('admin'),
             'email_verified_at' => now(),
+            'avatar' => 'assets/img/avatar/avatar-1.png',
         ]);
         User::create([
             'name' => 'Member 1',
@@ -44,6 +47,7 @@ class UserSeeder extends Seeder
             'role' => 'member',
             'password' => \bcrypt('member'),
             'email_verified_at' => now(),
+            'avatar' => 'assets/img/avatar/avatar-1.png',
         ]);
     }
 }

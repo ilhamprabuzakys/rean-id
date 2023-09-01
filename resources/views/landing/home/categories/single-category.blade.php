@@ -8,7 +8,7 @@
          <div class="col-12 col-lg-7 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{ route('home.category_list') }}">{{ __('Kategori Postingan') }}</a></li>
+               <li class="breadcrumb-item"><a href="{{ route('home.category_list') }}">{{ __('Daftar Kategori') }}</a></li>
                <li class="breadcrumb-item active fw-bold" aria-current="page">{{ $category->name }}</li>
             </ol>
             {{-- <h2 class="display-2 mb-4">

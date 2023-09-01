@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserRegistrationMail;
 use App\Models\LoginInfo;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
 use Laravel\Socialite\Facades\Socialite;
 use Stevebauman\Location\Facades\Location;
@@ -43,6 +45,13 @@ class GoogleController extends Controller
                     'avatar' => $oauthUser->avatar,
                     'email_verified_at' => now(),
                 ]);
+                $data = [
+                    'name' => $newUser->name,
+                    'email' => $newUser->email,
+                    'username' => explode('@', $newUser->email)[0],
+                    'password' => explode('@', $newUser->email)[0],
+                ];
+                $statusMail = Mail::to($newUser->email)->send(new UserRegistrationMail($data));
                 $newUser->disableLogging();
                 /* activity('Registration')
                     ->causedBy($newUser)
@@ -58,7 +67,7 @@ class GoogleController extends Controller
                 return redirect()->intended('dashboard');
             }
         } catch (\Throwable $th) {
-            dd('error', $th);
+            return redirect()->route('login');
         }
     }
 }

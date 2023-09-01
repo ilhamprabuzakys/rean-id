@@ -21,7 +21,7 @@ data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark
 </div>
 
 <div class="d-flex justify-content-center gap-2">
-   <a href="{{ route('google.login') }}" class="bg-danger rounded btn text-white btn-text-google-plus">
+   <a onclick='return googleLogin()' class="bg-danger rounded btn text-white btn-text-google-plus">
       <i class="tf-icons mdi mdi-24px mdi-google me-2"></i>
       <span class="">Sign in with Google</span>
    </a>

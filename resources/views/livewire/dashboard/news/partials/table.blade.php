@@ -26,12 +26,12 @@
                 {{ $berita->user->name }}
              </td>
              <td>
-                {{ $berita->created_at }}
+                {{ \Carbon\Carbon::parse($berita->created_at)->format('F d, Y') }}
              </td>
              <td class="text-center">
                 <div class="dropdown">
                    <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
-                      <i class="align-middle" data-feather="more-horizontal"></i>
+                      <i class="fas fa-ellipsis fa-lg"></i>
                    </a>
  
                    <div class="dropdown-menu dropdown-menu-end">

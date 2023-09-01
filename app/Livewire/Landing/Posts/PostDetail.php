@@ -30,8 +30,8 @@ class PostDetail extends Component
         if (auth()->check()) {
             if ($this->post->likes->contains(auth()->user())) {
                 // Pengguna sudah menyukai post, maka kita hapus like-nya
-                $this->post->likes()->detach(auth()->id());
                 $this->post->disableLogging();
+                $this->post->likes()->detach(auth()->id());
                 // Log aktivitas
                 // activity('Postingan')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
                 //     ->performedOn($this->post)
@@ -46,9 +46,10 @@ class PostDetail extends Component
                 //     ->event('unliked')
                 //     ->log(auth()->user()->name . ' batal menyukai postingan ' . $this->post->title);
             } else {
+                // dd('blm like');
                 // Pengguna belum menyukai post, maka kita tambahkan like-nya
-                $this->post->likes()->attach(auth()->id());
                 $this->post->disableLogging();
+                $this->post->likes()->attach(auth()->id());
                 // Log aktivitas
                 activity('Postingan')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
                     ->performedOn($this->post)
@@ -61,11 +62,11 @@ class PostDetail extends Component
                         'message' => auth()->user()->name . ' menyukai postingan ' . $this->post->title,
                     ])
                     ->event('liked')
-                    ->log(auth()->user()->name . ' menyukai postingan ' . $this->post->title);
+                    ->log(auth()->user()->name . ' menyukai postingan anda');
             }
             $this->post->refresh();
         } else {
-            $this->dispatch('notAuthenticatedLikeEvent');
+            $this->dispatch('notAuthenticated');
         }
     }
 

@@ -20,10 +20,11 @@ class ChatList extends Component
     {
         // dd($conversation, $receiverId);
         $this->selectedConversation = $conversation;
-        $receiverInstance = User::find($receiverId);
+        $this->receiverInstance = User::find($receiverId);
         $this->conversation_active_id = $conversation->id;
-        $this->dispatch('updateSendMessage', $this->selectedConversation, $receiverInstance)->to(ChatSendMessage::class);
-        $this->dispatch('loadConversation', $this->selectedConversation, $receiverInstance)->to(ChatHistoryWrapper::class);
+        $this->dispatch('updateSendMessage', 'Conversation', 'Receiver')->to(ChatSendMessage::class);
+        $this->dispatch('loadConversation', 'Conversation', 'Receiver')->to(ChatHistoryWrapper::class);
+        // dd($this->conversation_active_id);
     }
     
     public function getChatUserInstance(Conversation $conversation, $request)

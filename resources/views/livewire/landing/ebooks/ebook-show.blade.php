@@ -4,7 +4,26 @@
             <div class="row pb-7 pt-lg-9 align-items-center">
                 <div class="col-12 col-lg-7 mb-5 mb-lg-0">
                     <h2 class="display-1 mb-4">
-                        Ebook.
+                        {{ $ebook->title }}
+                        @php
+                            $status = '';
+                            $statusBG = '';
+                            switch ($ebook->status) {
+                                case 'rejected':
+                                    $status = 'Ditolak';
+                                    $statusBG = 'danger';
+                                    break;
+                                case 'pending':
+                                    $status = 'Dalam review';
+                                    $statusBG = 'primary';
+                                    break;
+                                default:
+                                    break;
+                            }
+                        @endphp
+                        @if($ebook->status != 'approved')
+                        <span class="badge bg-{{$statusBG}}">{{$status}}</span>
+                        @endif
                     </h2>
                     <p class="lead mb-0">
                         {{ $ebook->description }}
@@ -40,7 +59,7 @@
         </svg>
     </section>
     <section class="position-relative">
-        <div class="container pt-12 pb-9 pb-lg-11">
+        <div class="container pb-9 pb-lg-11">
             <div class="row pt-lg-7 justify-content-center">
                 <div class="col-lg-12 col-xl-10">
                     <div class="pb-2 mb-4 border-bottom border-2">
@@ -61,8 +80,10 @@
 
                         </div>
                         <div class="col-12 col-md-10 col-lg-9 mt-3">
+                            @if($ebook->files->first())
                             <img src="{{ asset($ebook->files->first()->file_path) }}" alt="" class="img-fluid img-zoom"
                                 style="width: -webkit-fill-available;">
+                            @endif
                         </div>
                     </div>
 
@@ -83,9 +104,9 @@
                                     <div><strong>{{ $ebook->title }}</strong></div>
                                 </li>
                                 <li class="d-flex align-items-center mb-4">
-                                    <div>Jumlah Halaman</div>
+                                    <div>Tersedia File PDF</div>
                                     <div class="flex-grow-1 border-bottom mx-3"></div>
-                                    <div><strong>Hal {{ $ebook->pages }}</strong></div>
+                                    <div><strong>{{ $ebook->pdf->first()->file_path ? 'Ada' : 'Tidak ada' }}</strong></div>
                                 </li>
                                 <li class="d-flex align-items-center mb-4">
                                     <div>Penulis</div>
@@ -95,7 +116,7 @@
                                 <li class="d-flex align-items-center mb-4">
                                     <div>Tanggal Publish</div>
                                     <div class="flex-grow-1 border-bottom mx-3"></div>
-                                    <div><strong>{{ \Carbon\Carbon::parse($ebook->published_at)->format('d F, Y')
+                                    <div><strong>{{ $ebook->published_at
                                             }}</strong></div>
                                 </li>
                                 <li class="d-flex align-items-center">
@@ -143,28 +164,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            function shareToFacebook() {
-                var currentURL = window.location.href;
-                var shareURL = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currentURL);
-                window.open(shareURL, "_blank");
-            }
-
-            function shareToWhatsapp() {
-                var currentURL = window.location.href;
-                var encodedMessage = encodeURIComponent("Lihat ini: " + currentURL);
-                var shareURL = `https://web.whatsapp.com/send?text=${encodedMessage}`;
-                window.open(shareURL, "_blank");
-            }
-
-
-            function shareToTwitter() {
-                var currentURL = window.location.href;
-                var shareURL = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(currentURL);
-                window.open(shareURL, "_blank");
-            }
-
-        </script>
     </section>
     <div class="modal fade" id="downloadEbook{{ $ebook->id }}" tabindex="-1" aria-labelledby="downloadEbook"
         aria-hidden="true">

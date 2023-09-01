@@ -10,7 +10,7 @@ class LogController extends Controller
     public function index()
     {
         return view('dashboard.logs.index', [
-            'title' => 'Log AKtivitas',
+            'title' => 'Log Aktivitas',
         ]);
     }
 }

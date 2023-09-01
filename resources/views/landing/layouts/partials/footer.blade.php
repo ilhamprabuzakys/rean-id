@@ -1,4 +1,4 @@
-<footer id="footer" class="bg-body footer" style="font-family: Poppins; font-weight: 600">
+<footer id="footer" class="bg-body footer border-top" style="font-family: Poppins; font-weight: 600">
     <div class="container pt-9 pt-lg-11 pb-5">
         <div class="row">
             <div class="col-lg-5 col-sm-7 mb-4 mb-sm-0">
@@ -93,8 +93,7 @@
                 <span class="d-block lh-sm text-body-secondary">© Copyright
                     <script>
                         document.write(new Date().getFullYear())
-
-                    </script>2023. REAN.ID
+                    </script> REAN.ID
                 </span>
             </div>
         </div>

@@ -16,7 +16,11 @@ class EbookShow extends Component
 
     public function render()
     {
-        return view('livewire.landing.ebooks.ebook-show');
+        if ($this->ebook->status == 'approved' || $this->ebook->user_id == auth()->user()->id || auth()->user()->role != 'member') {
+            return view('livewire.landing.ebooks.ebook-show');
+        }
+    
+        return abort(404);
     }
 
 }

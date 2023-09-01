@@ -1,5 +1,5 @@
 <!--  Large modal example -->
-<div wire:ignore.self class="modal fade" id="createCategoryModal" tabindex="-1" role="dialog">
+<div wire:ignore.self class="modal fade" id="createTagModal" tabindex="-1" role="dialog">
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-header">
@@ -16,7 +16,7 @@
                      <input type="text"
                         class="form-control @error('name')
                         is-invalid
-                     @enderror" wire:model.lazy="name">
+                     @enderror" wire:model.live.debounce.500ms="name">
                      @error('name')
                         <div class="invalid-feedback">
                            {{ $message }}

@@ -79,6 +79,7 @@ class ChatHistoryWrapper extends Component
     #[On('loadConversation')]
     public function getConversation(Conversation $conversation, User $receiver)
     {
+        dd($conversation, $receiver);
         $this->selectedConversation = $conversation;
         $this->receiverInstance = $receiver;
         $this->messages_count = Message::where('conversation_id', $this->selectedConversation->id)->count();

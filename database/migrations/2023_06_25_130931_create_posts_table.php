@@ -21,7 +21,10 @@ return new class extends Migration
             // $table->integer('like')->default(0);
             $table->foreignId('category_id')->nullable();
             // $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
-            $table->foreignId('user_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

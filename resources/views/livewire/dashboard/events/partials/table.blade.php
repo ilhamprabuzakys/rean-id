@@ -1,5 +1,5 @@
 <div class="table-responsive">
-   <table class="table table-sm ">
+   <table class="table table-sm">
 
       <thead class="table-light">
          <tr>
@@ -18,10 +18,12 @@
       </thead>
       <tbody>
          @forelse ($events as $event)
-            <tr class="{{ $event->status ? 'table-success' : 'table-danger'  }}">
+            <tr>
                <th scope="row">{{ $loop->iteration + ($paginate * ($events->currentPage()-1)) }}</th>
                <td>
-                  {{ $event->title }}
+                  <a href="{{ route('home.events.show', $event) }}" class="text-dark">
+                     {{ $event->title }}
+                  </a>
                </td>
                <td>
                   {{ $event->organizer }}
@@ -29,7 +31,22 @@
                <td>
                   {{ $event->location }}
                </td>
-               <td><span class="badge rounded-pill bg-label-{{ $event->status ? 'primary' : 'danger' }} me-1">{{ $event->status ? 'Berlangsung' : 'Berakhir'}}</span></td>
+               @php
+                  $status = '';
+                  $status_bg = '';
+                  $current_date = now(); // Asumsikan menggunakan Carbon untuk mendapatkan tanggal saat ini
+                  if ($current_date < $event->start_date) {
+                     $status = 'Akan datang';
+                     $status_bg = 'success';
+                  } elseif ($current_date >= $event->start_date && $current_date <= $event->end_date) {
+                     $status = 'Berlangsung';
+                     $status_bg = 'primary';
+                  } else {
+                     $status = 'Berakhir';
+                     $status_bg = 'danger';
+                  }
+               @endphp
+               <td><span class="badge rounded-pill bg-label-{{ $status_bg }} me-1">{{ $status }}</span></td>
                <td>
                   {{ $event->start_date }}
                </td>
@@ -51,7 +68,7 @@
                            <i class="fas fa-edit me-2"></i>
                            Edit
                         </a>
-                        @if($event->status == FALSE)
+                       {{--  @if($event->status == FALSE)
                         <a class="dropdown-item text-primary text-decoration-none" wire:click='activate({{ $event->id }})'>
                            <i class="fas fa-check me-2"></i>
                            Aktifkan
@@ -64,7 +81,7 @@
                         @endif
                         <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $event->id }})">
                            <i class="fas fa-trash me-2"></i>
-                           Hapus</a>
+                           Hapus</a> --}}
                      </div>
                   </div>
                </td>
@@ -72,7 +89,7 @@
             @include('livewire.dashboard.events.partials.modal.show')
          @empty
             <tr>
-               <td colspan="6">
+               <td colspan="8">
                   <h5 class="text-center my-3">Tidak ada event yang tersedia.</h5>
                </td>
             </tr>

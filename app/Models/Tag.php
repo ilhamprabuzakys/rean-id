@@ -14,7 +14,7 @@ use Spatie\Activitylog\Models\Activity;
 class Tag extends Model
 {
     use HasFactory, Sluggable, LogsActivity;
-    
+
     protected $guarded = ['id'];
     protected $table = 'tags';
 
@@ -24,13 +24,13 @@ class Tag extends Model
             $activity->properties = $this->attributes;
         }
     }
-    
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->useLogName('Label')
             ->logFillable('*')
-            ->setDescriptionForEvent(function(string $eventName) {
+            ->setDescriptionForEvent(function (string $eventName) {
                 $aksi = '';
                 switch ($eventName) {
                     case 'created':
@@ -59,6 +59,12 @@ class Tag extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        $search = strtolower($search);
+        return $query->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"]);
     }
 
     public function posts()

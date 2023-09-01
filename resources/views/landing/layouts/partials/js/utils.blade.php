@@ -132,12 +132,33 @@ function shareToWhatsApp(message) {
     const top = window.screenY + (window.outerHeight - height) / 2.5; // Pengurangan dengan 2.5 agar sedikit lebih ke atas dari tengah
 
     // Buka window baru
-    const newWindow = window.open(whatsappUrl, 'shareToWhatsApp', `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${width},height=${height},left=${left},top=${top}`);
+    /* const newWindow = window.open(whatsappUrl, 'shareToWhatsApp', `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${width},height=${height},left=${left},top=${top}`);
     
     // Fokus ke window baru
-    newWindow.focus();
+    newWindow.focus(); */
+    // Buka di newtab
+    window.open(whatsappUrl, '_blank');
 
     return false;
 }
+</script>
+<script>
+   function shareToFacebook() {
+       var currentURL = window.location.href;
+       var shareURL = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currentURL);
+       window.open(shareURL, "_blank");
+   }
 
+   function shareToWhatsapp() {
+       var currentURL = window.location.href;
+       var encodedMessage = encodeURIComponent("Lihat ini: " + currentURL);
+   var shareURL = `https://wa.me/send?text=${encodedMessage}`;
+       window.open(shareURL, "_blank");
+   }
+
+   function shareToTwitter() {
+       var currentURL = window.location.href;
+       var shareURL = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(currentURL);
+       window.open(shareURL, "_blank");
+   }
 </script>

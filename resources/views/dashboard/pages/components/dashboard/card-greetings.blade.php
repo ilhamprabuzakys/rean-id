@@ -1,4 +1,4 @@
-<div class="col-xl-4 col-lg-4 col-md-12 col-sm-8 col-12">
+<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mb-3">
    <div class="card h-100">
       <div class="card-body text-nowrap">
          <h4 class="card-title mb-1 d-flex gap-2 flex-wrap">Selamat Datang <strong>{{ $user->name

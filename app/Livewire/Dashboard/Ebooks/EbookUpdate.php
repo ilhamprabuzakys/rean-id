@@ -19,7 +19,7 @@ class EbookUpdate extends Component
     use WithFileUploads;
 
     public $ebook;
-    public $title, $description, $pages, $author, $published_at, $body, $user_id, $file_path;
+    public $title, $description, $author, $published_at, $body, $user_id, $file_path;
     public $files = [];
     public $existingFiles = [];
     public $existingPDF;
@@ -32,7 +32,6 @@ class EbookUpdate extends Component
         $this->ebook = $ebook;
         $this->title = $ebook->title;
         $this->description = $ebook->description;
-        $this->pages = $ebook->pages;
         $this->author = $ebook->author;
         $this->published_at = $ebook->published_at;
         $this->body = $ebook->body;
@@ -87,7 +86,6 @@ class EbookUpdate extends Component
                 ];
             }
         }
-        
     }
 
     public function rules()
@@ -95,7 +93,6 @@ class EbookUpdate extends Component
         return [
             'title' => ['required', 'min:4', 'max:50', Rule::unique('ebooks')->ignore($this->ebook->id)],
             'description' => ['required', 'min:4', 'max:100'],
-            'pages' => ['required'],
             'author' => ['required'],
             'published_at' => ['required'],
             'body' => ['required', 'min:4'],
@@ -111,7 +108,6 @@ class EbookUpdate extends Component
         'description.required' => 'Deskripsi itu harus diisi',
         'description.min' => 'Deskripsi terlalu pendek',
         'description.max' => 'Deskripsi terlalu panjang, maksimal hanya 20 karakter',
-        'pages.required' => 'Pages itu harus diisi',
         'author.required' => 'Author itu harus diisi',
         'cover_path.max' => 'Ukuran file terlalu besar, maksimal hanya 6MB',
         'files.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
@@ -134,6 +130,7 @@ class EbookUpdate extends Component
                 $this->messages['file_path.mimes'] = 'File harus berformat PDF';
                 $this->messages['file_path.max'] = 'Ukuran PDF tidak boleh lebih besar dari 20MB';
             }
+            $this->title = Str::of($this->title)->title();
             $this->validate($this->rules(), $this->messages);
             $this->deleteRemovedImages();
             $this->processDescriptionImages();
@@ -289,60 +286,8 @@ class EbookUpdate extends Component
     {
         $this->title = null;
         $this->description = null;
-        $this->pages = null;
         $this->author = null;
         $this->published_at = null;
         $this->body = null;
     }
-
-    /* private function processFilePath()
-    {
-        if ($this->ebook->file_path) {
-            if ($this->file_path) {
-                if ($this->file_path != $this->ebook->file_path) {
-                    $path = $this->file_path->store('file_path');
-                    $this->file_path = "storage/" . $path;
-
-                    if ($this->ebook->file_path) {
-                        $oldFilePath = str_replace('storage/', '', $this->ebook->file_path);
-                        Storage::delete($oldFilePath);
-                    }
-                } else {
-                    $validatedData['file_path'] = $this->ebook->file_path;
-                }
-            } else {
-                $validatedData['file_path'] = $this->ebook->file_path;
-            }
-        } elseif ($this->file_path) {
-            $path = $this->file_path->store('file_path');
-            $validatedData['file_path'] = "storage/" . $path;
-        } else {
-            unset($validatedData['file_path']);
-        }
-
-        if ($this->ebook->cover_path) {
-            if ($this->cover_path) {
-                if ($this->cover_path != $this->ebook->cover_path) {
-                    $path = $this->cover_path->store('cover_path');
-                    $validatedData['cover_path'] = "storage/" . $path;
-
-                    if ($this->ebook->cover_path) {
-                        $oldFilePath = str_replace('storage/', '', $this->ebook->cover_path);
-                        Storage::delete($oldFilePath);
-                    }
-                } else {
-                    $validatedData['cover_path'] = $this->ebook->cover_path;
-                }
-            } else {
-                $validatedData['cover_path'] = $this->ebook->cover_path;
-            }
-        } elseif ($this->cover_path) {
-            $path = $this->cover_path->store('cover_path');
-            $validatedData['cover_path'] = "storage/" . $path;
-        } else {
-            unset($validatedData['cover_path']);
-        }
-
-        return $validatedData;
-    } */
 }

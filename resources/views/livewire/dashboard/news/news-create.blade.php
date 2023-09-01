@@ -79,7 +79,7 @@
    <script>
       $(document).ready(function() {
          $('#body').summernote({
-            height: 300,
+            height: 200,
             tabsize: 2,
             lang: 'id-ID',
             callbacks: {
@@ -94,7 +94,7 @@
                ['color', ['color']],
                ['para', ['ul', 'ol', 'paragraph']],
                ['table', ['table']],
-               ['insert', ['link', 'picture'']],
+               ['insert', ['link', 'picture']],
                ['view', ['codeview', 'help']],
             ]
          });
@@ -102,7 +102,6 @@
          FilePond.registerPlugin(FilePondPluginImagePreview);
          const inputElement = document.querySelector('#file_path');
          const pond = FilePond.create(inputElement);
-
          pond.setOptions({
             server: {
                process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {

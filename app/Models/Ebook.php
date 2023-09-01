@@ -83,7 +83,7 @@ class Ebook extends Model
                     }
                     // $event->files()->delete();
                 } catch (\Throwable $th) {
-                    dd($th);
+                    return;
                 }
             } 
             
@@ -96,7 +96,7 @@ class Ebook extends Model
                     $ebook->pdf()->delete();
                     // $event->files()->delete();
                 } catch (\Throwable $th) {
-                    dd($th);
+                    return;
                 }
             }
         });

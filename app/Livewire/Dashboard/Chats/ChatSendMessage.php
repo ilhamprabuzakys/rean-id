@@ -20,6 +20,7 @@ class ChatSendMessage extends Component
     #[On('updateSendMessage')]
     public function getConversation(Conversation $conversation, User $receiver)
     {
+        dd('error?');
         $this->selectedConversation = $conversation;
         $this->receiverInstance = $receiver;
         // $this->messages_count = Message::where('conversation_id', $this->selectedConversation->id)->count();

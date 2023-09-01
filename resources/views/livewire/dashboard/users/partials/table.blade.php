@@ -36,7 +36,7 @@
                   class="w-px-40 h-px-40 rounded-circle img-profile-header" style="object-fit: cover">
             </td>
             <td>
-               {{ $user->name }} <span class="text-primary">{{ $user->id == auth()->user()->id ? ' (Anda)' : ''
+               <a href="{{ route('home.show_user', $user) }}" class="text-dark text-underline">{{ $user->name }}</a> <span class="text-primary">{{ $user->id == auth()->user()->id ? ' (Anda)' : ''
                   }}</span>
             </td>
             <td>{{ $user->email }}</td>
@@ -119,7 +119,7 @@
          @include('livewire.dashboard.users.partials.modal.postingan-terkait')
          @empty
          <tr>
-            <td colspan="6">
+            <td colspan="10">
                <h4 class="text-center my-3">Data User masih kosong</h4>
             </td>
          </tr>

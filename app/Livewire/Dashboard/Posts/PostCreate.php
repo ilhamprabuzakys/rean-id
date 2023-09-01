@@ -92,15 +92,15 @@ class PostCreate extends Component
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
             }
 
-            if ($this->files == null) {
-                $this->addError('files', 'Cover image harus disertakan.');
-                $this->dispatch('swal:modal', [
-                    'icon' => 'error',
-                    'title' => 'Terjadi Kesalahan',
-                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
-                ]);
-                return;
-            }
+            // if ($this->files == null) {
+            //     $this->addError('files', 'Cover image harus disertakan.');
+            //     $this->dispatch('swal:modal', [
+            //         'icon' => 'error',
+            //         'title' => 'Terjadi Kesalahan',
+            //         'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+            //     ]);
+            //     return;
+            // }
 
             $this->validate($rules, $this->messages);
 
@@ -157,6 +157,7 @@ class PostCreate extends Component
                 if (!$tag) {
                     // Jika tag belum ada, buat tag baru
                     $tag = Tag::create(['name' => $tagName]);
+                    $tag->disableLogging();
                 }
 
                 // Tambahkan ID tag ke dalam array
@@ -167,6 +168,7 @@ class PostCreate extends Component
             $post->tags()->sync($tagIds);
         }
         $post->save();
+        $post->disableLogging();
     }
 
     private function storeMediaFile($post) 

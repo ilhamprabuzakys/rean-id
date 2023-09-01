@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 
 
-<html lang="en" class="light-style  customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/"
-   data-template="vertical-menu-template">
+<html lang="en" class="light-style  customizer-hide" dir="ltr" data-theme="theme-default"
+   data-assets-path="{{ asset('assets/dashboard/materialize/assets/') }}/" data-template="vertical-menu-template">
 
 <head>
    <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+   <meta name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
    <title>{{ $title . ' - ' . config('app.name') }}</title>
 
 
-   <meta name="description" content="Materialize – is the most developer friendly &amp; highly customizable Admin Dashboard Template." />
-   <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+   <meta name="description"
+      content="Materialize – is the most developer friendly &amp; highly customizable Admin Dashboard Template." />
+   <meta name="keywords"
+      content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
    <!-- Canonical SEO -->
    <link rel="canonical"
       href="https://themeforest.net/item/materialize-material-design-admin-template/11446068?irgwc=1&amp;clickid=&amp;iradid=275988&amp;irpid=1244113&amp;iradtype=ONLINE_TRACKING_LINK&amp;irmptype=mediapartner&amp;mp_value1=&amp;utm_campaign=af_impact_radius_1244113&amp;utm_medium=affiliate&amp;utm_source=impact_radius">
 
    <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-   {{-- <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+   {{-- <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5J3LMKC');</script> --}}
+      })(window,document,'script','dataLayer','GTM-5J3LMKC');
+   </script> --}}
    <!-- End Google Tag Manager -->
 
    <!-- Favicon -->
@@ -31,28 +36,39 @@
    <!-- Fonts -->
    <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/index.html') }}">
    <link rel="preconnect" href="{{ asset('assets/dashboard/materialize/fonts.gstatic.com/index.html') }}" crossorigin>
-   <link href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Inter:wght@300;400;500;600;700&amp;display=swap') }}" rel="stylesheet">
+   <link
+      href="{{ asset('assets/dashboard/materialize/fonts.googleapis.com/css2ab8c.css?family=Inter:wght@300;400;500;600;700&amp;display=swap') }}"
+      rel="stylesheet">
 
    <!-- Icons -->
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/materialdesignicons.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/materialdesignicons.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/fonts/fontawesome.css') }}" />
 
    <!-- Core CSS -->
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/theme-default.css') }}" class="template-customizer-theme-css" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/core.css') }}"
+      class="template-customizer-core-css" />
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/css/rtl/theme-default.css') }}"
+      class="template-customizer-theme-css" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/css/demo.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/css/custom.css') }}" />
 
    <!-- Vendors CSS -->
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.css') }}" />
 
    <!-- Vendor -->
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css') }}" />
 
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.min.css">
 
@@ -62,11 +78,13 @@
    <!-- Helpers -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/helpers.js') }}"></script>
    <!-- Pace CSS -->
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
+   <link rel="stylesheet"
+      href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
    <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
 
    <!-- Jquery  -->
-   <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
    @stack('head')
    @stack('style')
@@ -78,7 +96,8 @@
 
 
    <!-- ?PROD Only: Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-   {{-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript> --}}
+   {{-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J3LMKC" height="0" width="0"
+         style="display: none; visibility: hidden"></iframe></noscript> --}}
    <!-- End Google Tag Manager (noscript) -->
 
    <!-- Content -->
@@ -94,7 +113,8 @@
                   <a href="{{ route('index') }}" class="app-brand-link gap-2">
                      <span class="app-brand-logo demo ms-4">
                         {{-- <span style="color:#666cff;">
-                           <svg width="268" height="150" viewBox="0 0 38 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <svg width="268" height="150" viewBox="0 0 38 20" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
                               <path
                                  d="M30.0944 2.22569C29.0511 0.444187 26.7508 -0.172113 24.9566 0.849138C23.1623 1.87039 22.5536 4.14247 23.5969 5.92397L30.5368 17.7743C31.5801 19.5558 33.8804 20.1721 35.6746 19.1509C37.4689 18.1296 38.0776 15.8575 37.0343 14.076L30.0944 2.22569Z"
                                  fill="currentColor" />
@@ -114,11 +134,13 @@
                                  d="M7.82901 2.22569C8.87231 0.444187 11.1726 -0.172113 12.9668 0.849138C14.7611 1.87039 15.3698 4.14247 14.3265 5.92397L7.38656 17.7743C6.34325 19.5558 4.04298 20.1721 2.24875 19.1509C0.454514 18.1296 -0.154233 15.8575 0.88907 14.076L7.82901 2.22569Z"
                                  fill="currentColor" />
                               <defs>
-                                 <linearGradient id="paint0_linear_2989_100980" x1="5.36642" y1="0.849138" x2="10.532" y2="24.104" gradientUnits="userSpaceOnUse">
+                                 <linearGradient id="paint0_linear_2989_100980" x1="5.36642" y1="0.849138" x2="10.532"
+                                    y2="24.104" gradientUnits="userSpaceOnUse">
                                     <stop offset="0" stop-opacity="1" />
                                     <stop offset="1" stop-opacity="0" />
                                  </linearGradient>
-                                 <linearGradient id="paint1_linear_2989_100980" x1="5.19475" y1="0.849139" x2="10.3357" y2="24.1155" gradientUnits="userSpaceOnUse">
+                                 <linearGradient id="paint1_linear_2989_100980" x1="5.19475" y1="0.849139" x2="10.3357"
+                                    y2="24.1155" gradientUnits="userSpaceOnUse">
                                     <stop offset="0" stop-opacity="1" />
                                     <stop offset="1" stop-opacity="0" />
                                  </linearGradient>
@@ -129,8 +151,7 @@
                      </span>
                      {{-- <span class="app-brand-text demo text-heading fw-bold ms-3">
                         <img src="{{ asset('assets/img/rean-text-logo-dark.png') }}" alt="logo-brand-text" style="
-                           height: 35px;"
-                        >
+                           height: 35px;">
                      </span> --}}
                   </a>
                </div>
@@ -149,8 +170,11 @@
             </div>
             <!-- /Login -->
             @yield('bg-img')
-            {{-- <img alt="mask" src="{{ asset('assets/dashboard/mater               ialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}" class="authentication-image d-none d-lg-block"
-               data-app-light-img="illustrations/auth-basic-login-mask-light.png" data-app-dark-img="illustrations/auth-basic-login-mask-dark.html" /> --}}
+            {{-- <img alt="mask"
+               src="{{ asset('assets/dashboard/mater               ialize/assets/img/illustrations/auth-basic-login-mask-light.png') }}"
+               class="authentication-image d-none d-lg-block"
+               data-app-light-img="illustrations/auth-basic-login-mask-light.png"
+               data-app-dark-img="illustrations/auth-basic-login-mask-dark.html" /> --}}
          </div>
       </div>
    </div>
@@ -163,7 +187,8 @@
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/jquery/jquery.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/popper/popper.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/bootstrap.js') }}"></script>
-   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}">
+   </script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
 
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/hammer/hammer.js') }}"></script>
@@ -180,9 +205,15 @@
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/bs-stepper/bs-stepper.js') }}"></script>
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/select2/select2.js') }}"></script>
-   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}"></script>
-   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}"></script>
-   <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}"></script>
+   <script
+      src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js') }}">
+   </script>
+   <script
+      src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js') }}">
+   </script>
+   <script
+      src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js') }}">
+   </script>
 
    <!-- Main JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/js/main.js') }}"></script>
@@ -194,6 +225,7 @@
    <!-- Pace JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
    <livewire:scripts />
+   @stack('javascripts')
    <script>
       // window.a   ddEventListener('swal:modal', event => {
       //    Swal.fire({
@@ -217,6 +249,29 @@
       });
    </script>
    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+         const toggleEyes = document.querySelectorAll('.form-password-toggle .input-group-text');
+         toggleEyes.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                  const input = this.closest('.input-group').querySelector('input');
+                  const icon = this.querySelector('i');
+      
+                  // Jika tipe saat ini adalah 'password', ganti menjadi 'text' dan sebaliknya
+                  if (input.type === 'password') {
+                     input.type = 'text';
+                     icon.classList.remove('mdi-eye-off-outline');
+                     icon.classList.add('mdi-eye-outline');
+                  } else {
+                     input.type = 'password';
+                     icon.classList.remove('mdi-eye-outline');
+                     icon.classList.add('mdi-eye-off-outline');
+                  }
+            });
+         });
+      });
+      
+      </script>
+   <script>
       window.addEventListener("message", function(event) {
          console.log("Pesan diterima:", event.data);
          if (event.data === "loginSuccess") {
@@ -228,22 +283,7 @@
       // Google Login
       function googleLogin() {
          const url = `{{ route('google.login') }}`;
-      
-         // Tentukan ukuran dan posisi window baru
-         const width = 600;
-         const height = 400;
-         //  const left = (window.innerWidth - width) / 2;
-         //  const top = (window.innerHeight - height) / 2;
-         // Hitung posisi tengah
-         const left = window.screenX + (window.outerWidth - width) / 2;
-         const top = window.screenY + (window.outerHeight - height) / 2.5; // Pengurangan dengan 2.5 agar sedikit lebih ke atas dari tengah
-      
-         // Buka window baru
-         const newWindow = window.open(url, 'googleLogin', `toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${width},height=${height},left=${left},top=${top}`);
-         
-         // Fokus ke window baru
-         newWindow.focus();
-      
+         window.open(url, '_self');
          return false;
       }
    </script>

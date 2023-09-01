@@ -65,7 +65,7 @@
       $(document).ready(function() {
          $('#editbody').summernote({
             placeholder: 'Isi body dari Konten Berita',
-            height: 400,
+            height: 200,
             tabsize: 2,
             lang: 'id-ID',
             callbacks: {

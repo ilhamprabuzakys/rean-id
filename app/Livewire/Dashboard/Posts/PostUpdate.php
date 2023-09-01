@@ -159,15 +159,15 @@ class PostUpdate extends Component
                 $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
             }
-            if ($this->post->files->count() < 1 && $this->files == null) {
-                $this->addError('files', 'Cover image harus disertakan.');
-                $this->dispatch('swal:modal', [
-                    'icon' => 'error',
-                    'title' => 'Terjadi Kesalahan',
-                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
-                ]);
-                return;
-            }
+            // if ($this->post->files->count() < 1 && $this->files == null) {
+            //     $this->addError('files', 'Cover image harus disertakan.');
+            //     $this->dispatch('swal:modal', [
+            //         'icon' => 'error',
+            //         'title' => 'Terjadi Kesalahan',
+            //         'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+            //     ]);
+            //     return;
+            // }
 
 
             $this->validate($rules, $this->messages);
@@ -275,6 +275,7 @@ class PostUpdate extends Component
                 if (!$tag) {
                     // Jika tag belum ada, buat tag baru
                     $tag = Tag::create(['name' => $tagName]);
+                    $tag->disableLogging();
                 }
 
                 // Tambahkan ID tag ke dalam array

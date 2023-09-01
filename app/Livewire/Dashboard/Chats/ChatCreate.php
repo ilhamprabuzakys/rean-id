@@ -82,13 +82,13 @@ class ChatCreate extends Component
                 'last_time_message' => now(),
             ]);
 
-            // $createdMessage = Message::create([
-            //     'conversation_id' => $createdConversation->id,
-            //     'sender_id' => \auth()->user()->id,
-            //     'receiver_id' => $receiver_id,
-            //     'body' => $this->message,
-            // ]);
-            // $createdConversation->last_time_message = $createdMessage->created_at;
+            $createdMessage = Message::create([
+                'conversation_id' => $createdConversation->id,
+                'sender_id' => \auth()->user()->id,
+                'receiver_id' => $receiver_id,
+                'body' => $this->message,
+            ]);
+            $createdConversation->last_time_message = $createdMessage->created_at;
 
             $createdConversation->last_time_message = $createdConversation->created_at;
             $createdConversation->save();

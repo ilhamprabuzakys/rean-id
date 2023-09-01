@@ -23,12 +23,12 @@ return new class extends Migration
             $table->text('longitude');
             $table->string('province');
             $table->string('city');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             // Masuknya ke relasi USER
             $table->string('contact_email');
             $table->string('organizer');
-            $table->boolean('status')->default(TRUE);
+            // $table->boolean('status')->default(TRUE);
             $table->foreignId('user_id');
             $table->timestamps();
         });

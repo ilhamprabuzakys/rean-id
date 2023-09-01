@@ -20,9 +20,14 @@
                <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                   <span class="d-none d-sm-block">Unggah Foto Baru</span>
                   <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
-                  <input type="file" id="upload" wire:model='avatar' class="account-file-input d-none">
+                  <input type="file" id="upload" wire:model.live='avatar' class="account-file-input d-none">
+                  <div wire:loading>
+                     <span class="ms-2 spinner-border" role="status" aria-hidden="true"></span>
+                     <span class="visually-hidden">Loading...</span>
+                  </div>
                </label>
-               <button type="button" class="btn btn-outline-secondary account-image-reset mb-3" wire:click='$dispatch("cancelAvatar")' id="img-reset-btn">
+               <button type="button" class="btn btn-outline-secondary account-image-reset mb-3"
+                  wire:click='$dispatch("cancelAvatar")' id="img-reset-btn">
                   <i class="mdi mdi-reload d-block d-sm-none"></i>
                   <span class="d-none d-sm-block">Urungkan</span>
                </button>
@@ -90,14 +95,16 @@
             </div>
             <div class="mb-3 col-md-12">
                <label for="description" class="form-label">Deskripsi</label>
-               <textarea id="basic-description-message" class="form-control" wire:model='description' rows="4"></textarea>
+               <textarea id="basic-description-message" class="form-control" wire:model='description'
+                  rows="4"></textarea>
                @error('description')
                <div class="invalid-feedback">
                   {{ $message }}
                </div>
                @enderror
                <div class="text-muted small mt-1">
-                  Tulis deskripsi singkat tentang diri kamu sehingga orang dapat mengetahui kamu lebih baik saat mengunjungi halaman profilmu
+                  Tulis deskripsi singkat tentang diri kamu sehingga orang dapat mengetahui kamu lebih baik saat
+                  mengunjungi halaman profilmu
                </div>
             </div>
          </div>
@@ -112,6 +119,61 @@
       </div>
       <!-- /Account -->
    </div>
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+         const avatar = document.getElementById('upload');
+
+         // Pastikan File ada
+         if (!avatar) return;
+         
+         avatar.addEventListener('change', function() {
+            const file = avatar.files[0];
+            
+            if (!file) {
+                  Swal.fire({
+                     title: "Gagal Submit",
+                     html: "File yang diupload harus berupa image",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Media file harus disertakan');
+                  avatar.value = ''; // Reset input file
+                  return;
+            }
+
+            // Cek ukuran file (3MB = 20 * 1024 * 1024 bytes)
+            if (file.size > 3 * 1024 * 1024) {
+                  Swal.fire({
+                     title: "Gagal Upload",
+                     html: "Ukuran file tidak boleh lebih besar dari <span class='text-danger'>3MB</span>",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Ukuran media file tidak boleh lebih besar dari 20MB');
+                  avatar.value = ''; // Reset input file
+                  return;
+            }
+
+            // Cek ekstensi file
+            const allowedFormats = ['jpg', 'jpeg', 'png'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedFormats.includes(fileExtension)) {
+                  Swal.fire({
+                     title: "Gagal Upload",
+                     html: "File harus dalam format: <span class='text-danger'>jpg, jpeg dan png</span>",
+                     icon: "error",
+                     confirmButtonText: 'Ok',
+                     timer: 2500,
+                  })
+                  // alert('Media file harus berformat media: mp3, mp4, mkv');
+                  avatar.value = ''; // Reset input file
+                  return;
+            }
+         });
+      });
+   </script>
 </div>
 <script>
    window.Livewire.on('fileChoosen', () => {

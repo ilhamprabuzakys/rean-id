@@ -16,7 +16,7 @@ use Illuminate\Validation\ValidationException;
 class EbookCreate extends Component
 {
     use WithFileUploads;
-    public $title, $description, $pages, $author, $published_at, $user_id, $body, $file_path;
+    public $title, $description, $status, $author, $published_at, $user_id, $body, $file_path;
     public $files = [];
 
     public function mount($user)
@@ -29,7 +29,6 @@ class EbookCreate extends Component
         return [
             'title' => ['required', 'min:4', 'max:50', Rule::unique('ebooks')],
             'description' => ['required', 'min:4', 'max:100'],
-            'pages' => ['required'],
             'author' => ['required'],
             'published_at' => ['required'],
             'files.*' => ['max:20000'],
@@ -46,23 +45,15 @@ class EbookCreate extends Component
         'description.required' => 'Deskripsi itu harus diisi',
         'description.min' => 'Deskripsi terlalu pendek',
         'description.max' => 'Deskripsi terlalu panjang, maksimal hanya 20 karakter',
-        'pages.required' => 'Pages itu harus diisi',
         'published_at.required' => 'Tanggal dipublish itu harus diisi',
         'author.required' => 'Author itu harus diisi',
         'file.*.max' => 'Ukuran file terlalu besar, maksimal hanya 20MB',
         'file_path.max' => 'Ukuran file terlalu besar, maksimal hanya 40MB',
         'file_path.mimes' => 'Format file harus PDF',
-        'file_path.file' => 'Harap mengupload tipe file',
+        'file_path.file' => 'Harap mengupload file PDF',
         'body.required' => 'Body itu harus diisi',
         'body.min' => 'Konten body terlalu pendek',
     ];
-
-    // protected $validationAttributes = [
-    //     'title' => 'Judul',
-    //     'description' => 'Deskripsi',
-    //     'pages' => 'Pages',
-    //     'author' => 'author',
-    // ];
 
     public function render()
     {
@@ -73,6 +64,12 @@ class EbookCreate extends Component
     {
         // dd($this->all());
         try {
+            if (auth()->user()->role == 'member') {
+                $this->status = 'approved';
+            } else {
+                $this->status = 'approved';
+            }
+            $this->title = Str::of($this->title)->title();
             $this->validate($this->rules(), $this->messages);
             $this->processDescriptionImages();
 
@@ -163,7 +160,7 @@ class EbookCreate extends Component
             // $extension = $this->file_path->getClientOriginalExtension(); // Mendapatkan ekstensi file
             // Membuat format nama file
             $objName = Str::slug($ebook->title); // Menggunakan slug agar aman untuk nama file
-            $filename = "{$ebook->id}_{$objName}_{$timestamp}.pdf";
+            $filename = "{$objName}.pdf";
             $path = $this->file_path->storeAs('ebooks/pdf', $filename);
             $storedPath = "storage/" . $path;
             FileEbookPDF::create([
@@ -177,7 +174,6 @@ class EbookCreate extends Component
     {
         $this->title = null;
         $this->description = null;
-        $this->pages = null;
         $this->author = null;
         $this->published_at = null;
         $this->body = null;

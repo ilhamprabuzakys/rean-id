@@ -84,10 +84,10 @@ $latestPosts = \App\Models\Post::latest('created_at')->where('status', 'approved
                     <!-- Footer -->
                     <div class="pb-4 pb-lg-0">
                       <div>
-                        <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt=""
+                        <img src="{{ asset( optional($post->user)->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt=""
                           class="img-fluid img-zoom me-2 rounded-circle"
                           style="object-fit: cover;width: 50px;height: 50px;">
-                        <span class="h6 me-2">{{ $post->user->name }}</span>
+                        <span class="h6 me-2">{{  optional($post->user)->name }}</span>
                         <span class="ms-5"><i class="bx bx-time me-2"></i>
                           <span class="h6">{{ $post->created_at->diffForHumans() }}</span></span>
                       </div>

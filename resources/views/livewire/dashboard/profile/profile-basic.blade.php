@@ -62,6 +62,84 @@
          </div>
       </div>
       <!--/ Profile Overview -->
+      
+      <!-- Social Media Overview -->
+      <div class="card mb-4">
+         <div class="card-body">
+            <small class="card-text text-uppercase text-muted">Sosial Media</small>
+            <div class="d-flex mt-3 mb-2">
+               <div class="flex-shrink-0">
+                  <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/facebook.png') }}"
+                     alt="facebook" class="me-3" height="30">
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-4">
+                     <h6 class="mb-0">Facebook</h6>
+                  </div>
+                  <div class="col-8 text-end">
+                     <input type="text" class="form-control" readonly value="{{ auth()->user()->facebook }}">
+                  </div>
+               </div>
+            </div>
+            <div class="d-flex mb-2">
+               <div class="flex-shrink-0">
+                  <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/twitter.png') }}"
+                     alt="twitter" class="me-3" height="30">
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-4">
+                     <h6 class="mb-0">Twitter</h6>
+                  </div>
+                  <div class="col-8 text-end">
+                     <input type="text" class="form-control" readonly value="{{ auth()->user()->twitter }}">
+                  </div>
+               </div>
+            </div>
+            <div class="d-flex mb-2">
+               <div class="flex-shrink-0">
+                  <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/instagram.png') }}"
+                     alt="instagram" class="me-3" height="30">
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-4">
+                     <h6 class="mb-0">Instagram</h6>
+                  </div>
+                  <div class="col-8 text-end">
+                     <input type="text" class="form-control" readonly value="{{ auth()->user()->instagram }}">
+                  </div>
+               </div>
+            </div>
+            <div class="d-flex mb-2">
+               <div class="flex-shrink-0">
+                  <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/gmail.png') }}"
+                     alt="gmail" class="me-3" height="30">
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-4">
+                     <h6 class="mb-0">Gmail</h6>
+                  </div>
+                  <div class="col-8 text-end">
+                     <input type="text" class="form-control" readonly value="{{ auth()->user()->gmail }}">
+                  </div>
+               </div>
+            </div>
+            <div class="d-flex mb-2">
+               <div class="flex-shrink-0">
+                  <img src="{{ asset('assets/dashboard/materialize/assets/img/icons/brands/youtube.png') }}"
+                     alt="youtube" class="me-3" height="30">
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-4">
+                     <h6 class="mb-0">YouTube</h6>
+                  </div>
+                  <div class="col-8 text-end">
+                     <input type="text" class="form-control" readonly value="{{ auth()->user()->youtube }}">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--/ Social Media Overview -->
    </div>
    <div class="col-xl-8 col-lg-7 col-md-7">
       <!-- Activity Timeline -->

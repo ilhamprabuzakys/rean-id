@@ -78,7 +78,7 @@
                </div>
                <div class="row mb-3">
                   <div class="col-12">
-                     <label for="files" class="mb-2">Cover Image <sup class="text-danger">*</sup></label>
+                     <label for="files" class="mb-2">Cover Image</label>
                      <div wire:ignore>
                         <div id="files" class="filepond @error('files') is-invalid @enderror" wire:model='files'></div>
                      </div>
@@ -102,9 +102,10 @@
                   </div>
                </div>
                @can('superadmin')
-                  <div class="col-12 mb-4">
-                     <p class="text-muted">Anda login sebagai <strong>Super Admin</strong>, data yang anda tambahkan akan otomatis masuk ke dalam status <strong>Approved</strong>.</p>
-                  </div>
+               <div class="col-12 mb-4">
+                  <p class="text-muted">Anda login sebagai <strong>Super Admin</strong>, data yang anda tambahkan akan
+                     otomatis masuk ke dalam status <strong>Approved</strong>.</p>
+               </div>
                @endcan
                <div class="row form-button mx-1">
                   <div class="col">
@@ -132,6 +133,10 @@
             placeholder: 'Pilih Tag',
             allowClear: true,
             tags: true,
+         });
+         $('#tags-multi-select').on('change', function (e) {
+            var data = $('#tags-multi-select').select2("val");
+            @this.set('tags', data);
          });
          $('#category_id').select2({
             theme: 'bootstrap-5'

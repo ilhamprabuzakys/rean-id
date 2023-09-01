@@ -16,7 +16,7 @@
                      <input type="text"
                         class="form-control @error('name')
                         is-invalid
-                     @enderror" wire:model.lazy="name">
+                     @enderror" wire:model.live.debounce.500ms="name">
                      @error('name')
                         <div class="invalid-feedback">
                            {{ $message }}

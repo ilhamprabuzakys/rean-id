@@ -1,6 +1,7 @@
 @extends('dashboard.template.dashboard')
 @include('dashboard.components.select2')
 @include('dashboard.components.flatpickr')
+@include('dashboard.components.carousel')
 @section('content')
    <!-- start page title -->
    <h4 class="fw-bold py-3 mb-4">

@@ -1,11 +1,11 @@
 <div>
     <section class="position-relative bg-gradient-primary text-white" data-speed='.2'>
-        <img src="{{ asset('assets/img/illustrations/event.png') }}" alt="event-header-img" class="img-fluid position-absolute" style="
+        {{-- <img src="{{ asset('assets/img/illustrations/event.png') }}" alt="event-header-img" class="img-fluid position-absolute" style="
         width: 500px;
         left: 10%;
         top: 25%;
         filter: brightness(0.75);
-    ">
+    "> --}}
         <!--Overlay-->
         <div class="position-absolute start-0 top-0 w-100 h-100"></div>
         <!--:Hero BG:-->
@@ -53,6 +53,21 @@
             </div>
 
             @forelse($events as $event)
+            @php
+                $status = '';
+                $status_bg = '';
+                $current_date = now(); // Asumsikan menggunakan Carbon untuk mendapatkan tanggal saat ini
+                if ($current_date < $event->start_date) {
+                    $status = 'Akan datang';
+                    $status_bg = 'success';
+                } elseif ($current_date >= $event->start_date && $current_date <= $event->end_date) {
+                    $status = 'Berlangsung';
+                    $status_bg = 'primary';
+                } else {
+                    $status = 'Berakhir';
+                    $status_bg = 'danger';
+                }
+            @endphp
             <div class="card rounded-3 mb-5 p-2 align-items-lg-center flex-lg-row d-flex"
                 data-aos="fade-up" data-aos-once="false">
                 <div class="col-lg-5">
@@ -63,9 +78,7 @@
                             style="height: 300px; object-fit: cover;width: -webkit-fill-available;">
                         <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark opacity-50"></div>
                         <div class="position-absolute start-0 top-0 w-100 pt-3 px-3">
-                            <span class="badge bg-{{ $event->status == TRUE ? 'primary' : 'danger'}}">{{
-                                $event->status
-                                == TRUE ? 'Berlangsung' : 'Berakhir'}}</span>
+                            <span class="badge bg-{{ $status_bg }}">{{ $status }}</span>
                         </div>
                     </a>
                 </div>
@@ -93,8 +106,8 @@
                         <div class="col-8">
                             <!--Price-->
                             <h6><i class="bx bxs-time me-2"></i>
-                                {{ \Carbon\Carbon::parse($event->start_date)->format('M d, Y h:i A') }} - {{
-                                \Carbon\Carbon::parse($event->end_date)->format('M d, Y h:i A') }}
+                                {{ \Carbon\Carbon::parse($event->start_date)->format('M d, Y') }} - {{
+                                \Carbon\Carbon::parse($event->end_date)->format('M d, Y') }}
                             </h6>
                         </div>
                         <div class="col-4">
@@ -104,7 +117,7 @@
                                 <img src="{{ asset($event->user->avatar ?? "assets/img/avatar/avatar-1.png") }}" alt=""
                                     class="flex-shrink-0 flex-shrink-0 avatar sm rounded-circle me-2 img-fluid">
                                 <span class="small">
-                                    {{ $event->organizer }}
+                                    {{ Str::limit($event->organizer, 15, '..') }}
                                 </span>
                             </div>
                         </div>
@@ -124,7 +137,7 @@
         </div>
     </section>
 
-    <section class="position-relative overflow-hidden">
+    {{-- <section class="position-relative overflow-hidden">
         <!--Circle line-->
         <div class="position-absolute start-0 bottom-0 mb-n4 h-100 w-50 text-warning rellax"
             data-rellax-percentage=".75" data-rellax-speed="1">
@@ -286,7 +299,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     {{-- <svg class="w-100 position-absolute start-0 bottom-0 z-1 mb-n1" height="48" fill="currentColor"
         preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"
         style="transform: rotate(180deg) scaleX(-1);color:var(--bs-body-bg)">

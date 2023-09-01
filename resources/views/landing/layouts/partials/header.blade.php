@@ -32,7 +32,7 @@
             @auth
             <div class="nav-item me-3 me-lg-0 dropdown">
                <!--:User:-->
-               <a href="#" class="btn btn-primary dropdown-toggle rounded-pill py-0 ps-0 pe-2"
+               <a href="javascript:void(0)" class="btn btn-primary dropdown-toggle rounded-pill py-0 ps-0 pe-2"
                   data-bs-toggle="dropdown">
                   <img
                      src="{{ asset(auth()->user()->avatar !== NULL ? auth()->user()->avatar : 'assets/img/avatar/avatar-1.png') }}"
@@ -109,9 +109,9 @@
                      data-bs-auto-close="click">Data
                   </a>
                   <div class="dropdown-menu">
-                     <a class="dropdown-item" href="{{ route('home.category_list') }}">Kategori</a>
-                     <a class="dropdown-item" href="{{ route('home.all_post') }}">Semua Postingan</a>
-                     <a class="dropdown-item" href="{{ route('home.about') }}">About</a>
+                     <a class="dropdown-item" href="{{ route('home.category_list') }}">Daftar Kategori</a>
+                     <a class="dropdown-item" href="{{ route('home.semua_postingan') }}">Daftar Postingan</a>
+                     <a class="dropdown-item" href="{{ route('home.about') }}">Tentang Rean</a>
                   </div>
                </li>
 

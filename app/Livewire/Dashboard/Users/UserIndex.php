@@ -2,6 +2,10 @@
 
 namespace App\Livewire\Dashboard\Users;
 
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use App\Models\Conversation;
+use App\Models\Message;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Validator;
@@ -10,17 +14,21 @@ use App\Models\User;
 use App\Models\Post;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserIndex extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $search, $filter_date;
     public $rolefilter = '';
     public $paginate = 5;
+    public $file;
 
     public $name, $email, $password, $role, $user_id, $user, $dataposts;
-    
+
+    #[On('refresh')]
     public function render()
     {
         $roles = collect([
@@ -28,31 +36,68 @@ class UserIndex extends Component
             (object) ['key' => 'admin', 'label' => 'Admin'],
             (object) ['key' => 'member', 'label' => 'Member'],
         ]);
-        
-        $query = User::with(['posts'])->latest('updated_at')
-        ->when($this->search, function ($query) {
-            return $query->globalSearch($this->search);
-        })->when($this->rolefilter, function($query) {
-            return $query->where('role', $this->rolefilter);
-        })->when($this->filter_date, function ($query) {
-            $dateRange = explode(' to ', $this->filter_date);
-            $startDate = $dateRange[0];
-            $endDate = $dateRange[1] ?? $dateRange[0];
 
-            return $query->whereDate('created_at', '>=', $startDate)
-                ->whereDate('created_at', '<=', $endDate);
-        });
+        $query = User::with(['posts'])->latest('updated_at')
+            ->when($this->search, function ($query) {
+                return $query->globalSearch($this->search);
+            })->when($this->rolefilter, function ($query) {
+                return $query->where('role', $this->rolefilter);
+            })->when($this->filter_date, function ($query) {
+                $dateRange = explode(' to ', $this->filter_date);
+                $startDate = $dateRange[0];
+                $endDate = $dateRange[1] ?? $dateRange[0];
+
+                return $query->whereDate('created_at', '>=', $startDate)
+                    ->whereDate('created_at', '<=', $endDate);
+            });
 
         $users = $query->paginate($this->paginate);
-        
+
         return view('livewire.dashboard.users.user-index', [
             'users' => $users,
-            // 'users' => User::with(['posts', 'login_info', 'event_logs'])->where('name', 'like', '%'.$this->search.'%')->where('role', 'like', '%'.$this->rolefilter.'%')->orderBy('updated_at', 'desc')->paginate(10),
             'roles' => $roles
         ]);
     }
 
-    public function rules() 
+    public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'daftar-user.xlsx');
+    }
+
+    public function importExcel()
+    {
+        // dd($this->file->getRealPath());
+        Excel::import(new UsersImport, $this->file->getRealPath());
+
+        activity('User')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
+            ->causedBy(auth()->user())
+            ->withProperties([
+                'message' => 'Berhasil mengimport data User',
+            ])
+            ->event('imported')
+            ->log(auth()->user()->name . ' mengimport data user');
+        // Tampilkan pesan setelah berhasil import
+        $this->dispatch('alert', [
+            'type' => 'success',
+            'title' => 'Berhasil import',
+            'message' => 'Data User berhasil diperbarui'
+        ]);
+        $this->dispatch('swal:modal', [
+            'icon' => 'success',
+            'title' => 'Berhasil import',
+            'text' => 'Data User berhasil diperbarui, password akan diset default menjadi <br><b>password123</b>'
+        ]);
+        $this->dispatch('refresh');
+        $this->file = null;
+    }
+
+    public function updatedFile()
+    {
+        $this->importExcel();
+    }
+
+
+    public function rules()
     {
         return [
             'name' => 'required',
@@ -61,7 +106,7 @@ class UserIndex extends Component
             'role' => 'required',
         ];
     }
- 
+
     protected $messages = [
         'email.required' => 'Alamat email harus terisi.',
         'email.email' => 'Alamat email harus berformat email, contoh: @gmail.com, @yahoo.com.',
@@ -70,7 +115,7 @@ class UserIndex extends Component
         'password.required' => 'Password harus terisi.',
         'role.required' => 'Role harus dipilih.',
     ];
- 
+
     protected $validationAttributes = [
         'name' => 'name',
         'email' => 'email address',
@@ -99,6 +144,7 @@ class UserIndex extends Component
         ]);
         $name = $validatedData['name'];
         $this->resetInput();
+        $this->dispatch('refresh');
         $this->dispatch('alert', [
             'type' => 'success',
             'title' => 'Berhasil ditambahkan',
@@ -120,6 +166,7 @@ class UserIndex extends Component
             'password' => $validatedData['password'],
         ]);
         $this->resetInput();
+        $this->dispatch('refresh');
         $this->dispatch('alert', [
             'type' => 'success',
             'title' => 'Berhasil diperbarui',
@@ -135,19 +182,32 @@ class UserIndex extends Component
             'title' => 'User'
         ]);
     }
-    
+
     #[On('deleteConfirmed')]
     public function destroy()
     {
-        User::find($this->user_id)->delete();
+        $user = User::find($this->user_id);
+        // Hapus semua conversations dimana user adalah sender
+        Conversation::where('sender_id', $user->id)->delete();
+        // Hapus semua conversations dimana user adalah receiver
+        Conversation::where('receiver_id', $user->id)->delete();
+
+        // Hapus semua messages dimana user adalah sender
+        Message::where('sender_id', $user->id)->delete();
+        // Hapus semua messages dimana user adalah receiver
+        Message::where('receiver_id', $user->id)->delete();
+
+        // Kemudian hapus user
+        $user->delete();
         $this->dispatch('alert', [
             'type' => 'success',
             'title' => 'Berhasil dihapus',
             'message' => 'Data berhasil dihapus'
         ]);
+        $this->dispatch('refresh');
     }
 
-    public function editUser(int $user_id) 
+    public function editUser(int $user_id)
     {
         $user = User::find($user_id);
         if ($user) {
@@ -172,7 +232,7 @@ class UserIndex extends Component
             return back();
         }
     }
-    
+
     public function findUser(int $user_id)
     {
         $this->user_id = $user_id;
@@ -202,20 +262,21 @@ class UserIndex extends Component
         $user->update(['active' => TRUE]);
         $this->dispatch('alert', [
             'title' => 'Berhasil',
-            'message' => 'Akun User '. $user->name .' berhasil <strong>diaktifkan</strong>',
+            'message' => 'Akun User ' . $user->name . ' berhasil <strong>diaktifkan</strong>',
             'type' => 'success',
         ]);
+        $this->dispatch('refresh');
     }
-    
+
     public function deactivate($id)
     {
         $user = User::find($id);
         $user->update(['active' => FALSE]);
         $this->dispatch('alert', [
             'title' => 'Berhasil',
-            'message' => 'Akun User <strong>'. $user->name .'</strong> berhasil <strong>dinonaktifkan</strong>',
+            'message' => 'Akun User <strong>' . $user->name . '</strong> berhasil <strong>dinonaktifkan</strong>',
             'type' => 'success',
         ]);
+        $this->dispatch('refresh');
     }
-
 }

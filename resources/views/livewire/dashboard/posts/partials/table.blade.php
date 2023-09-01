@@ -29,7 +29,7 @@
             <tr>
                <th scope="row">{{ $loop->iteration + ($paginate * ($posts->currentPage()-1)) }}</th>
                <td>
-                   {!! Str::limit(strip_tags($post->title), 20, '...') !!}
+                   <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post])}}" class="text-dark">{!! Str::limit(strip_tags($post->title), 20, '...') !!}</a>
                </td>
                <td>
                   {{ optional($post->user)->name }}
@@ -100,8 +100,8 @@
                      </a>
    
                      <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item text-primary text-decoration-none" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="javascript:void(0)postinganDenganID{{ $post->id }}">
-                           <i class="fas fa-md fa-eye me-2"></i>Tampilkan
+                        <a class="dropdown-item text-primary text-decoration-none" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#postinganDenganID{{ $post->id }}">
+                           <i class="fas fa-md fa-eye me-2"></i>Lihat preview
                         </a>
                         <a class="dropdown-item text-success text-decoration-none" href="{{ route('posts.edit', $post) }}">
                            <i class="fas fa-md fa-edit me-3"></i>Edit
@@ -116,9 +116,15 @@
             @endpush
          @empty
          <tr>
+            @cannot('member')
             <td colspan="8">
                <h5 class="text-center my-3">Tidak ada postingan yang tersedia.</h5>
             </td>
+            @else
+            <td colspan="7">
+               <h5 class="text-center my-3">Tidak ada postingan yang tersedia.</h5>
+            </td>
+            @endcannot
          </tr>
          @endforelse
       </tbody>

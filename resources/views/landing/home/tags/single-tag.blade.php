@@ -14,7 +14,7 @@
             {{-- <h2 class="display-2 mb-4">
                {{ __('Daftar Postingan') }}
             </h2> --}}
-            <h1 class="mb-0 display-3">Tag {{ $tag->name }}</h1>
+            <h1 class="mb-2 display-3">Tag {{ $tag->name }}</h1>
             <p class="lead mb-0">
                Berisi semua data postingan yang memiliki tag #<strong>{{ $tag->name }}</strong>.
             </p>

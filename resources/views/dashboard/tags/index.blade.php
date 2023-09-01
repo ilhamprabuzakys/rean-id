@@ -3,9 +3,10 @@
    <!-- start page title -->
    <h4 class="fw-bold py-3 mb-4">
       <a class="text-muted fw-light" href="{{ route('dashboard') }}">Home /</a>
-      Daftar Label
+      Daftar Tags
    </h4>
    <!-- end page title -->
+   
    <livewire:dashboard.tags.tag-index />
 @endsection
 @push('scripts')

@@ -102,13 +102,14 @@
                   @enderror
                </div>
             </div>
-            <div class="col-6 mb-3">
+            {{-- <div class="col-6 mb-3">
                <div class="form-check form-switch mb-2">
                   <input class="form-check-input" type="checkbox" wire:model='status' id="status">
                   <label class="form-check-label" for="status">Aktif</label>
                </div>
-            </div>
-            <div class="col-6 mb-3 d-flex gap-3 justify-content-end">
+            </div> --}}
+            <input class="form-check-input d-none" type="checkbox" wire:model='status' value='true' id="status">
+            <div class="col-12 mb-3 d-flex gap-3 justify-content-end">
                <a class="btn btn-light" href="{{ route('events.index') }}"><i
                   class="mdi mdi-arrow-left me-2"></i>Kembali</a>
                <button class="btn btn-primary" type="button" wire:click='update()' wire:loading.attr="disabled"><i
@@ -125,10 +126,7 @@
 
             $("#merge_date").flatpickr({
                mode: "range",
-               enableTime: true,
                minDate: "today",
-               minTime: "06:00",
-               maxTime: "22:00",
             });
 
             $('#descriptionEdit').summernote({

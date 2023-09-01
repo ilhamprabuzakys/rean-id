@@ -63,7 +63,7 @@
                                     data-bs-placement="top" title="" data-bs-original-title="Jumlah Halaman">
                                     <div class="d-flex align-items-center">
                                         <i class="bx bx-book-open fs-5 me-2"></i>
-                                        <strong class="small">{{ $ebook->pages }}</strong>
+                                        <strong class="small">{{ $ebook->pdf->first()->file_path ? 'Downloadable' : 'Not Exist' }}</strong>
                                     </div>
                                 </div>
                             </div>

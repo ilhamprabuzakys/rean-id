@@ -61,6 +61,37 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
             <div class="swiper-wrapper">
                 @foreach($newreleases as $post)
                 <div class="swiper-slide" data-aos="fade-up">
+                    @if($post->category->name == 'Foto' || $post->category->name == 'Poster' || $post->category->name ==
+                    'Desain')
+                    <div
+                        class="card card-hover hover-lift hover-shadow-lg text-white border-0 overflow-hidden rounded-5">
+                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}"
+                            class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 320px;">
+                        <!--Background-layer-->
+                        <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark"></div>
+                        <div
+                            class="card-body d-flex flex-column position-absolute start-0 top-0 w-100 h-100 justify-content-end pb-lg-5 px-4">
+                            <div class="mb-2">
+                                <a href="{{ route('home.category_view', $post->category)}}" class="badge bg-primary">
+                                    {{ $post->category->name }}
+                                </a>
+                            </div>
+                            <h5 class="h5 mb-4"><span>{{ Str::limit($post->title, 20, '..') }}</span>
+                            </h5>
+                            <div class="d-flex align-items-center">
+                                <span>
+                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                                        alt="author" class="avatar sm rounded-circle me-2">
+                                </span>
+                                <div class="small">
+                                    {{$post->user->name}}
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
+                            class="stretched-link"></a>
+                    </div>
+                    @else
                     <article class="card card-hover text-center hover-shadow-lg overflow-hidden border-0 rounded-3">
                         <div class="overflow-hidden position-relative">
                             <!--Article image-->
@@ -91,6 +122,7 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
                         <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
                             class="stretched-link"></a>
                     </article>
+                    @endif
                 </div>
                 @endforeach
             </div>
@@ -227,24 +259,31 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
                 <div class="swiper-slide" data-aos="fade-up">
                     <div
                         class="card card-hover hover-lift hover-shadow-lg text-white border-0 overflow-hidden rounded-5">
-                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}" class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
+                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}"
+                            class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
                         <!--Background-layer-->
                         <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark"></div>
                         <div
                             class="card-body d-flex flex-column position-absolute start-0 top-0 w-100 h-100 justify-content-end pb-lg-5 px-4">
-                            <p class="small"><span>Foto</span></p>
+                            <div class="mb-2">
+                                <a href="{{ route('home.category_view', $post->category)}}" class="badge bg-primary">
+                                    {{ $post->category->name }}
+                                </a>
+                            </div>
                             <h5 class="h3 mb-4"><span>{{ Str::limit($post->title, 20, '..') }}</span>
                             </h5>
                             <div class="d-flex align-items-center">
                                 <span>
-                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt="author" class="avatar sm rounded-circle me-2">
+                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                                        alt="author" class="avatar sm rounded-circle me-2">
                                 </span>
                                 <div class="small">
                                     {{$post->user->name}}
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}" class="stretched-link"></a>
+                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
+                            class="stretched-link"></a>
                     </div>
                 </div>
                 @endforeach
@@ -300,24 +339,31 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
                 <div class="swiper-slide" data-aos="fade-up">
                     <div
                         class="card card-hover hover-lift hover-shadow-lg text-white border-0 overflow-hidden rounded-5">
-                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}" class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
+                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}"
+                            class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
                         <!--Background-layer-->
                         <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark"></div>
                         <div
                             class="card-body d-flex flex-column position-absolute start-0 top-0 w-100 h-100 justify-content-end pb-lg-5 px-4">
-                            <p class="small"><span>Foto</span></p>
+                            <div class="mb-2">
+                                <a href="{{ route('home.category_view', $post->category)}}" class="badge bg-primary">
+                                    {{ $post->category->name }}
+                                </a>
+                            </div>
                             <h5 class="h3 mb-4"><span>{{ Str::limit($post->title, 20, '..') }}</span>
                             </h5>
                             <div class="d-flex align-items-center">
                                 <span>
-                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt="author" class="avatar sm rounded-circle me-2">
+                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                                        alt="author" class="avatar sm rounded-circle me-2">
                                 </span>
                                 <div class="small">
                                     {{$post->user->name}}
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}" class="stretched-link"></a>
+                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
+                            class="stretched-link"></a>
                     </div>
                 </div>
                 @endforeach
@@ -373,24 +419,31 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
                 <div class="swiper-slide" data-aos="fade-up">
                     <div
                         class="card card-hover hover-lift hover-shadow-lg text-white border-0 overflow-hidden rounded-5">
-                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}" class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
+                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}"
+                            class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
                         <!--Background-layer-->
                         <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark"></div>
                         <div
                             class="card-body d-flex flex-column position-absolute start-0 top-0 w-100 h-100 justify-content-end pb-lg-5 px-4">
-                            <p class="small"><span>Foto</span></p>
+                            <div class="mb-2">
+                                <a href="{{ route('home.category_view', $post->category)}}" class="badge bg-primary">
+                                    {{ $post->category->name }}
+                                </a>
+                            </div>
                             <h5 class="h3 mb-4"><span>{{ Str::limit($post->title, 20, '..') }}</span>
                             </h5>
                             <div class="d-flex align-items-center">
                                 <span>
-                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt="author" class="avatar sm rounded-circle me-2">
+                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                                        alt="author" class="avatar sm rounded-circle me-2">
                                 </span>
                                 <div class="small">
                                     {{$post->user->name}}
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}" class="stretched-link"></a>
+                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
+                            class="stretched-link"></a>
                     </div>
                 </div>
                 @endforeach
@@ -457,24 +510,31 @@ $query->where('name', 'Musik')->where('name', 'Audio')->where('name', 'Video');
                 <div class="swiper-slide" data-aos="fade-up">
                     <div
                         class="card card-hover hover-lift hover-shadow-lg text-white border-0 overflow-hidden rounded-5">
-                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}" class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
+                        <img src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x1140/'. rand(1,5)  .'.jpg') }}"
+                            class="img-fluid img-zoom" alt="..." style="object-fit: cover; height: 390px;">
                         <!--Background-layer-->
                         <div class="position-absolute start-0 top-0 w-100 h-100 bg-gradient-dark"></div>
                         <div
                             class="card-body d-flex flex-column position-absolute start-0 top-0 w-100 h-100 justify-content-end pb-lg-5 px-4">
-                            <p class="small"><span>Foto</span></p>
+                            <div class="mb-2">
+                                <a href="{{ route('home.category_view', $post->category)}}" class="badge bg-primary">
+                                    {{ $post->category->name }}
+                                </a>
+                            </div>
                             <h5 class="h3 mb-4"><span>{{ Str::limit($post->title, 20, '..') }}</span>
                             </h5>
                             <div class="d-flex align-items-center">
                                 <span>
-                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt="author" class="avatar sm rounded-circle me-2">
+                                    <img src="{{ asset($post->user->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                                        alt="author" class="avatar sm rounded-circle me-2">
                                 </span>
                                 <div class="small">
                                     {{$post->user->name}}
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}" class="stretched-link"></a>
+                        <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post] )}}"
+                            class="stretched-link"></a>
                     </div>
                 </div>
                 @endforeach

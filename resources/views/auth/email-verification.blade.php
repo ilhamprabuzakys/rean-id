@@ -12,7 +12,7 @@
    <p class="text-start mb-4">
       Kami telah mengirim kode verifikasi ke email anda.
       Masukkan kode tersebut untuk menyelesaikan tahap ini.
-      <span class="fw-bold d-block mt-2">il*****s@gmail.com</span>
+      {{-- <span class="fw-bold d-block mt-2">il*****s@gmail.com</span> --}}
    </p>
 @endsection
 @section('content')

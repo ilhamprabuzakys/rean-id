@@ -37,6 +37,10 @@ class RecentLoginActivity extends Component
                 ->whereDate('created_at', '<=', $endDate);
         });
 
+        if (auth()->user()->role == 'member') {
+            $query = $query->where('user_id', auth()->user()->id);
+        }
+
         $login_info =  $query->paginate($this->paginate);
         return view('livewire.dashboard.recent-login-activity', compact('login_info'));
     }

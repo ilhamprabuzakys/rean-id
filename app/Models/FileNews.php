@@ -9,7 +9,7 @@ use Spatie\Activitylog\LogOptions;
 
 class FileNews extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory;
     protected $guarded = ['id'];
 
     public function getActivitylogOptions(): LogOptions

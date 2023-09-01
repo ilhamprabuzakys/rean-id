@@ -8,6 +8,7 @@ use App\Models\Ebook;
 use App\Models\Event;
 use App\Models\News;
 use App\Models\Tag;
+use App\Models\User;
 use Jenssegers\Agent\Agent;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -148,6 +149,13 @@ class HomeController extends Controller
         return view('landing.home.ebooks.show', [
             'title' => $ebook->title,
         ], compact('ebook'));
+    }
+   
+    public function user_view(User $user)
+    {
+        return view('landing.home.users.show', [
+            'title' => 'Profile ' . $user->name,
+        ], compact('user'));
     }
     
     public function news()
