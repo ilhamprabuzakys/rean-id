@@ -1,6 +1,4 @@
 <div>
-   @include('livewire.dashboard.categories.partials.modal.create')
-   @include('livewire.dashboard.categories.partials.modal.edit')
    <div class="col-12">
       <div class="card shadow-md">
          <div class="card-header">
@@ -36,4 +34,6 @@
          </div>
       </div>
    </div>
+   @include('livewire.dashboard.categories.partials.modal.edit')
+   @include('livewire.dashboard.categories.partials.modal.create')
 </div>

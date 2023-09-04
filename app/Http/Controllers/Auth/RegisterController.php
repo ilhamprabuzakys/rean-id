@@ -152,7 +152,7 @@ class RegisterController extends Controller
             ]);
             $validatedData = $validator->validated();
             if ($validatedData['verification_code'] != $otp) {
-                dd('error not same otp', $otp, $validatedData['verification_code']);
+                return redirect()->back()->with('fails', "Kode OTP yang anda masukkan tidak valid");
             } elseif ($validatedData['verification_code'] == $otp) {
                 $newUser = User::create([
                     'name' => $user->name,
@@ -168,18 +168,16 @@ class RegisterController extends Controller
                     'username' => explode('@', $user->email)[0],
                     'password' => explode('@', $user->email)[0],
                 ];
-                $statusMail = Mail::to($newUser->email)->send(new UserRegistrationMail($data));
-                $newUser->disableLogging();
-                /* activity('Registration')
+                Mail::to($newUser->email)->send(new UserRegistrationMail($data));
+                activity('Registration')
                     ->causedBy($newUser)
                     ->withProperties([
                         'action' => 'registration',
                         'action_user' =>  $newUser->id,
-                        'message' => 'Akun anda berhasil dibuat',
+                        'message' => 'Akun anda berhasil dibuat melalui registrasion email.',
                     ])
                     ->event('registration')
                     ->log('Akun anda berhasil dibuat');
-                     */
                 $otpM->update([
                     'expired' => true,
                     'expired_at' => Carbon::now()->toDateTimeString()

@@ -20,7 +20,6 @@ class Logout extends Component
     {
         // Update status user ke 'offline'
         $user = User::find(auth()->user()->id);
-        $user->disableLogging();
         $user->update([
             'status' => 'offline',
             'last_activity_at' => now(),

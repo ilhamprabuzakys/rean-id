@@ -77,11 +77,6 @@ class DashboardController extends Controller
                     'url' => route('logs.index')
                 ],
                 [
-                    'name' => 'Layanan Chat',
-                    'icon' => 'mdi-forum-outline',
-                    'url' => route('chats.index')
-                ],
-                [
                     'name' => 'Profile',
                     'icon' => 'mdi-account-outline',
                     'url' => route('profile')
@@ -173,11 +168,6 @@ class DashboardController extends Controller
                     'name' => 'Daftar Aktivitas',
                     'icon' => 'mdi-resistor',
                     'url' => route('logs.index')
-                ],
-                [
-                    'name' => 'Layanan Chat',
-                    'icon' => 'mdi-forum-outline',
-                    'url' => route('chats.index')
                 ],
                 [
                     'name' => 'Profile',

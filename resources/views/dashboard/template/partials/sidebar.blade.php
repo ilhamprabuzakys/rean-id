@@ -175,12 +175,12 @@
             <div data-i18n="Log Aktivitas">Log Aktivitas</div>
          </a>
       </li>
-      <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('chats.index')) ? 'active' : '' }}">
+      {{-- <li class="menu-item mt-2 {{ str_starts_with(request()->url(), route('chats.index')) ? 'active' : '' }}">
          <a href="{{ route('chats.index') }}" class="menu-link">
             <i class="menu-icon tf-icons mdi mdi-forum-outline"></i>
             <div data-i18n="Layanan Chat">Layanan Chat</div>
          </a>
-      </li>
+      </li> --}}
    </ul>
 
 

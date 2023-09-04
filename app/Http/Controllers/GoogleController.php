@@ -51,17 +51,16 @@ class GoogleController extends Controller
                     'username' => explode('@', $newUser->email)[0],
                     'password' => explode('@', $newUser->email)[0],
                 ];
-                $statusMail = Mail::to($newUser->email)->send(new UserRegistrationMail($data));
-                $newUser->disableLogging();
-                /* activity('Registration')
+                Mail::to($newUser->email)->send(new UserRegistrationMail($data));
+                activity('Registration')
                     ->causedBy($newUser)
                     ->withProperties([
                         'action' => 'registration',
                         'action_user' =>  $newUser->id,
-                        'message' => 'Akun anda berhasil dibuat',
+                        'message' => 'Akun anda didaftarkan melalui akun google anda.',
                     ])
                     ->event('registration')
-                    ->log('Akun anda berhasil dibuat'); */
+                    ->log('Akun anda berhasil dibuat');
                 Auth::login($newUser);
                 \saveUserLoginInfo();
                 return redirect()->intended('dashboard');

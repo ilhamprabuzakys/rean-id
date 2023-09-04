@@ -5,6 +5,7 @@
 </div>
 @endpush
 @section('content')
+@include('landing.components.sidebar')
 <!--begin:Partners section-->
 {{-- @include('landing.layouts.partials.partners') --}}
 <!--/end:Partners section-->

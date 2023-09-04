@@ -86,6 +86,15 @@
    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
       integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
+   <style>
+      .my-custom-content {
+         text-align: left;
+      }
+
+      .my-custom-title {
+         font-size: 16px;
+      }
+   </style>
    @stack('head')
    @stack('style')
    @stack('css')
@@ -217,25 +226,17 @@
 
    <!-- Main JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/js/main.js') }}"></script>
-
    <!-- Page JS -->
    @stack('page-js')
    <script src="{{ asset('assets/dashboard/materialize/assets/js/pages-auth.js') }}"></script>
-
    <!-- Pace JS -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
+   <script src="{{ asset('assets/dashboard/materialize/assets/js/ui-popover.js') }}"></script>
+
    <livewire:scripts />
    @stack('javascripts')
+   @stack('scripts')
    <script>
-      // window.a   ddEventListener('swal:modal', event => {
-      //    Swal.fire({
-      //       title: event.detail.title,
-      //       text: event.detail.text,
-      //       icon: event.detail.icon,
-      //       confirmButtonText: 'Okay',
-      //       timer: 2500,
-      //    })
-      // });
       Livewire.on('swal:modal', data => {
          Swal.fire({
             title: data[0].title,
@@ -245,6 +246,7 @@
             // confirmButtonText: 'Okay',
             timer: data[0].duration ?? 2500,
             timerProgressBar: true,
+            allowOutsideClick: false,
          })
       });
    </script>
@@ -269,8 +271,7 @@
             });
          });
       });
-      
-      </script>
+   </script>
    <script>
       window.addEventListener("message", function(event) {
          console.log("Pesan diterima:", event.data);
@@ -278,14 +279,48 @@
             window.location.href = "{{ route('dashboard') }}";
          }
       });
-
-
       // Google Login
       function googleLogin() {
-         const url = `{{ route('google.login') }}`;
-         window.open(url, '_self');
-         return false;
+         Swal.fire({
+            title: 'Konfirmasi Login',
+            html: `
+                     <div class="text-start">
+                        Dengan melanjutkan login dengan <strong>google</strong> akan membuat <strong>akun baru</strong> untuk REAN.ID bila sebelumnya <strong>belum</strong> pernah membuat akun. <br><br>
+                        Jika Anda sudah <strong>pernah</strong> mendaftar, Anda akan langsung <strong>masuk</strong> dengan akun Anda yang sudah ada.   
+                     </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Lanjutkan',
+            cancelButtonText: 'Batal',
+         }).then((result) => {
+            if (result.isConfirmed) {
+                  Swal.fire({
+                     title: 'Mengarahkan',
+                     html: 'Sedang mencoba login...',
+                     timer: 5000,
+                     timerProgressBar: true,
+                     allowOutsideClick: false,
+                     didOpen: () => {
+                        Swal.showLoading();
+                     }
+                  }).then((result) => {
+                     if (result.dismiss === Swal.DismissReason.timer) {
+                        // console.log('Modal ditutup oleh timer');
+                     }
+                  });
+
+                  const url = `{{ route('google.login') }}`;
+                  setTimeout(() => {
+                     window.open(url, '_self');
+                  }, 500); // Jeda 0.5 detik sebelum mengarahkan ulang, agar SweetAlert sempat ditampilkan
+
+                  return false;
+            } else {
+                  return false;
+            }
+         });
       }
+
    </script>
 </body>
 

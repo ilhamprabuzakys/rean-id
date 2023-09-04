@@ -30,13 +30,21 @@
              </td>
              <td class="text-center">
                 <div class="dropdown">
-                   <a class="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
+                   <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                       <i class="fas fa-ellipsis fa-lg"></i>
                    </a>
  
                    <div class="dropdown-menu dropdown-menu-end">
-                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('news.edit', $berita) }}">Edit</a>
-                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $berita->id }})">Hapus</a>
+                        <a class="dropdown-item text-primary text-decoration-none" 
+                        href="{{ route('news.show', $berita) }}">
+                           <i class="fas fa-md fa-eye me-2"></i>Lihat preview
+                        </a>
+                      <a class="dropdown-item text-success text-decoration-none" href="{{ route('news.edit', $berita) }}">
+                        <i class="fas fa-md fa-edit me-3"></i>
+                        Edit</a>
+                      <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $berita->id }})">
+                        <i class="fas fa-md fa-trash-alt me-3"></i>
+                        Hapus</a>
                       {{-- <a class="text-danger text-decoration-none dropdown-item" wire:click="findEbook({{ $ebook->id }})" data-bs-toggle="modal" data-bs-target="#deleteEbookModal">Hapus</a> --}}
                    </div>
                 </div>

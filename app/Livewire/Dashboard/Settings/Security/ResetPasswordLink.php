@@ -27,11 +27,7 @@ class ResetPasswordLink extends Component
                 'text' => 'Link untuk reset password berhasil dikirim ke email <b>' . $this->email . '</b>',
                 'icon' => 'success',
             ]);
-            $this->dispatch('alert', [
-                'title' => 'Berhasil',
-                'message' => 'Link untuk reset password berhasil dikirim ke email <b>' . $this->email . '</b>',
-                'type' => 'success',
-            ]);
+            $this->dispatch('close:modal');
         } else {
             // Pesan error jika link gagal dikirim
             $this->dispatch('alert', [

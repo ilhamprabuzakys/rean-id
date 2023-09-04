@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->integer('like')->default(0);
             $table->integer('views')->default(0); // Tambahkan kolom views
-            $table->string('title');
+            $table->string('title')->unique();
+            $table->string('slug')->unique();
             $table->string('description');
             $table->string('author');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');

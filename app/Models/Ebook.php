@@ -14,6 +14,11 @@ class Ebook extends Model
     use HasFactory, LogsActivity;
     protected $guarded = ['id'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function tapActivity(Activity $activity, string $eventName)
     {
         if ($eventName == 'deleted') {

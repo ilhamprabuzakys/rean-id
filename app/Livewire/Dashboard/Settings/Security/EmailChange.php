@@ -90,7 +90,7 @@ class EmailChange extends Component
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Terjadi Kesalahan',
-                'text' => 'Ada beberapa kesalahan pada proses anda:<br>' . \getErrorsString($e)
+                'text' => 'Ada beberapa kesalahan pada proses anda:' . \getErrorsString($e)
             ]);
             // Mengirim error bag ke komponen Livewire
             $this->setErrorBag($e->validator->getMessageBag());
@@ -136,14 +136,13 @@ class EmailChange extends Component
                         $this->dispatch('swal:modal', [
                             'icon' => 'error',
                             'title' => 'Terjadi Kesalahan',
-                            'text' => 'Ada beberapa kesalahan pada proses anda:<br>' . \getErrorsString($this->getErrorBag())
+                            'text' => 'Ada beberapa kesalahan pada proses anda:' . \getErrorsString($this->getErrorBag())
                         ]);
                     } else {
                         $otpM->update([
                             'expired' => true,
                             'expired_at' => Carbon::now()->toDateTimeString()
                         ]);
-                        $this->user->disableLogging();
                         $this->user->update(['email' => $this->new_email]);
                         activity('Ganti Email')
                             ->causedBy($this->user)
@@ -169,7 +168,7 @@ class EmailChange extends Component
                     $this->dispatch('swal:modal', [
                         'icon' => 'error',
                         'title' => 'Terjadi Kesalahan',
-                        'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . \getErrorsString($e)
+                        'text' => 'Ada beberapa kesalahan pada input Anda:' . \getErrorsString($e)
                     ]);
                     // Mengirim error bag ke komponen Livewire
                     $this->setErrorBag($e->validator->getMessageBag());

@@ -17,6 +17,25 @@ use Livewire\Component;
 
 class ChartIndex extends Component
 {
+    public $posts, $ebooks, $categories, $postsCount, $ebooksCount;
+
+    public function mount()
+    {
+        // Deklarasi Sumber Data
+        // Cek level user yang login 
+        if (auth()->user()->role != 'member') {
+            $this->posts = Post::all();
+            $this->ebooks = Ebook::all();
+        } else {
+            $this->posts = Post::where('user_id', auth()->id())->get();
+            $this->ebooks = Ebook::where('user_id', auth()->id())->get();
+        }
+        $this->categories = Category::all();
+
+        $this->postsCount = $this->posts->count();
+        $this->ebooksCount = $this->ebooks->count();
+    }
+
     #[On('onSliceClick')]
     public function onSliceClick($slice)
     {
@@ -25,16 +44,13 @@ class ChartIndex extends Component
 
     public function render()
     {
-        // Deklarasi Sumber Data
-        $posts = Post::all();
-        $ebooks = Ebook::all();
         $postPieChartModel = (new PieChartModel())->setTitle('Data Postingan')
             ->setAnimated(true)
             ->setType('donut')
             ->legendPositionBottom()
             ->legendHorizontallyAlignedCenter()
             ->setDataLabelsEnabled(true)
-            ->addSlice('Pending', $posts->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $posts->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $posts->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
+            ->addSlice('Pending', $this->posts->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $this->posts->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $this->posts->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
         
         $ebookPieChartModel = (new PieChartModel())->setTitle('Data Ebook')
             ->setAnimated(true)
@@ -42,14 +58,13 @@ class ChartIndex extends Component
             ->legendPositionBottom()
             ->legendHorizontallyAlignedCenter()
             ->setDataLabelsEnabled(true)
-            ->addSlice('Pending', $ebooks->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $ebooks->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $ebooks->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
+            ->addSlice('Pending', $this->ebooks->where('status', 'pending')->count(), '#086bff', 'pending')->addSlice('Disetujui', $this->ebooks->where('status', 'approved')->count(), '#00ff2a', 'approved')->addSlice('Ditolak', $this->ebooks->where('status', 'rejected')->count(), '#ff2e2e', 'rejected');
 
 
-        $categories = Category::all();
         $columnChartModel = (new ColumnChartModel())->setTitle('Data Postingan')
         ->setAnimated(true);
 
-        foreach ($categories as $category) {
+        foreach ($this->categories as $category) {
             $color = '#000';
             switch ($category->name) {
                 case 'Artikel':
@@ -82,7 +97,7 @@ class ChartIndex extends Component
         $treeMapChartModel = (new TreeMapChartModel())->setTitle('Data Master')
         ->setAnimated(true);
 
-        foreach ($categories as $category) {
+        foreach ($this->categories as $category) {
             $treeMapChartModel->addBlock($category->name, $category->posts->count(), '#5582ff');
         }
 

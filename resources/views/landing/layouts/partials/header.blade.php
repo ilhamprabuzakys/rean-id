@@ -127,12 +127,12 @@
                   <a href="{{ route('home.cns') }}"
                      class="nav-link {{ request()->url() == route('home.cns') ? 'active' : '' }}">CNS Radio</a>
                </li>
-               @auth
+               {{-- @auth
                <li class="nav-item me-lg-2">
                   <a href="{{ route('chats.index') }}"
                      class="nav-link {{ request()->url() == route('chats.index') ? 'active' : '' }}">Layanan Chat</a>
                </li>
-               @endauth
+               @endauth --}}
                <li class="nav-item me-lg-2">
                   <a href="{{ route('home.contact') }}"
                      class="nav-link {{ request()->url() == route('home.contact') ? 'active' : '' }}">Contact Us</a>

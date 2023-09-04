@@ -77,11 +77,12 @@ class ChatHistoryWrapper extends Component
 
 
     #[On('loadConversation')]
-    public function getConversation(Conversation $conversation, User $receiver)
+    public function getConversation(Conversation $conversation, $receiver)
     {
-        dd($conversation, $receiver);
+        // dd($conversation, $receiver);
         $this->selectedConversation = $conversation;
         $this->receiverInstance = $receiver;
+        // dd($this->selectedConversation);
         $this->messages_count = Message::where('conversation_id', $this->selectedConversation->id)->count();
         $this->messages = Message::where('conversation_id', $this->selectedConversation->id)
             ->skip($this->messages_count - $this->paginateVar)->take($this->paginateVar)->get();

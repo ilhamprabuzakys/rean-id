@@ -2,14 +2,8 @@
 
 namespace App\Livewire\Dashboard\Settings;
 
-use App\Http\Controllers\EditProfile;
-use App\Livewire\Dashboard\Chats\ChatCreate;
-use App\Livewire\Dashboard\Chats\ChatList;
 use App\Livewire\Dashboard\Partials\HeaderUserDropdown;
-use App\Livewire\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -123,7 +117,6 @@ class ProfileBasic extends Component
 
 
                 // Langkah 4: Perbarui data pengguna
-                $this->user->disableLogging();
                 $this->user->update($validatedData);
                 $this->firstTimeUpdate = false;
                 // Log aktivitas

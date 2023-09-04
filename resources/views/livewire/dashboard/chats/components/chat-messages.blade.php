@@ -1,4 +1,5 @@
-<ul class="list-unstyled chat-history" id="chat_body">
+<ul class="list-unstyled chat-history" id="chat_body"
+>
    @forelse ($messages as $message)
 
    @if ($message->sender_id == auth()->user()->id)

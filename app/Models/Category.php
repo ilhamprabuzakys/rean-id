@@ -79,4 +79,9 @@ class Category extends Model
     {
         return $this->hasOne(FileCategory::class);
     }
+    
+    public function type()
+    {
+        return $this->belongsTo(CategoryType::class, 'category_type_id');
+    }
 }

@@ -6,6 +6,7 @@
          icon: data[0].icon,
          confirmButtonText: 'Ok',
          timer: data[0].duration ?? 2500,
+         allowOutsideClick: false,
       })
    });
 

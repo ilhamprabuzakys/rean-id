@@ -4,7 +4,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-2">
-                  <label for="title">Judul Berita</label>
+                  <label for="title">Judul Berita <sup class="text-danger">*</sup></label>
                </div>
                <div class="col-10">
                   <input type="text" id="title" wire:model='title' class="form-control @error('title') is-invalid @enderror" />
@@ -19,7 +19,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-2">
-                  <label for="about">Topik</label>
+                  <label for="about">Topik <sup class="text-danger">*</sup></label>
                </div>
                <div class="col-10">
                   <input type="text" id="about" wire:model='about' class="form-control @error('about') is-invalid @enderror" />
@@ -34,7 +34,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-2">
-                  <label for="file_path">Cover</label>
+                  <label for="file_path">Cover <sup class="text-danger">*</sup></label>
                </div>
                <div class="col-10">
                   <div wire:ignore>
@@ -51,7 +51,7 @@
          <div class="col-md-12">
             <div class="row">
                <div class="col-4">
-                  <label for="body">Body</label>
+                  <label for="body">Body <sup class="text-danger">*</sup></label>
                </div>
                <div class="col-12 mt-3">
                   <div wire:ignore>
@@ -85,6 +85,20 @@
             callbacks: {
                onChange: function(contents, $editable) {
                   @this.set('body', contents);
+               },
+               onImageUpload: function(files) {
+                     for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+                        let fileName = file["name"];
+                        let ext = fileName.split('.').pop().toLowerCase();
+                        if($.inArray(ext, ['jpg','jpeg','png']) == -1) {
+                           alert('Ekstensi file tidak diizinkan! Hanya jpg, jpeg, dan png yang diperbolehkan.');
+                        } else {
+                           // Proses unggah gambar Anda
+                           // Anda dapat menambahkan fungsi unggah Anda di sini
+                           // Contoh: $.upload(file);
+                        }
+                     }
                }
             },
             toolbar: [

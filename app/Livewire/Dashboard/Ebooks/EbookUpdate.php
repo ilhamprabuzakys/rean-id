@@ -19,7 +19,7 @@ class EbookUpdate extends Component
     use WithFileUploads;
 
     public $ebook;
-    public $title, $description, $author, $published_at, $body, $user_id, $file_path;
+    public $title, $slug, $description, $author, $published_at, $body, $user_id, $file_path;
     public $files = [];
     public $existingFiles = [];
     public $existingPDF;
@@ -130,6 +130,7 @@ class EbookUpdate extends Component
                 $this->messages['file_path.mimes'] = 'File harus berformat PDF';
                 $this->messages['file_path.max'] = 'Ukuran PDF tidak boleh lebih besar dari 20MB';
             }
+            $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
             $this->validate($this->rules(), $this->messages);
             $this->deleteRemovedImages();

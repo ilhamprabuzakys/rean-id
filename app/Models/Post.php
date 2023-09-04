@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 use Livewire\Livewire;
 use Spatie\Activitylog\LogOptions;
@@ -34,13 +35,22 @@ class Post extends Model
         ];
     }
 
-    /**
-     * Get the index name for the model.
-     */
-    /* public function searchableAs()
+    protected static function boot()
     {
-        return 'post_index';
-    }  */
+        parent::boot();
+
+        static::updating(function ($post) {
+            if ($post->isDirty('slug')) {
+                DB::table('old_slugs')->insert([
+                    'post_id' => $post->id,
+                    'slug' => $post->getOriginal('slug'),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        });
+    }
+    
     public function tapActivity(Activity $activity, string $eventName)
     {
         if ($eventName == 'deleted') {

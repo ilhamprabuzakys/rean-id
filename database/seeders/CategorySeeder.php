@@ -16,30 +16,37 @@ class CategorySeeder extends Seeder
         Category::create([
             'name' => 'Artikel',
             'slug' => 'artikel',
+            'category_type_id' => 5,
         ]);
         Category::create([
             'name' => 'Foto',
             'slug' => 'foto',
+            'category_type_id' => 4,
         ]);
         Category::create([
             'name' => 'Video',
             'slug' => 'video',
+            'category_type_id' => 3,
         ]);
         Category::create([
             'name' => 'Poster',
             'slug' => 'poster',
+            'category_type_id' => 4,
         ]);
         Category::create([
             'name' => 'Desain',
             'slug' => 'desain',
+            'category_type_id' => 4,
         ]);
         Category::create([
             'name' => 'Musik',
             'slug' => 'musik',
+            'category_type_id' => 2,
         ]);
         Category::create([
-            'name' => 'Audio',
-            'slug' => 'audio',
+            'name' => 'Podcast',
+            'slug' => 'podcast',
+            'category_type_id' => 1,
         ]);
     }
 }

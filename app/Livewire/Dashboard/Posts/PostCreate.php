@@ -18,7 +18,7 @@ use Livewire\WithFileUploads;
 class PostCreate extends Component
 {
     use WithFileUploads;
-    public $title, $slug, $category_id, $file_path, $body, $status, $user_id;
+    public $title, $slug, $category_id, $category_type_id, $link, $file_path, $body, $status, $user_id;
     public $files = [];
     public $tags = [];
 
@@ -85,11 +85,16 @@ class PostCreate extends Component
 
         try {
             $rules = $this->rules();
-            if (in_array($this->category_id, [3, 6, 7])) {
+            if (in_array($this->category_id, [3, 6])) {
                 $rules['file_path'] = 'required|max:20000|mimes:mp3,mp4,mkv';
                 $this->messages['file_path.required'] = 'Media file harus disertakan';
                 $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
+            }
+            
+            if ($this->category_id == 7) {
+                $rules['link'] = 'required';
+                $this->messages['link.required'] = 'Link harus disertakan';
             }
 
             // if ($this->files == null) {
@@ -101,23 +106,32 @@ class PostCreate extends Component
             //     ]);
             //     return;
             // }
-
+            // dd($this->files == null);
+            if ($this->files == null && in_array($this->category_id, [2, 4, 5])) {
+                $this->addError('files', 'Wajib mengupload cover file');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
+            }
             $this->validate($rules, $this->messages);
-
 
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
             $this->processDescriptionImages();
-
+            
             // Simpan data ke variabel
             $post = Post::create($this->all());
             $this->storeTags($post);
             // Simpan files
             $this->storeFiles($post);
             // Simpan file media jika ada
-            if ($this->file_path !== null && in_array($this->category_id, [3, 6, 7])) {
+            if ($this->file_path !== null && in_array($this->category_id, [3, 6])) {
                 $this->storeMediaFile($post);
             }
+            
             $this->resetInput();
             $this->dispatch('stored');
             $this->dispatch('swal:modal', [
@@ -157,9 +171,9 @@ class PostCreate extends Component
                 if (!$tag) {
                     // Jika tag belum ada, buat tag baru
                     $tag = Tag::create(['name' => $tagName]);
-                    $tag->disableLogging();
                 }
 
+                $tag->disableLogging();
                 // Tambahkan ID tag ke dalam array
                 $tagIds[] = $tag->id;
             }
@@ -178,6 +192,7 @@ class PostCreate extends Component
         if (!file_exists($directoryPath)) {
             mkdir($directoryPath, 0777, true);
         }
+        // dd($this->file_path);
         if ($this->file_path)
         {
             $timestamp = now()->format('H:i_d-m-Y');

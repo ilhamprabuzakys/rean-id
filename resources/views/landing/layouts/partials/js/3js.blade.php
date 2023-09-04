@@ -87,7 +87,7 @@
    function animate() {
       requestAnimationFrame(animate);
       if (model) {
-         model.rotation.y += 0.04;
+         model.rotation.y += 0.02;
       }
       renderer.render(scene, camera);
    }

@@ -18,7 +18,7 @@ class EventUpdate extends Component
     use WithFileUploads;
 
     public $event, $user_id;
-    public $title, $slug, $description, $province, $city, $merge_date, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location;
+    public $title, $slug, $description, $province, $city, $start_date, $end_date, $contact_email, $organizer, $latitude, $longitude, $location;
     public $files = [];
     public $existingFiles = [];
     public $filePathOrName = '';
@@ -35,7 +35,7 @@ class EventUpdate extends Component
         $this->contact_email = $event->contact_email;
         $this->start_date = $event->start_date;
         $this->end_date = $event->end_date;
-        $this->merge_date = $event->start_date . ' to ' . $event->end_date;
+        // $this->merge_date = $event->start_date . ' to ' . $event->end_date;
         $this->latitude = $event->latitude;
         $this->longitude = $event->longitude;
         $this->location = $event->location;
@@ -65,7 +65,8 @@ class EventUpdate extends Component
             'description' => ['required', 'min:4'],
             'province' => ['required'],
             'city' => ['required'],
-            'merge_date' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
             'contact_email' => ['required'],
             'organizer' => ['required'],
             'location' => ['required'],
@@ -80,7 +81,8 @@ class EventUpdate extends Component
         'description.min' => 'Deskripsi tidak boleh terlalu pendek',
         'province.required' => 'Provinsi harus diisi',
         'city.required' => 'Kota harus diisi',
-        'merge_date.required' => 'Tanggal harus diisi',
+        'start_date.required' => 'Tanggal mulai harus diisi',
+        'end_date.required' => 'Tanggal akhir harus diisi',
         'contact_email.required' => 'Kontak Email harus diisi',
         'organizer.required' => 'Penyelenggara harus diisi',
         'location.required' => 'Lokasi harus diisi',
@@ -118,6 +120,7 @@ class EventUpdate extends Component
     {
         // dd($this->all());
         try {
+            // dd($this->start_date, $this->end_date);
             $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
 
@@ -143,7 +146,7 @@ class EventUpdate extends Component
 
             $this->validate($this->rules(), $this->messages);
 
-            $this->parseDateRange();
+            // $this->parseDateRange();
             $this->storeFiles();
             $this->processDescriptionImages();
 

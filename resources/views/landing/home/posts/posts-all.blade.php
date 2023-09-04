@@ -5,7 +5,7 @@
 <section class="position-relative bg-gradient-primary text-white">
    <div class="container pt-12 pb-9 pb-lg-12 position-relative z-2">
       <div class="row pb-7 pt-lg-9 align-items-center">
-         <div class="col-12 col-lg-7 mb-5 mb-lg-0">
+         <div class="col-12 col-lg-12 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                <li class="breadcrumb-item active fw-bold" aria-current="page">{{ __('Daftar Postingan') }}</li>

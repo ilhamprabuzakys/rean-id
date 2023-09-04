@@ -16,7 +16,7 @@ use Illuminate\Validation\ValidationException;
 class EbookCreate extends Component
 {
     use WithFileUploads;
-    public $title, $description, $status, $author, $published_at, $user_id, $body, $file_path;
+    public $title, $slug, $description, $status, $author, $published_at, $user_id, $body, $file_path;
     public $files = [];
 
     public function mount($user)
@@ -65,11 +65,13 @@ class EbookCreate extends Component
         // dd($this->all());
         try {
             if (auth()->user()->role == 'member') {
-                $this->status = 'approved';
+                $this->status = 'pending';
             } else {
                 $this->status = 'approved';
             }
+            $this->slug = Str::slug($this->title);
             $this->title = Str::of($this->title)->title();
+            
             $this->validate($this->rules(), $this->messages);
             $this->processDescriptionImages();
 

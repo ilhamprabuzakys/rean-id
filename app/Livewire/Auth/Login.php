@@ -52,7 +52,7 @@ class Login extends Component
             $this->dispatch('swal:modal', [
                 'icon' => 'error',
                 'title' => 'Login Gagal',
-                'text' => 'Harap masukkan kredensial anda sebelum login'
+                'text' => 'Harap masukkan <strong>kredensial</strong> anda sebelum login'
             ]);
         } else {
             try {
@@ -62,26 +62,26 @@ class Login extends Component
     
                 $user = User::where($login_type, $this->login)->first();
                 if (!$user) {
-                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan <strong>salah</strong> atau <strong>tidak ditemukan</strong>');
                 }
     
                 if (!Hash::check($this->password, $user->password)) {
-                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan <strong>salah</strong> atau <strong>tidak ditemukan</strong>');
                 }
     
                 if ($user->email_verified_at === null) {
-                    return $this->failedLoginResponse('Akun anda dibekukan atau dinonaktifkan sementara');
+                    return $this->failedLoginResponse('Akun anda <strong>dibekukan</strong> atau telah <strong>dinonaktifkan</strong> sementara');
                 }
     
                 if ($user->active == 0) {
-                    return $this->failedLoginResponse('Akun telah dinonaktifkan karena melanggar ketentuan komunitas kami. Hubungi admin jika ini merupakan suatu kesalahan.');
+                    return $this->failedLoginResponse('Akun telah <strong>dinonaktifkan</strong> karena <strong>melanggar</strong> ketentuan komunitas kami. Hubungi admin jika ini merupakan suatu <strong>kesalahan</strong>.');
                 }
     
                 $user->createToken('user login')->plainTextToken;
     
                 $credentials = [$login_type => $this->login, 'password' => $this->password];
                 if (!Auth::attempt($credentials, $this->remember)) {
-                    return $this->failedLoginResponse('Kredensial yang anda masukkan salah atau tidak ditemukan');
+                    return $this->failedLoginResponse('Kredensial yang anda masukkan <strong>salah</strong> atau <strong>tidak ditemukan</strong>');
                 }
     
                 $this->dispatch('refresh')->to(ChatList::class);
@@ -110,46 +110,5 @@ class Login extends Component
         ]);
 
         session()->flash('fails', $message);
-    }
-
-    protected function saveLoginInfo($now)
-    {
-        $ip = $this->getPublicIP();
-        $location = Location::get($ip);
-        $agent = new Agent();
-        $device = $agent->isDesktop() ? 'Desktop' : ($agent->isMobile() ? 'Mobile' : 'WebKit');
-
-        LoginInfo::create([
-            'user_id' => auth()->user()->id,
-            'browser' => $agent->browser(),
-            'os' => $agent->platform(),
-            'device' => $device,
-            'login_at' => Carbon::parse(Carbon::now())->locale('id')->isoFormat('dddd D MMMM YYYY, HH:mm:ss'),
-            'login_ip' => $ip,
-            'country' => $location->countryName,
-            'country_code' => $location->countryCode,
-            'region' => $location->regionName,
-            'region_code' => $location->regionCode,
-            'city' => $location->cityName,
-            'zip_code' => $location->zipCode,
-            'latitude' => $location->latitude,
-            'longitude' => $location->longitude,
-        ]);
-    }
-
-    private function getPublicIP()
-    {
-        // Logic untuk mendapatkan IP public.
-        $response = Http::get('http://ipecho.net/plain');
-        return $response->body();
-    }
-
-    public function changePasswordToggle()
-    {
-        if ($this->passwordToggle == 1) {
-            $this->passwordToggle = 0;
-        } elseif ($this->passwordToggle == 0) {
-            $this->passwordToggle = 1;
-        }
     }
 }

@@ -5,7 +5,7 @@
             <div class="card-header flex-column flex-md-row">
 
                <div class="row mb-3 justify-content-start">
-                  <div class="col-lg-3 col-sm-3">
+                  <div class="col-lg-3 col-sm-2">
                      <label for="filter-category" class="form-label">Kategori {{ $filter_category }}</label>
                      <select class="form-select form-select-md" id="filter-category" 
                      wire:model.live='filter_category'>
@@ -24,7 +24,18 @@
                         @endforeach
                      </select>
                   </div>
-                  <div class="col-lg-4 col-sm-7 d-flex align-items-end align-self-end justify-content-end gap-3">
+                  @cannot('member')
+                  <div class="col-lg-2 col-sm-2">
+                     <label for="filter-role" class="form-label">Role</label>
+                     <select class="form-select form-select-md" name="role" id="filter-role" wire:model.live='filter_role'>
+                        <option selected value="">Semua</option>
+                        @foreach ($roles as $role)
+                           <option value="{{ $role->key }}">{{ $role->label }}</option>
+                        @endforeach
+                     </select>
+                  </div>
+                  @endcannot
+                  <div class="col-lg-4 col-sm-6 d-flex align-items-end align-self-end justify-content-end gap-3">
                      <div><a class="btn btn-danger" href="javascript:void(0)" wire:click='$dispatch("reset-filter")'>
                         <span><i class="fas fa-refresh"></i>
                            <span class="d-none d-sm-inline-block">Reset Filter</span></span>

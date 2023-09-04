@@ -47,7 +47,7 @@ class MailNotify extends Mailable
         }
         return new Envelope(
             from: new Address($this->message->email, $this->message->name),
-            subject: $subject,
+            subject: $subject . ' - ' . $this->message->name,
             // subject: "Permintaan",
             replyTo: [
                 new Address($this->message->email, $this->message->name),

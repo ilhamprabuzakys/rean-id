@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Models\News;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Jenssegers\Agent\Agent;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
@@ -25,7 +26,7 @@ class HomeController extends Controller
         $versionDevice = $agent->version($device);
         $versionBrowser = $agent->version($browser);
 
-        
+
         $posts = Post::with(['category', 'user'])->where('status', 'approved')->orderBy('updated_at', 'desc')->get();
         // $mostViewedArticle = Post::mostViewed($posts, 5, 'artikel');
         $categories = Category::orderBy('updated_at', 'desc')->get();
@@ -39,7 +40,7 @@ class HomeController extends Controller
             'title' => 'About',
         ]);
     }
-    
+
     public function cns_radio()
     {
         return view('landing.home.static.cns-radio', [
@@ -53,7 +54,7 @@ class HomeController extends Controller
             'title' => 'Contact Us',
         ]);
     }
-    
+
     public function analytics()
     {
         // $analyticsData = Analytics::fetchVisitorsAndPageViews(Period::days(7));
@@ -64,7 +65,7 @@ class HomeController extends Controller
             'analyticsData' => $analyticsData,
         ]);
     }
-    
+
     public function chat()
     {
         return view('landing.home.static.chat', [
@@ -91,13 +92,12 @@ class HomeController extends Controller
 
     public function show_post($category, Post $post)
     {
-        $post->increment('views');
         return view('landing.home.posts.detail', [
             'title' => $post->title,
             'heropost' => $post,
         ], compact('post'));
     }
-    
+
 
     public function category_list()
     {
@@ -106,7 +106,7 @@ class HomeController extends Controller
             'title' => 'Daftar Kategori',
         ], compact('categories'));
     }
-    
+
     public function category_view(Category $category)
     {
         $posts = $category->posts->sortByDesc('updated_at');
@@ -129,45 +129,45 @@ class HomeController extends Controller
             'title' => 'Daftar Events',
         ]);
     }
-    
+
     public function event_detail(Event $event)
     {
         return view('landing.home.events.show', [
             'title' => $event->title,
         ], compact('event'));
     }
-    
+
     public function ebook()
     {
         return view('landing.home.ebooks.index', [
             'title' => 'Daftar Ebook',
         ]);
     }
-    
+
     public function ebook_detail(Ebook $ebook)
     {
         return view('landing.home.ebooks.show', [
             'title' => $ebook->title,
         ], compact('ebook'));
     }
-   
+
     public function user_view(User $user)
     {
         return view('landing.home.users.show', [
             'title' => 'Profile ' . $user->name,
         ], compact('user'));
     }
-    
+
     public function news()
     {
-        return view('landing.home.newss.index', [
-            'title' => 'Daftar Ebook',
+        return view('landing.home.news.index', [
+            'title' => 'Daftar Berita',
         ]);
     }
-    
+
     public function news_detail(News $news)
     {
-        return view('landing.home.newss.show', [
+        return view('landing.home.news.show', [
             'title' => $news->title,
         ], compact('news'));
     }

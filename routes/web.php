@@ -46,12 +46,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/settings', 'settings')->name('settings');
             Route::post('/settings', 'settings')->name('settings.reset-password');
         });
-
-        Route::middleware(['except:role:member'])->group(function () {
-            Route::get('/posts/approval', [PostController::class, 'approval'])->name('posts.approval');
-            Route::post('/posts/approval', [PostController::class, 'approvalForm'])->name('posts.approval.form');
+        Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+        
+        Route::middleware(['except:member'])->group(function () {
             Route::get('/media/posts', [MediaPostController::class, 'posts'])->name('media.posts');
-            Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
             Route::resource('/events', EventController::class)->except(['show']);
             Route::resource('/news', NewsController::class);
             Route::get('/users/roles', [UserController::class, 'roles'])->name('users.roles');
@@ -92,6 +90,8 @@ Route::middleware(['record.visitor'])->group(function () {
         Route::get('/users/{user}', 'user_view')->name('home.show_user');
         Route::get('/events/{event}', 'event_detail')->name('home.events.show');
         Route::get('/events', 'event')->name('home.events.index');
+        Route::get('/news/{news}', 'news_detail')->name('home.news.show');
+        Route::get('/news', 'news')->name('home.news.index');
         Route::get('/daftar-kategori', 'category_list')->name('home.category_list');
         Route::get('/tag/{tag}', 'tag_view')->name('home.tag_view');
         Route::get('/cns-radio', 'cns_radio')->name('home.cns');

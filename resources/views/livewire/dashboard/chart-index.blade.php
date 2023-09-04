@@ -54,9 +54,15 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @if ($postsCount > 0)
                     <div style="height: 300px !important">
                         <livewire:livewire-pie-chart :pie-chart-model="$postPieChartModel" />
                     </div>
+                    @else
+                    <div style="height: 300px !important" class="d-flex justify-content-center  align-items-center">
+                        <h4>Data masih kosong</h4>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -74,9 +80,17 @@
                     </div>
                 </div>
                 <div class="card-body">
+
+                    @if ($ebooksCount > 0)
                     <div style="height: 300px !important">
                         <livewire:livewire-pie-chart :pie-chart-model="$ebookPieChartModel" />
                     </div>
+                    @else
+                    <div style="height: 300px !important" class="d-flex justify-content-center  align-items-center">
+                        <h4>Data masih kosong</h4>
+                    </div>
+                    @endif
+
                 </div>
             </div>
         </div>

@@ -18,11 +18,11 @@ class ChatSendMessage extends Component
     public $body;
 
     #[On('updateSendMessage')]
-    public function getConversation(Conversation $conversation, User $receiver)
+    public function getConversation(Conversation $conversation, $receiver)
     {
-        dd('error?');
+        // dd($conversation, $receiver);
         $this->selectedConversation = $conversation;
-        $this->receiverInstance = $receiver;
+        $this->receiverInstance = User::find($receiver);
         // $this->messages_count = Message::where('conversation_id', $this->selectedConversation->id)->count();
         // $this->messages = Message::where('conversation_id', $this->selectedConversation->id)
         // ->skip($this->messages_count - $this->paginateVar)->take($this->paginateVar)->get();

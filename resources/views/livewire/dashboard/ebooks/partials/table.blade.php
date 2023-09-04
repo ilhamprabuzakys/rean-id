@@ -23,7 +23,7 @@
       <tr>
          <th scope="row">{{ $loop->iteration + ($paginate * ($ebooks->currentPage()-1)) }}</th>
          <td>
-            @if($ebook->status == 'approved' || $this->ebook->user_id == auth()->user()->id || auth()->user()->role != 'member')
+            @if($ebook->status == 'approved' || $ebook->user_id == auth()->user()->id || auth()->user()->role != 'member')
             <a href="{{ route('home.ebooks.show', $ebook) }}" class="text-dark text-decoration-underline">{{ $ebook->title }}</a>
             @else
             {{ $ebook->title }}
@@ -98,7 +98,7 @@
                      href="{{ route('ebooks.edit', $ebook) }}"><i class="fas fa-md fa-edit me-3"></i>Edit</a>
                   <a class="text-danger text-decoration-none dropdown-item"
                      wire:click.prevent="deleteConfirmation({{ $ebook->id }})"><i
-                        class="far fa-md fa-trash-alt me-3"></i>Hapus</a>
+                        class="fas fa-md fa-trash-alt me-3"></i>Hapus</a>
                </div>
             </div>
          </td>

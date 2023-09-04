@@ -125,3 +125,27 @@ table tbody tr td div.dropdown .dropdown-toggle::after {
    border-radius: 0.375rem;
    box-shadow: 0 0 0.375rem 0.25rem rgba(165,163,174,.15) !important;
 }
+
+/* Login */
+.ceaed94f7 {
+   display: inline-block;
+   width: 20px;
+   height: 20px;
+   position: relative;
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: 50%;
+}
+
+.google-icon {
+   background-image: url("../../../../../assets/img/icon/svg/google.svg");
+}
+
+.c40c4de2c .ceaed94f7 {
+   position: absolute;
+   left: 26px;
+   left: calc(var(--spacing-6-5)/2);
+   top: 50%;
+   transform: translateX(-50%) translateY(-50%);
+   color: #f8f8f8;
+}

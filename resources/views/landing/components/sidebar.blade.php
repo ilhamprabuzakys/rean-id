@@ -145,7 +145,7 @@
    
        .sidebar.minimized #sidebar-toggle::before {
           content: ">";
-          transition: 0.4s;
+          transition: 0.3s;
        }
     }
    
@@ -200,7 +200,6 @@
                    
                    <img src="https://cegahnarkoba.bnn.go.id/wp-content/uploads/assets/img/logo_cns_medium_for_sidebar.png" alt="" id="brand-name" class="img-sidebar">
                    <button class="toggle-button" id="sidebar-toggle">
-                      
                    </button>
                    
                    

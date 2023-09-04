@@ -72,7 +72,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($login_info as $info)
+                        @forelse ($login_info as $info)
                         <tr>
                             @php
                             $deviceIcon =
@@ -145,7 +145,13 @@
                                 {{ $info->login_at }}
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center my-2">
+                                <h5>Tidak ada data ditemukan.</h5>
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
                 <div class="float-end mt-5 me-3">

@@ -2,9 +2,9 @@
     <section class="position-relative bg-gradient-primary text-white">
         <div class="container pt-12 pb-9 pb-lg-12 position-relative z-2">
             <div class="row pb-7 pt-lg-9 align-items-center">
-                <div class="col-12 col-lg-7 mb-5 mb-lg-0">
-                    <h2 class="display-1 mb-4">
-                        {{ $ebook->title }}
+                <div class="col-12 col-lg-12 mb-5 mb-lg-0">
+                    <h1 class="mb-4">
+                        {{ Str::limit($ebook->title, 25, '..') }}
                         @php
                             $status = '';
                             $statusBG = '';
@@ -71,7 +71,7 @@
                             <small class="d-block text-body-tertiary mb-3">
                                 <i class="bx bx-history me-1 fs-5"></i> Ditambahkan : {{ $ebook->created_at }}
                             </small>
-                            <h1 class="display-4 mb-3" id="heading-ebook">
+                            <h1 class="mb-3" id="heading-ebook">
                                 {{ $ebook->title }}
                             </h1>
                             <p class="fs-6 mb-5 mb-md-0">
@@ -79,15 +79,13 @@
                             </p>
 
                         </div>
+                        @if($ebook->files->first())
                         <div class="col-12 col-md-10 col-lg-9 mt-3">
-                            @if($ebook->files->first())
-                            <img src="{{ asset($ebook->files->first()->file_path) }}" alt="" class="img-fluid img-zoom"
+                            <img src="{{ asset($ebook->files->first()->file_path) }}" alt="" class="img-fluid img-zoom rounded-2"
                                 style="width: -webkit-fill-available;">
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                     </div>
-
-
 
                     <!--career details-->
                     <article>
@@ -186,14 +184,7 @@
                     <!-- Embed PDF viewer dari PDF.js melalui CDN -->
                     <div class="row g-0">
                         <div class="col-12">
-                            {{-- <iframe
-                                src="https://mozilla.github.io/pdf.js/web/viewer.html?file={{ asset($ebook->pdf->file_path) }}"
-                                width="80%" height="500px" class="mt-5"></iframe> --}}
-                            {{-- <iframe
-                                src="{{ asset('plugins/pdf.js/web/viewer.html') }}?file={{ asset($ebook->pdf->file_path) }}"
-                                width="100%" height="500px" class="mt-5"></iframe>
-                            <div class="modal-body p-5"> --}}
-                                <iframe src="{{ asset($ebook->pdf->file_path) }}" width="100%" height="500px"></iframe>
+                            <iframe src="{{ asset($ebook->pdf->file_path) }}" width="100%" height="500px"></iframe>
                             </div>
                         </div>
                     </div>

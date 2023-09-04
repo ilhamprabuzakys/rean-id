@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $seeders = [
             UserSeeder::class,
             CategorySeeder::class,
+            CategoryTypeSeeder::class,
             TagSeeder::class,
             CompanySeeder::class,
             CompanySocialMediaSeeder::class,

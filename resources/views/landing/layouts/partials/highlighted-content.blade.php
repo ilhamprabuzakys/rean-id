@@ -49,7 +49,7 @@ $latestPosts = \App\Models\Post::latest('created_at')->where('status', 'approved
                     <!--testimonial Image-->
                     <img
                       src="{{ asset($post->files->first()->file_path ?? 'assets/landing/assan/assets/img/960x900/' . rand(1,5) . '.jpg') }}"
-                      class="img-fluid" alt="">
+                      class="img-fluid" alt="" style="width: 460px; height: 400px; object-fit: cover">
 
                     <!--Testimonial image divider-->
                     <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -74,20 +74,23 @@ $latestPosts = \App\Models\Post::latest('created_at')->where('status', 'approved
                 <div class="col-lg-6 mx-auto px-0">
                   <div class="px-3 py-4 mb-0">
                     <div class="mb-3 mb-lg-4 h-auto mx-auto text-primary">
-                      <h4>{{ Str::limit($post->title, 30, '...') }}</h4>
+                      <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post])}}">
+                        <h4>{{ Str::limit($post->title, 30, '...') }}</h4>
+                      </a>
                     </div>
                     <!-- Text -->
                     <p class="mb-5 w-lg-75">
-                      {!! Str::limit($post->body, 60, '...') !!}
+                      {!! Str::limit($post->body, 100, '...') !!}
                     </p>
-
                     <!-- Footer -->
                     <div class="pb-4 pb-lg-0">
                       <div>
-                        <img src="{{ asset( optional($post->user)->avatar ?? 'assets/img/avatar/avatar-1.png') }}" alt=""
-                          class="img-fluid img-zoom me-2 rounded-circle"
+                        <img src="{{ asset( optional($post->user)->avatar ?? 'assets/img/avatar/avatar-1.png') }}"
+                          alt="" class="img-fluid img-zoom me-2 rounded-circle"
                           style="object-fit: cover;width: 50px;height: 50px;">
-                        <span class="h6 me-2">{{  optional($post->user)->name }}</span>
+                        <a href="{{ route('home.show_user', $post->user)}}">
+                          <span class="h6 me-2">{{ optional($post->user)->name }}</span>
+                        </a>
                         <span class="ms-5"><i class="bx bx-time me-2"></i>
                           <span class="h6">{{ $post->created_at->diffForHumans() }}</span></span>
                       </div>

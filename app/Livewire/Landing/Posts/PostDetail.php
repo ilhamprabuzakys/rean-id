@@ -14,10 +14,23 @@ class PostDetail extends Component
     public function mount($post)
     {
         $this->post = $post;
-        $this->related_post = Post::where('category_id', $post->category_id)
+        $query_related_post = Post::where('category_id', $post->category_id)
             ->where('id', '!=', $post->id) // untuk menghindari mendapatkan post yang sama
             ->take(4) // Ambil lima postingan terkait saja sebagai contoh
             ->get();
+
+        if ($query_related_post->count() > 3) {
+            $this->related_post = $query_related_post;
+        } else {
+            $neededMore = 4 - $query_related_post->count();
+            $addiotional_query = Post::where('user_id', $post->user_id)
+            ->where('id', '!=', $post->id) // untuk menghindari mendapatkan post yang sama
+            ->take($neededMore) // Ambil lima postingan terkait saja sebagai contoh
+            ->get();
+            $allNotifications = $query_related_post->concat($addiotional_query)->unique('id');
+            $this->related_post = $allNotifications;
+        }
+        
         $this->media_post = Post::find($post->id)->media->first();
         // $this->media_post = Post::whereHas('files', function ($query) {
         //     $query->where('file_path', 'like', '%.mp3')
@@ -72,6 +85,9 @@ class PostDetail extends Component
 
     public function render()
     {
-        return view('livewire.landing.posts.post-detail');
+        if ($this->post->status == 'approved' || $this->post->user_id == auth()->user()->id || auth()->user()->role != 'member') {
+            return view('livewire.landing.posts.post-detail');
+        }
+        return abort(404);
     }
 }

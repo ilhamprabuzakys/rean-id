@@ -16,14 +16,14 @@
         </svg>
         <div class="container pt-12 pb-12 position-relative z-1">
             <div class="row pt-3 pt-lg-9 pb-4 justify-content-between align-items-center">
-                <div class="col-xl-8 mb-5 mb-xl-0">
+                <div class="col-xl-10 col-lg-12 col-sm-12 mb-5 mb-xl-0">
                     <ol class="breadcrumb mb-3">
                         <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('home.events.index') }}">{{ __('Daftar Event')
                                 }}</a></li>
                         <li class="breadcrumb-item active fw-bold" aria-current="page">{{ $event->title }}</li>
                     </ol>
-                    <h2 class="display-2 mb-4">
+                    <h2 class="display-6 mb-4">
                         {{ $event->title }}
                     </h2>
                     <p class="mb-0 lead pe-lg-8"><i class="bx bx-map me-2 align-center"></i><span class="align-end">{{ $event->city . ', ' . $event->province }}</span></p>

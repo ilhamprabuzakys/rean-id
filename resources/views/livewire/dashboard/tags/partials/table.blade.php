@@ -39,7 +39,7 @@
                            <i class="fas fa-edit me-2"></i> Edit
                         </a>
                         <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $tag->id }})">
-                           <i class="far fa-trash-alt me-2"></i> Hapus</a>
+                           <i class="fas fa-trash-alt me-2"></i> Hapus</a>
                         {{-- <a class="text-danger text-decoration-none dropdown-item" href="{{ route('users.destroy', $user) }}" data-confirm-delete="true">Hapus</a> --}}
                      </div>
                   </div>

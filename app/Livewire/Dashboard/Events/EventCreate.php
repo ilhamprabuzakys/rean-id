@@ -31,7 +31,8 @@ class EventCreate extends Component
             'description' => ['required', 'min:4'],
             'province' => ['required'],
             'city' => ['required'],
-            'merge_date' => ['required'],
+            'start_date' => ['required'],
+            'end_date' => ['required'],
             'contact_email' => ['required'],
             'organizer' => ['required'],
             'location' => ['required'],
@@ -46,7 +47,8 @@ class EventCreate extends Component
         'description.min' => 'Deskripsi tidak boleh terlalu pendek',
         'province.required' => 'Provinsi harus diisi',
         'city.required' => 'Kota harus diisi',
-        'merge_date.required' => 'Tanggal harus diisi',
+        'start_date.required' => 'Tanggal mulai harus diisi',
+        'end_date.required' => 'Tanggal akhir harus diisi',
         'contact_email.required' => 'Kontak Email harus diisi',
         'organizer.required' => 'Penyelenggara harus diisi',
         'location.required' => 'Lokasi harus diisi',
@@ -109,12 +111,24 @@ class EventCreate extends Component
 
             $this->validate($this->rules(), $this->message);
 
-            $this->parseDateRange();
+            // $this->parseDateRange();
             $this->processDescriptionImages();
 
             // Simpan event ke variabel
             $event = Event::create($this->all());
-
+            activity('Event')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
+                    ->performedOn($event)
+                    ->causedBy(auth()->user())
+                    ->withProperties([
+                        'action' => 'global',
+                        'post_target' => $event->id,
+                        'link' => route('home.events.show', $event),
+                        'action_user' => auth()->user()->id,
+                        'post_author' => $event->user->id,
+                        'message' =>  'Event ' . $event->title . ' telah ditambahkan oleh '. auth()->user()->name .', cek didetail halaman Event'
+                    ])
+                    ->event('global')
+                    ->log('Event baru telah ditambahkan, cek didetail halaman Event');
             // Simpan files
             $this->storeFiles($event->id);  // Mengirim id event ke fungsi storeFiles
             $this->resetInput();
@@ -124,6 +138,7 @@ class EventCreate extends Component
                 'title' => 'Berhasil dibuat',
                 'text' => 'Berhasil menambahkan data Event',
             ]);
+            $event->disableLogging();
             return redirect()->route('events.index');
         } catch (ValidationException $e) {
             $this->dispatch('swal:modal', [
@@ -165,6 +180,7 @@ class EventCreate extends Component
 
     private function parseDateRange()
     {
+        // dd($this->start_date, $this->end_date);
         $dateRange = explode(' to ', $this->merge_date);
         $this->start_date = $dateRange[0];
         $this->end_date = $dateRange[1] ?? $dateRange[0];

@@ -53,6 +53,7 @@ function getErrorsString($e)
     else {
         return 'Terjadi kesalahan yang tidak dikenal.';
     }
+    
     $errorString = '<br><br>';
     foreach ($errors as $field => $errorList) {
         foreach ($errorList as $error) {
@@ -98,7 +99,6 @@ function getPublicIP()
 function saveUserLogoutInfo()
 {
     $user = User::find(auth()->user()->id);
-    $user->disableLogging();
     $user->update([
         'status' => 'offline',
         'last_activity_at' => now(),
@@ -113,7 +113,6 @@ function saveUserLoginInfo()
     $agent = new Agent();
     $device = $agent->isDesktop() ? 'Desktop' : ($agent->isMobile() ? 'Mobile' : 'WebKit');
     $user = User::find(auth()->user()->id);
-    $user->disableLogging();
     $user->update([
         'status' => 'online',
         'last_login_at' => now(),

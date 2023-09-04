@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard\Categories;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\CategoryType;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
@@ -18,7 +19,7 @@ class CategoryIndex extends Component
     public $rolefilter = '';
     public $paginate = 5;
 
-    public $name, $category, $category_id, $dataposts;
+    public $name, $category, $category_type_id, $category_id, $dataposts;
 
     public function render()
     {
@@ -26,8 +27,11 @@ class CategoryIndex extends Component
             return $query->search($this->search);
         })->paginate($this->paginate);
 
+        $category_types = CategoryType::oldest('type')->get();
+
         return view('livewire.dashboard.categories.category-index', [
             'categories' => $categories,
+            'category_types' => $category_types,
         ]);
     }
 
@@ -35,11 +39,13 @@ class CategoryIndex extends Component
     {
         return [
             'name' => ['required', 'min:4', Rule::unique('categories')->ignore($this->category_id)],
+            'category_type_id' => ['required'],
         ];
     }
 
     protected $messages = [
         'name.required' => 'Nama Kategori harus terisi.',
+        'category_type_id.required' => 'Tipe Kategori harus terisi.',
         'name.min' => 'Nama Kategori minimal harus 4 karakter.',
         'name.unique' => 'Kategori dengan nama ini sudah ada.',
     ];
@@ -55,10 +61,12 @@ class CategoryIndex extends Component
 
     public function store()
     {
+        // dd($this->all());
         $this->validate();
         $category = Category::create([
             'name' => $this->name,
             'slug' => Str::slug($this->name),
+            'category_type_id' => $this->category_type_id,
         ]);
         $this->resetInput();
         $this->dispatch('close-modal');
@@ -84,6 +92,7 @@ class CategoryIndex extends Component
             $category->update([
                 'name' => $this->name,
                 'slug' => Str::slug($this->name),
+                'category_type_id' => $this->category_type_id,
             ]);
             $this->resetInput();
             $this->dispatch('close-modal');
@@ -120,6 +129,7 @@ class CategoryIndex extends Component
         $category = Category::findOrFail($category_id);
         if ($category) {
             $this->category_id = $category->id;
+            $this->category_type_id = $category->category_type_id;
             $this->name = $category->name;
         } else {
             return back();
@@ -145,6 +155,7 @@ class CategoryIndex extends Component
     public function resetInput()
     {
         $this->name = null;
+        $this->category_type_id = null;
     }
 
     public function closeModal()

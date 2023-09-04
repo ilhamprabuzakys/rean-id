@@ -10,6 +10,11 @@
         </div>
     </div>
     <div class="card-body">
+        @if($news->file->first())
+            <div class="mt-2 mb-3">
+                <img src="{{ asset($news->file->first()->file_path) }}" alt="gambar" class="img-zoom img-hover rounded" style="width: -webkit-fill-available; height: 200px; object-fit: cover">
+            </div>
+        @endif
        {!! $news->body !!}
     </div>
  </div>

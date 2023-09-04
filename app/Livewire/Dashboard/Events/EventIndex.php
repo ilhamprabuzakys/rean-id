@@ -20,17 +20,17 @@ class EventIndex extends Component
 
     public $event_id;
 
-    protected $updatesQueryString = ['search', 'filter_date'];
-    protected $queryString = [
-        'search' => ['except' => ''],
-        'filter_date' => ['except' => ''],
-    ];
+    // protected $updatesQueryString = ['search', 'filter_date'];
+    // protected $queryString = [
+    //     'search' => ['except' => ''],
+    //     'filter_date' => ['except' => ''],
+    // ];
 
-    public function mount()
-    {
-        $this->search = request()->query('search');
-        $this->filter_date = request()->query('filter_date');
-    }
+    // public function mount()
+    // {
+    //     $this->search = request()->query('search');
+    //     $this->filter_date = request()->query('filter_date');
+    // }
 
     public function render()
     {
@@ -113,4 +113,12 @@ class EventIndex extends Component
             $event->update(['status' => TRUE]);
         }
     }
+
+    #[On('resetFilter')]
+    public function resetFilter()
+    {
+        $this->filter_date = null;
+    }
 }
+
+

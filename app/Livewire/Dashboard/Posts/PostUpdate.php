@@ -19,7 +19,7 @@ use Livewire\WithFileUploads;
 class PostUpdate extends Component
 {
     use WithFileUploads;
-    public $post, $title, $slug, $category_id, $file_path, $body, $status, $user_id;
+    public $post, $title, $slug, $category_id, $link, $file_path, $body, $status, $user_id;
     public $files = [];
     public $newTags = [];
     public $tags = [];
@@ -33,13 +33,13 @@ class PostUpdate extends Component
         $this->post = $post;
         $this->slug = $post->slug;
         $this->title = $post->title;
+        $this->link = $post->link;
         $this->body = $post->body;
         $this->status = $post->status;
         $this->category_id = $post->category_id;
         $this->user_id = $post->user_id;
         $this->tags = $post->tags->pluck('name')->toArray();
-        $allowedExtensions = ['mp3', 'mp4', 'mkv'];
-
+        $allowedExtensions = ['mp3', 'mp4'];
         $this->existingFiles = $post->files
             ->filter(function ($file) use ($allowedExtensions) {
                 // Dapatkan ekstensi file
@@ -64,31 +64,25 @@ class PostUpdate extends Component
                 ];
             })->toArray();
 
-        if (in_array($post->category_id, [3, 6, 7])) {
-            $this->existingMediaFile = $post->files
-                ->filter(function ($file) use ($allowedExtensions) {
-                    $extension = pathinfo($file->file_path, PATHINFO_EXTENSION);
-                    return in_array($extension, $allowedExtensions);
-                })
-                ->map(function ($file) {
-                    $filePath = public_path($file->file_path);
-                    $fileSizeBytes = filesize($filePath);
-                    if ($fileSizeBytes < 1024 * 1024) { // Jika kurang dari 1MB
-                        $fileSize = round($fileSizeBytes / 1024, 2) . "KB";
-                    } else {
-                        $fileSize = round($fileSizeBytes / (1024 * 1024), 2) . "MB";
-                    }
-                    return (object) [
-                        'source_path' => asset($file->file_path),
-                        'extension' => pathinfo($file->file_path, PATHINFO_EXTENSION),
-                        'file_name' => basename($file->file_path),
-                        'file_size' => $fileSize,
-                        'mime_type' => mime_content_type($filePath),
-                        'id' => $file->id
-                    ];
-                })
-                ->first();
-        }
+        $this->existingMediaFile = $post->media
+            ->map(function ($file) {
+                $filePath = public_path($file->file_path);
+                $fileSizeBytes = filesize($filePath);
+                if ($fileSizeBytes < 1024 * 1024) { // Jika kurang dari 1MB
+                    $fileSize = round($fileSizeBytes / 1024, 2) . "KB";
+                } else {
+                    $fileSize = round($fileSizeBytes / (1024 * 1024), 2) . "MB";
+                }
+                return (object) [
+                    'source_path' => asset($file->file_path),
+                    'extension' => pathinfo($file->file_path, PATHINFO_EXTENSION),
+                    'file_name' => basename($file->file_path),
+                    'file_size' => $fileSize,
+                    'mime_type' => mime_content_type($filePath),
+                    'id' => $file->id
+                ];
+            })
+            ->first();
     }
 
     private function rules()
@@ -135,8 +129,14 @@ class PostUpdate extends Component
     {
         try {
             $this->title = Str::of($this->title)->title();
+            $this->slug = Str::slug($this->title);
             $rules = $this->rules();
-            $mediaExtensions = ['mp3', 'mp4', 'mkv'];
+            $mediaExtensions = ['mp3', 'mp4'];
+            if ($this->category_id == 7) {
+                $rules['link'] = 'required';
+                $this->messages['link.required'] = 'Link harus disertakan';
+            }
+
             $hasMediaFile = false;
 
             // Cek apakah ada file dengan ekstensi media di $post->files
@@ -153,11 +153,21 @@ class PostUpdate extends Component
             }
 
             // dd(!$hasMediaFile);
-            if (in_array($this->category_id, [3, 6, 7]) && !$hasMediaFile) {
+            if (in_array($this->category_id, [3, 6]) && !$hasMediaFile) {
                 $rules['file_path'] = 'required|max:20000|mimes:mp3,mp4,mkv';
                 $this->messages['file_path.required'] = 'Media file harus disertakan';
                 $this->messages['file_path.mimes'] = 'Media file harus berformat media: mp3,mp4,mkv';
                 $this->messages['file_path.max'] = 'Ukuran media file tidak boleh lebih besar dari 20MB';
+            }
+
+            if ($this->files == null && in_array($this->category_id, [2, 4, 5])) {
+                $this->addError('files', 'Wajib mengupload cover file');
+                $this->dispatch('swal:modal', [
+                    'icon' => 'error',
+                    'title' => 'Terjadi Kesalahan',
+                    'text' => 'Ada beberapa kesalahan pada input Anda' . \getErrorsString($this->getErrorBag()),
+                ]);
+                return;
             }
             // if ($this->post->files->count() < 1 && $this->files == null) {
             //     $this->addError('files', 'Cover image harus disertakan.');
@@ -179,8 +189,8 @@ class PostUpdate extends Component
             // Simpan files
             $this->storeFiles();  // Mengirim id data ke fungsi storeFiles
             // Simpan file media jika ada
-            // Jika category_id di luar dari 3, 6, 7
-            if (!in_array($this->category_id, [3, 6, 7])) {
+            // Jika category_id di luar dari 3, 6
+            if (!in_array($this->category_id, [3, 6])) {
                 if ($this->post->media) {
                     $media_file = $this->post->media->first();
                     if ($media_file) {
@@ -215,7 +225,7 @@ class PostUpdate extends Component
             $this->dispatch('swal:modal', [
                 'icon' => 'success',
                 'title' => 'Berhasil update',
-                'text' => 'Berhasil memperbarui data ' . $this->post->title,
+                'text' => 'Berhasil memperbarui data <strong>' . $this->post->title . '</strong>',
             ]);
 
             return redirect()->route('posts.index');
@@ -275,9 +285,9 @@ class PostUpdate extends Component
                 if (!$tag) {
                     // Jika tag belum ada, buat tag baru
                     $tag = Tag::create(['name' => $tagName]);
-                    $tag->disableLogging();
                 }
 
+                $tag->disableLogging();
                 // Tambahkan ID tag ke dalam array
                 $tagIds[] = $tag->id;
             }

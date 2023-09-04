@@ -106,7 +106,7 @@
                         <a class="dropdown-item text-success text-decoration-none" href="{{ route('posts.edit', $post) }}">
                            <i class="fas fa-md fa-edit me-3"></i>Edit
                         </a>
-                        <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $post->id }})"><i class="far fa-md fa-trash-alt me-3"></i>Delete</a>
+                        <a class="text-danger text-decoration-none dropdown-item" wire:click.prevent="deleteConfirmation({{ $post->id }})"><i class="fas fa-md fa-trash-alt me-3"></i>Delete</a>
                      </div>
                   </div>
                </td>

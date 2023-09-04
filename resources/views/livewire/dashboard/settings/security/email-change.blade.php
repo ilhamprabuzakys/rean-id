@@ -46,7 +46,7 @@
                </div>
                <div class="col-md-3 form-password-toggle d-flex align-items-center">
                   <button class="btn btn-primary waves-effect waves-light" type="button"
-                     wire:click.prevent='sendEmail()'>
+                     wire:click.prevent='sendEmail()' id="sendEmailBTN">
                      <div wire:loading wire:target='sendEmail'>
                         <span class="spinner-border" role="status" aria-hidden="true"></span>
                         <span class="visually-hidden">Loading...</span>

@@ -2,7 +2,11 @@
    <div class="card mb-4">
       <h5 class="card-header">
          Ganti Password
-         <livewire:dashboard.settings.security.reset-password-link />
+         <div class="text-muted small mt-2 mb-0">
+            <small>Lupa password anda? klik link berikut untuk reset password, 
+               <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#resetPasswordModal">Klik disini</a>.
+            </small>
+         </div>
          <div class="text-muted small mt-1 mb-0">
             <small>Jika anda mendaftar dengan akun google, maka password anda adalah nama depan email yang anda gunakan saat registrasi/login yakni <strong>{{ explode('@', $user->email)[0] }}</strong>.</small>
          </div>

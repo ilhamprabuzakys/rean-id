@@ -24,7 +24,7 @@
                         <img style="object-fit: cover;" src="{{ asset($post->user->avatar) }}" alt=""
                            class="width-3x height-3x rounded-circle me-2">
                         @endif
-                        <span class="text-body-secondary d-inline-block">By <a href="blog-article-basic.html#!"
+                        <span class="text-body-secondary d-inline-block">By <a href="{{ route('home.show_user', $post->user) }}"
                               class="text-dark">{{ $post->user->name }}</a></span>
                      </div>
                   </div>
@@ -42,8 +42,8 @@
          @if ($post->files->first() && in_array(pathinfo($post->files->first()->file_path, PATHINFO_EXTENSION),
          ['jpeg', 'jpg', 'png']))
          <div class="post-detail-img-container container">
-            <img style="object-fit: cover;" src="{{ asset($post->files->first()->file_path) }}" alt=""
-               class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14">
+            <img style="object-fit: contain;" src="{{ asset($post->files->first()->file_path) }}" alt=""
+               class="img-fluid shadow-lg rounded-4 mb-6 mb-lg-5 position-relative mt-n14" data-glightbox data-gallery="gallery{{$post->files->first()->id}}">
             {{-- <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/1200x600/4.jpg') }}"
                alt="" class="img-fluid shadow-lg rounded-4 mb-7 mb-lg-9 position-relative mt-n14"> --}}
          </div>
@@ -51,18 +51,27 @@
 
          <div class="row">
             <div class="col-xl-9 mx-auto">
+               @if ($post->category_id == 7 && $post->link != null) 
+                  <div class="my-3">
+                     <a href="{{ $post->link }}" class="text-primary">{{ $post->link }}</a>
+                  </div>
+               @endif
                <article class="article mb-9 dropcap">
                   @if($media_post != null)
                   @if(Str::endsWith($media_post->file_path, '.mp3'))
                   <div class="mb-3">
-                     <audio controls>
+                     <audio controls style="
+                     width: -webkit-fill-available;
+                 ">
                         <source src="{{ asset($media_post->file_path) }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                      </audio>
                   </div>
                   @elseif(Str::endsWith($media_post->file_path, '.mp4'))
                   <div class="mb-3">
-                     <video controls width="320" height="240">
+                     <video controls height="240" style="
+                     width: -webkit-fill-available;
+                 ">
                         <source src="{{ asset($media_post->file_path) }}" type="video/mp4">
                         Your browser does not support the video tag.
                      </video>
@@ -104,42 +113,46 @@
                   @endforelse
                </div>
 
-               <ul class="list-inline mb-0 mt-4">
-                  <li class="list-inline-item text-muted align-middle me-2 text-uppercase fs-13 fw-medium">Share:</li>
-                  <li class="list-inline-item me-2 align-middle">
-                     <a href="javascript:void(0);" onclick="shareToFacebook()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                           class="feather feather-facebook icon-xs icon-dual-primary">
-                           <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                        </svg>
-                     </a>
-                  </li>
-                  <li class="list-inline-item me-2 align-middle">
-                     <a href="javascript:void(0);" onclick="shareToTwitter()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                           class="feather feather-twitter icon-xs icon-dual-info">
-                           <path
-                              d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                           </path>
-                        </svg>
-                     </a>
-                  </li>
-                  <li class="list-inline-item align-middle">
-                     <a href="javascript:void(0);" onclick="shareToWhatsapp()">
-                        <i class="bx bxl-whatsapp icon-xs icon-dual-success" style="font-size: 26px"></i>
-                     </a>
-                  </li>
-                  <li
-                     class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
-                     <span class="ms-1 me-1">Like: {{ $post->likes->count() }}</span>
-                     <button wire:click='likeThis()' class="border-0 bg-transparent">
-                        <i class="bx {{ $post->likes->contains(auth()->user()) ? 'bxs-heart' : 'bx-heart' }}  text-danger"
-                           style="font-size: 22px"></i>
-                     </button>
-                  </li>
-               </ul>
+               <div class="row">
+                  <div class="col-12">
+                     <ul class="list-inline mb-0 mt-4">
+                        <li class="list-inline-item text-muted align-middle me-2 text-uppercase fs-13 fw-medium">Share:</li>
+                        <li class="list-inline-item me-2 align-middle">
+                           <a href="javascript:void(0);" onclick="shareToFacebook()">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-facebook icon-xs icon-dual-primary">
+                                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                              </svg>
+                           </a>
+                        </li>
+                        <li class="list-inline-item me-2 align-middle">
+                           <a href="javascript:void(0);" onclick="shareToTwitter()">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-twitter icon-xs icon-dual-info">
+                                 <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                 </path>
+                              </svg>
+                           </a>
+                        </li>
+                        <li class="list-inline-item align-middle">
+                           <a href="javascript:void(0);" onclick="shareToWhatsapp()">
+                              <i class="bx bxl-whatsapp icon-xs icon-dual-success" style="font-size: 26px"></i>
+                           </a>
+                        </li>
+                        <li
+                           class="list-inline-item text-muted align-middle text-uppercase fs-13 fw-medium float-end d-flex align-items-end">
+                           <span class="ms-1 me-1">Like: {{ $post->likes->count() }}</span>
+                           <button wire:click='likeThis()' class="border-0 bg-transparent">
+                              <i class="bx {{ $post->likes->contains(auth()->user()) ? 'bxs-heart' : 'bx-heart' }}  text-danger"
+                                 style="font-size: 22px"></i>
+                           </button>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
                {{--
                <!--/.social-->
                <h4 class="mb-5">Comments (2)</h4>

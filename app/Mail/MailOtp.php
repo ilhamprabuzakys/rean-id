@@ -34,7 +34,7 @@ class MailOtp extends Mailable
     {
         return new Envelope(
             from: new Address(env('MAIL_USERNAME'), "REAN.ID"),
-            subject: "Kode OTP untuk verifikasi Email",
+            subject: $this->data['user_nama'] . " Ini Kode OTP anda " . $this->data['otp'],
             // subject: "Permintaan",
             // replyTo: [
             //     new Address($this->data['user_email'], $this->data['user_nama']),

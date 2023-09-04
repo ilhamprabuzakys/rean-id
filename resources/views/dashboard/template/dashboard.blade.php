@@ -73,12 +73,12 @@
    <!-- Helpers -->
    <script src="{{ asset('assets/dashboard/materialize/assets/vendor/js/helpers.js') }}"></script>
    <!-- Pace CSS -->
-   {{--
+   
    <link rel="stylesheet"
       href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace-theme-default.min.css') }}">
-   --}}
-   {{--
-   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}"> --}}
+  
+   
+   <link rel="stylesheet" href="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/flash.css') }}">
 
 
    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -196,8 +196,8 @@
    @stack('page-js')
 
    <!-- Pace JS -->
-   {{-- <script data-pace-options='{ "restartOnPushState": false, "restartOnRequestAfter": false }'
-      src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script> --}}
+   <script data-pace-options='{ "restartOnPushState": false, "restartOnRequestAfter": false }'
+      src="{{ asset('assets/dashboard/materialize/assets/vendor/libs/pace/pace-1.2.4/pace.min.js') }}"></script>
 
    {{-- @livewireScripts --}}
    @include('dashboard.template.partials.js')

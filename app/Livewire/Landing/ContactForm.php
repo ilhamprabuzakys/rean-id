@@ -17,7 +17,7 @@ class ContactForm extends Component
             'name' => ['required', 'min:2'],
             'email' => ['required', 'min:4', 'email'],
             'subject' => ['required', 'min:4'],
-            'message' => ['required', 'min:10', 'max:255'],
+            'message' => ['required', 'min:10'],
             'recaptcha' => ['required'],
         ];
     }
@@ -55,6 +55,8 @@ class ContactForm extends Component
     public function store()
     {
         try {
+            // dd(nl2br($this->message));
+            $this->message = \nl2br($this->message);
             $this->validate();
             $message = ContactMessage::create($this->all());
             Mail::to(\env('MAIL_USERNAME'))->send(new MailNotify($message));
@@ -64,6 +66,7 @@ class ContactForm extends Component
                 'message' => 'Pesan berhasil dikirim',
             ]);
             session()->flash('success', 'Pesan yang kamu tulis <b>berhasil</b> dikirim!');
+            $this->reset();
         } catch (\Throwable $th) {
             $this->dispatch('alert', [
                 'type' => 'error',

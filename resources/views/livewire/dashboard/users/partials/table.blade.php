@@ -102,15 +102,18 @@
                   <div class="dropdown-menu dropdown-menu-end">
                      <a class="dropdown-item text-primary text-decoration-none" href="#" data-bs-toggle="modal"
                         data-bs-target="#postinganTerkait" wire:click="postinganTerkait({{ $user->id }})">
+                        <i class="fas fa-md fa-eye me-2"></i>
                         Lihat postingan {{ $user->id == auth()->user()->id ? 'saya' : 'terkait' }}
                      </a>
                      @if ($user->id != auth()->user()->id)
                      <a class="dropdown-item text-success text-decoration-none" href="#" data-bs-toggle="modal"
                         data-bs-target="#editUserModal" wire:click="editUser({{ $user->id }})">
-                        Edit
+                        <i class="fas fa-md fa-edit me-3"></i> Edit
                      </a>
                      <a class="text-danger text-decoration-none dropdown-item"
-                        wire:click="deleteConfirmation({{ $user->id }})">Hapus</a>
+                        wire:click="deleteConfirmation({{ $user->id }})">
+                        <i class="fas fa-md fa-trash-alt me-3"></i>
+                        Hapus</a>
                      @endif
                   </div>
                </div>

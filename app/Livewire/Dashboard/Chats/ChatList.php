@@ -22,8 +22,8 @@ class ChatList extends Component
         $this->selectedConversation = $conversation;
         $this->receiverInstance = User::find($receiverId);
         $this->conversation_active_id = $conversation->id;
-        $this->dispatch('updateSendMessage', 'Conversation', 'Receiver')->to(ChatSendMessage::class);
-        $this->dispatch('loadConversation', 'Conversation', 'Receiver')->to(ChatHistoryWrapper::class);
+        $this->dispatch('updateSendMessage', $conversation, $this->receiverInstance->id)->to(ChatSendMessage::class);
+        $this->dispatch('loadConversation', $conversation, $this->receiverInstance->id)->to(ChatHistoryWrapper::class);
         // dd($this->conversation_active_id);
     }
     

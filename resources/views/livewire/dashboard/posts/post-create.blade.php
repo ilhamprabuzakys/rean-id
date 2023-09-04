@@ -3,8 +3,8 @@
       <div class="col-12">
          <div class="card">
             <div class="card-body">
-               <div class="row mb-3">
-                  <div class="col-lg-12">
+               <div class="row">
+                  <div class="col-lg-12 mb-3">
                      <label for="title" class="form-label">Judul <sup class="text-danger">*</sup></label>
                      <input type="text" class="form-control @error('title')
                             is-invalid
@@ -16,8 +16,8 @@
                      @enderror
                   </div>
                </div>
-               <div class="row mb-3">
-                  <div class="col-lg-5">
+               <div class="row">
+                  <div class="col-lg-5 mb-3">
                      <label for="category_id" class="form-label">Kategori <sup class="text-danger">*</sup></label>
                      <select class="form-select form-select-md @error('category_id')
                                 is-invalid
@@ -33,7 +33,7 @@
                      </div>
                      @enderror
                   </div>
-                  <div class="col-lg-5" wire:ignore>
+                  <div class="col-lg-5 mb-3" wire:ignore>
                      <label for="tags-multi-select" class="form-label">Tags</label>
                      <select class="form-select form-select-md @error('tags')
                             is-invalid
@@ -45,17 +45,32 @@
                         </optgroup>
                      </select>
                   </div>
-                  <div class="col-lg-2">
+                  <div class="col-lg-2 mb-3">
                      <label for="user_id" class="form-label">Author</label>
                      <input type="text" class="form-control" id="user_id" placeholder="{{ auth()->user()->name }}"
                         readonly>
                   </div>
                </div>
+               
+               <div class="row mb-3 @if ($category_id == 7) @else d-none @endif">
+                  <div class="col-lg-12">
+                     <label for="link" class="form-label">Link <sup class="text-danger">*</sup></label>
+                     <input type="text" class="form-control @error('link')
+                            is-invalid
+                            @enderror" id="link" wire:model='link'>
+                     @error('link')
+                     <div class="text-danger small mt-2">
+                        {{ $message }}
+                     </div>
+                     @enderror
+                  </div>
+                  <span class="text-muted mt-2 text-sm">Pastikan link yang anda masukkan itu <strong>valid</strong>.</span>
+               </div>
 
-               <div class="row mb-3 @if (in_array($category_id, [3, 6, 7])) @else d-none @endif">
+               <div class="row mb-3 @if (in_array($category_id, [3, 6])) @else d-none @endif">
                   <div class="col-12">
                      <label for="files" class="mb-2">File
-                        @if ($category_id == 6 || $category_id == 7)
+                        @if ($category_id == 6)
                         Audio
                         @elseif($category_id == 3)
                         Video
@@ -67,23 +82,27 @@
                            class="form-control @error('file_path') is-invalid @enderror" wire:model='file_path'>
                      </div>
                      @error('file_path')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
-                     <div class="invalid-feedback" id="error_message">
-                     </div>
                   </div>
-                  <span class="text-muted">File harus berformat mp3, mp4 atau mkv</span>
+                  <span class="mt-2 text-muted text-sm">File harus berformat
+                     @if($category_id == 3)
+                        <strong>MP4</strong>
+                     @elseif($category_id == 6)
+                     <strong>MP3</strong>
+                     @endif
+                  </span>
                </div>
-               <div class="row mb-3">
-                  <div class="col-12">
-                     <label for="files" class="mb-2">Cover Image</label>
+               <div class="row">
+                  <div class="col-12 mb-3">
+                     <label for="files" class="mb-2">Cover Image @if (in_array($category_id, [2, 4, 5])) <sup class="text-danger">*</sup> @endif</label>
                      <div wire:ignore>
                         <div id="files" class="filepond @error('files') is-invalid @enderror" wire:model='files'></div>
                      </div>
                      @error('files')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
@@ -95,7 +114,7 @@
                      <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4"
                         wire:model='body'></textarea>
                      @error('body')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
@@ -107,19 +126,11 @@
                      otomatis masuk ke dalam status <strong>Approved</strong>.</p>
                </div>
                @endcan
-               <div class="row form-button mx-1">
-                  <div class="col">
-                     <a class="btn btn-danger text-decoration-none" href="{{ route('posts.index') }}">
-                        Kembali
-                        <i class="mdi mdi-arrow-left ms-2"></i>
-                     </a>
-                  </div>
-                  <div class="col">
-                     <button class="btn btn-primary" type="button" wire:click='store()'>
-                        Simpan Data
-                        <i class="mdi mdi-content-save-check ms-2"></i>
-                     </button>
-                  </div>
+               <div class="col-12 mx-2 d-flex justify-content-end gap-3">
+                  <a class="btn btn-light" href="{{ route('posts.index') }}"><i
+                        class="mdi mdi-arrow-left me-2"></i>Kembali</a>
+                  <button class="btn btn-primary" type="button" wire:click='store()' wire:loading.attr="disabled"><i
+                        class="mdi mdi-content-save-check me-2"></i>Simpan Data</button>
                </div>
             </div>
          </div>
@@ -156,7 +167,21 @@
             lang: 'id-ID',
             callbacks: {
                onChange: function(contents, $editable) {
-                  @this.set('body', contents);
+                     @this.set('body', contents);
+               },
+               onImageUpload: function(files) {
+                     for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+                        let fileName = file["name"];
+                        let ext = fileName.split('.').pop().toLowerCase();
+                        if($.inArray(ext, ['jpg','jpeg','png']) == -1) {
+                           alert('Ekstensi file tidak diizinkan! Hanya jpg, jpeg, dan png yang diperbolehkan.');
+                        } else {
+                           // Proses unggah gambar Anda
+                           // Anda dapat menambahkan fungsi unggah Anda di sini
+                           // Contoh: $.upload(file);
+                        }
+                     }
                }
             },
             toolbar: [
@@ -170,6 +195,7 @@
                ['view', ['codeview', 'help']],
             ]
          });
+
 
          FilePond.registerPlugin(FilePondPluginImagePreview);
          const inputElement = document.querySelector('#files');
@@ -207,40 +233,7 @@
             pond.removeFiles();
             @this.set('body', '');
          });
-
-
       });
-
-      /* $('#category_id').change(function() {
-         var selectedText = $('option:selected', this).text();
-         var selectedSlug = $('option:selected', this).data('slug');
-         console.log("selectedText : " + selectedText);
-         var url = "{{ config('app.url') }}" + selectedSlug + "/";
-         $('#slug-input-addon').text(url);
-         var fileExtension;
-         if (selectedText == 'Ebook') {
-            $('#label-file').text('Ebook File (PDF)')
-            fileExtension = ['pdf'];
-         } else if (selectedText == 'Video' || selectedText == 'Musik' || selectedText == 'Audio') {
-            $('#label-file').text('Media Pilihan')
-            fileExtension = ['mp4', 'mp3']; // tambahkan format file media yang diperbolehkan di sini
-         } else {
-            $('#label-file').text('Image Pilihan')
-            fileExtension = ['jpeg', 'jpg', 'png', 'webp'];
-         }
-      }); */
-      // document.getElementById('createPost').addEventListener('submit', function(event) {
-      //    event.preventDefault(); // Mencegah pengiriman formulir secara langsung
-
-      //    // Tangkap nilai dari editor CKEditor
-      //    var editorData = CKEditor.instances['body-editor'].getData();
-
-      //    // Setel nilai pada elemen input
-      //    document.getElementById('body').value = editorData;
-
-      //    // Kirim formulir
-      //    this.submit();
-      // });
    </script>
    <script>
       document.addEventListener('DOMContentLoaded', function() {

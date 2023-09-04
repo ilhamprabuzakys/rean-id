@@ -29,7 +29,8 @@
                   {{ $event->organizer }}
                </td>
                <td>
-                  {{ $event->location }}
+                  {{-- {{ $event->location }} --}}
+                  {{ $event->city }}, {{ $event->province }}
                </td>
                @php
                   $status = '';

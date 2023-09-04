@@ -10,7 +10,7 @@
                              is-invalid
                              @enderror" id="title" wire:model.live='title'>
                      @error('title')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
@@ -28,7 +28,7 @@
                         @endforeach
                      </select>
                      @error('category_id')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
@@ -52,6 +52,23 @@
                         readonly>
                   </div>
                </div>
+
+               <div class="row mb-3 @if ($category_id == 7) @else d-none @endif">
+                  <div class="col-lg-12">
+                     <label for="link" class="form-label">Link <sup class="text-danger">*</sup></label>
+                     <input type="text" class="form-control @error('link')
+                            is-invalid
+                            @enderror" id="link" wire:model='link'>
+                     @error('link')
+                     <div class="text-danger small mt-2">
+                        {{ $message }}
+                     </div>
+                     @enderror
+                  </div>
+                  <span class="text-muted">Pastikan link yang anda masukkan itu <strong>valid</strong>.</span>
+               </div>
+               
+               {{-- @dump($existingMediaFile) --}}
                @if ($existingMediaFile !== null)
                <div class="row mb-3">
                   <div class="col-12">
@@ -78,10 +95,10 @@
                @else
                @endif
 
-               <div class="row mb-3 @if (in_array($category_id, [3, 6, 7])) @else d-none @endif">
+               <div class="row mb-3 @if (in_array($category_id, [3, 6])) @else d-none @endif">
                   <div class="col-12">
                      <label for="files" class="mb-2">File
-                        @if ($category_id == 6 || $category_id == 7)
+                        @if ($category_id == 6)
                         Audio
                         @elseif($category_id == 3)
                         Video
@@ -96,23 +113,27 @@
                            class="form-control @error('file_path') is-invalid @enderror" wire:model='file_path'>
                      </div>
                      @error('file_path')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
-                     <div class="invalid-feedback" id="error_message">
-                     </div>
                   </div>
-                  <span class="text-muted mt-1 text-sm">File harus berformat mp3, mp4 atau mkv</span>
+                  <span class="mt-2 text-muted text-sm">File harus berformat
+                     @if($category_id == 3)
+                        <strong>MP4</strong>
+                     @elseif($category_id == 6)
+                     <strong>MP3</strong>
+                     @endif
+                  </span>
                </div>
                <div class="row mb-3">
                   <div class="col-12">
-                     <label for="files" class="mb-2">Cover Image</label>
+                     <label for="files" class="mb-2">Cover Image @if (in_array($category_id, [2, 4, 5])) <sup class="text-danger">*</sup> @endif</label>
                      <div wire:ignore>
                         <div id="files" class="filepond @error('files') is-invalid @enderror"></div>
                      </div>
                      @error('files')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
@@ -124,16 +145,16 @@
                      <textarea name="body" class="form-control @error('body') is-invalid @enderror" id="body" rows="4"
                         wire:model='body'></textarea>
                      @error('body')
-                     <div class="invalid-feedback">
+                     <div class="text-danger small mt-2">
                         {{ $message }}
                      </div>
                      @enderror
                   </div>
                </div>
-               <div class="col-12 mb-3 d-flex justify-content-end gap-3">
+               <div class="col-12 my-2 d-flex justify-content-end gap-3">
                   <a class="btn btn-light" href="{{ route('posts.index') }}"><i
                         class="mdi mdi-arrow-left me-2"></i>Kembali</a>
-                  <button class="btn btn-primary" type="button" wire:click='update()'><i
+                  <button class="btn btn-primary" type="button" wire:click='update()' wire:loading.attr="disabled"><i
                         class="mdi mdi-content-save-check me-2"></i>Simpan Perubahan</button>
                </div>
 
@@ -152,6 +173,20 @@
                callbacks: {
                   onChange: function(contents, $editable) {
                      @this.set('body', contents);
+                  },
+                  onImageUpload: function(files) {
+                     for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+                        let fileName = file["name"];
+                        let ext = fileName.split('.').pop().toLowerCase();
+                        if($.inArray(ext, ['jpg','jpeg','png']) == -1) {
+                           alert('Ekstensi file tidak diizinkan! Hanya jpg, jpeg, dan png yang diperbolehkan.');
+                        } else {
+                           // Proses unggah gambar Anda
+                           // Anda dapat menambahkan fungsi unggah Anda di sini
+                           // Contoh: $.upload(file);
+                        }
+                     }
                   }
                },
                toolbar: [

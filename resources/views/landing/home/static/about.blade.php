@@ -1,17 +1,17 @@
 @extends('landing.layouts.template')
 @section('content')
 @php
-   $artikelCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
-      return $query->where('name', 'Artikel');
-   })->count();
-   
-   $fotoPosterDesainCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
-      return $query->where('name', 'Foto')->where('name', 'Poster')->where('name', 'Desain');
-   })->count();
-   
-   $videoAudioMusikCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
-      return $query->where('name', 'Video')->where('name', 'Audio')->where('name', 'Musik');
-   })->count();
+$artikelCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
+return $query->where('name', 'Artikel');
+})->count();
+
+$fotoPosterDesainCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
+return $query->where('name', 'Foto')->where('name', 'Poster')->where('name', 'Desain');
+})->count();
+
+$videoAudioMusikCount = \App\Models\Post::where('status', 'approved')->whereHas('category', function($query) {
+return $query->where('name', 'Video')->where('name', 'Audio')->where('name', 'Musik');
+})->count();
 @endphp
 <section class="position-relative overflow-hidden" id="rean">
    <div class="container py-9 py-lg-11">
@@ -25,11 +25,15 @@
                </span>
             </h1>
             <p class="mb-5 w-lg-75 text-secondary" data-aos="fade-right" data-aos-delay="150" data-aos-duration="700">
-               Dalam program Rumah edukasi anti narkoba mencangkup 3 hal yaitu <strong>Media Informasi</strong>, <strong>Media Edukasi</strong> dan <strong>Sumber
-                  Informasi dan Edukasi</strong>. ke 3 hal tersebut memiliki fokus yang berbeda-beda. <strong>Media informasi</strong> untuk remaja
-               indonesia berjejaring, belajar, berbagi cerita dan inspirasi. Sedangkan untuk <strong>Media edukasi</strong> untuk remaja
+               Dalam program Rumah edukasi anti narkoba mencangkup 3 hal yaitu <strong>Media Informasi</strong>,
+               <strong>Media Edukasi</strong> dan <strong>Sumber
+                  Informasi dan Edukasi</strong>. ke 3 hal tersebut memiliki fokus yang berbeda-beda. <strong>Media
+                  informasi</strong> untuk remaja
+               indonesia berjejaring, belajar, berbagi cerita dan inspirasi. Sedangkan untuk <strong>Media
+                  edukasi</strong> untuk remaja
                indonesia yang mampu mengekspresikan karya, menggali potensi, membangun kepercayaan diri guna memperkuat
-               citra remaja dan untuk <strong>Sumber Informasi dan Edukasi</strong> di fokuskan untuk remaja yang membuat konten yang
+               citra remaja dan untuk <strong>Sumber Informasi dan Edukasi</strong> di fokuskan untuk remaja yang
+               membuat konten yang
                berliterasi dibidang pencegahan narkoba.
             </p>
          </div>
@@ -52,38 +56,40 @@
 </section>
 <section class="position-relative border-top border-bottom">
    <div class="container py-9 py-lg-11">
-       <div class="row" data-aos='fade-up'>
-           <div class="col-md-4 mb-5 mb-md-0">
-               <h6 class="fst-italic font-serif">Artikel</h6>
-               <h5 class="mb-3">
-                   <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{$artikelCount}}" data-aos=""
-                       data-aos-id="countup:in" class="display-4 text-primary"></span>
-               </h5>
-               <p class="mb-0">
-                   Beberapa karya <strong>Kreatif</strong> berupa artikel tersedia di komunitas kami.
-               </p>
-           </div>
-           <div class="col-md-4 mb-5 mb-md-0">
-               <h6 class="fst-italic font-serif">Poster Desain</h6>
-               <h5 class="mb-3">
-                   <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{ $fotoPosterDesainCount }}" data-aos=""
-                   data-aos-id="countup:in" class="display-4 text-primary"></span>
-               </h5>
-               <p class="mb-0">
-                   Karya berupa foto <strong>Poster</strong> juga <strong>Desain</strong> yang menginsiprasi juga tersedia di komunitas kami.
-               </p>
-           </div>
-           <div class="col-md-4 mb-5 mb-md-0">
-               <h6 class="fst-italic font-serif">Video Musik</h6>
-               <h5 class="mb-3">
-                   <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{ $videoAudioMusikCount }}" data-aos=""
-                       data-aos-id="countup:in" class="display-4 text-primary"></span>
-               </h5>
-               <p class="mb-0">
-                  Karya berupa hiburan seperti <strong>Video</strong> dan <strong>Musik</strong> yang menghibur dan mengedukasi juga tersedia di komunitas kami.
-               </p>
-           </div>
-       </div>
+      <div class="row" data-aos='fade-up'>
+         <div class="col-md-4 mb-5 mb-md-0">
+            <h6 class="fst-italic font-serif">Artikel</h6>
+            <h5 class="mb-3">
+               <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{$artikelCount}}" data-aos=""
+                  data-aos-id="countup:in" class="display-4 text-primary"></span>
+            </h5>
+            <p class="mb-0">
+               Beberapa karya <strong>Kreatif</strong> berupa artikel tersedia di komunitas kami.
+            </p>
+         </div>
+         <div class="col-md-4 mb-5 mb-md-0">
+            <h6 class="fst-italic font-serif">Poster Desain</h6>
+            <h5 class="mb-3">
+               <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{ $fotoPosterDesainCount }}" data-aos=""
+                  data-aos-id="countup:in" class="display-4 text-primary"></span>
+            </h5>
+            <p class="mb-0">
+               Karya berupa foto <strong>Poster</strong> juga <strong>Desain</strong> yang menginsiprasi juga tersedia
+               di komunitas kami.
+            </p>
+         </div>
+         <div class="col-md-4 mb-5 mb-md-0">
+            <h6 class="fst-italic font-serif">Video Musik</h6>
+            <h5 class="mb-3">
+               <span data-countup='{"startVal": 0,"suffix":"+"}' data-to="{{ $videoAudioMusikCount }}" data-aos=""
+                  data-aos-id="countup:in" class="display-4 text-primary"></span>
+            </h5>
+            <p class="mb-0">
+               Karya berupa hiburan seperti <strong>Video</strong> dan <strong>Musik</strong> yang menghibur dan
+               mengedukasi juga tersedia di komunitas kami.
+            </p>
+         </div>
+      </div>
    </div>
    </div>
 </section>
@@ -93,13 +99,11 @@
          <div class="col-lg-6 mb-5 mb-lg-0 ">
             <div class="rellax position-absolute top-0 mt-n3 end-0 width-16x h-auto" data-rellax-speed="-1"
                data-rellax-percentage=".9">
-               <img src="{{ asset('assan/line.svg') }}" data-inject-svg
-                  class=" fill-success w-100 h-auto" alt="">
+               <img src="{{ asset('assan/line.svg') }}" data-inject-svg class=" fill-success w-100 h-auto" alt="">
             </div>
-            <div class="position-relative pb-9 pb-lg-12 pt-5" data-aos="fade-right"
-               data-aos-delay="200" data-aos-duration="700">
-               <img src="{{ asset('assets/img/about/3.png') }}" alt=""
-                  class="img-fluid rounded-4 position-relative">
+            <div class="position-relative pb-9 pb-lg-12 pt-5" data-aos="fade-right" data-aos-delay="200"
+               data-aos-duration="700">
+               <img src="{{ asset('assets/img/about/3.png') }}" alt="" class="img-fluid rounded-4 position-relative">
             </div>
          </div>
          <div class="col-lg-6 ms-auto position-relative">
@@ -111,7 +115,8 @@
                </span>
             </h1>
             <p class="mb-5 w-lg-75 text-secondary" data-aos="fade-right" data-aos-delay="150" data-aos-duration="700">
-               Melibatkan remaja <strong>(Generasi Milenial)</strong> sebagai aktor utama dalam setiap kegiatan. Mengunggah seluruh
+               Melibatkan remaja <strong>(Generasi Milenial)</strong> sebagai aktor utama dalam setiap kegiatan.
+               Mengunggah seluruh
                aktivitas <strong>Drug Free Exhibition Day</strong> dan hasil karyanya dalam Rumah Edukasi Narkoba.
                Menyediakan ruang bagi remaja untuk mengakses informasi dan edukasi bidang pencegahan melalui
                konten-konten dan literatur digital dalam halaman Rumah Edukasi Anti Narkoba.
@@ -120,51 +125,91 @@
       </div>
    </div>
 </section>
-<section class="position-relative bg-success bg-opacity-10 overflow-hidden" data-aos='fade-up'>
+{{-- <section class="position-relative bg-success bg-opacity-10 overflow-hidden" data-aos='fade-up'>
    <!--Divider shape-->
-   <svg class="position-absolute start-0 bottom-0 w-100" style="color: var(--bs-body-bg);" preserveAspectRatio="none" width="1200"
-       height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path fill-rule="evenodd" clip-rule="evenodd"
-           d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
-           fill="currentColor" />
+   <svg class="position-absolute start-0 bottom-0 w-100" style="color: var(--bs-body-bg);" preserveAspectRatio="none"
+      width="1200" height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+         d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
+         fill="currentColor" />
    </svg>
    <!--Divider shape-top-->
-   <svg class="position-absolute start-0 flip-y top-0 w-100" style="color: var(--bs-body-bg);" preserveAspectRatio="none" width="1200"
-       height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path fill-rule="evenodd" clip-rule="evenodd"
-           d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
-           fill="currentColor" />
+   <svg class="position-absolute start-0 flip-y top-0 w-100" style="color: var(--bs-body-bg);"
+      preserveAspectRatio="none" width="1200" height="80" viewBox="0 0 1200 167" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+         d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
+         fill="currentColor" />
    </svg>
    <div class="container position-relative">
-       <div class="position-relative">
-           <div class="row py-9">
-               <div class="col-lg-10 col-xl-8 py-9 offset-lg-1 position-relative z-1">
-                   <figure class="mb-0 position-relative">
-                       <div class="position-relative">
-                           <!--Avatar Image-->
-                           <img class="position-relative avatar xl rounded-circle shadow"
-                               src="{{ asset('assets/img/avatar/avatar-5.png') }}" alt="">
-                       </div>
-                       <div class="pt-4">
-                           <blockquote>
-                               <h2 class="display-6 font-serif mb-5 mb-lg-7">
-                                   " Mari Berprestasi tanpa Ekstasi Mari Berkreasi tanpa Halusinasi.
-                                   "
-                               </h2>
-                           </blockquote>
-                           <figcaption>
-                               <h6 class="mb-1">
-                                   Sun Tzu
-                               </h6>
-                               <span class="text-body-secondary small">
-                                   Art of Life
-                               </span>
-                           </figcaption>
-                       </div>
-                   </figure>
+      <div class="position-relative">
+         <div class="row py-9">
+            <div class="col-lg-10 col-xl-8 py-9 offset-lg-1 position-relative z-1">
+               <figure class="mb-0 position-relative">
+                  <div class="position-relative">
+                     <!--Avatar Image-->
+                     <img class="position-relative avatar xl rounded-circle shadow"
+                        src="{{ asset('assets/img/avatar/avatar-5.png') }}" alt="">
+                  </div>
+                  <div class="pt-4">
+                     <blockquote>
+                        <h2 class="display-6 font-serif mb-5 mb-lg-7">
+                           " Mari Berprestasi tanpa Ekstasi Mari Berkreasi tanpa Halusinasi.
+                           "
+                        </h2>
+                     </blockquote>
+                     <figcaption>
+                        <h6 class="mb-1">
+                           Sun Tzu
+                        </h6>
+                        <span class="text-body-secondary small">
+                           Art of Life
+                        </span>
+                     </figcaption>
+                  </div>
+               </figure>
+            </div>
+         </div>
+      </div>
+   </div>
+</section> --}}
+<section class="position-relative bg-primary text-white overflow-hidden" data-aos='fade-up'>
+   <!--begin: Divider shape-->
+   <svg class="position-absolute start-0 top-0" style="color: var(--bs-body-bg);" width="100%" height="48"
+      preserveAspectRatio="none" viewBox="0 0 1284 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+         d="M0 0L31.03 14.5833C60.99 29.1667 121.98 58.3333 182.97 62.5C245.03 66.6667 306.02 45.8333 367.01 35.4167C428 25 488.99 25 549.98 37.5C610.97 50 673.03 75 734.02 70.8333C795.01 66.6667 856 33.3333 916.99 31.25C977.98 29.1667 1038.97 58.3333 1101.03 75C1162.02 91.6667 1223.01 95.8333 1252.97 97.9167L1284 100V0H1252.97C1223.01 0 1162.02 0 1101.03 0C1038.97 0 977.98 0 916.99 0C856 0 795.01 0 734.02 0C673.03 0 610.97 0 549.98 0C488.99 0 428 0 367.01 0C306.02 0 245.03 0 182.97 0C121.98 0 60.99 0 31.03 0H0Z"
+         fill="currentColor"></path>
+   </svg>
+   <!--end: Divider shape-->
+
+   <svg class="position-absolute start-0 bottom-0 w-100" style="color: var(--bs-body-bg);" preserveAspectRatio="none"
+      width="1200" height="80" viewBox="0 0 1200 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+         d="M1200 39.6228L1133 26.8851C1067 14.1473 933 -11.3281 800 5.65554C667 22.6392 533 82.0819 400 99.0655C267 116.049 133 90.5737 67 77.836L0 65.0982V167H67C133 167 267 167 400 167C533 167 667 167 800 167C933 167 1067 167 1133 167H1200V39.6228Z"
+         fill="currentColor" />
+   </svg>
+
+   <div class="container py-9 py-lg-11 position-relative">
+      <div class="row pt-7 pb-10">
+         <!--Testimonial column-->
+         <div class="col-11 mx-auto col-lg-9" data-aos="fade-right">
+
+            <!--Testimonial card-->
+            <div class="position-relative">
+               <div class="mb-5 mb-lg-7">
+                  <img src="{{ asset('assets/img/LogoBNN.png') }}" class="width-8x h-auto" alt="">
                </div>
-           </div>
-       </div>
+               <!--Testimonial text-->
+               <h2 class="display-5 font-serif mb-6">
+                  "Mari <strong>Berprestasi</strong> tanpa Ekstasi Mari Berkreasi tanpa <strong>Halusinasi</strong>."
+               </h2>
+               <!--Testimonial user info-->
+               <h6 class="mb-0">REAN.ID</h6>
+               <small class="text-white-50">Komunitas Cegah Narkoba</small>
+            </div>
+         </div>
+      </div>
    </div>
 </section>
 <section class="position-relative overflow-hidden border-bottom" id="tujuan">
@@ -179,7 +224,10 @@
                </span>
             </h1>
             <p class="mb-5 w-lg-75 text-secondary" data-aos="fade-right" data-aos-delay="150" data-aos-duration="700">
-               Terjalin hubungan <strong>“KITABISACEGAH”</strong> dengan remaja yang terlibat langsung dalam proses produksi konten pencegahan <strong>(Co-Produce)</strong>. Tersedianya media bagi remaja untuk berekspresi dalam pencegahan narkoba (Co-Creator). Terbentuk jati diri remaja sebagai role model pencegahan narkoba <strong>(Co-Brand)</strong>.
+               Terjalin hubungan <strong>“KITABISACEGAH”</strong> dengan remaja yang terlibat langsung dalam proses
+               produksi konten pencegahan <strong>(Co-Produce)</strong>. Tersedianya media bagi remaja untuk berekspresi
+               dalam pencegahan narkoba (Co-Creator). Terbentuk jati diri remaja sebagai role model pencegahan narkoba
+               <strong>(Co-Brand)</strong>.
                Terbangunnya literasi informasi dan edukasi pencegahan narkoba bagi remaja <strong>(Co-Respon)</strong>.
             </p>
          </div>
@@ -191,8 +239,7 @@
             </div>
             <div class="position-relative ps-9 ps-lg-12 pb-9 pb-lg-12 pe-5 pt-5" data-aos="fade-right"
                data-aos-delay="200" data-aos-duration="700">
-               <img src="{{ asset('assets/img/about/4.png') }}" alt=""
-                  class="img-fluid rounded-4 position-relative">
+               <img src="{{ asset('assets/img/about/4.png') }}" alt="" class="img-fluid rounded-4 position-relative">
             </div>
          </div>
       </div>
@@ -203,12 +250,12 @@
 <section class="position-relative bg-gradient-primary text-white">
    <div class="container pt-12 pb-9 pb-lg-12 position-relative z-2">
       <div class="row pb-7 pt-lg-9 align-items-center">
-         <div class="col-12 col-lg-7 mb-5 mb-lg-0">
+         <div class="col-12 col-lg-12 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                <li class="breadcrumb-item active fw-bold" aria-current="page">About Us</li>
             </ol>
-            <h1 class="display-2 mb-3">
+            <h1 class="display-4 mb-3">
                Ini cerita tentang aku
             </h1>
             <p class="mb-0 lead pe-lg-8">Sejarah detail serta visi misi dari Kami.</p>

@@ -79,7 +79,7 @@
                                  selengkapnya</a>
                            </p>
                            <div class="mt-auto mb-1 row">
-                              <div class="col-9 d-flex">
+                              <div class="col-6 d-flex">
                                  @if ($post->user->avatar == null)
                                     <img style="object-fit: cover;" class="me-3 avatar d-flex align-self-center sm rounded-circle" src="{{ asset('assets/img/avatar/avatar-' . rand(1, 5) . '.png') }}" alt=""
                                        height="36">
@@ -91,12 +91,25 @@
                                     <p class="text-muted mb-0 small">{{ $post->created_at->format('d M, Y') }} · {{ rand(1, 5) }} min read</p>
                                  </div>
                               </div>
-                              <div class="col-3 d-flex justify-content-end">
+                              <div class="col-6 d-flex justify-content-end">
                                  @forelse ($post->tags as $tag)
-                                    @if($loop->iteration > 2) @break @endif
-                                    <div class="me-1"><a href="{{ route('home.tag_view', $tag) }}" class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a></div>
+                                    @if($loop->iteration > 2)
+                                       @break
+                                    @endif
+                                    
+                                    @if(strlen($tag->name) > 12 && $loop->iteration > 1)
+                                       @break
+                                    @endif
+                              
+                                    <div>
+                                       <a href="{{ route('home.tag_view', $tag) }}"
+                                          class="btn btn-soft-secondary tag-post-item">#{{ $tag->name }}</a>
+                                    </div>
                                  @empty
                                  @endforelse
+                                 {{-- <span class="align-self-center">
+                                    ...
+                                 </span> --}}
                               </div>
                            </div>
                         </div>

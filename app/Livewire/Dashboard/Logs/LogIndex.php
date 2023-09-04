@@ -59,8 +59,9 @@ class LogIndex extends Component
 
     public function render()
     {
-        $query = Activity::latest('created_at')->when($this->search, function ($query) {
-            return $query->where('description', 'like', '%' . $this->search . '%');
+        $query = Activity::latest('created_at')
+        ->when($this->search, function ($query) {
+            return $query->globalSearch($this->search);
         })->when($this->filter_date, function ($query) {
             $dateRange = explode(' to ', $this->filter_date);
             $startDate = $dateRange[0];

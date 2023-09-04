@@ -21,6 +21,7 @@ class PostIndex extends Component
 
     public $search;
     public $filter_popularity = '';
+    public $filter_role = '';
     public $filter_like = '';
     public $filter_category = '';
     public $paginate = 10;
@@ -44,6 +45,10 @@ class PostIndex extends Component
             })->when($this->filter_category, function ($query) {
                 $query->whereHas('category', function ($q) {
                     return $q->where('id', $this->filter_category);
+                });
+            })->when($this->filter_role, function ($query) {
+                $query->whereHas('user', function ($q) {
+                    return $q->where('role', $this->filter_role);
                 });
             })->when($this->filter_status, function ($query) {
                 return $query->where('status', $this->filter_status);
@@ -108,7 +113,12 @@ class PostIndex extends Component
             (object) ['key' => 'approved', 'label' => 'Approved'],
             (object) ['key' => 'rejected', 'label' => 'Rejected'],
         ]);
-        return view('livewire.dashboard.posts.post-index', compact('posts', 'categories', 'tags', 'statuses'));
+        $roles = collect([
+            (object) ['key' => 'superadmin', 'label' => 'Super Admin'],
+            (object) ['key' => 'admin', 'label' => 'Admin'],
+            (object) ['key' => 'member', 'label' => 'Member'],
+        ]);
+        return view('livewire.dashboard.posts.post-index', compact('posts', 'categories', 'tags', 'statuses', 'roles'));
     }
 
     public function resetData()
@@ -123,6 +133,7 @@ class PostIndex extends Component
     {
         $this->search = '';
         $this->filter_status = '';
+        $this->filter_role = '';
         $this->filter_category = '';
         $this->filter_date = '';
         $this->filter_popularity = '';

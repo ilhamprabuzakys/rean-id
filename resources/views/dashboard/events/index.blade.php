@@ -11,9 +11,9 @@
 @endsection
 @push('scripts')
 <script>
-   $("#filter_date").flatpickr({
-         mode: "range",
-      });
+   // $("#filter_date").flatpickr({
+   //       mode: "range",
+   //    });
    $(".edit-tanggal-range").flatpickr({
          mode: "range",
          enableTime: true,

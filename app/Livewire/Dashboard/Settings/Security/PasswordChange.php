@@ -73,7 +73,6 @@ class PasswordChange extends Component
                 } 
                 $this->validate($this->rules(), $this->messages, $this->validationAttributes);
                 $user = User::findOrFail(auth()->user()->id);
-                $user->disableLogging();
                 $user->update(['password' => bcrypt($this->new_password)]);
                 activity('Ganti Password')
                     ->causedBy(auth()->user())
@@ -100,7 +99,7 @@ class PasswordChange extends Component
                 $this->dispatch('swal:modal', [
                     'icon' => 'error',
                     'title' => 'Terjadi Kesalahan',
-                    'text' => 'Ada beberapa kesalahan pada input Anda:<br>' . \getErrorsString($e),
+                    'text' => 'Ada beberapa kesalahan pada input Anda:' . \getErrorsString($e),
                 ]);
 
                 // Mengirim error bag ke komponen Livewire

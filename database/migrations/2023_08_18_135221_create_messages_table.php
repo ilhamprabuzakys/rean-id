@@ -13,17 +13,24 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('conversation_id');
+            $table->foreignId('conversation_id');
             $table->unsignedBigInteger('sender_id');
             $table->unsignedBigInteger('receiver_id');
-            $table->foreign('sender_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->foreign('receiver_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->boolean('read')->default(0);
-            $table->text('body');
+            $table->foreign('sender_id')->references('id')->on('users');
+            $table->foreign('receiver_id')->references('id')->on('users');
+            $table->boolean('read')->default(0)->nullable();
+            $table->text('body')->nullable();
+            // $table->unsignedBigInteger('conversation_id');
+            // $table->unsignedBigInteger('sender_id');
+            // $table->unsignedBigInteger('receiver_id');
+            // $table->foreign('sender_id')
+            //     ->references('id')->on('users')
+            //     ->onDelete('cascade');
+            // $table->foreign('receiver_id')
+            //     ->references('id')->on('users')
+            //     ->onDelete('cascade');
+            // $table->boolean('read')->default(0);
+            // $table->text('body');
             $table->string('type')->nullable();
             $table->timestamps();
         });
