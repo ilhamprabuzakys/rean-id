@@ -2,7 +2,7 @@
    <section id="article-header" class="position-relative">
       <div class="container @if($post->files->first() !== null) pb-9 pb-lg-11 @endif position-relative">
          <article
-            class="row @if($post->files->first() !== null) pt-lg-7 pb-11 @else pt-lg-5 pb-5  @endif justify-content-center">
+            class="row @if($post->files->first() !== null) pt-lg-7 pb-7 @else pt-lg-5 pb-5  @endif justify-content-center">
             <div class="col-lg-10 col-xl-9">
                <div class="position-relative pb-3 pb-lg-0">
                   <div class="d-flex align-items-center w-100">
@@ -56,7 +56,7 @@
                      <a href="{{ $post->link }}" class="text-primary">{{ $post->link }}</a>
                   </div>
                @endif
-               <article class="article mb-9 dropcap">
+               <article class="article mb-5 dropcap">
                   @if($media_post != null)
                   @if(Str::endsWith($media_post->file_path, '.mp3'))
                   <div class="mb-3">

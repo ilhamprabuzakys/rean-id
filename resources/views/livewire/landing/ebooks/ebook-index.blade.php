@@ -41,11 +41,13 @@
                 <div class="col-md-4 col-lg-3">
                     <!--Property-item-row-->
                     <div class="card rounded-3 mb-5 aos-init aos-animate" data-aos="fade-up">
+                        @if($ebook->files->first())
                         <div class="mb-0 p-2 pb-0">
                             <a href="{{ route('home.ebooks.show', $ebook) }}" class="d-block overflow-hidden rounded-3">
                                 <img src="{{ asset($ebook->files->first()->file_path) }}" class="img-zoom img-fluid" alt="" style="width: -webkit-fill-available;">
                             </a>
                         </div>
+                        @endif
                         <div class="card-body overflow-hidden p-4 px-lg-5 flex-grow-1">
                             {{-- <span class="badge bg-body-tertiary text-primary mb-3">For Sale</span> --}}
                             <a href="{{ route('home.ebooks.show', $ebook) }}" class="text-dark d-block mb-4">

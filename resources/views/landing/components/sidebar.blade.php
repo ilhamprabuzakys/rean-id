@@ -67,7 +67,7 @@
        font-size: 26px;
        border: 0;
        outline: none;
-       transition: 0.4s;
+       transition: 0.3s;
     }
    
     .sidebar.minimized h1,
@@ -120,8 +120,20 @@
     }
    
     #sidebar-toggle::before {
-       content: "🡸";
+      content: "\eb32";
+      font-family: 'boxicons';
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    /* #sidebar-toggle::before {
+       content: "🡸";
+    } */
    
     @keyframes delayedAppear {
        0% {
@@ -135,16 +147,35 @@
      
     .sidebar.minimized #sidebar-toggle::before {
        content: url('https://cegahnarkoba.bnn.go.id/wp-content/uploads/assets/img/logo_cns.png');
-       animation: delayedAppear 1.3s ease-in-out forwards;
+       animation: delayedAppear 1.1s ease-in-out forwards;
     }
    
     @media only screen and (max-width: 768px) {
        #sidebar-toggle::before {
-          content: "<";
+         content: "\eb32";
+         font-family: 'boxicons';
+         speak: none;
+         font-style: normal;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         line-height: 1;
+         -webkit-font-smoothing: antialiased;
+         -moz-osx-font-smoothing: grayscale;
        }
    
        .sidebar.minimized #sidebar-toggle::before {
-          content: ">";
+         /* content: "\ebe5"; */
+         content: url('https://cegahnarkoba.bnn.go.id/wp-content/uploads/assets/img/logo_cns.png');
+         font-family: 'boxicons';
+         speak: none;
+         font-style: normal;
+         font-weight: normal;
+         font-variant: normal;
+         text-transform: none;
+         line-height: 1;
+         -webkit-font-smoothing: antialiased;
+         -moz-osx-font-smoothing: grayscale;
           transition: 0.3s;
        }
     }
@@ -200,6 +231,7 @@
                    
                    <img src="https://cegahnarkoba.bnn.go.id/wp-content/uploads/assets/img/logo_cns_medium_for_sidebar.png" alt="" id="brand-name" class="img-sidebar">
                    <button class="toggle-button" id="sidebar-toggle">
+                     {{-- <i class='bx bx-right-arrow'></i> --}}
                    </button>
                    
                    
@@ -211,22 +243,12 @@
                    <source src="https://c3.siar.us/proxy/cnsradio/stream"/>
                </audio>
                
-               <iframe
-                 src="https://a5.siar.us/public/cnsradio/history?theme=light"
-                 frameborder="0"
-                allowtransparency="true"
-                 style="width: 100%; min-height: 150px; border: 0;"
-                 class="player"
-               ></iframe>
-   
-   
-   
                <a href="#">Playlist : </a>
    
                <iframe
                    src="https://a5.siar.us/public/cnsradio/history"
                    width="100%"
-                   height="150"
+                   height="350"
                    allowfullscreen=""
                    loading="lazy"
                    class="playlist"

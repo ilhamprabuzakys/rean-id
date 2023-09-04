@@ -8,7 +8,7 @@
                    <span class="border-top d-block flex-grow-1"></span>
                 </div>
                 <div class="row">
-                   <div class="col-7">
+                   <div class="col-5">
                       <div class="input-icon-group">
                          <span class="input-icon">
                             <i class="bx bx-search fs-5"></i>
@@ -17,17 +17,17 @@
                             wire:model.live.debounce.500ms='search'>
                       </div>
                    </div>
-                   <div class="col-4">
+                   <div class="col-6" wire:ignore>
                       <div class="input-icon-group">
                          <span class="input-icon">
                             <i class="bx bx-calendar fs-5"></i>
                          </span>
-                         <input type="text" id="dateFilter" data-flatpickr='{"mode":"range"}' class="form-control"
+                         <input type="text" id="filter_date" class="form-control"
                             placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
                       </div>
                    </div>
                    <div class="col-1 d-flex align-items-center">
-                      <a href="javascript:void(0);" wire:click='resetFilter()' class="align-center"><i
+                      <a href="javascript:void(0);" wire:click='resetFilter()' class="align-center" id="reset-filter"><i
                             class="bx bx-x text-danger" style="font-size: 40px"></i></a>
                    </div>
                 </div>
@@ -65,7 +65,7 @@
                             class="d-block glightbox3 rounded-3 overflow-hidden hover-shadow-lg hover-lift"
                             data-glightbox data-gallery="gallery{{$key}}">
                             <img
-                               src="{{ asset($post->files->first()->file_path) }}"
+                               src="{{ asset($post->file->first()->file_path) }}"
                                alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
                          </a>
                       </div>
@@ -128,17 +128,16 @@
                       </div>
                    </article>
                    @empty
-                   @if ($filter_category)
-                   <h4 class="px-4">Postingan dengan tipe {{ \ucfirst($filter_category) }} tidak ditemukan.</h4>
-                   @elseif($search)
+                   @if($search)
                    <h4 class="px-4">Postingan dengan kata kunci {{ \ucfirst($search) }} tidak ditemukan.</h4>
                    @elseif($filter_date)
                    @php
                    $dateRange = explode(' to ', $filter_date);
                    $startDate = $dateRange[0];
-                   $endDate = $dateRange[1] ?? $dateRange[0];
+                   $endDate = $dateRange[1] ?? '';
                    @endphp
-                   <h4 class="px-4">Postingan pada tanggal {{ \ucfirst($startDate) . ' sampai ' . \ucfirst($endDate) }}
+                   <h4 class="px-4">Postingan pada tanggal {{ 
+                   \Carbon\Carbon::parse($startDate)->format('d F Y') . ' sampai ' . \Carbon\Carbon::parse($endDate)->format('d F Y')  }}
                       tidak ditemukan.</h4>
                    @endif
                    @endforelse
@@ -150,4 +149,41 @@
           </div>
        </div>
     </section>
+    @push('scripts')
+    <script>
+       $(document).ready(function() {
+          let filterDateInstance = $("#filter_date").flatpickr({
+             mode: "range",
+             dateFormat: "Y-m-d",  // Format yang dikirim ke backend
+             altInput: true,  // Membuat input tambahan untuk menampilkan format
+             altFormat: "d F Y",  // Format tanggal yang ditampilkan di frontend
+             rangeSeparator: " sampai ",
+             onClose: function(selectedDates, dateStr, instance) {
+                // Mengganti "to" dengan "sampai" pada altInput setelah tanggal dipilih
+                instance.altInput.value = instance.altInput.value.replace(' to ', ' sampai ');
+             }
+          });
+ 
+ 
+          let timeout;  // Variabel untuk menyimpan referensi timeout
+          $('#filter_date').on('change', function (e) {
+             var data = $('#filter_date').val();
+             // Jika ada timeout sebelumnya, batalkan dulu
+             if (timeout) {
+                clearTimeout(timeout);
+             }
+             // Atur timeout baru
+             timeout = setTimeout(function() {
+                @this.set('filter_date', data);
+             }, 300);
+          });
+          
+          $('#reset-filter').on('click', function(e) {
+             e.preventDefault();
+             filterDateInstance.clear();
+             Livewire.dispatch('resetFilter'); // Panggil fungsi resetFilter di komponen Livewire
+          });
+       });
+    </script>
+    @endpush
  </div>

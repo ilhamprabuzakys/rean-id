@@ -55,7 +55,7 @@ class NewsIndex extends Component
         
         $news = $query;
         $this->dispatch('refreshAOS');
-        return view('livewire.landing.news.news-index', compact('news$news'));
+        return view('livewire.landing.news.news-index', compact('news'));
     }
 
     public function resetFilter()

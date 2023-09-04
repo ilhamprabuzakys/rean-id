@@ -38,7 +38,7 @@
         Swal.fire({
             title: 'Sedang Diproses',
             html: 'Mencoba untuk login...',
-            timer: 5000,
+            timer: 8000,
             timerProgressBar: true,
             allowOutsideClick: false,
             didOpen: () => {

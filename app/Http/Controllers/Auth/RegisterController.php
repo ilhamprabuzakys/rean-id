@@ -48,7 +48,11 @@ class RegisterController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email' => ['required', 'email'],
+                'email' => ['required', 'email', 'unique:users'],
+            ], [
+                'email.required' => 'Email wajib diisi',
+                'email.email' => 'Email wajib berformat valid',
+                'email.unique' => 'User dengan email ini sudah terdaftar!',
             ]);
             $validatedData = $validator->validated();
             $otpM = VerificationCode::where('user_email', $user->email)
@@ -185,7 +189,7 @@ class RegisterController extends Controller
                 return redirect()->route('login')->with('success', "Akun anda telah <b>berhasil</b> dibuat, silahkan login!");
             }
         } catch (\Throwable $th) {
-            return redirect()->back()->with('fails', "Kode OTP yang anda masukkan tidak valid");
+            return redirect()->back()->with('fails', "User dengan email ini sudah terdaftar!");
         }
     }
 

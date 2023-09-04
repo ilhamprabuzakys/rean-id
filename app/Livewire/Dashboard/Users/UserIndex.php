@@ -67,28 +67,32 @@ class UserIndex extends Component
     public function importExcel()
     {
         // dd($this->file->getRealPath());
-        Excel::import(new UsersImport, $this->file->getRealPath());
+        try {
+            Excel::import(new UsersImport, $this->file->getRealPath());
 
-        activity('User')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
-            ->causedBy(auth()->user())
-            ->withProperties([
-                'message' => 'Berhasil mengimport data User',
-            ])
-            ->event('imported')
-            ->log(auth()->user()->name . ' mengimport data user');
-        // Tampilkan pesan setelah berhasil import
-        $this->dispatch('alert', [
-            'type' => 'success',
-            'title' => 'Berhasil import',
-            'message' => 'Data User berhasil diperbarui'
-        ]);
-        $this->dispatch('swal:modal', [
-            'icon' => 'success',
-            'title' => 'Berhasil import',
-            'text' => 'Data User berhasil diperbarui, password akan diset default menjadi <br><b>password123</b>'
-        ]);
-        $this->dispatch('refresh');
-        $this->file = null;
+            activity('User')  // Anda dapat mengganti 'custom_log' dengan nama log yang Anda inginkan
+                ->causedBy(auth()->user())
+                ->withProperties([
+                    'message' => 'Berhasil mengimport data User',
+                ])
+                ->event('imported')
+                ->log(auth()->user()->name . ' mengimport data user');
+            // Tampilkan pesan setelah berhasil import
+            $this->dispatch('alert', [
+                'type' => 'success',
+                'title' => 'Berhasil import',
+                'message' => 'Data User berhasil diperbarui'
+            ]);
+            $this->dispatch('swal:modal', [
+                'icon' => 'success',
+                'title' => 'Berhasil import',
+                'text' => 'Data User berhasil diperbarui, password akan diset default menjadi <br><b>password123</b>'
+            ]);
+            $this->dispatch('refresh');
+            $this->file = null;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     public function updatedFile()

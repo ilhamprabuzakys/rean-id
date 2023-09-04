@@ -8,24 +8,27 @@
                   <span class="border-top d-block flex-grow-1"></span>
                </div>
                <div class="row">
-                  <div class="col-7">
+                  <div class="col-5">
                      <div class="input-icon-group">
                         <span class="input-icon">
-                            <i class="bx bx-search fs-5"></i>
+                           <i class="bx bx-search fs-5"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Cari sesuatu..." wire:model.live.debounce.500ms='search'>
-                    </div>
+                        <input type="text" class="form-control" placeholder="Cari sesuatu..."
+                           wire:model.live.debounce.500ms='search'>
+                     </div>
                   </div>
-                  <div class="col-4">
+                  <div class="col-6" wire:ignore>
                      <div class="input-icon-group">
                         <span class="input-icon">
-                            <i class="bx bx-calendar fs-5"></i>
+                           <i class="bx bx-calendar fs-5"></i>
                         </span>
-                        <input type="text" id="dateFilter" data-flatpickr='{"mode":"range"}' class="form-control" placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
-                    </div>
+                        <input type="text" id="filter_date" class="form-control"
+                           placeholder="Filter berdasarkan tanggal" wire:model.live='filter_date'>
+                     </div>
                   </div>
                   <div class="col-1 d-flex align-items-center">
-                     <a href="javascript:void(0);" wire:click='resetFilter()' class="align-center"><i class="bx bx-x text-danger" style="font-size: 40px"></i></a>
+                     <a href="javascript:void(0);" wire:click='resetFilter()' class="align-center" id="reset-filter"><i
+                           class="bx bx-x text-danger" style="font-size: 40px"></i></a>
                   </div>
                </div>
                <hr class="mt-5 mb-3">
@@ -51,19 +54,19 @@
                   </div>
                </div>
                <div class="pe-lg-4 pe-md-2">
-                  @forelse ($posts as $post)
+                  @forelse ($posts as $key => $post)
                      <article wire:key="post-{{ $post->id }}" class="card align-items-stretch flex-md-row mb-4 mb-md-7 border-0 no-gutters"
                         data-aos="fade-right" data-aos-once="true">
+                        @if($post->files->first())
                         <div class="col-lg-5">
-                           <a href="{{ route('home.show_post', ['category' => $post->category, 'post' => $post]) }}"
-                              class="d-block rounded-3 overflow-hidden hover-shadow-lg hover-lift">
-                              @if ($post->file_path !== null && in_array(pathinfo($post->file_path, PATHINFO_EXTENSION), ['jpeg', 'jpg', 'png']))
-                                 <img style="object-fit: cover;" src="{{ asset('storage/' . $post->file_path) }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                              @else
-                                 <img style="object-fit: cover;" src="{{ asset('assets/landing/assan/assets/img/960x900/' . rand(1, 5) . '.jpg') }}" alt="{{ $post->title }}" class="img-post-item img-fluid rounded-3">
-                              @endif
+                           <a href="{{ asset($post->files->first()->file_path) }}"
+                              class="d-block glightbox3 rounded-3 overflow-hidden hover-shadow-lg hover-lift"
+                              data-glightbox data-gallery="gallery{{$key}}">
+                              <img src="{{ asset($post->files->first()->file_path) }}" alt="{{ $post->title }}"
+                                 class="img-post-item img-fluid rounded-3">
                            </a>
                         </div>
+                        @endif
                         <div class="card-body d-flex flex-column col-auto p-md-0 ps-md-4">
                            <div class="d-flex mb-0 justify-content-between">
                               <h4 class="mb-3">
@@ -91,7 +94,7 @@
                                     <p class="text-muted mb-0 small">{{ $post->created_at->format('d M, Y') }} · {{ rand(1, 5) }} min read</p>
                                  </div>
                               </div>
-                              <div class="col-6 d-flex justify-content-end">
+                              <div class="col-6 d-flex justify-content-end gap-1">
                                  @forelse ($post->tags as $tag)
                                     @if($loop->iteration > 2)
                                        @break
@@ -115,7 +118,18 @@
                         </div>
                      </article>
                   @empty
-                     <h4 class="px-4">Tidak ada hasil ditemukan.</h4>
+                  @if($search)
+                  <h4 class="px-4">Postingan dengan kata kunci {{ \ucfirst($search) }} tidak ditemukan.</h4>
+                  @elseif($filter_date)
+                  @php
+                  $dateRange = explode(' to ', $filter_date);
+                  $startDate = $dateRange[0];
+                  $endDate = $dateRange[1] ?? '';
+                  @endphp
+                  <h4 class="px-4">Postingan pada tanggal {{ 
+                  \Carbon\Carbon::parse($startDate)->format('d F Y') . ' sampai ' . \Carbon\Carbon::parse($endDate)->format('d F Y')  }}
+                     tidak ditemukan.</h4>
+                  @endif
                   @endforelse
                </div>
                <div class="pe-lg-4 pe-md-2 mt-5">
@@ -126,4 +140,41 @@
          </div>
       </div>
    </section>
+   @push('scripts')
+   <script>
+      $(document).ready(function() {
+         let filterDateInstance = $("#filter_date").flatpickr({
+            mode: "range",
+            dateFormat: "Y-m-d",  // Format yang dikirim ke backend
+            altInput: true,  // Membuat input tambahan untuk menampilkan format
+            altFormat: "d F Y",  // Format tanggal yang ditampilkan di frontend
+            rangeSeparator: " sampai ",
+            onClose: function(selectedDates, dateStr, instance) {
+               // Mengganti "to" dengan "sampai" pada altInput setelah tanggal dipilih
+               instance.altInput.value = instance.altInput.value.replace(' to ', ' sampai ');
+            }
+         });
+
+
+         let timeout;  // Variabel untuk menyimpan referensi timeout
+         $('#filter_date').on('change', function (e) {
+            var data = $('#filter_date').val();
+            // Jika ada timeout sebelumnya, batalkan dulu
+            if (timeout) {
+               clearTimeout(timeout);
+            }
+            // Atur timeout baru
+            timeout = setTimeout(function() {
+               @this.set('filter_date', data);
+            }, 300);
+         });
+         
+         $('#reset-filter').on('click', function(e) {
+            e.preventDefault();
+            filterDateInstance.clear();
+            Livewire.dispatch('resetFilter'); // Panggil fungsi resetFilter di komponen Livewire
+         });
+      });
+   </script>
+   @endpush
 </div>

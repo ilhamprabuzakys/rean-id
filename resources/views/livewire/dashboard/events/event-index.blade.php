@@ -56,7 +56,6 @@
       $(document).ready(function() {
          let filterDateInstance = $("#filter_date").flatpickr({
             mode: "range",
-            minDate: "today",
             dateFormat: "Y-m-d",  // Format yang dikirim ke backend
             altInput: true,  // Membuat input tambahan untuk menampilkan format
             altFormat: "d F Y",  // Format tanggal yang ditampilkan di frontend

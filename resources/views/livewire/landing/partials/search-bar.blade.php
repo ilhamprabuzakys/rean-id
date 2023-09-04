@@ -72,7 +72,11 @@
                                                     <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
                                                 </a>
                                                 @elseif($resultType == 'ebooks')
-                                                <a href="{{ route('home.ebooks.show', ['ebook' => $result->id]) }}">
+                                                <a href="{{ route('home.ebooks.show', ['ebook' => $result->slug]) }}">
+                                                    <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
+                                                </a>
+                                                @elseif($resultType == 'news')
+                                                <a href="{{ route('home.news.show', ['news' => $result->slug]) }}">
                                                     <p class="no-wrap overflow-hidden">{{ $result->title }}</p>
                                                 </a>
                                                 @endif

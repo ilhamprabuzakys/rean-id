@@ -167,7 +167,7 @@ class HomeController extends Controller
 
     public function news_detail(News $news)
     {
-        return view('landing.home.news.show', [
+        return view('landing.home.news.detail', [
             'title' => $news->title,
         ], compact('news'));
     }

@@ -7,38 +7,17 @@
          <div class="col-12 col-lg-12 mb-5 mb-lg-0">
             <ol class="breadcrumb mb-3">
                <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{ route('home.semua_postingan') }}">{{ __('Daftar Postingan')
+               <li class="breadcrumb-item"><a href="{{ route('home.news.index') }}">{{ __('Daftar Berita')
                      }}</a></li>
-               <li class="breadcrumb-item active fw-bold" aria-current="page">{{ Str::limit($post->title, 35, '..') }}
+               <li class="breadcrumb-item active fw-bold" aria-current="page">{{ Str::limit($news->title, 35, '..') }}
                </li>
             </ol>
-            @php
-            $status = '';
-            $statusBG = '';
-            switch ($post->status) {
-            case 'rejected':
-            $status = 'Ditolak';
-            $statusBG = 'danger';
-            break;
-            case 'pending':
-            $status = 'Dalam review';
-            $statusBG = 'primary';
-            break;
-            default:
-            break;
-            }
-            @endphp
             <div class="row justify-content-between align-items-center">
                <div>
                   <h1 class="mb-4">
-                  {{ Str::limit($post->title, 35, '..') }}
+                  {{ Str::limit($news->title, 35, '..') }}
                </h1>
                </div>
-               @if($post->status != 'approved')
-               <div>
-                  <span class=" ms-3 badge rounded-pill bg-{{$statusBG}}">{{$status}}</span>
-               </div>
-               @endif
             </div>
          </div>
       </div>
@@ -62,5 +41,5 @@
 </section>
 @endsection
 @section('content')
-<livewire:landing.posts.post-detail :$post />
+<livewire:landing.news.news-detail :$news />
 @endsection

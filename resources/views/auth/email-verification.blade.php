@@ -64,7 +64,7 @@
       </button>
       <div class="text-center">
          <span class="d-inline-block">Tidak mendapatkan kode?</span>
-         <a href="{{ route('register.code_verification', ['user' => $temp_user, 'resend' => 'true']) }}"> Kirim Ulang </a>
+         <a id="kirim-ulang-email" href="{{ route('register.code_verification', ['user' => $temp_user, 'resend' => 'true']) }}"> Kirim Ulang </a>
          {{-- <a href="{{ route('register.again_code_verification', $temp_user) }}"> Kirim Ulang </a> --}}
          {{-- <button class="resend-link" data-user="{{ $temp_user->id }}"> Kirim Ulang </button> --}}
          <span class="d-inline-block">Salah memasukkan email?</span>
@@ -104,3 +104,26 @@
       <p class="text-muted mb-0">Salah memasukkan email? <a href="{{ route('register.email-again', $temp_user) }}" class="text-primary fw-semibold"> Klik disini </a> </p>
    </div>
 @endsection
+@push('scripts')
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+    const kirimUlang = document.querySelector("#kirim-ulang-email");
+    kirimUlang.addEventListener("click", () => {
+        Swal.fire({
+            title: 'Sedang Diproses',
+            html: 'Mengirim ulang email..',
+            timer: 12000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+               //  console.log('Modal ditutup oleh timer');
+            }
+        });
+    });
+});
+</script>
+@endpush

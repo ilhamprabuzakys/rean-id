@@ -124,6 +124,10 @@
                      class="nav-link {{ str_starts_with(request()->url(), route('home.ebooks.index')) ? 'active' : '' }}">Ebooks</a>
                </li>
                <li class="nav-item me-lg-2">
+                  <a href="{{ route('home.news.index') }}"
+                     class="nav-link {{ str_starts_with(request()->url(), route('home.news.index')) ? 'active' : '' }}">Berita</a>
+               </li>
+               <li class="nav-item me-lg-2">
                   <a href="{{ route('home.cns') }}"
                      class="nav-link {{ request()->url() == route('home.cns') ? 'active' : '' }}">CNS Radio</a>
                </li>

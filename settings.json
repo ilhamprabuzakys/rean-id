@@ -1,0 +1,232 @@
+{
+   "workbench.startupEditor": "none",
+   "workbench.sideBar.location": "right",
+   // Editor preferences
+   "editor.fontFamily": "Monolisa, Anonymous Pro, Hack, Monolisa, Dank Mono, Anonymous Pro",
+   // Anonymous Pro, Cascadia Mono, Courier New, Bmono, Source Code Pro, Monolisa, Bmono, Fantasque Sans Mono, Jetbrains Mono Slashed, Hack, Fira Mono, Jetbrains Mono Slashed, Hermit, Drucifer
+   "terminal.integrated.fontFamily": "Anonymous Pro, Bmono, Jetbrains Mono Slashed,Hack",
+   "editor.fontLigatures": false,
+   "editor.fontWeight": "700",
+   "editor.fontSize": 15,
+   "editor.fontVariations": false,
+   "editor.letterSpacing": -0.4,
+   "editor.renderWhitespace": "none",
+   "editor.wordWrap": "on",
+   "editor.hover.delay": 500,
+   "editor.lineHeight": 30,
+   "editor.tokenColorCustomizations": {
+     "textMateRules": [
+       {
+         "scope": [
+           //following will be in italic
+           // "comment",
+           // "entity.name.type.class", //class names
+           // "constant", //String, Number, Boolean…, this, super
+           // "storage.modifier", //static keyword
+           // "storage.type.class.js", //class keyword
+           // "keyword", //import, export, return…
+         ],
+         "settings": {
+           "fontStyle": "italic"
+         }
+       },
+       {
+         "scope": [
+           //following will be excluded from italics (VSCode has some defaults for italics)
+           "invalid",
+           "keyword.operator",
+           "constant.numeric.css",
+           "keyword.other.unit.px.css",
+           "constant.numeric.decimal.js",
+           "constant.numeric.json"
+         ],
+         "settings": {
+           "fontStyle": ""
+         }
+       }
+     ]
+   },
+   "editor.maxTokenizationLineLength": 10000000,
+   "editor.mouseWheelScrollSensitivity": 3,
+   "editor.scrollbar.horizontalScrollbarSize": 10,
+   "editor.scrollbar.vertical": "visible",
+   "editor.cursorSmoothCaretAnimation": "on",
+   "editor.cursorBlinking": "solid",
+   "editor.cursorSurroundingLines": 0,
+   "editor.cursorWidth": 1,
+   "editor.minimap.enabled": false,
+   "editor.minimap.showSlider": "always",
+   "editor.quickSuggestionsDelay": 0,
+   "editor.suggestFontSize": 0,
+   // End of : Editor preferences
+   "telemetry.telemetryLevel": "off",
+   "files.eol": "\r\n",
+   "window.title": "${dirty}${activeEditorLong}${separator}${rootName}${separator}",
+   "extensions.autoUpdate": false,
+   "terminal.integrated.fontSize": 18,
+   "terminal.integrated.gpuAcceleration": "auto",
+   "terminal.integrated.fontWeight": "600",
+   "terminal.integrated.lineHeight": 1.3,
+   "terminal.integrated.cursorStyle": "line",
+   "terminal.integrated.cursorWidth": 1,
+   "terminal.integrated.letterSpacing": 1,
+   "terminal.integrated.defaultProfile.linux": "fish",
+   "terminal.integrated.fontWeightBold": "400",
+   "debug.console.wordWrap": false,
+   "workbench.settings.openDefaultKeybindings": true,
+   "editor.suggestSelection": "recentlyUsedByPrefix",
+   // "php.validate.executablePath": "/opt/lampp/bin/php",
+   "emmet.includeLanguages": {
+     "html": "javascript",
+     "blade": "html",
+     "javascript": "html",
+     "django-html": "html",
+     "php": "html"
+   },
+   "emmet.syntaxProfiles": {
+     "php": "html",
+     "blade": "html",
+     "django-html": "html, php, javascript",
+     "html": {
+       "inline_break": 1,
+       "tag_nl": true,
+       "tag_nl_leaf": true,
+       "indent": true
+     }
+   },
+   "files.associations": {
+     "*.tpl": "html",
+     "*.html": "html",
+     "*.php": "php",
+     "*.blade.php": "blade",
+   },
+   "editor.formatOnSave": false,
+   "update.mode": "none",
+   "update.showReleaseNotes": false,
+   "extensions.autoCheckUpdates": false,
+   "editor.fastScrollSensitivity": 3,
+   "workbench.list.smoothScrolling": true,
+   "security.workspace.trust.enabled": false,
+   "security.workspace.trust.emptyWindow": false,
+   "security.workspace.trust.startupPrompt": "never",
+   // Note
+   // PHP Format? just install Format HTML in PHP
+   // Adding css remote snippet or intellisense for class name
+   // Just install HTML CSS Support
+   // Remote stylesheets configuration: masukan cdn kesini atau link file css kesini
+   "css.styleSheets": [
+     // "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+     "https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css",
+     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+     // "https://cdn.jsdelivr.net/gh/creativetimofficial/tailwind-starter-kit/compiled-tailwind.min.css"
+   ],
+   "css.enabledLanguages": ["html", "php", "blade"],
+   // END of CSS
+   "explorer.confirmDragAndDrop": false,
+   "editor.inlineSuggest.enabled": true,
+   // "editor.quickSuggestions": true,
+   "editor.quickSuggestions": {
+     "other": true,
+     "comments": true,
+     "strings": true
+   },
+   // Blade
+   "[blade]": {
+     // "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+     "editor.autoClosingBrackets": "always",
+     "editor.defaultFormatter": "onecentlin.laravel-blade"
+     // "editor.detectIndentation": true,
+     // "editor.autoIndent": "full",
+     // "editor.wrappingIndent": "same",
+   },
+   "files.defaultLanguage": "html",
+   "explorer.confirmDelete": false,
+   "editor.tabSize": 3,
+   "bladeFormatter.format.indentSize": 3,
+   "workbench.iconTheme": "vscode-icons-mac",
+   "github.gitAuthentication": false,
+   "workbench.preferredLightColorTheme": "Monokai Pro (Filter Spectrum)",
+   "typescript.disableAutomaticTypeAcquisition": true,
+   "workbench.editor.restoreViewState": false,
+   "path-intellisense.autoSlashAfterDirectory": true,
+   "path-intellisense.mappings": {
+     // "/": "${workspaceFolder}",
+     "/": "${workspaceFolder}/public/",
+     "lib": "${workspaceFolder}/lib",
+     "global": "/Users/dummy/globalLibs"
+   },
+   "git.autofetch": true,
+   "editor.smoothScrolling": true,
+   "terminal.integrated.defaultProfile.windows": "Git Bash",
+   "files.exclude": {
+     "**/.classpath": true,
+     "**/.project": true,
+     "**/.settings": true,
+     "**/.factorypath": true
+   },
+   "terminal.integrated.rightClickBehavior": "default",
+   // JAVA :
+   "java.help.firstView": "none",
+   "java.help.showReleaseNotes": false,
+   "java.dependency.autoRefresh": false,
+   "java.project.sourcePaths": ["src"],
+   "java.project.outputPath": "bin",
+   // END OF JAVA
+   "livePreview.autoRefreshPreview": "On Changes to Saved Files",
+   "files.autoSave": "onFocusChange",
+   "bladeFormatter.format.wrapLineLength": 200,
+   "[php]": {
+ 
+     // "editor.defaultFormatter": "",
+   },
+   "[html]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[css]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "[javascript]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "bladeFormatter.format.wrapAttributes": "preserve",
+   "intelephense.completion.fullyQualifyGlobalConstantsAndFunctions": true,
+   "emmet.showExpandedAbbreviation": "always",
+   "[jsonc]": {
+     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   },
+   "LaravelExtraIntellisense.modelsPaths": ["app/Models"],
+   "workbench.editor.tabSizing": "shrink",
+   "git.openRepositoryInParentFolders": "never",
+   "[django-html]": {
+     "editor.quickSuggestions": {
+       "other": true,
+       "comments": true,
+       "strings": true
+     }
+   },
+   "open-in-browser.default": "chrome",
+   "git.enabled": false,
+   "editor.renderControlCharacters": false,
+   "workbench.activityBar.visible": false,
+   "tabnine.experimentalAutoImports": true,
+   "LaravelExtraIntellisense.disableAuth": true,
+   "LaravelExtraIntellisense.disableBlade": true,
+   "Laraphense.createViewEveryWhere": false,
+   "Laraphense.disableMixCompletion": true,
+   "Laraphense.disableTranslationCompletion": true,
+   "Laraphense.maxLinesCount": 500,
+   "Laraphense.viewExtensions": [
+     ".blade.php"
+   ],
+   "Laraphense.viewFolders": {
+     "default": "/resources/views",
+     "js": "/resources/js/Pages",
+     "livewire": "/resources/views/livewire",
+   },
+   "Laraphense.disableAuthCompletion": true,
+   "Laraphense.disableControllerCompletion": true,
+   "Laraphense.disableCurlyBracesSpacer": true,
+   "Laraphense.disableGoToConfig": true,
+   "workbench.colorTheme": "Monokai Pirokai - Beach Sunset"
+ }
+ 

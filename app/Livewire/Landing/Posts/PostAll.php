@@ -66,8 +66,8 @@ class PostAll extends Component
 
     public function resetFilter()
     {
-        $this->search = null;
-        $this->filter_date = null;
-        $this->filter_category = null;
+        $this->search = '';
+        $this->filter_date = '';
+        $this->filter_category = '';
     }
 }

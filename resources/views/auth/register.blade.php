@@ -100,10 +100,33 @@
 </div>
 
 <div class="d-flex justify-content-center gap-2">
-   <a href="{{ route('google.login') }}" class="bg-danger rounded btn text-white btn-text-google-plus">
-      <i class="tf-icons mdi mdi-24px mdi-google me-2"></i>
-      <span class="">Sign in with Google</span>
+   <a onclick='return googleLogin()' class="btn-outline-secondary btn w-100" data-bs-toggle="tooltip" data-bs-placement="right" title="Langsung bergabung dengan REAN hanya dengan menggunakan akun google anda">
+      {{-- <i class="tf-icons mdi mdi-24px mdi-google me-2"></i> --}}
+      <span class="ceaed94f7 cb1a65fd9 me-2 google-icon"></span>
+      <span class="">Lanjutkan dengan google</span>
    </a>
 </div>
-
 @endsection
+@push('scripts')
+<script>
+   document.addEventListener("DOMContentLoaded", () => {
+    const formElement = document.querySelector("#formAuthentication");
+    formElement.addEventListener("submit", () => {
+        Swal.fire({
+            title: 'Sedang Diproses',
+            html: 'Mengirim email verifikasi ke email yang anda masukkan..',
+            timer: 12000,
+            timerProgressBar: true,
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+               //  console.log('Modal ditutup oleh timer');
+            }
+        });
+    });
+});
+</script>
+@endpush

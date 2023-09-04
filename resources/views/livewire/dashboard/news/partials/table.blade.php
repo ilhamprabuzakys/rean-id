@@ -17,7 +17,7 @@
           <tr>
              <th scope="row">{{ $loop->iteration + ($paginate * ($news->currentPage()-1)) }}</th>
              <td>
-                <a href="{{ route('news.show', $berita) }}">{{ $berita->title }}</a>
+                <a href="{{ route('home.news.show', $berita) }}">{{ $berita->title }}</a>
              </td>
              <td>
                 {{ $berita->about }}
